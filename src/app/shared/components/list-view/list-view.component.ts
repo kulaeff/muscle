@@ -5,7 +5,7 @@ import { ANIMATION } from '../../../app.constants';
     selector: 'm-list-view',
     styleUrls: ['./list-view.component.less'],
     templateUrl: './list-view.component.html',
-    animations: [
+    /*animations: [
         trigger('animationState', [
             state(
                 'void',
@@ -27,7 +27,7 @@ import { ANIMATION } from '../../../app.constants';
                 ]
             )
         ])
-    ]
+    ]*/
 })
 
 export class ListViewComponent implements OnChanges {

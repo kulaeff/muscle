@@ -2,7 +2,6 @@
         class="tool-button tool-button_icon_{{icon}}"
         [class.tool-button_state_disabled]="disabled"
         [ngSwitch]="icon"
-        @animationState
 >
     <template [ngSwitchCase]="'create'">
         <svg>

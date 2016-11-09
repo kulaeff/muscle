@@ -4,7 +4,6 @@
             *ngFor="let item of items; let i = index"
             [class.list-view-item-selected]="i == selectedItemIndex"
             (click)="selectItem(i)"
-            @animationState
     >
         <template [ngTemplateOutlet]="template" [ngOutletContext]="{ item: item }"></template>
     </div>

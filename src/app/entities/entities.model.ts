@@ -5,6 +5,6 @@ export enum EntityType {
 
 
 export class Entity {
-    title: string;
+    name: string;
     type: EntityType;
 }

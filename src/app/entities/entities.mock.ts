@@ -2,19 +2,19 @@ import { Entity, EntityType } from './entities.model';
 
 export const ENTITIES: Entity[] = [
     {
-        title: 'mysql',
+        name: 'mysql',
         type: EntityType.DATABASE
     },
     {
-        title: 'csgame',
+        name: 'csgame',
         type: EntityType.DATABASE
     },
     {
-        title: 'loko',
+        name: 'loko',
         type: EntityType.DATABASE
     },
     {
-        title: 'flash',
+        name: 'flash',
         type: EntityType.DATABASE
     }
 ];

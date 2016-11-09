@@ -16,7 +16,7 @@ import { ANIMATION } from '../../../app.constants';
     selector: 'm-tool-button',
     templateUrl: './tool-button.component.html',
     styleUrls: ['./tool-button.component.less'],
-    animations: [
+    /*animations: [
         trigger('animationState', [
             state(
                 'void',
@@ -38,7 +38,7 @@ import { ANIMATION } from '../../../app.constants';
                 ]
             )
         ])
-    ]
+    ]*/
 })
 
 export class ToolButtonComponent {

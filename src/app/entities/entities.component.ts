@@ -32,7 +32,7 @@ export class EntitiesComponent implements OnInit {
     ngOnInit() {
         this.entitiesService.getDatabases().then(entities => {
             this.entities = entities;
-            this.entitiesSorted = this.entities.sort((a, b) => (a.title > b.title) ? 1 : -1);
+            this.entitiesSorted = this.entities.sort((a, b) => (a.name > b.name) ? 1 : -1);
             this.entitiesLength = this.entities.length;
         });
 
@@ -125,8 +125,8 @@ export class EntitiesComponent implements OnInit {
     onToolButtonDeleteClick(event: any) {
         // TODO: Maybe we need to select next account, after deleting current one
 
-        this.entities = this.entities.filter(entity => entity.id !== this.selectedEntity.id);
-        this.entitiesSorted = this.entitiesSorted.filter(entity => entity.id !== this.selectedEntity.id);
+        this.entities = this.entities.filter(entity => entity.name !== this.selectedEntity.name);
+        this.entitiesSorted = this.entitiesSorted.filter(entity => entity.name !== this.selectedEntity.name);
 
         this.selectedEntity = null;
 

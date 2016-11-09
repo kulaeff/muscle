@@ -5,7 +5,7 @@ import { ANIMATION } from '../../../../app.constants';
     selector: 'm-navigation-pane-item',
     styleUrls: ['./navigation-pane-item.component.less'],
     templateUrl: './navigation-pane-item.component.html',
-    animations: [
+    /*animations: [
         trigger('animationState', [
             state(
                 'void',
@@ -27,7 +27,7 @@ import { ANIMATION } from '../../../../app.constants';
                 ]
             )
         ])
-    ]
+    ]*/
 })
 
 export class NavigationPaneItemComponent {
