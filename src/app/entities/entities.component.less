@@ -1,10 +1,7 @@
 @import "../../styles/variables";
 @import "../../styles/mixins/title";
 
-:host {
-    height: 100%;
-}
-.budgets {
+.entitites {
     box-sizing: border-box;
     display: block;
     height: 100%;
@@ -32,31 +29,48 @@
         display: table;
         position: relative;
         width: 100%;
-        &-column {
+        & > div {
             box-sizing: border-box;
             display: table-cell;
             padding: @margin / 4 @margin / 2;
             position: relative;
-            vertical-align: top;
-            &_limit {
-                text-align: right;
-                width: 20%;
-                white-space: nowrap;
+            vertical-align: middle;
+        }
+        &-balance {
+            display: inline-block;
+            padding-right: @margin / 2;
+            & + & {
+                border-left: 1px solid @colorLightGray;
+                padding-left: @margin / 2;
             }
-            &_progress {
-                white-space: nowrap;
-                vertical-align: middle;
-            }
-            &_title {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                min-width: 220px;
-                width: 20%;
-                white-space: nowrap;
+            &_last {
+                padding-right: 0;
             }
         }
-        &-progress {
-            padding: @margin / 4 @margin / 2;
+        &-balances {
+            //text-align: right;
+        }
+        &-icon {
+            width: @margin / 2 + 1.6rem;
+            svg {
+                bottom: 0;
+                fill: @colorDarkGray;
+                height: 1.6rem;
+                left: @margin / 2;
+                margin: auto;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 1.6rem;
+            }
+        }
+        &-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 220px;
+            width: 20%;
+            white-space: nowrap;
+
         }
     }
     &__toolbar {

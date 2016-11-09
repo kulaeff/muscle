@@ -2,27 +2,27 @@ import { TestBed } from '@angular/core/testing';
 
 import { SharedModule } from "../shared/shared.module";
 
-import { BudgetsComponent } from './budgets.component';
+import { EntitiesComponent } from './entities.component';
 
-import { BudgetsService } from './budgets.service';
+import { EntitiesService } from './entities.service';
 
 describe('App', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BudgetsComponent
+                EntitiesComponent,
             ],
             imports: [
                 SharedModule
             ],
             providers: [
-                BudgetsService
+                EntitiesService
             ]
         });
     });
     it('should work', () => {
-        let fixture = TestBed.createComponent(BudgetsComponent);
+        let fixture = TestBed.createComponent(EntitiesComponent);
 
-        expect(fixture.componentInstance instanceof BudgetsComponent).toBe(true, 'should create BudgetsComponent');
+        expect(fixture.componentInstance instanceof EntitiesComponent).toBe(true, 'should create EntitiesComponent');
     });
 });

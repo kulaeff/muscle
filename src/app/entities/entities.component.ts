@@ -1,39 +1,39 @@
-import { AccountsModule } from './accounts.module';
+import { EntitiesModule } from './entities.module';
 
 import { Component, OnInit } from '@angular/core';
 
-import { Account, AccountType } from './account.model';
-import { AccountsService } from './accounts.service';
-import { AccountsCreateComponent } from './accounts.create.component';
+import { Entity, EntityType } from './entities.model';
+import { EntitiesService } from './entities.service';
+import { EntitiesCreateComponent } from './entities.create.component';
 import { ModalService } from '../modal/modal.service';
 import { NavigationPaneItem } from '../shared/components/navigation-pane/navigation-pane.component';
 
 @Component({
-    selector: 'm-accounts',
-    templateUrl: './accounts.component.html',
-    styleUrls: ['./accounts.component.less']
+    selector: 'm-entities',
+    templateUrl: './entities.component.html',
+    styleUrls: ['./entities.component.less']
 })
 
-export class AccountsComponent implements OnInit {
+export class EntitiesComponent implements OnInit {
     canCreate: boolean = true;
     canEdit: boolean = false;
     canDelete: boolean = false;
 
-    accounts: Account[];
-    accountsSorted: Account[];
-    accountsLength: number;
+    entities: Entity[];
+    entitiesSorted: Entity[];
+    entitiesLength: number;
 
     filters: NavigationPaneItem[];
 
-    selectedAccount: Account = null;
+    selectedEntity: Entity = null;
 
-    constructor(private accountsService: AccountsService, private modalService: ModalService) { }
+    constructor(private entitiesService: EntitiesService, private modalService: ModalService) { }
 
     ngOnInit() {
-        this.accountsService.getAccounts().then(accounts => {
-            this.accounts = accounts
-            this.accountsSorted = this.accounts.sort((a, b) => (a.title > b.title) ? 1 : -1);
-            this.accountsLength = this.accounts.length;
+        this.entitiesService.getDatabases().then(entities => {
+            this.entities = entities;
+            this.entitiesSorted = this.entities.sort((a, b) => (a.title > b.title) ? 1 : -1);
+            this.entitiesLength = this.entities.length;
         });
 
         this.filters = [
@@ -69,28 +69,22 @@ export class AccountsComponent implements OnInit {
     onNavigationPaneItemChange(id: string) {
         switch (id) {
             case 'all':
-                this.accountsSorted = this.accounts;
+                this.entitiesSorted = this.entities;
                 break;
             case 'accounts':
-                this.accountsSorted = this.filterAccountsByType(AccountType.ACCOUNT);
+                this.entitiesSorted = this.filterEntitiesByType(EntityType.DATABASE);
                 break;
             case 'cash':
-                this.accountsSorted = this.filterAccountsByType(AccountType.CASH);
-                break;
-            case 'cards':
-                this.accountsSorted = this.filterAccountsByType(AccountType.CARD);
-                break;
-            case 'deposits':
-                this.accountsSorted = this.filterAccountsByType(AccountType.DEPOSIT);
+                this.entitiesSorted = this.filterEntitiesByType(EntityType.TABLE);
                 break;
             default:
-                this.accountsSorted = this.accounts;
+                this.entitiesSorted = this.entities;
         }
 
         this.canEdit = false;
         this.canDelete = false;
 
-        this.accountsLength = this.accountsSorted.length;
+        this.entitiesLength = this.entitiesSorted.length;
     }
 
     /**
@@ -98,11 +92,11 @@ export class AccountsComponent implements OnInit {
      *
      * @param item
      */
-    onListViewItemChange(account: Account) {
+    onListViewItemChange(account: Entity) {
         this.canEdit = true;
         this.canDelete = true;
 
-        this.selectedAccount = account;
+        this.selectedEntity = account;
     }
 
     /**
@@ -111,7 +105,7 @@ export class AccountsComponent implements OnInit {
     onToolButtonCreateClick(event: any) {
         console.log(event);
 
-        let modal$ = this.modalService.create(AccountsModule, AccountsCreateComponent, {
+        let modal$ = this.modalService.create(EntitiesModule, EntitiesCreateComponent, {
             ok: () => {
               alert('asd');
             }
@@ -131,10 +125,10 @@ export class AccountsComponent implements OnInit {
     onToolButtonDeleteClick(event: any) {
         // TODO: Maybe we need to select next account, after deleting current one
 
-        this.accounts = this.accounts.filter(account => account.id !== this.selectedAccount.id);
-        this.accountsSorted = this.accountsSorted.filter(account => account.id !== this.selectedAccount.id);
+        this.entities = this.entities.filter(entity => entity.id !== this.selectedEntity.id);
+        this.entitiesSorted = this.entitiesSorted.filter(entity => entity.id !== this.selectedEntity.id);
 
-        this.selectedAccount = null;
+        this.selectedEntity = null;
 
         this.canEdit = false;
         this.canDelete = false;
@@ -143,7 +137,7 @@ export class AccountsComponent implements OnInit {
     /**
      *
      */
-    filterAccountsByType(type: AccountType) {
-        return this.accounts.filter(account => account.type === type);
+    filterEntitiesByType(type: EntityType) {
+        return this.entities.filter(entity => entity.type === type);
     }
 }

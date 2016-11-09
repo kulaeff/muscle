@@ -1,7 +1,7 @@
-<div class="accounts">
-    <div class="accounts__toolbar">
-        <div class="accounts__toolbar-section accounts__toolbar-section_title">Счета</div>
-        <div class="accounts__toolbar-section accounts__toolbar-section_buttons">
+<div class="entitites">
+    <div class="entitites__toolbar">
+        <div class="entitites__toolbar-section entitites__toolbar-section_title">Счета</div>
+        <div class="entitites__toolbar-section entitites__toolbar-section_buttons">
             <m-tool-button
                     [icon]="'create'"
                     [disabled]="!canCreate"
@@ -22,21 +22,21 @@
             ></m-tool-button>
         </div>
     </div>
-    <div class="accounts__container">
-        <div class="accounts__container-panel accounts__container-panel_filters">
+    <div class="entitites__container">
+        <div class="entitites__container-panel entitites__container-panel_filters">
             <m-navigation-pane
                     [items]="filters"
                     [theme]="'dark'"
                     (onChange)="onNavigationPaneItemChange($event)"
             ></m-navigation-pane>
         </div>
-        <div class="accounts__container-panel accounts__container-panel_items">
-            <template [ngIf]="accountsLength > 0">
-                <m-list-view [items]="accountsSorted" (onChange)="onListViewItemChange($event)">
+        <div class="entitites__container-panel entitites__container-panel_items">
+            <template [ngIf]="entititesLength > 0">
+                <m-list-view [items]="entititesSorted" (onChange)="onListViewItemChange($event)">
                     <template let-account="item">
                         <!-- account -->
-                        <div class="accounts__item">
-                            <div class="accounts__item-icon" [ngSwitch]="account.type">
+                        <div class="entitites__item">
+                            <div class="entitites__item-icon" [ngSwitch]="account.type">
                                 <template [ngSwitchCase]="0">
                                     <svg>
                                         <use xlink:href="#icon-account-type-account"></use>
@@ -58,11 +58,11 @@
                                     </svg>
                                 </template>
                             </div>
-                            <div class="accounts__item-title">{{account.title}}</div>
+                            <div class="entitites__item-title">{{account.title}}</div>
                             <!-- balances -->
-                            <div class="accounts__item-balances">
+                            <div class="entitites__item-balances">
                                 <!-- balance -->
-                                <div class="accounts__item-balance" [class.accounts__item-balance_last]="last" *ngFor="let balance of account.balances; let last = last">
+                                <div class="entitites__item-balance" [class.entitites__item-balance_last]="last" *ngFor="let balance of account.balances; let last = last">
                                     <span class="currency currency_size_medium">
                                         <span class="currency__value">{{balance.value | number}}</span>
                                         <span class="currency__code">{{balance.currency.code}}</span>
@@ -76,8 +76,8 @@
                     </template>
                 </m-list-view>
             </template>
-            <template [ngIf]="accountsLength == 0">
-                <div class="accounts__empty">Нет элементов для отображения</div>
+            <template [ngIf]="entititesLength == 0">
+                <div class="entitites__empty">Нет элементов для отображения</div>
             </template>
         </div>
     </div>

@@ -5,14 +5,9 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { CoreModule }     from './core/core.module';
 import { ModalModule }   from './modal/modal.module';
 
-import { AccountsModule } from './accounts/accounts.module';
-import { BudgetsModule } from './budgets/budgets.module';
-import { CategoriesModule } from './categories/categories.module';
+import { EntitiesModule } from './entities/entities.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { GoalsModule } from './goals/goals.module';
-import { ReportsModule } from './reports/reports.module';
 import { SettingsModule } from './settings/settings.module';
-import { TransactionsModule } from './transactions/transactions.module';
 
 // Main component
 import { AppComponent } from './app.component';
@@ -29,14 +24,9 @@ import { routing } from './app.routing';
 
         routing,
 
-        AccountsModule,
-        BudgetsModule,
-        CategoriesModule,
+        EntitiesModule,
         DashboardModule,
-        GoalsModule,
-        ReportsModule,
         SettingsModule,
-        TransactionsModule,
     ],
     declarations: [
         AppComponent
