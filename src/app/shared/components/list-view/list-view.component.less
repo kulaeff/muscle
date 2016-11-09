@@ -1,0 +1,26 @@
+@import "../../../../styles/variables";
+
+:host {
+    display: block;
+}
+.list-view {
+    display: block;
+    position: relative;
+    &-item {
+        border-radius: @borderRadius;
+        cursor: pointer;
+        display: block;
+        position: relative;
+        transition: background-color @duration / 3 linear;
+        width: 100%;
+        &:hover {
+            background-color: @colorControlHoverDark;
+        }
+        &-selected {
+            background-color: #fff;
+            &:hover {
+                background-color: #fff;
+            }
+        }
+    }
+}

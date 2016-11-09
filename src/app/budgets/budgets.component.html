@@ -1,0 +1,56 @@
+<div class="budgets">
+    <div class="budgets__toolbar">
+        <div class="budgets__toolbar-section budgets__toolbar-section_title">Бюджеты</div>
+        <div class="budgets__toolbar-section budgets__toolbar-section_buttons">
+            <m-tool-button
+                    [icon]="'create'"
+                    [disabled]="!canCreate"
+                    (onClick)="onToolButtonCreateClick($event)"
+                    title="Добавить бюджет"
+            ></m-tool-button>
+            <m-tool-button
+                    [icon]="'edit'"
+                    [disabled]="!canEdit"
+                    (onClick)="onToolButtonEditClick($event)"
+                    title="Редактировать выбранный бюджет"
+            ></m-tool-button>
+            <m-tool-button
+                    [icon]="'delete'"
+                    [disabled]="!canDelete"
+                    (onClick)="onToolButtonDeleteClick($event)"
+                    title="Удалить выбранный бюджет"
+            ></m-tool-button>
+        </div>
+    </div>
+    <div class="budgets__container">
+        <div class="budgets__container-panel budgets__container-panel_filters">
+            <m-navigation-pane
+                    [items]="filters"
+                    [theme]="'dark'"
+                    (onChange)="onNavigationPaneItemChange($event)"
+            ></m-navigation-pane>
+        </div>
+        <div class="budgets__container-panel budgets__container-panel_items">
+            <template [ngIf]="budgetsLength > 0">
+                <m-list-view [items]="budgetsSorted" (onChange)="onListViewItemChange($event)">
+                    <template let-item="item">
+                        <div class="budgets__item">
+                            <div class="budgets__item-column budgets__item-column_title">{{item.category.title}}</div>
+                            <div class="budgets__item-column budgets__item-column_progress">
+                                <m-progress-bar [value]="item.current | percent:item.limit"></m-progress-bar>
+                            </div>
+                            <div class="budgets__item-column budgets__item-column_limit" title="Лимит бюджета">
+                                {{item.current | currency:item.currency.code}}
+                                из
+                                <strong>{{item.limit | currency:item.currency.code}}</strong>
+                            </div>
+                        </div>
+                    </template>
+                </m-list-view>
+            </template>
+            <template [ngIf]="categoriesLength == 0">
+                <div class="categories__empty">Нет элементов для отображения</div>
+            </template>
+        </div>
+    </div>
+</div>

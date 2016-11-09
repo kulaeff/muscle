@@ -1,0 +1,98 @@
+@import "../styles/variables";
+
+@headerHeight: 4.5rem;
+
+@navItemSize: 6.4rem;
+
+:host {
+    display: block;
+    height: 100%;
+}
+.app {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    &__container {
+        flex: 1 100%;
+        overflow: hidden;
+        padding: @margin;
+    }
+    &__logo {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: @colorPrimary;
+        font-size: 2.8rem;
+        font-weight: 600;
+        height: @navItemSize;
+        line-height: @navItemSize;
+        text-align: center;
+        text-transform: uppercase;
+        vertical-align: middle;
+        width: @navItemSize;
+            svg {
+                fill: none;
+                height: @navItemSize;
+                stroke: rgba(255, 255, 255, 0.3);
+                stroke-width: 2px;
+                width: @navItemSize;
+            }
+    }
+    &__nav {
+        cursor: default;
+        position: relative;
+        &-item {
+            @borderHeight: 0.3rem;
+
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            height: @navItemSize;
+            position: relative;
+            text-decoration: none;
+            height: @navItemSize;
+            width: @navItemSize;
+            svg {
+                fill: none;
+                height: @navItemSize;
+                stroke: rgba(255, 255, 255, 0.3);
+                stroke-width: 2px;
+                width: @navItemSize;
+            }
+        }
+    }
+    &__panel {
+        background-color: #303438;
+        flex: 1;
+        &-profile {
+            background-color: @colorPrimary;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color @duration / 3 linear;
+            width: @headerHeight;
+            svg {
+                fill: rgba(255, 255, 255, 0.9);
+                height: 1.9rem;
+                transition: fill @duration / 3 linear;
+                vertical-align: top;
+                width: 1.9rem;
+            }
+            //
+            &:hover {
+                background-color: lighten(@colorPrimary, 5%);
+                svg {
+                    fill: #fff;
+                }
+            }
+            //
+            &_selected {
+                background-color: darken(@colorControlBackgroundDark, 5%);
+                &:hover {
+                    background-color: darken(@colorControlBackgroundDark, 5%);
+                }
+                svg {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}

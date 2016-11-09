@@ -1,0 +1,3 @@
+1. Staggering animations
+2. Global loading indicator using interceptor (when it will be implemented in Angular2)
+3. Refactor tooltip (конвертировать в абсолютныен координаты)

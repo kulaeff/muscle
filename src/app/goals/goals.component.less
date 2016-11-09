@@ -1,0 +1,112 @@
+@import "../../styles/variables";
+@import "../../styles/mixins/title";
+
+.goals {
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+    position: relative;
+    &__container {
+        display: table;
+        width: 100%;
+        &-panel {
+            display: table-cell;
+            vertical-align: top;
+            &_filters {
+                min-width: 15rem;
+                padding-right: @margin * 2;
+                width: 15%;
+            }
+            &_items {
+                //
+            }
+        }
+    }
+    &__empty {
+        padding: @margin / 4 @margin / 2;
+    }
+    &__item {
+        display: block;
+        padding: @margin / 4 @margin / 2;
+        &-category {
+            .title_size_6();
+            color: @colorDarkGray;
+        }
+        &-content {
+            display: table-cell;
+            padding-left: @margin / 4;
+            vertical-align: top;
+        }
+        &-date {
+            .title_size_7();
+            position: relative;
+        }
+        &-details {
+            display: table;
+            margin-top: @margin / 8;
+            width: 100%;
+            & > div {
+                display: table-cell;
+                vertical-align: top;
+            }
+            &_amount {
+                text-align: right;
+                white-space: nowrap;
+            }
+            &_title {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 220px;
+                width: 20%;
+                white-space: nowrap;
+
+            }
+        }
+        &-icon {
+            display: table-cell;
+            padding-right: @margin / 4;
+            width: 3.2rem;
+            svg {
+                fill: @colorGray;
+                height: 3.2rem;
+                margin-top: @margin / 12;
+                width: 3.2rem;
+            }
+        }
+        &-progress {
+            padding: @margin / 4 0;
+        }
+        &-wrapper {
+            display: table;
+            width: 100%;
+        }
+    }
+    &__toolbar {
+        display: table;
+        margin-bottom: @margin;
+        width: 100%;
+        &-section {
+            display: table-cell;
+            vertical-align: middle;
+            &_buttons {
+                padding: 0 @margin / 2;
+                font-size: 0;
+            }
+            &_switcher {
+                font-size: 0;
+                text-align: right;
+            }
+            &_title {
+                border-left: 0.2rem solid @colorDarkGray;
+                .title_size_4();
+                height: 3.2rem;
+                line-height: 3.2rem;
+                min-width: 15rem;
+                padding-left: @margin - 0.2rem;
+                padding-right: @margin * 2;
+                vertical-align: middle;
+                width: 15%;
+            }
+        }
+    }
+}

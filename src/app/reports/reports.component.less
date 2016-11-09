@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.reports {
+    display: table;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    & > div {
+        box-sizing: border-box;
+        display: table-cell;
+        vertical-align: top;
+    }
+    //
+    &__content {
+        padding-left: @margin;
+    }
+    &__navigation {
+        min-width: 15rem;
+        padding-right: @margin;
+        width: 12%;
+    }
+}

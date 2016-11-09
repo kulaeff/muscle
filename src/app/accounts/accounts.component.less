@@ -1,0 +1,99 @@
+@import "../../styles/variables";
+@import "../../styles/mixins/title";
+
+.accounts {
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+    position: relative;
+    &__container {
+        display: table;
+        width: 100%;
+        &-panel {
+            display: table-cell;
+            vertical-align: top;
+            &_filters {
+                min-width: 15rem;
+                padding-right: @margin * 2;
+                width: 15%;
+            }
+            &_items {
+                //
+            }
+        }
+    }
+    &__empty {
+        padding: @margin / 4 @margin / 2;
+    }
+    &__item {
+        display: table;
+        position: relative;
+        width: 100%;
+        & > div {
+            box-sizing: border-box;
+            display: table-cell;
+            padding: @margin / 4 @margin / 2;
+            position: relative;
+            vertical-align: middle;
+        }
+        &-balance {
+            display: inline-block;
+            padding-right: @margin / 2;
+            & + & {
+                border-left: 1px solid @colorLightGray;
+                padding-left: @margin / 2;
+            }
+            &_last {
+                padding-right: 0;
+            }
+        }
+        &-balances {
+            //text-align: right;
+        }
+        &-icon {
+            width: @margin / 2 + 1.6rem;
+            svg {
+                bottom: 0;
+                fill: @colorDarkGray;
+                height: 1.6rem;
+                left: @margin / 2;
+                margin: auto;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 1.6rem;
+            }
+        }
+        &-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 220px;
+            width: 20%;
+            white-space: nowrap;
+
+        }
+    }
+    &__toolbar {
+        display: table;
+        margin-bottom: @margin;
+        width: 100%;
+        &-section {
+            display: table-cell;
+            &_title {
+                border-left: 0.2rem solid @colorDarkGray;
+                .title_size_4();
+                height: 3.2rem;
+                line-height: 3.2rem;
+                min-width: 15rem;
+                padding-left: @margin - 0.2rem;
+                padding-right: @margin * 2;
+                vertical-align: middle;
+                width: 15%;
+            }
+            &_buttons {
+                padding-left: @margin / 2;
+                font-size: 0;
+            }
+        }
+    }
+}

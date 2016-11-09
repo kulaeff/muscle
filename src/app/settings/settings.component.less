@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.settings {
+    background-color: darken(@colorControlBackgroundDark, 5%);
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: @margin;
+    position: relative;
+    &__container {
+        display: table;
+        width: 100%;
+        & > div {
+            display: table-cell;
+            vertical-align: top;
+        }
+    }
+    &__content {
+        //
+    }
+    &__header {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: @margin;
+        text-transform: uppercase;
+    }
+    &__navigation {
+        min-width: 15rem;
+        width: 10%;
+    }
+}

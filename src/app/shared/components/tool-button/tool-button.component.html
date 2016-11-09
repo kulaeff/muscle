@@ -1,0 +1,22 @@
+<button
+        class="tool-button tool-button_icon_{{icon}}"
+        [class.tool-button_state_disabled]="disabled"
+        [ngSwitch]="icon"
+        @animationState
+>
+    <template [ngSwitchCase]="'create'">
+        <svg>
+            <use xlink:href="#icon-toolbutton-create"></use>
+        </svg>
+    </template>
+    <template [ngSwitchCase]="'edit'">
+        <svg>
+            <use xlink:href="#icon-toolbutton-edit"></use>
+        </svg>
+    </template>
+    <template [ngSwitchCase]="'delete'">
+        <svg>
+            <use xlink:href="#icon-toolbutton-delete"></use>
+        </svg>
+    </template>
+</button>

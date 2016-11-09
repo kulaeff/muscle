@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="16" height="16" viewBox="0 0 16.00 16.00" enable-background="new 0 0 16.00 16.00" xml:space="preserve">
+	<ellipse fill="#000000" fill-opacity="0.701961" stroke-linejoin="round" cx="8" cy="10" rx="2" ry="2"/>
+	<path fill="#000000" fill-opacity="1" stroke-linejoin="round" d="M 15,9C 15,10.1046 14.1046,11 13,11L 11,11L 11,10L 13,10C 13.5523,10 14,9.55229 14,9L 15,9 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-linejoin="round" d="M 2,9C 2,9.55229 2.44771,10 3,10L 5,10L 5,11L 3,11C 2.63571,11 2.29417,10.9026 1.99999,10.7324L 1.99998,13C 1.99998,13.5523 2.44769,14 2.99998,14L 13,14C 13.5523,14 14,13.5523 14,13L 14,5.99999C 14,5.44771 13.5523,4.99999 13,4.99999L 2.99998,4.99999C 2.44769,4.99999 1.99998,5.44771 1.99998,5.99999L 2,9 Z M 2,3.00002L 3,3L 3,1C 3,0.44772 3.44771,3.8147e-006 4,3.8147e-006L 12,3.8147e-006C 12.5523,3.8147e-006 13,0.44772 13,1L 13,3L 14,3.00002C 15.1045,3.00002 16,3.89545 16,5.00002L 16,14C 16,15.1046 15.1045,16 14,16L 2,16C 0.89543,16 0,15.1046 0,14L 0,5.00002C 0,3.89545 0.89543,3.00002 2,3.00002 Z M 5,2L 5,3L 11,3L 11,2L 5,2 Z "/>
+</svg>

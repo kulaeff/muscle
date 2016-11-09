@@ -1,0 +1,12 @@
+<div class="navigation-pane navigation-pane_theme_{{theme}}">
+    <div class="navigation-pane__items">
+        <m-navigation-pane-item
+                *ngFor="let item of items"
+                [id]="item.id"
+                [title]="item.title"
+                [selected]="item.selected"
+                [theme]="theme"
+                (onClick)="change($event)"
+        ></m-navigation-pane-item>
+    </div>
+</div>

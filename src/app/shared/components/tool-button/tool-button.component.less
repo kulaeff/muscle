@@ -1,0 +1,68 @@
+@import "../../../../styles/variables";
+
+@size: 3.2rem;
+
+:host {
+    display: inline-block;
+    margin-right: @margin / 4;
+    position: relative;
+    // Селектор & + & перестал работать после обновления на Angular 2 RC6
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.tool-button {
+    background-color: @colorControlBackgroundDark;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    height: @size;
+    outline: none;
+    position: relative;
+    transition: background-color @duration / 3 linear;
+    vertical-align: top;
+    width: @size;
+    svg {
+        bottom: 0;
+        fill: #fff;
+        height: 1.4rem;
+        left: 0;
+        margin: auto;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: fill @duration / 3 linear;
+        width: 1.4rem;
+    }
+    &:hover {
+        border-color: #000;
+    }
+    // Themes
+
+    // Icons
+    &_icon_create {
+        &:hover {
+            background-color: @colorPrimary;
+        }
+    }
+    &_icon_edit {
+        &:hover {
+            background-color: @colorPrimary;
+        }
+    }
+    &_icon_delete {
+        &:hover {
+            background-color: @colorSecondary;
+        }
+    }
+    // States
+    &_state_disabled {
+        background-color: @colorControlDisabledDark;
+        cursor: default;
+        pointer-events: none;
+        &:hover {
+            background-color: @colorControlDisabledDark;
+        }
+    }
+}
