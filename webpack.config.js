@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var svgStore = require('webpack-svgstore-plugin');
 
 module.exports = {
     devServer: {
@@ -52,7 +53,15 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin()
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new svgStore({
+            svgoOptions: {
+                plugins: [
+                    { removeTitle: true }
+                ]
+            },
+            prefix: 'icon-'
+        })
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']

@@ -1,16 +1,53 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { browserHistory } from 'react-router';
+import NavigationBar from '../../components/NavigationBar'
 import block from 'bem-cn'
 import './style.less'
 
+const navigationBarItems = [
+    {
+        id: 'summary',
+        title: 'Summary',
+    },
+    {
+        id: 'databases',
+        title: 'Databases',
+    },
+]
+
 class App extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selectedIndex: 0
+        }
+
+        this.onNavigationBarChange = this.onNavigationBarChange.bind(this)
+    }
+
+    onNavigationBarChange(id) {
+        browserHistory.push(`/${id}`)
+
+        this.setState({
+            selectedIndex: navigationBarItems.findIndex(item => item.id === id)
+        })
+    }
+
     render() {
-        const b = block('app')
+        const
+            b = block('app')
 
         return (
             <div className={b()}>
-                <div className={b('nav')}></div>
-                <div className={b('container')}>
+                <div className={b('panel', {position: 'left'})}>
+                    <div className={b('logo')}>M</div>
+                    <div className={b('nav')}>
+                        <NavigationBar items={navigationBarItems} selectedIndex={this.state.selectedIndex} onChange={this.onNavigationBarChange} />
+                    </div>
+                </div>
+                <div className={b('panel', {position: 'middle'})}>
                     {this.props.children}
                 </div>
             </div>
@@ -20,7 +57,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        browse: state.browse,
+        databases: state.databases,
         summary: state.summary
     }
 }

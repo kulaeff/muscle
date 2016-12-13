@@ -19,3 +19,7 @@ render(
     </Provider>,
     document.getElementById('root')
 )
+
+const __svg__           = { path: './**/*.svg', name: 'icons.svg' };
+
+require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);

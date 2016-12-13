@@ -1,14 +1,29 @@
 @import (reference) '../../styles/variables';
 
+@itemSize: 48px;
+
 .app {
     display: flex;
     height: 100%;
-    &__nav {
-        background: @cSecondary;
-        flex: 1;
-        min-width: 64px
+    &__logo {
+        background: @cAccent;
+        color: #fff;
+        font-size: 2.4rem;
+        height: @itemSize;
+        line-height: @itemSize;
+        text-align: center;
     }
-    &__container {
-        flex: 1 100%;
+    &__nav {
+        position: relative;
+    }
+    &__panel {
+        flex: 1;
+        &_position_left {
+            background: @cNav;
+            min-width: @itemSize;
+        }
+        &_position_middle {
+            flex: 1 100%;
+        }
     }
 }

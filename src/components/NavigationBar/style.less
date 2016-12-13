@@ -1,0 +1,31 @@
+@import (reference) '../../styles/variables';
+
+@itemSize: 48px;
+
+.navigation-bar {
+    position: relative;
+    &__item {
+        cursor: pointer;
+        display: block;
+        height: @itemSize;
+        position: relative;
+        width: @itemSize;
+        svg {
+            display: block;
+            fill: #fff;
+            height: @itemSize;
+            margin: auto;
+            opacity: 0.7;
+            width: @itemSize;
+        }
+        &:hover {
+            background: @cNavHover;
+        }
+        &_state_selected {
+            background: @cNavSelected;
+            &:hover {
+                background: @cNavSelected;
+            }
+        }
+    }
+}
