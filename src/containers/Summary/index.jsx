@@ -2,17 +2,39 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Title from '../../components/Title'
+import Spinner from '../../components/Spinner'
 import * as summaryActions from '../../actions/summary'
 import block from 'bem-cn'
 import './style.less';
 
+/**
+ * Summary container
+ * @class
+ */
 class Summary extends Component {
+    /**
+     * Summary properties
+     * @static
+     * @property {object} summary The state of container
+     */
+    static propTypes = {
+        summary: PropTypes.object.isRequired,
+    }
+
+    /**
+     * Invoked after the component was mounted
+     * @method
+     */
     componentDidMount() {
         const { getSummary } = this.props.summaryActions
 
         getSummary()
     }
 
+    /**
+     * Renders Summary container
+     * @method
+     */
     render() {
         const
             b = block('summary'),
@@ -22,6 +44,7 @@ class Summary extends Component {
             <div className={b()}>
                 <div className={b('title')}>
                     <Title size="large" title="Summary" theme="light" />
+                    <Spinner active={summary.fetching}/>
                 </div>
                 <div className={b('indicators')}>
                     <span className={b('indicators-title')}>
@@ -85,10 +108,6 @@ class Summary extends Component {
             </div>
         )
     }
-}
-
-Summary.propTypes = {
-    summary: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {

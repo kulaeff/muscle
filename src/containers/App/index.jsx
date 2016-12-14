@@ -43,7 +43,10 @@ class App extends Component {
                 <div className={b('panel', {position: 'left'})}>
                     <div className={b('logo')}>M</div>
                     <div className={b('nav')}>
-                        <NavigationBar items={navigationBarItems} selectedIndex={this.state.selectedIndex} onChange={this.onNavigationBarChange} />
+                        <NavigationBar
+                            items={navigationBarItems}
+                            selectedIndex={this.state.selectedIndex}
+                            onChange={this.onNavigationBarChange} />
                     </div>
                 </div>
                 <div className={b('panel', {position: 'middle'})}>

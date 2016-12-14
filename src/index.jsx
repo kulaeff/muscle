@@ -9,10 +9,11 @@ import configureStore from './configureStore'
 import configureRoutes from './configureRoutes';
 import './index.less';
 
-const store = configureStore(new API())
-const routes = configureRoutes();
-
-const history = syncHistoryWithStore(browserHistory, store);
+const
+    store = configureStore(new API()),
+    routes = configureRoutes(),
+    history = syncHistoryWithStore(browserHistory, store),
+    __svg__ = { name: 'icons.svg', path: './**/*.svg' }
 
 render(
     <Provider store={store}>
@@ -20,7 +21,5 @@ render(
     </Provider>,
     document.getElementById('root')
 )
-
-const __svg__           = { path: './**/*.svg', name: 'icons.svg' };
 
 require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);

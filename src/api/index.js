@@ -4,11 +4,11 @@ class API {
     constructor() {
         this.axios = axios.create({
             baseURL: '/api/v1',
-            responseType: 'json',
-            withCredentials: false,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            },
+            responseType: 'json',
+            withCredentials: false
         })
     }
 
