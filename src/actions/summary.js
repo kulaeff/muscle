@@ -1,24 +1,16 @@
 import {
     GET_SUMMARY_REQUEST,
     GET_SUMMARY_SUCCESS,
-    //GET_SUMMARY_FAIL
+    GET_SUMMARY_FAIL
 } from '../constants/summary'
 
 export function getSummary() {
-    return async (dispatch) => {
+    return async (dispatch, getState, api) => {
         dispatch({
             type: GET_SUMMARY_REQUEST
         })
 
-        const a = 1000
-
-        setTimeout(() => {
-            dispatch({
-                type: GET_SUMMARY_SUCCESS,
-                payload: {}
-            })
-        }, a)
-        /*try {
+        try {
             const response = await api.getSummary()
 
             dispatch({
@@ -30,6 +22,6 @@ export function getSummary() {
                 type: GET_SUMMARY_FAIL,
                 payload: ex
             })
-        }*/
+        }
     }
 }

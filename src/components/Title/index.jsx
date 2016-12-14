@@ -9,7 +9,7 @@ class Title extends Component {
             { size = 'small', title, theme } = this.props
 
         return (
-            <div className={b({size, theme})}>{title}</div>
+            <span className={b({size, theme})}>{title}</span>
         )
     }
 }

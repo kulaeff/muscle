@@ -1,11 +1,61 @@
 @import (reference) '../../styles/variables';
 
+@color: #fff;
+@speed: .4s;
+
+@keyframes pulsate {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .spinner {
     display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    &__ellipse {
+        border: 3px solid transparent;
+        border-radius: 50%;
+        box-sizing: border-box;
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        &_position_bottom {
+            border-bottom-color: @color;
+        }
+        &_position_left {
+            border-left-color: @color;
+        }
+        &_position_right {
+            border-right-color: @color;
+        }
+        &_position_top {
+            border-top-color: @color;
+        }
+    }
+    // Sizes
+    &_size_small {
+        height: 2rem;
+        width: 2rem;
+    }
     // States
-    &_state_active {
-        font-size: 1.4rem;
-        font-weight: 600;
+    &_state_active &__ellipse {
+        animation: pulsate @speed infinite;
+    }
+    &_state_active &__ellipse_position_right {
+        animation-delay: @speed * .25;
+    }
+    &_state_active &__ellipse_position_bottom {
+        animation-delay: @speed * .5;
+    }
+    &_state_active &__ellipse_position_left {
+        animation-delay: @speed * .75;
     }
     // Themes
     &_theme_dark {
