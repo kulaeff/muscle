@@ -1,10 +1,18 @@
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Title from '../../components/Title'
+import * as summaryActions from '../../actions/summary'
 import block from 'bem-cn'
 import './style.less';
 
 class Summary extends Component {
+    componentDidMount() {
+        const { getSummary } = this.props.summaryActions
+
+        getSummary()
+    }
+
     render() {
         const
             b = block('summary'),
@@ -79,14 +87,20 @@ class Summary extends Component {
     }
 }
 
+Summary.propTypes = {
+    summary: PropTypes.object.isRequired,
+}
+
 function mapStateToProps (state) {
     return {
         summary: state.summary
     }
 }
 
-Summary.propTypes = {
-    summary: PropTypes.object.isRequired
+function mapDispatchToProps(dispatch) {
+    return {
+        summaryActions: bindActionCreators(summaryActions, dispatch)
+    }
 }
 
-export default connect(mapStateToProps)(Summary)
+export default connect(mapStateToProps, mapDispatchToProps)(Summary)

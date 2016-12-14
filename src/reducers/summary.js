@@ -1,3 +1,5 @@
+import GET_SUMMARY from '../constants/summary'
+
 const initialState = {
     server: {
         usage: {
@@ -22,6 +24,11 @@ const initialState = {
     }
 }
 
-export default function user(state = initialState) {
-    return state
+export default function user(state = initialState, action) {
+    switch(action.type) {
+        case GET_SUMMARY:
+            return { ...state, summary: action.payload }
+        default:
+            return state
+    }
 }

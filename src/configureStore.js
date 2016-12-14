@@ -1,8 +1,11 @@
-import {createStore} from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers'
+import thunk from 'redux-thunk'
 
-export default function configureStore(initialState) {
-    const store = createStore(rootReducer, initialState)
+export default function configureStore(api) {
+    const store = createStore(
+        rootReducer, applyMiddleware(thunk.withExtraArgument(api))
+    )
 
     if (module.hot) {
         module.hot.accept('./reducers', () => {

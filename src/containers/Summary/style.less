@@ -6,7 +6,9 @@
     height: 100%;
     padding: @mDefault;
     &__indicators {
+        border-left: 3px solid #707274;
         display: block;
+        padding-left: @mDefault;
         &-container {
             display: flex;
             margin-top: @mDefault / 4;
@@ -16,7 +18,8 @@
         }
     }
     &__indicator {
-        flex: 1;
+        //flex: 1;
+        min-width: 20rem;
         &-title {
             color: #a0a2a4;
             display: block;

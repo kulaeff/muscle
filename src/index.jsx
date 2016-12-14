@@ -4,11 +4,12 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+import API from './api';
 import configureStore from './configureStore'
 import configureRoutes from './configureRoutes';
 import './index.less';
 
-const store = configureStore()
+const store = configureStore(new API())
 const routes = configureRoutes();
 
 const history = syncHistoryWithStore(browserHistory, store);
