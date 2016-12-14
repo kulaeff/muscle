@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { browserHistory } from 'react-router';
 import NavigationBar from '../../components/NavigationBar'
 import block from 'bem-cn'
@@ -55,11 +54,4 @@ class App extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        databases: state.databases,
-        summary: state.summary
-    }
-}
-
-export default connect(mapStateToProps)(App)
+export default App

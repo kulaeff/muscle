@@ -2,5 +2,44 @@
 
 .summary {
     background: @cNavSelected;
+    color: #fff;
     height: 100%;
+    padding: @mDefault;
+    &__indicators {
+        display: block;
+        &-container {
+            display: flex;
+            margin-top: @mDefault / 4;
+        }
+        &-title {
+            display: block;
+        }
+    }
+    &__indicator {
+        flex: 1;
+        &-title {
+            color: #a0a2a4;
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &-unit {
+            color: #707274;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-left: @mDefault / 4;
+            text-transform: uppercase;
+        }
+        &-value {
+            font-size: 3.2rem;
+        }
+    }
+    &__title {
+        margin-bottom: @mDefault;
+    }
+    //
+    &__indicators + &__indicators {
+        margin-top: @mDefault;
+    }
 }
