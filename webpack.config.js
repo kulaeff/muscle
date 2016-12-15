@@ -61,7 +61,15 @@ module.exports = {
         new svgStore({
             svgoOptions: {
                 plugins: [
-                    { removeTitle: true }
+                    {
+                        cleanupEnableBackground: true,
+                        removeComments: true,
+                        removeDoctype: true,
+                        removeMetadata: true,
+                        removeTitle: true,
+                        removeUselessStrokeAndFill: true,
+                        removeXMLNS: true,
+                    }
                 ]
             },
             prefix: 'icon-'

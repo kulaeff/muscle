@@ -4,9 +4,10 @@
     background: @cNavSelected;
     color: #fff;
     height: 100%;
-    padding: @mDefault;
     &__indicators {
         display: block;
+        margin-top: @mDefault;
+        padding: 0 @mDefault;
         &-container {
             display: flex;
             margin-top: @mDefault / 4;
@@ -21,7 +22,7 @@
         &-title {
             color: #a0a2a4;
             display: block;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             text-transform: uppercase;
         }
@@ -33,11 +34,15 @@
             text-transform: uppercase;
         }
         &-value {
-            font-size: 3.2rem;
+            font-size: 3rem;
         }
     }
     &__title {
-        margin-bottom: @mDefault;
+        border-bottom: 1px solid @cNav;
+        box-sizing: border-box;
+        height: 4.8rem;
+        line-height: 4.8rem;
+        padding: 0 @mDefault;
         &-label {
             display: inline-block;
             vertical-align: middle;

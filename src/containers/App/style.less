@@ -11,7 +11,20 @@
         font-weight: 600;
         height: @itemSize;
         line-height: @itemSize;
+        position: relative;
         text-align: center;
+        svg {
+            bottom: 0;
+            display: block;
+            fill: @cAccent;
+            height: @itemSize;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: @itemSize;
+        }
     }
     &__nav {
         position: relative;

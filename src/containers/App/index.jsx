@@ -41,7 +41,11 @@ class App extends Component {
         return (
             <div className={b()}>
                 <div className={b('panel', {position: 'left'})}>
-                    <div className={b('logo')}>M</div>
+                    <div className={b('logo')}>
+                        <svg>
+                            <use xlinkHref="#icon-logo" />
+                        </svg>
+                    </div>
                     <div className={b('nav')}>
                         <NavigationBar
                             items={navigationBarItems}
