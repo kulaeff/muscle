@@ -3,10 +3,7 @@ import axios from 'axios';
 class API {
     constructor() {
         this.axios = axios.create({
-            baseURL: '/api/v1',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            baseURL: '/api',
             responseType: 'json',
             withCredentials: false
         })

@@ -15,10 +15,12 @@ class Summary extends Component {
     /**
      * Summary properties
      * @static
-     * @property {object} summary The state of container
+     * @property {bool} fetching Is data fetching
+     * @property {object} server The server's status
      */
     static propTypes = {
-        summary: PropTypes.object.isRequired,
+        fetching: PropTypes.bool,
+        server: PropTypes.object.isRequired,
     }
 
     /**
@@ -38,7 +40,7 @@ class Summary extends Component {
     render() {
         const
             b = block('summary'),
-            { summary } = this.props
+            { fetching, server } = this.props
 
         return (
             <div className={b()}>
@@ -47,7 +49,7 @@ class Summary extends Component {
                         <Title size="large" title="Summary" theme="light" />
                     </div>
                     <div className={b('title-spinner')}>
-                        <Spinner active={summary.fetching}/>
+                        <Spinner active={fetching}/>
                     </div>
                 </div>
                 <div className={b('indicators')}>
@@ -58,28 +60,28 @@ class Summary extends Component {
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Received</span>
                             <span className={b('indicator-value')}>
-                                {summary.server.usage.received.value}
+                                {server.usage.received}
                             </span>
                             <span className={b('indicator-unit')}>
-                                {summary.server.usage.received.unit}
+                                Kb
                             </span>
                         </div>
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Sent</span>
                             <span className={b('indicator-value')}>
-                                {summary.server.usage.sent.value}
+                                {server.usage.sent}
                             </span>
                             <span className={b('indicator-unit')}>
-                                {summary.server.usage.sent.unit}
+                                Kb
                             </span>
                         </div>
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Total</span>
                             <span className={b('indicator-value')}>
-                                {summary.server.usage.total.value}
+                                {server.usage.total}
                             </span>
                             <span className={b('indicator-unit')}>
-                                {summary.server.usage.total.unit}
+                                Kb
                             </span>
                         </div>
                     </div>
@@ -92,19 +94,19 @@ class Summary extends Component {
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Failed</span>
                             <div className={b('indicator-value')}>
-                                {summary.server.connections.failed}
+                                {server.connections.failed}
                             </div>
                         </div>
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Aborted</span>
                             <div className={b('indicator-value')}>
-                                {summary.server.connections.aborted}
+                                {server.connections.aborted}
                             </div>
                         </div>
                         <div className={b('indicator')}>
                             <span className={b('indicator-title')}>Total</span>
                             <div className={b('indicator-value')}>
-                                {summary.server.connections.total}
+                                {server.connections.total}
                             </div>
                         </div>
                     </div>
@@ -116,7 +118,8 @@ class Summary extends Component {
 
 function mapStateToProps (state) {
     return {
-        summary: state.summary
+        fetching: state.summary.fetching,
+        server: state.summary.server
     }
 }
 

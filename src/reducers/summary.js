@@ -7,19 +7,11 @@ import {
 const initialState = {
     fetching: false,
     server: {
+        upTime: 6781324365,
         usage: {
-            received: {
-                unit: 'Kb',
-                value: 245,
-            },
-            sent: {
-                unit: 'Kb',
-                value: 139,
-            },
-            total: {
-                unit: 'Kb',
-                value: 384,
-            },
+            received: 245,
+            sent: 139,
+            total: 416,
         },
         connections: {
             aborted: 1,

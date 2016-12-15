@@ -15,7 +15,7 @@ export function getSummary() {
 
             dispatch({
                 type: GET_SUMMARY_SUCCESS,
-                payload: response
+                payload: response.data
             })
         } catch(ex) {
             dispatch({

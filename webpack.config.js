@@ -1,6 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
-var svgStore = require('webpack-svgstore-plugin');
+var
+    path = require('path'),
+    webpack = require('webpack'),
+    svgStore = require('webpack-svgstore-plugin');
 
 module.exports = {
     devServer: {
@@ -28,7 +29,7 @@ module.exports = {
                     'eslint'
                 ],
                 include: [
-                    path.resolve(__dirname, "src"),
+                    path.resolve(__dirname, 'src'),
                 ],
             }
         ],
@@ -43,7 +44,7 @@ module.exports = {
                     'babel-loader'
                 ],
                 include: [
-                    path.resolve(__dirname, "src")
+                    path.resolve(__dirname, 'src')
                 ],
                 test: /\.(?:jsx?)$/,
                 plugins: [
@@ -53,6 +54,9 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development'),
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new svgStore({
             svgoOptions: {
