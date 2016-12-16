@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux';
-import databases from './databases'
+import browse from './browse'
 import summary from './summary'
 
 export default combineReducers({
     routing: routerReducer,
-    databases,
+    browse,
     summary
 })

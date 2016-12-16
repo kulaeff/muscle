@@ -10,8 +10,8 @@ const navigationBarItems = [
         title: 'Summary',
     },
     {
-        id: 'databases',
-        title: 'Databases',
+        id: 'browse',
+        title: 'Browse',
     },
 ]
 
@@ -20,7 +20,7 @@ class App extends Component {
         super(props)
 
         this.state = {
-            selectedIndex: 0
+            selectedIndex: 1
         }
 
         this.onNavigationBarChange = this.onNavigationBarChange.bind(this)

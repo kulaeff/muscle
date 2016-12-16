@@ -46,7 +46,7 @@ class Summary extends Component {
             <div className={b()}>
                 <div className={b('title')}>
                     <div className={b('title-label')}>
-                        <Title size="large" title="Summary" theme="light" />
+                        <Title size="large" title="Server status" theme="light" />
                     </div>
                     <div className={b('title-spinner')}>
                         <Spinner active={fetching}/>

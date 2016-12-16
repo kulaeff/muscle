@@ -14,6 +14,12 @@ class API {
 
         return response
     }
+
+    async getBrowse() {
+        const response = await this.axios.get('browse.php')
+
+        return response
+    }
 }
 
 export default API;
