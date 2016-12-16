@@ -5,7 +5,14 @@
     display: flex;
     height: 100%;
     &__container {
+        background: #f0f2f4;
         flex: 1 70%;
+    }
+    &__panel {
+        background: @cNavSelected;
+        flex: 1;
+        min-width: 200px;
+        width: 30%;
     }
     &__title {
         border-bottom: 1px solid @cNav;
@@ -25,9 +32,6 @@
         }
     }
     &__tree {
-        background: @cNavSelected;
-        flex: 1;
-        min-width: 200px;
-        width: 30%;
+        margin-top: @mDefault;
     }
 }

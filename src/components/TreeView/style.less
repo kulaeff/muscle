@@ -1,0 +1,30 @@
+@import (reference) '../../styles/variables';
+
+@itemSize: 48px;
+
+.tree-view {
+    padding: 0 @mDefault / 2;
+    position: relative;
+    &__item {
+        cursor: pointer;
+        display: block;
+        position: relative;
+        &-label {
+            padding: @mDefault / 4 @mDefault / 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        //
+        &:hover {
+            background: rgba(255, 255, 255, .05);
+        }
+        // States
+        &_state_selected &-label {
+            background: @cAccent;
+        }
+        &_state_selected:hover &-label {
+            background: @cAccent;
+        }
+    }
+}
