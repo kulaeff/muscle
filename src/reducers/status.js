@@ -1,8 +1,8 @@
 import {
-    GET_SUMMARY_REQUEST,
-    GET_SUMMARY_SUCCESS,
-    GET_SUMMARY_FAIL
-} from '../constants/summary'
+    GET_STATUS_REQUEST,
+    GET_STATUS_SUCCESS,
+    GET_STATUS_FAIL
+} from '../constants/status'
 
 const initialState = {
     fetching: false,
@@ -21,13 +21,13 @@ const initialState = {
     }
 }
 
-export default function summary(state = initialState, action) {
+export default function status(state = initialState, action) {
     switch(action.type) {
-        case GET_SUMMARY_REQUEST:
+        case GET_STATUS_REQUEST:
             return { ...state, fetching: true }
-        case GET_SUMMARY_SUCCESS:
+        case GET_STATUS_SUCCESS:
             return { ...state, fetching: false }
-        case GET_SUMMARY_FAIL:
+        case GET_STATUS_FAIL:
             return { ...state, fetching: false }
         default:
             return state

@@ -50,7 +50,11 @@ module.exports = {
                 plugins: [
                     'transform-runtime'
                 ]
-            }
+            },
+            {
+                test: /\.(jpeg|png|gif|svg)$/i,
+                loader: 'url'
+            },
         ]
     },
     plugins: [
@@ -61,15 +65,14 @@ module.exports = {
         new svgStore({
             svgoOptions: {
                 plugins: [
-                    {
-                        cleanupEnableBackground: true,
-                        removeComments: true,
-                        removeDoctype: true,
-                        removeMetadata: true,
-                        removeTitle: true,
-                        removeUselessStrokeAndFill: true,
-                        removeXMLNS: true,
-                    }
+                    { cleanupEnableBackground: true },
+                    { removeAttrs: { attrs: ['fill', 'stroke'] }},
+                    { removeComments: true },
+                    { removeDoctype: true },
+                    { removeMetadata: true },
+                    { removeTitle: true },
+                    { removeUselessStrokeAndFill: true },
+                    { removeXMLNS: true }
                 ]
             },
             prefix: 'icon-'

@@ -3,17 +3,17 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Title from '../../components/Title'
 import Spinner from '../../components/Spinner'
-import * as summaryActions from '../../actions/summary'
+import * as statusActions from '../../actions/status'
 import block from 'bem-cn'
 import './style.less';
 
 /**
- * Summary container
+ * Status container
  * @class
  */
-class Summary extends Component {
+class Status extends Component {
     /**
-     * Summary properties
+     * Status properties
      * @static
      * @property {bool} fetching Is data fetching
      * @property {object} server The server's status
@@ -28,18 +28,18 @@ class Summary extends Component {
      * @method
      */
     componentDidMount() {
-        const { getSummary } = this.props.summaryActions
+        const { getStatus } = this.props.statusActions
 
-        getSummary()
+        getStatus()
     }
 
     /**
-     * Renders Summary container
+     * Renders Status container
      * @method
      */
     render() {
         const
-            b = block('summary'),
+            b = block('status'),
             { fetching, server } = this.props
 
         return (
@@ -118,15 +118,15 @@ class Summary extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.summary.fetching,
-        server: state.summary.server
+        fetching: state.status.fetching,
+        server: state.status.server
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        summaryActions: bindActionCreators(summaryActions, dispatch)
+        statusActions: bindActionCreators(statusActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Summary)
+export default connect(mapStateToProps, mapDispatchToProps)(Status)

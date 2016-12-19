@@ -22,8 +22,21 @@
         &:hover {
             background: @cNavHover;
         }
+        // ICONS
+        // Status
+        &_icon_status {
+            svg {
+                fill: none;
+                stroke: #fff;
+            }
+        }
+        // STATES
+        // Selected
         &_state_selected {
             background: @cNavSelected;
+            svg {
+                opacity: 1;
+            }
             &:hover {
                 background: @cNavSelected;
             }

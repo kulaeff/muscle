@@ -6,8 +6,8 @@ import './style.less'
 
 const navigationBarItems = [
     {
-        id: 'summary',
-        title: 'Summary',
+        id: 'status',
+        title: 'Status',
     },
     {
         id: 'browse',

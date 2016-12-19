@@ -1,0 +1,54 @@
+@import (reference) '../../styles/variables';
+
+@smallSize: 1.8rem;
+@largeSize: 3rem;
+
+.toolbar {
+    font-size: 0;
+    position: relative;
+    white-space: nowrap;
+    &__button {
+        background: @cUndefined;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1.4rem;
+        outline: none;
+        position: relative;
+        svg {
+            bottom: 0;
+            display: block;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        //
+        &:hover {
+            background-color: negation(@cUndefined, #999999);
+        }
+    }
+    // SIZES
+    // Small
+    &_size_small &__button {
+        height: @smallSize;
+        width: @smallSize;
+        svg {
+            fill: #000;
+            height: @smallSize;
+            width: @smallSize;
+        }
+    }
+    // THEMES
+    // Dark
+    &_theme_dark &__button {
+        background: #fff;
+        &:hover {
+            background-color: @cPrimary;
+        }
+        &:active {
+            background-color: darken(@cPrimary, 10%);
+        }
+    }
+}
