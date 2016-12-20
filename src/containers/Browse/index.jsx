@@ -32,6 +32,7 @@ class Browse extends Component {
     constructor(props) {
         super(props)
 
+        this.onToolBarButtonCreateDatabaseClick = this.onToolBarButtonCreateDatabaseClick.bind(this)
         this.onTreeViewChange = this.onTreeViewChange.bind(this)
     }
 
@@ -43,6 +44,14 @@ class Browse extends Component {
         const { getBrowse } = this.props.browseActions
 
         getBrowse()
+    }
+
+    /**
+     * Show modal when toolbar button Create Database clicked
+     * @method
+     */
+    onToolBarButtonCreateDatabaseClick() {
+        console.log('toolbar button Create Database cliked')
     }
 
     /**
@@ -60,7 +69,8 @@ class Browse extends Component {
     render() {
         const
             b = block('browse'),
-            { children, fetching, items } = this.props
+            { children, fetching, items } = this.props,
+            sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
             <div className={b()}>
@@ -75,11 +85,11 @@ class Browse extends Component {
                     </div>
                     <div className={b('toolbar')}>
                         <ToolBar>
-                            <ToolBarButton icon="create" label="create" />
+                            <ToolBarButton icon="create" onClick={this.onToolBarButtonCreateDatabaseClick} />
                         </ToolBar>
                     </div>
                     <div className={b('tree')}>
-                        <TreeView items={items} onChange={this.onTreeViewChange}/>
+                        <TreeView items={sortedItems} onChange={this.onTreeViewChange}/>
                     </div>
                 </div>
                 <div className={b('container')}>

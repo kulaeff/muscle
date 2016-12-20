@@ -5,7 +5,7 @@
     display: flex;
     height: 100%;
     &__container {
-        background: #f0f2f4;
+        background: @cSecondary;
         flex: 1 70%;
     }
     &__panel {
@@ -15,7 +15,6 @@
         width: 30%;
     }
     &__title {
-        border-bottom: 1px solid @cNav;
         box-sizing: border-box;
         flex: 1;
         height: 4.8rem;
@@ -37,5 +36,6 @@
     }
     &__tree {
         margin-top: @mDefault / 2;
+        padding: 0 @mDefault / 2;
     }
 }

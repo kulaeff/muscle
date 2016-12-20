@@ -52,7 +52,7 @@ class TreeView extends Component {
     onItemClick(id, name) {
         const { onChange } = this.props
 
-        if (onChange) {
+        if (onChange && this.state.selectedIndex !== id) {
             this.setState({
                 selectedIndex: id
             })

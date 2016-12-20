@@ -60,6 +60,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.VERSION': JSON.stringify('1.0.0')
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new svgStore({

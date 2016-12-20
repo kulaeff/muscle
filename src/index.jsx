@@ -22,4 +22,8 @@ render(
     document.getElementById('root')
 )
 
+if (process.env.NODE_ENV === 'development') {
+    console.info(`Version: ${process.env.VERSION}`)
+}
+
 require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);

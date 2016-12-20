@@ -3,7 +3,6 @@
 @itemSize: 48px;
 
 .tree-view {
-    padding: 0 @mDefault / 2;
     position: relative;
     &__item {
         cursor: pointer;
@@ -21,10 +20,8 @@
         }
         // States
         &_state_selected &-label {
-            background: @cAccent;
-        }
-        &_state_selected:hover &-label {
-            background: @cAccent;
+            background: @cSecondary;
+            color: #000;
         }
     }
 }
