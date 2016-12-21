@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Title from '../../components/Title'
 import Spinner from '../../components/Spinner'
-import ToolBar, { ToolBarButton } from '../../components/Toolbar'
+import Button from '../../components/Button'
 import TreeView from '../../components/TreeView'
 import * as browseActions from '../../actions/browse'
 import block from 'bem-cn'
@@ -82,11 +82,9 @@ class Browse extends Component {
                         <div className={b('title-spinner')}>
                             <Spinner active={fetching}/>
                         </div>
-                    </div>
-                    <div className={b('toolbar')}>
-                        <ToolBar>
-                            <ToolBarButton icon="create" onClick={this.onToolBarButtonCreateDatabaseClick} />
-                        </ToolBar>
+                        <div className={b('title-button')}>
+                            <Button icon="create" size="small" theme="light" type="icon" />
+                        </div>
                     </div>
                     <div className={b('tree')}>
                         <TreeView items={sortedItems} onChange={this.onTreeViewChange}/>

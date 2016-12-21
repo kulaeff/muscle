@@ -1,0 +1,68 @@
+@import (reference) '../../styles/variables';
+
+@sDefault: 1rem;
+@sSmall: 1.8rem;
+@sMedium: 3rem;
+@sLarge: 3.6rem;
+
+.button {
+    background-color: @cUndefined;
+    border: none;
+    cursor: pointer;
+    height: @sDefault;
+    outline: none;
+    padding: 0;
+    position: relative;
+    svg {
+        //
+    }
+    // SIZES
+    &_size_small {
+        height: @sSmall;
+    }
+    &_size_medium {
+        height: @sMedium;
+    }
+    &_size_large {
+        height: @sLarge;
+    }
+    // THEMES
+    &_theme_dark {
+        background-color: #202224;
+    }
+    &_theme_light {
+        background-color: #fff;
+        svg {
+            fill: #000;
+        }
+    }
+    // TYPES
+    &_type_default {
+        //
+    }
+    &_type_icon {
+        width: @sDefault;
+        svg {
+            bottom: 0;
+            height: @sDefault;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: @sDefault;
+        }
+    }
+    &_type_composite {
+        //
+    }
+    // SIZES + TYPES
+    &_size_small&_type_icon {
+        height: @sSmall;
+        width: @sSmall;
+        svg {
+            height: @sSmall;
+            width: @sSmall;
+        }
+    }
+}
