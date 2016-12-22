@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Title from '../../components/Title'
 import Spinner from '../../components/Spinner'
-import Button from '../../components/Button'
+import Toolbar, { ToolBarButton } from '../../components/ToolBar'
 import TreeView from '../../components/TreeView'
 import * as browseActions from '../../actions/browse'
 import block from 'bem-cn'
@@ -74,23 +73,31 @@ class Browse extends Component {
 
         return (
             <div className={b()}>
-                <div className={b('panel')}>
-                    <div className={b('title')}>
-                        <div className={b('title-label')}>
-                            <Title size="large" title="Databases" theme="light" />
+                <div className={b('container')}>
+                    <div className={b('header')}>
+                        <div className={b('title')}>
+                            <span className={b('title', {role: 'title'})}>Databases</span>
+                            <span className={b('title', {role: 'caption'})}>Local databases</span>
                         </div>
-                        <div className={b('title-spinner')}>
-                            <Spinner active={fetching}/>
-                        </div>
-                        <div className={b('title-button')}>
-                            <Button icon="create" size="small" theme="light" type="icon" />
+                        <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
+                        <div className={b('buttons')}>
+                            <button className={b('button', {action: 'minimize'})}></button>
+                            <button className={b('button', {action: 'close'})}></button>
                         </div>
                     </div>
-                    <div className={b('tree')}>
+                    <div className={b('toolbar')}>
+                        <Toolbar>
+                            <ToolBarButton icon="create" />
+                        </Toolbar>
+                    </div>
+                    <div className={b('filters')}>
+                        <input type="text" name="filter" />
+                    </div>
+                    <div className={b('table')}>
                         <TreeView items={sortedItems} onChange={this.onTreeViewChange}/>
                     </div>
                 </div>
-                <div className={b('container')}>
+                <div className={b('view')}>
                     {children}
                 </div>
             </div>

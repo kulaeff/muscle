@@ -11,13 +11,13 @@ class Spinner extends Component {
      * Spinner properties
      * @static
      * @property {bool} active Is spinner active
-     * @property {string} size The size of the spinner
      * @property {string} theme The theme of the spinner
+     * @property {string} type The type of the spinner
      */
     static propTypes = {
         active: PropTypes.bool,
-        size: PropTypes.oneOf(['small', 'medium', 'large']),
-        theme: PropTypes.oneOf(['dark', 'light'])
+        theme: PropTypes.oneOf(['dark', 'light']),
+        type: PropTypes.oneOf(['ellipse', 'rect'])
     }
 
     /**
@@ -29,8 +29,8 @@ class Spinner extends Component {
      */
     static defaults = {
         active: false,
-        size: 'small',
-        theme: 'dark'
+        theme: 'dark',
+        type: 'ellipse'
     }
 
     /**
@@ -40,14 +40,27 @@ class Spinner extends Component {
     render() {
         const
             b = block('spinner'),
-            { active, size = Spinner.defaults.size, theme = Spinner.defaults.theme } = this.props
+            { active, theme = Spinner.defaults.theme, type = Spinner.defaults.type } = this.props
 
         return (
-            <div className={b({size, state: active ? 'active' : null, theme})}>
-                <div className={b('ellipse', {position: 'top'})}></div>
-                <div className={b('ellipse', {position: 'right'})}></div>
-                <div className={b('ellipse', {position: 'bottom'})}></div>
-                <div className={b('ellipse', {position: 'left'})}></div>
+            <div className={b({state: active ? 'active' : null, theme, type})}>
+            {
+                type === 'rect' ?
+                    <div className={b('container')}>
+                        <div className={b('rect', {position: 'lt'})}></div>
+                        <div className={b('rect', {position: 'rt'})}></div>
+                        <div className={b('rect', {position: 'rb'})}></div>
+                        <div className={b('rect', {position: 'lb'})}></div>
+                    </div>
+                :
+                    <div className={b('container')}>
+                        <div className={b('ellipse', {position: 'top'})}></div>
+                        <div className={b('ellipse', {position: 'right'})}></div>
+                        <div className={b('ellipse', {position: 'bottom'})}></div>
+                        <div className={b('ellipse', {position: 'left'})}></div>
+                    </div>
+
+            }
             </div>
         )
     }

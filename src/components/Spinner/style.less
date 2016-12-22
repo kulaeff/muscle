@@ -2,8 +2,18 @@
 
 @color: #fff;
 @speed: .4s;
+@sizeRect: 0.6rem;
 
-@keyframes pulsate {
+@keyframes pulsateEllipse {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes pulsateRect {
     0% {
         opacity: 1;
     }
@@ -16,6 +26,10 @@
     display: inline-block;
     position: relative;
     vertical-align: middle;
+    &__container {
+        height: 100%;
+        width: 100%;
+    }
     &__ellipse {
         border: 3px solid transparent;
         border-radius: 50%;
@@ -39,14 +53,42 @@
             border-top-color: @color;
         }
     }
-    // Sizes
-    &_size_small {
+    &__rect {
+        background-color: @color;
+        display: inline-block;
+        height: @sizeRect;
+        opacity: 0;
+        position: absolute;
+        width: @sizeRect;
+        &_position_lt {
+            left: 0;
+            top: 0;
+        }
+        &_position_rt {
+            left: @sizeRect * 1.5 - 0.1rem;
+            top: 0;
+        }
+        &_position_rb {
+            left: @sizeRect * 1.5 - 0.1rem;
+            top: @sizeRect * 1.5 - 0.1rem;
+        }
+        &_position_lb {
+            left: 0;
+            top: @sizeRect * 1.5 - 0.1rem;
+        }
+    }
+    // TYPES
+    &_type_ellipse {
+        height: 2.4rem;
+        width: 2.4rem;
+    }
+    &_type_rect {
         height: 2rem;
         width: 2rem;
     }
-    // States
+    // STATES
     &_state_active &__ellipse {
-        animation: pulsate @speed infinite;
+        animation: pulsateEllipse @speed infinite;
     }
     &_state_active &__ellipse_position_right {
         animation-delay: @speed * .25;
@@ -57,7 +99,19 @@
     &_state_active &__ellipse_position_left {
         animation-delay: @speed * .75;
     }
-    // Themes
+    &_state_active &__rect {
+        animation: pulsateRect @speed infinite;
+    }
+    &_state_active &__rect_position_rt {
+        animation-delay: @speed * .25;
+    }
+    &_state_active &__rect_position_rb {
+        animation-delay: @speed * .5;
+    }
+    &_state_active &__rect_position_lb {
+        animation-delay: @speed * .75;
+    }
+    // THEMES
     &_theme_dark {
         color: #000;
     }

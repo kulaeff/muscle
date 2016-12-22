@@ -59,7 +59,7 @@ export default function browse(state = initialState, action) {
         case GET_BROWSE_REQUEST:
             return { ...state, fetching: true }
         case GET_BROWSE_SUCCESS:
-            return { ...state, fetching: false }
+            return { ...state, fetching: true }
         case GET_BROWSE_FAIL:
             return { ...state, fetching: false }
         default:

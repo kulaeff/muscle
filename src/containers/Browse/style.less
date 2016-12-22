@@ -4,45 +4,109 @@
     color: #fff;
     display: flex;
     height: 100%;
-    &__container {
-        background: @cTertiary;
-        flex: 1 70%;
-    }
-    &__panel {
-        background: @cSecondary;
+    &__buttons {
         flex: 1;
-        min-width: 200px;
-        width: 30%;
+        font-size: 0;
+        vertical-align: top;
+        white-space: nowrap;
     }
-    &__title {
+    &__button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        height: 2rem;
+        outline: none;
+        position: relative;
+        width: 2rem;
+        &_action_close {
+            &:before, &:after {
+                background-color: #fff;
+                content: '';
+                display: block;
+                height: 2px;
+                left: 0.4rem;
+                position: absolute;
+                top: 0.9rem;
+                width: 1.2rem;
+            }
+            &:after {
+                transform: rotate(45deg);
+            }
+            &:before {
+                transform: rotate(-45deg);
+            }
+        }
+        &_action_minimize {
+            &:before {
+                background-color: #fff;
+                bottom: 0.5rem;
+                content: '';
+                display: block;
+                height: 2px;
+                left: 0.4rem;
+                position: absolute;
+                width: 1.2rem;
+            }
+        }
+        //
+        &:hover {
+            background: rgba(255, 255, 255, 0.15)
+        }
+        //
+        &_action_close:hover {
+            background: @cAccent;
+        }
+    }
+    &__container {
+        background: @cSecondary;
+        border-right: 2px solid rgba(255, 255, 255, 0.15);
         box-sizing: border-box;
-        display: table;
-        height: 4.8rem;
-        padding: 0 @mDefault;
-        width: 100%;
-        &-button {
-            display: table-cell;
-            font-size: 0;
-            text-align: right;
-            vertical-align: middle;
-        }
-        &-label {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        &-spinner {
-            display: table-cell;
-            font-size: 0;
-            padding-left: @mDefault / 2;
-            vertical-align: middle;
-        }
+        min-width: 400px;
+        max-width: 700px;
+        padding: @mDefault * 0.75 @mDefault;
+        position: relative;
+    }
+    &__filters {
+        margin: @mDefault 0;
+    }
+    &__header {
+        display: flex;
+    }
+    &__spinner {
+        flex: 1;
+        font-size: 0;
+        padding: 0.3rem @mDefault / 4 0;
+        vertical-align: top;
     }
     &__toolbar {
-        padding: 0 @mDefault;
-        margin: @mDefault / 2 0;
+        margin: @mDefault 0;
+    }
+    &__title {
+        flex: 1 100%;
+        vertical-align: top;
+        &_role_title {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &_role_caption {
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
     }
     &__tree {
         margin-top: @mDefault / 2;
         padding: 0 @mDefault / 2;
+    }
+    &__view {
+        //
+    }
+    //
+    &__button + &__button {
+        margin-left: @mDefault / 4;
     }
 }
