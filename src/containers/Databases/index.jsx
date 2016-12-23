@@ -5,7 +5,7 @@ import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
-import * as browseActions from '../../actions/browse'
+import * as databasesActions from '../../actions/Databases'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
@@ -14,7 +14,7 @@ import './style.less';
  * Databases container
  * @class
  */
-class Browse extends Component {
+class Databases extends Component {
     /**
      * Databases container properties
      * @static
@@ -27,7 +27,7 @@ class Browse extends Component {
     }
 
     /**
-     * Creates Browse container
+     * Creates Databases container
      * @constructor
      */
     constructor(props) {
@@ -47,9 +47,9 @@ class Browse extends Component {
      * @method
      */
     componentDidMount() {
-        const { getBrowse } = this.props.browseActions
+        const { getDatabases } = this.props.databasesActions
 
-        getBrowse()
+        getDatabases()
     }
 
     /**
@@ -89,14 +89,14 @@ class Browse extends Component {
             selectedIndex: index
         })
 
-        router.push(`/browse/${sortedItems[index].name}`)
+        router.push(`/Databases/${sortedItems[index].name}`)
     }
 
     /**
      * Filters databases
      */
     debouncedTextboxFilterChange = (e) => {
-        const { setFilter } = this.props.browseActions
+        const { setFilter } = this.props.DatabasesActions
 
         setFilter(e.target.value)
     }
@@ -113,7 +113,7 @@ class Browse extends Component {
      */
     render() {
         const
-            b = block('browse'),
+            b = block('databases'),
             { children, fetching, items } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
@@ -166,15 +166,15 @@ class Browse extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.browse.fetching,
-        items: state.browse.items
+        fetching: state.databases.fetching,
+        items: state.databases.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        browseActions: bindActionCreators(browseActions, dispatch)
+        databasesActions: bindActionCreators(databasesActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Browse)
+export default connect(mapStateToProps, mapDispatchToProps)(Databases)

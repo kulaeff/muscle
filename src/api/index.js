@@ -33,7 +33,7 @@ class API {
                         }
                     }
                 })
-                .onGet('/browse').replyOnce(statusCode, {
+                .onGet('/databases').replyOnce(statusCode, {
                     items: [
                         { name: 'mysql' },
                         { name: 'loko' },
@@ -51,14 +51,14 @@ class API {
         return response
     }
 
-    async getBrowse() {
-        const response = await this.axios.get('browse')
+    async getDatabases() {
+        const response = await this.axios.get('databases')
 
         return response
     }
 
-    async setDatabasesFilter(token) {
-        const response = await this.axios.get('browse', { token })
+    async getDatabasesByFilter(token) {
+        const response = await this.axios.get('databases', { token })
 
         return response
     }

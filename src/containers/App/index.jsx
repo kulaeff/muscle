@@ -10,8 +10,8 @@ const navigationBarItems = [
         title: 'Status',
     },
     {
-        id: 'browse',
-        title: 'Browse',
+        id: 'databases',
+        title: 'databases',
     },
 ]
 

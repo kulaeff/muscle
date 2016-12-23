@@ -1,24 +1,24 @@
 import {
-    GET_BROWSE_REQUEST,
-    GET_BROWSE_SUCCESS,
-    GET_BROWSE_FAIL,
+    GET_DATABASES_REQUEST,
+    GET_DATABASES_SUCCESS,
+    GET_DATABASES_FAIL,
     SET_FILTER_REQUEST,
     SET_FILTER_SUCCESS,
     SET_FILTER_FAIL
-} from '../constants/browse'
+} from '../constants/databases'
 
 const initialState = {
     fetching: false,
     items: []
 }
 
-export default function browse(state = initialState, action) {
+export default function databases(state = initialState, action) {
     switch(action.type) {
-        case GET_BROWSE_REQUEST:
+        case GET_DATABASES_REQUEST:
             return { ...state, fetching: true }
-        case GET_BROWSE_SUCCESS:
+        case GET_DATABASES_SUCCESS:
             return { ...state, fetching: false, items: action.payload.items }
-        case GET_BROWSE_FAIL:
+        case GET_DATABASES_FAIL:
             return { ...state, fetching: false }
         case SET_FILTER_REQUEST:
             return { ...state, fetching: true }

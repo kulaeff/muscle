@@ -1,28 +1,28 @@
 import {
-    GET_BROWSE_REQUEST,
-    GET_BROWSE_SUCCESS,
-    GET_BROWSE_FAIL,
+    GET_DATABASES_REQUEST,
+    GET_DATABASES_SUCCESS,
+    GET_DATABASES_FAIL,
     SET_FILTER_REQUEST,
     SET_FILTER_SUCCESS,
     SET_FILTER_FAIL
-} from '../constants/browse'
+} from '../constants/databases'
 
-export function getBrowse() {
+export function getDatabases() {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: GET_BROWSE_REQUEST
+            type: GET_DATABASES_REQUEST
         })
 
         try {
-            const response = await api.getBrowse()
+            const response = await api.getDatabases()
 
             dispatch({
-                type: GET_BROWSE_SUCCESS,
+                type: GET_DATABASES_SUCCESS,
                 payload: response.data
             })
         } catch(ex) {
             dispatch({
-                type: GET_BROWSE_FAIL,
+                type: GET_DATABASES_FAIL,
                 payload: ex
             })
         }
