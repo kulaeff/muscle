@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ToolBarButton from './ToolBarButton'
+import ToolBarSeparator from './ToolBarSeparator'
 import block from 'bem-cn'
 import './style.less'
 
@@ -43,5 +44,5 @@ class ToolBar extends Component {
     }
 }
 
-export {ToolBarButton}
+export { ToolBarButton, ToolBarSeparator }
 export default ToolBar

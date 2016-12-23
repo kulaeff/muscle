@@ -2,9 +2,9 @@ import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
     GET_DATABASES_FAIL,
-    SET_FILTER_REQUEST,
-    SET_FILTER_SUCCESS,
-    SET_FILTER_FAIL
+    SET_DATABASES_FILTER_REQUEST,
+    SET_DATABASES_FILTER_SUCCESS,
+    SET_DATABASES_FILTER_FAIL
 } from '../constants/databases'
 
 export function getDatabases() {
@@ -29,22 +29,22 @@ export function getDatabases() {
     }
 }
 
-export function setFilter(token) {
+export function setDatabasesFilter(token) {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: SET_FILTER_REQUEST
+            type: SET_DATABASES_FILTER_REQUEST
         })
 
         try {
-            const response = await api.setDatabasesFilter(token)
+            const response = await api.getDatabasesByFilter(token)
 
             dispatch({
-                type: SET_FILTER_SUCCESS,
+                type: SET_DATABASES_FILTER_SUCCESS,
                 payload: response.data
             })
         } catch(ex) {
             dispatch({
-                type: SET_FILTER_FAIL,
+                type: SET_DATABASES_FILTER_FAIL,
                 payload: ex
             })
         }

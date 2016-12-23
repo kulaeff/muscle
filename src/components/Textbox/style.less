@@ -2,7 +2,7 @@
 
 .textbox {
     background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-sizing: border-box;
     color: #fff;
     font-family: 'Open Sans';
@@ -11,4 +11,10 @@
     padding: @mDefault / 6 @mDefault / 4;
     position: relative;
     width: 100%;
+    &:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    &:focus {
+        border-color: @cAccent;
+    }
 }

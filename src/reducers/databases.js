@@ -2,9 +2,9 @@ import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
     GET_DATABASES_FAIL,
-    SET_FILTER_REQUEST,
-    SET_FILTER_SUCCESS,
-    SET_FILTER_FAIL
+    SET_DATABASES_FILTER_REQUEST,
+    SET_DATABASES_FILTER_SUCCESS,
+    SET_DATABASES_FILTER_FAIL
 } from '../constants/databases'
 
 const initialState = {
@@ -20,11 +20,11 @@ export default function databases(state = initialState, action) {
             return { ...state, fetching: false, items: action.payload.items }
         case GET_DATABASES_FAIL:
             return { ...state, fetching: false }
-        case SET_FILTER_REQUEST:
+        case SET_DATABASES_FILTER_REQUEST:
             return { ...state, fetching: true }
-        case SET_FILTER_SUCCESS:
+        case SET_DATABASES_FILTER_SUCCESS:
             return { ...state, fetching: false }
-        case SET_FILTER_FAIL:
+        case SET_DATABASES_FILTER_FAIL:
             return { ...state, fetching: false }
         default:
             return state

@@ -3,23 +3,23 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
-import Toolbar, { ToolBarButton } from '../../components/ToolBar'
+import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
-import * as databasesActions from '../../actions/databases'
+import * as tablesActions from '../../actions/tables'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
 /**
- * Databases container
+ * Tables container
  * @class
  */
-class Databases extends Component {
+class Tables extends Component {
     /**
-     * Databases container properties
+     * Tables container properties
      * @static
      * @property {bool} fetching Is data fetching
-     * @property {array} items Databases and tables
+     * @property {array} items Tables and tables
      */
     static propTypes = {
         fetching: PropTypes.bool,
@@ -27,7 +27,7 @@ class Databases extends Component {
     }
 
     /**
-     * Creates Databases container
+     * Creates Tables container
      * @constructor
      */
     constructor(props) {
@@ -43,30 +43,29 @@ class Databases extends Component {
     }
 
     /**
-     * Fetch data after the component was mounted
-     * @method
+     * Fetches tables for selected database
      */
-    componentDidMount() {
-        const { getDatabases } = this.props.databasesActions
+    refreshTables() {
+        const { getTables } = this.props.tablesActions
 
-        getDatabases()
+        getTables()
     }
 
     /**
-     * Refresh databases view:
-     *   1. set selectedindex if we came from direct url (/databases/<name>)
+     * Fetches tables when database was selected for the first time
      * @method
-     * @param {object} nextProps New properties
+     */
+    componentDidMount() {
+        this.refreshTables()
+    }
+
+    /**
+     * Fetches tables when selected database was changed
+     * @method
      */
     componentWillReceiveProps(nextProps) {
-        const { items, params } = this.props
-
-        if (items.length !== nextProps.items.length) {
-            const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
-
-            this.setState({
-                selectedIndex: sortedItems.findIndex(item => item.name === params.database)
-            })
+        if (this.props.routeParams.database !== nextProps.routeParams.database) {
+            this.refreshTables()
         }
     }
 
@@ -101,27 +100,29 @@ class Databases extends Component {
      */
     onListViewChange = (index) => {
         const
-            { items, router } = this.props,
+            { items, router, routeParams } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/databases/${sortedItems[index].name}`)
+        console.log(this.props)
+
+        router.push(`/databases/${routeParams.database}/${sortedItems[index].name}`)
     }
 
     /**
      * Debounces textbox change handler
      */
     debouncedTextboxFilterChange = (e) => {
-        const { setDatabasesFilter } = this.props.databasesActions
+        const { setTablesFilter } = this.props.tablesActions
 
-        setDatabasesFilter(e.target.value)
+        setTablesFilter(e.target.value)
     }
 
     /**
-     * Filters databases
+     * Filters tables
      */
     onTextboxFilterChange = (e) => {
         e.persist()
@@ -135,8 +136,8 @@ class Databases extends Component {
      */
     render() {
         const
-            b = block('databases'),
-            { children, fetching, items } = this.props,
+            b = block('tables'),
+            { children, fetching, items, routeParams } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
@@ -144,8 +145,8 @@ class Databases extends Component {
                 <div className={b('container')}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Databases</span>
-                            <span className={b('title', {role: 'caption'})}>Local databases</span>
+                            <span className={b('title', {role: 'title'})}>Tables</span>
+                            <span className={b('title', {role: 'caption'})}>{routeParams.database}</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -157,17 +158,18 @@ class Databases extends Component {
                         <Toolbar>
                             <ToolBarButton
                                 icon="create"
-                                title="Create new database"
+                                title="Create new table"
                                 onClick={this.onToolBarButtonCreateDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="edit"
-                                title="Edit database"
+                                title="Edit table"
                                 onClick={this.onToolBarButtonEditDatabaseClick} />
+                            <ToolBarSeparator />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="delete"
-                                title="Delete database"
+                                title="Delete table"
                                 onClick={this.onToolBarButtonDeleteDatabaseClick} />
                         </Toolbar>
                     </div>
@@ -175,10 +177,7 @@ class Databases extends Component {
                         <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
-                        <ListView
-                            items={sortedItems}
-                            selectedIndex={this.state.selectedIndex}
-                            onChange={this.onListViewChange} />
+                        <ListView items={sortedItems} onChange={this.onListViewChange}/>
                     </div>
                 </div>
                 <div className={b('view')}>
@@ -191,15 +190,15 @@ class Databases extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.databases.fetching,
-        items: state.databases.items
+        fetching: state.tables.fetching,
+        items: state.tables.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        databasesActions: bindActionCreators(databasesActions, dispatch)
+        tablesActions: bindActionCreators(tablesActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Databases)
+export default connect(mapStateToProps, mapDispatchToProps)(Tables)

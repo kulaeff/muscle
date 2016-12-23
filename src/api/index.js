@@ -33,13 +33,23 @@ class API {
                         }
                     }
                 })
-                .onGet('/databases').replyOnce(statusCode, {
+                .onGet('/databases').reply(statusCode, {
                     items: [
                         { name: 'mysql' },
                         { name: 'loko' },
                         { name: 'fsx' },
                         { name: 'wheels' },
                         { name: 'money' }
+                    ]
+                })
+                .onGet('/tables').reply(statusCode, {
+                    items: [
+                        { name: 'columns' },
+                        { name: 'profiles' },
+                        { name: 'messages' },
+                        { name: 'events' },
+                        { name: 'groups' },
+                        { name: 'users' }
                     ]
                 })
         }
@@ -59,6 +69,18 @@ class API {
 
     async getDatabasesByFilter(token) {
         const response = await this.axios.get('databases', { token })
+
+        return response
+    }
+
+    async getTables() {
+        const response = await this.axios.get('tables')
+
+        return response
+    }
+
+    async getTablesByFilter(token) {
+        const response = await this.axios.get('tables', { token })
 
         return response
     }
