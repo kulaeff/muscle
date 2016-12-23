@@ -7,16 +7,16 @@ import {
 const initialState = {
     fetching: false,
     server: {
-        upTime: 6781324365,
+        upTime: 0,
         usage: {
-            received: 245,
-            sent: 139,
-            total: 416,
+            received: 0,
+            sent: 0,
+            total: 0,
         },
         connections: {
-            aborted: 1,
-            failed: 24,
-            total: 573,
+            aborted: 0,
+            failed: 0,
+            total: 0,
         }
     }
 }
@@ -26,7 +26,7 @@ export default function status(state = initialState, action) {
         case GET_STATUS_REQUEST:
             return { ...state, fetching: true }
         case GET_STATUS_SUCCESS:
-            return { ...state, fetching: false }
+            return { ...state, fetching: false, server: action.payload.server }
         case GET_STATUS_FAIL:
             return { ...state, fetching: false }
         default:

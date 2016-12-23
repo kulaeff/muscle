@@ -8,7 +8,9 @@ export default function createRoutes () {
     return (
         <Route path="/" component={App}>
             <IndexRedirect to="browse" />
-            <Route path="browse" component={Browse} />
+            <Route path="browse" component={Browse}>
+                <Route path=":database" />
+            </Route>
             <Route path="status" component={Status} />
        </Route>
     );

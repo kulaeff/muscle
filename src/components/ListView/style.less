@@ -1,0 +1,24 @@
+@import (reference) '../../styles/variables';
+
+@itemSize: 48px;
+
+.list-view {
+    position: relative;
+    &__item {
+        cursor: pointer;
+        display: block;
+        padding: @mDefault / 4 @mDefault / 2;
+        position: relative;
+        //
+        &:hover {
+            background: rgba(255, 255, 255, .05);
+        }
+        // States
+        &_state_selected {
+            background: @cAccent;
+            &:hover {
+                background: @cAccent;
+            }
+        }
+    }
+}

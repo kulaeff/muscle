@@ -11,7 +11,7 @@ export function getStatus() {
         })
 
         try {
-            const response = await api.getSTATUS()
+            const response = await api.getStatus()
 
             dispatch({
                 type: GET_STATUS_SUCCESS,

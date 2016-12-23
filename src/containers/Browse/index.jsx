@@ -2,9 +2,11 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
+import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton } from '../../components/ToolBar'
-import TreeView from '../../components/TreeView'
+import ListView from '../../components/ListView'
 import * as browseActions from '../../actions/browse'
+import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
@@ -29,10 +31,15 @@ class Browse extends Component {
      * @constructor
      */
     constructor(props) {
+        const textboxFilterChangeDelay = 700
+
         super(props)
 
-        this.onToolBarButtonCreateDatabaseClick = this.onToolBarButtonCreateDatabaseClick.bind(this)
-        this.onTreeViewChange = this.onTreeViewChange.bind(this)
+        this.state = {
+            selectedIndex: null
+        }
+
+        this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
     }
 
     /**
@@ -46,19 +53,58 @@ class Browse extends Component {
     }
 
     /**
-     * Show modal when toolbar button Create Database clicked
+     * Show modal when toolbar button Create clicked
      * @method
      */
-    onToolBarButtonCreateDatabaseClick() {
-        console.log('toolbar button Create Database cliked')
+    onToolBarButtonCreateDatabaseClick = () => {
+        console.log('toolbar button Create cliked')
     }
 
     /**
-     * Invoked when selected tree view item was changed
+     * Show modal when toolbar button Edit clicked
      * @method
      */
-    onTreeViewChange(index, name) {
-        console.log('changed', index, name)
+    onToolBarButtonEditDatabaseClick = () => {
+        console.log('toolbar button Edit cliked')
+    }
+
+    /**
+     * Show confirm modal when toolbar button Delete clicked
+     * @method
+     */
+    onToolBarButtonDeleteDatabaseClick = () => {
+        console.log('toolbar button Delete cliked')
+    }
+
+    /**
+     * Invoked when selected item was changed
+     * @method
+     */
+    onListViewChange = (index) => {
+        const
+            { items, router } = this.props,
+            sortedItems = items.sort((a, b) => a.name > b.name)
+
+        this.setState({
+            selectedIndex: index
+        })
+
+        router.push(`/browse/${sortedItems[index].name}`)
+    }
+
+    /**
+     * Filters databases
+     */
+    debouncedTextboxFilterChange = (e) => {
+        const { setFilter } = this.props.browseActions
+
+        setFilter(e.target.value)
+    }
+
+    onTextboxFilterChange = (e) => {
+        e.persist()
+
+        this.debouncedTextboxFilterChange(e)
     }
 
     /**
@@ -87,14 +133,27 @@ class Browse extends Component {
                     </div>
                     <div className={b('toolbar')}>
                         <Toolbar>
-                            <ToolBarButton icon="create" />
+                            <ToolBarButton
+                                icon="create"
+                                title="Create new database"
+                                onClick={this.onToolBarButtonCreateDatabaseClick} />
+                            <ToolBarButton
+                                disabled={this.state.selectedIndex === null}
+                                icon="edit"
+                                title="Edit database"
+                                onClick={this.onToolBarButtonEditDatabaseClick} />
+                            <ToolBarButton
+                                disabled={this.state.selectedIndex === null}
+                                icon="delete"
+                                title="Delete database"
+                                onClick={this.onToolBarButtonDeleteDatabaseClick} />
                         </Toolbar>
                     </div>
                     <div className={b('filters')}>
-                        <input type="text" name="filter" />
+                        <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
-                        <TreeView items={sortedItems} onChange={this.onTreeViewChange}/>
+                        <ListView items={sortedItems} onChange={this.onListViewChange}/>
                     </div>
                 </div>
                 <div className={b('view')}>

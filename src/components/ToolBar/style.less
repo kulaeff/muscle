@@ -1,7 +1,7 @@
 @import (reference) '../../styles/variables';
 
-@smallSize: 1.8rem;
-@largeSize: 3rem;
+@sSmall: 2.2rem;
+@sLarge: 3rem;
 
 .toolbar {
     font-size: 0;
@@ -29,26 +29,37 @@
             background-color: negation(@cUndefined, #999999);
         }
     }
+    //
+    &__button + &__button {
+        margin-left: 6px;
+    }
     // SIZES
     // Small
     &_size_small &__button {
-        height: @smallSize;
-        width: @smallSize;
+        height: @sSmall;
+        width: @sSmall;
         svg {
             fill: #000;
-            height: @smallSize;
-            width: @smallSize;
+            height: @sSmall;
+            width: @sSmall;
         }
     }
     // THEMES
     // Dark
     &_theme_dark &__button {
-        background: #fff;
+        background: @cToolButtonDark;
         &:hover {
-            background-color: @cPrimary;
+            background-color: @cToolButtonHoverDark;
         }
         &:active {
-            background-color: darken(@cPrimary, 10%);
+            background-color: @cToolButtonActiveDark;
         }
+
+    }
+    // STATES
+    // Disabled
+    &_theme_dark &__button_state_disabled {
+        background-color: @cToolButtonDisabledDark;
+        pointer-events: none;
     }
 }

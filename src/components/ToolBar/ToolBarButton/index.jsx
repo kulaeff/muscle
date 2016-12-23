@@ -10,10 +10,14 @@ class ToolBarButton extends Component {
      * ToolBarButton properties
      * @static
      * @property {string} icon The icon of the button
+     * @property {bool} disabled Is button disabled?
+     * @property {string} title The title of the button
      * @property {func} onClick Click event handler
      */
     static propTypes = {
+        disabled: PropTypes.bool,
         icon: PropTypes.string.isRequired,
+        title: PropTypes.string,
         onClick: PropTypes.func
     }
 
@@ -22,7 +26,7 @@ class ToolBarButton extends Component {
      * @static
      */
     static defaults = {
-        //
+        title: 'undefined'
     }
 
     /**
@@ -31,11 +35,13 @@ class ToolBarButton extends Component {
     render() {
         const
             b = block('toolbar'),
-            { icon, onClick } = this.props
+            { disabled, icon, title, onClick } = this.props
 
         return (
             <button
-                className={b('button')}
+                className={b('button', {state: disabled ? 'disabled' : null})}
+                disabled={disabled}
+                title={title}
                 onClick={onClick}>
                 <svg>
                     <use xlinkHref={`#icon-${icon}`} />
