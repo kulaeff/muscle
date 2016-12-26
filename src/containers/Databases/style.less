@@ -59,7 +59,7 @@
     }
     &__container {
         background: @cSecondary;
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        border-right: 1px solid lighten(@cSecondary, 15%);
         box-sizing: border-box;
         min-width: 45rem;
         max-width: 75rem;
@@ -103,7 +103,7 @@
         padding: 0 @mDefault / 2;
     }
     &__view {
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        border-right: 1px solid lighten(@cSecondary, 15%);
     }
     //
     &__button + &__button {

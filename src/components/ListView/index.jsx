@@ -33,25 +33,11 @@ class ListView extends Component {
     }
 
     /**
-     * Creates ListView
-     * @constructor
-     */
-    constructor (props) {
-        super(props);
-
-        this.state = {
-            selectedIndex: this.props.selectedIndex
-        }
-
-        this.onItemClick = this.onItemClick.bind(this)
-    }
-
-    /**
      * Handler for ListViewItem click event
      * @method
      * @param {string} id The ID of clicked item
      */
-    onItemClick(id) {
+    onItemClick = (id) => {
         const { selectedIndex, onChange } = this.props
 
         if (onChange && selectedIndex !== id) {

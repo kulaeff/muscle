@@ -44,7 +44,7 @@ class Databases extends Component {
     }
 
     /**
-     * Fetch data after the component was mounted
+     * Fetches data after the component was mounted
      * @method
      */
     componentDidMount() {
@@ -54,20 +54,21 @@ class Databases extends Component {
     }
 
     /**
-     * Refresh databases view:
-     *   1. set selectedindex if we came from direct url (/databases/<name>)
+     * Refreshes databases view
      * @method
      * @param {object} nextProps New properties
      */
     componentWillReceiveProps(nextProps) {
         const { items, params } = this.props
 
+        // Set selectedindex if we came from direct url (/databases/<name>)
         if (items.length !== nextProps.items.length) {
             const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
 
             this.setState({
                 selectedIndex: sortedItems.findIndex(item => item.name === params.database)
             })
+        // Reset selectedIndex if we closed Tables window
         } else if (params.database !== nextProps.params.database && !nextProps.params.hasOwnProperty('database')) {
             this.setState({
                 selectedIndex: null
