@@ -35,11 +35,11 @@ class API {
                 })
                 .onGet('/columns').reply(statusCode, {
                     items: [
-                        { name: 'id' },
-                        { name: 'loko' },
-                        { name: 'fsx' },
-                        { name: 'wheels' },
-                        { name: 'money' }
+                        { name: 'id', type: 'int', size: 5 },
+                        { name: 'group', type: 'int', size: 5 },
+                        { name: 'title', type: 'varchar', size: 32 },
+                        { name: 'createdAt', type: 'timestamp', size: 12 },
+                        { name: 'updatedAt', type: 'timestamp', size: 12 }
                     ]
                 })
                 .onGet('/databases').reply(statusCode, {
@@ -66,6 +66,12 @@ class API {
 
     async getStatus() {
         const response = await this.axios.get('status')
+
+        return response
+    }
+
+    async getColumns() {
+        const response = await this.axios.get('columns')
 
         return response
     }

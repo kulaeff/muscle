@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
-import ListView from '../../components/ListView'
+import DataTable from '../../components/DataTable'
 import * as columnsActions from '../../actions/columns'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
@@ -169,8 +169,12 @@ class Columns extends Component {
     render() {
         const
             b = block('columns'),
-            { children, fetching, items, params } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            columns = [
+                { id: 'name', title: 'Name' },
+                { id: 'type', title: 'Type' },
+                { id: 'size', title: 'Size' }
+            ],
+            { children, fetching, items, params } = this.props
 
         return (
             <div className={b({state: this.state.minimized ? 'minimized' : null})}>
@@ -213,9 +217,9 @@ class Columns extends Component {
                         </Toolbar>
                     </div>
                     <div className={b('table')}>
-                        <ListView
-                            icon="table"
-                            items={sortedItems}
+                        <DataTable
+                            columns={columns}
+                            items={items}
                             selectedIndex={this.state.selectedIndex}
                             onChange={this.onListViewChange} />
                     </div>

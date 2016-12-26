@@ -1,0 +1,45 @@
+import React, { Component, PropTypes } from 'react'
+import block from 'bem-cn'
+
+/**
+ * DataTableColumn Component
+ * @class
+ */
+class DataTableColumn extends Component {
+    /**
+     * DataTableColumn properties
+     * @static
+     * @property {string} id The id of the column
+     * @property {string} title The title of the column
+     * @property {func} onClick Click event handler
+     */
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        onClick: PropTypes.func.isRequired
+    }
+
+    /**
+     * Renders DataTableColumn component
+     */
+    render() {
+        const
+            b = block('data-table'),
+            {
+                id,
+                title,
+                onClick
+            } = this.props
+
+        return (
+            <th
+                className={b('column')}
+                title={title}
+                onClick={() => onClick(id)}>
+                {title}
+            </th>
+        )
+    }
+}
+
+export default DataTableColumn
