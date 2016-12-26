@@ -220,6 +220,7 @@ class Tables extends Component {
                         <ListView
                             icon="table"
                             items={sortedItems}
+                            selectedIndex={this.state.selectedIndex}
                             onChange={this.onListViewChange} />
                     </div>
                 </div>
