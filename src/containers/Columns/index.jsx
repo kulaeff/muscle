@@ -139,8 +139,6 @@ class Columns extends Component {
             selectedIndex: index
         })
 
-        console.log(this.props)
-
         router.push(`/databases/${routeParams.database}/${sortedItems[index].name}`)
     }
 
@@ -172,7 +170,11 @@ class Columns extends Component {
             columns = [
                 { id: 'name', title: 'Name' },
                 { id: 'type', title: 'Type' },
-                { id: 'size', title: 'Size' }
+                { id: 'collation', title: 'Collation' },
+                { id: 'attributes', title: 'Attributes' },
+                { id: 'null', title: 'Null' },
+                { id: 'default', title: 'Default' },
+                { id: 'extra', title: 'Extra' }
             ],
             { children, fetching, items, params } = this.props
 

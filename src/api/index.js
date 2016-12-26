@@ -35,11 +35,11 @@ class API {
                 })
                 .onGet('/columns').reply(statusCode, {
                     items: [
-                        { name: 'id', type: 'int', size: 5 },
-                        { name: 'group', type: 'int', size: 5 },
-                        { name: 'title', type: 'varchar', size: 32 },
-                        { name: 'createdAt', type: 'timestamp', size: 12 },
-                        { name: 'updatedAt', type: 'timestamp', size: 12 }
+                        [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],
+                        [ 'group', 'int (5)', '', 'unsigned', 'yes', 'null', '' ],
+                        [ 'title', 'varchar (32)', '', '', 'no', 'none', '' ],
+                        [ 'createdAt', 'timestamp', '', '', 'no', 'none', '' ],
+                        [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
                     ]
                 })
                 .onGet('/databases').reply(statusCode, {

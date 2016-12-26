@@ -74,12 +74,11 @@ class DataTable extends Component {
                     {
                         items.map((item, index) =>
                             <DataTableItem
+                                cells={item}
                                 key={index}
                                 id={index}
                                 selected={selectedIndex === index}
-                                onClick={this.onItemClick}>
-                                {item.name}
-                            </DataTableItem>
+                                onClick={this.onItemClick} />
                         )
                     }
                 </tbody>
