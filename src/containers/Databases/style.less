@@ -109,4 +109,25 @@
     &__button + &__button {
         margin-left: @mDefault / 4;
     }
+    // STATES
+    &_state_minimized &__container {
+        cursor: pointer;
+        min-width: initial;
+        max-width: initial;
+    }
+    &_state_minimized &__spinner {
+        display: none;
+    }
+    &_state_minimized &__buttons {
+        display: none;
+    }
+    &_state_minimized &__toolbar {
+        display: none;
+    }
+    &_state_minimized &__filters {
+        display: none;
+    }
+    &_state_minimized &__table {
+        display: none;
+    }
 }

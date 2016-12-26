@@ -36,7 +36,8 @@ class Tables extends Component {
         super(props)
 
         this.state = {
-            selectedIndex: null
+            selectedIndex: null,
+            minimized: false
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -94,6 +95,38 @@ class Tables extends Component {
     }
 
     /**
+     * Minimizes the window
+     * @method
+     */
+    onWindowButtonMinimizeClick = () => {
+        this.setState({
+            minimized: true
+        })
+    }
+
+    /**
+     * Closes the window and goes to previous route
+     * @method
+     */
+    onWindowButtonCloseClick = () => {
+        const { router } = this.props
+
+        router.push('/databases')
+    }
+
+    /**
+     * Restores the window
+     * @method
+     */
+    onWindowClick = () => {
+        if (this.state.minimized) {
+            this.setState({
+                minimized: false
+            })
+        }
+    }
+
+    /**
      * Redirects to selected database details
      * @method
      * @param {number} index The index of selected item
@@ -141,8 +174,8 @@ class Tables extends Component {
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
-            <div className={b()}>
-                <div className={b('container')}>
+            <div className={b({state: this.state.minimized ? 'minimized' : null})}>
+                <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
                             <span className={b('title', {role: 'title'})}>Tables</span>
@@ -150,8 +183,12 @@ class Tables extends Component {
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
-                            <button className={b('button', {action: 'minimize'})}></button>
-                            <button className={b('button', {action: 'close'})}></button>
+                            <button
+                                className={b('button', {action: 'minimize'})}
+                                onClick={this.onWindowButtonMinimizeClick}></button>
+                            <button
+                                className={b('button', {action: 'close'})}
+                                onClick={this.onWindowButtonCloseClick}></button>
                         </div>
                     </div>
                     <div className={b('toolbar')}>

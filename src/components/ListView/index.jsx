@@ -40,7 +40,7 @@ class ListView extends Component {
         super(props);
 
         this.state = {
-            selectedIndex: ListView.defaults.selectedIndex
+            selectedIndex: this.props.selectedIndex
         }
 
         this.onItemClick = this.onItemClick.bind(this)
@@ -52,13 +52,9 @@ class ListView extends Component {
      * @param {string} id The ID of clicked item
      */
     onItemClick(id) {
-        const { onChange } = this.props
+        const { selectedIndex, onChange } = this.props
 
-        if (onChange && this.state.selectedIndex !== id) {
-            this.setState({
-                selectedIndex: id
-            })
-
+        if (onChange && selectedIndex !== id) {
             onChange(id)
         }
     }
@@ -70,7 +66,7 @@ class ListView extends Component {
     render() {
         const
             b = block('list-view'),
-            { icon, items, selectedIndex = this.state.selectedIndex} = this.props
+            { icon, items, selectedIndex } = this.props
 
         return (
             <div className={b()}>

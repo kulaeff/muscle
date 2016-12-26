@@ -36,7 +36,8 @@ class Databases extends Component {
         super(props)
 
         this.state = {
-            selectedIndex: null
+            selectedIndex: null,
+            minimized: false
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -67,6 +68,10 @@ class Databases extends Component {
             this.setState({
                 selectedIndex: sortedItems.findIndex(item => item.name === params.database)
             })
+        } else if (params.database !== nextProps.params.database && !nextProps.params.hasOwnProperty('database')) {
+            this.setState({
+                selectedIndex: null
+            })
         }
     }
 
@@ -92,6 +97,28 @@ class Databases extends Component {
      */
     onToolBarButtonDeleteDatabaseClick = () => {
         console.log('toolbar button Delete cliked')
+    }
+
+    /**
+     * Minimizes the window
+     * @method
+     */
+    onWindowButtonMinimizeClick = () => {
+        this.setState({
+            minimized: true
+        })
+    }
+
+    /**
+     * Restores the window
+     * @method
+     */
+    onWindowClick = () => {
+        if (this.state.minimized) {
+            this.setState({
+                minimized: false
+            })
+        }
     }
 
     /**
@@ -140,8 +167,8 @@ class Databases extends Component {
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
-            <div className={b()}>
-                <div className={b('container')}>
+            <div className={b({state: this.state.minimized ? 'minimized' : null})}>
+                <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
                             <span className={b('title', {role: 'title'})}>Databases</span>
@@ -149,7 +176,9 @@ class Databases extends Component {
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
-                            <button className={b('button', {action: 'minimize'})}></button>
+                            <button
+                                className={b('button', {action: 'minimize'})}
+                                onClick={this.onWindowButtonMinimizeClick}></button>
                             <button className={b('button', {action: 'close'})}></button>
                         </div>
                     </div>
