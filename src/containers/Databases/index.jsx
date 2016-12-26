@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
-import Toolbar, { ToolBarButton } from '../../components/ToolBar'
+import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
 import * as databasesActions from '../../actions/databases'
 import { debounce } from 'lodash'
@@ -157,18 +157,35 @@ class Databases extends Component {
                         <Toolbar>
                             <ToolBarButton
                                 icon="create"
+                                label="New"
                                 title="Create new database"
                                 onClick={this.onToolBarButtonCreateDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="edit"
+                                label="Edit"
                                 title="Edit database"
                                 onClick={this.onToolBarButtonEditDatabaseClick} />
+                            <ToolBarSeparator />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="delete"
+                                label="Delete"
                                 title="Delete database"
                                 onClick={this.onToolBarButtonDeleteDatabaseClick} />
+                            <ToolBarSeparator />
+                            <ToolBarButton
+                                disabled={this.state.selectedIndex === null}
+                                icon="import"
+                                label="Import"
+                                title="Import database"
+                                onClick={this.onToolBarButtonEditDatabaseClick} />
+                            <ToolBarButton
+                                disabled={this.state.selectedIndex === null}
+                                icon="export"
+                                label="Export"
+                                title="Export database"
+                                onClick={this.onToolBarButtonEditDatabaseClick} />
                         </Toolbar>
                     </div>
                     <div className={b('filters')}>
@@ -176,6 +193,7 @@ class Databases extends Component {
                     </div>
                     <div className={b('table')}>
                         <ListView
+                            icon="database"
                             items={sortedItems}
                             selectedIndex={this.state.selectedIndex}
                             onChange={this.onListViewChange} />

@@ -11,11 +11,13 @@ class ListView extends Component {
     /**
      * ListView properties
      * @static
+     * @property {string} icons The icon's name to use in ListViewItem
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
      * @property {func} onChange Change event handler
      */
     static propTypes = {
+        icon: PropTypes.string,
         items: PropTypes.array.isRequired,
         selectedIndex: PropTypes.number,
         onChange: PropTypes.func.isRequired
@@ -68,7 +70,7 @@ class ListView extends Component {
     render() {
         const
             b = block('list-view'),
-            { items, selectedIndex = this.state.selectedIndex} = this.props
+            { icon, items, selectedIndex = this.state.selectedIndex} = this.props
 
         return (
             <div className={b()}>
@@ -79,6 +81,13 @@ class ListView extends Component {
                         id={index}
                         selected={selectedIndex === index}
                         onClick={this.onItemClick}>
+                        {
+                            icon ?
+                                <svg>
+                                    <use xlinkHref={`#icon-${icon}`} />
+                                </svg>
+                            : null
+                        }
                         {item.name}
                     </ListViewItem>
                 )

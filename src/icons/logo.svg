@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="30.7227" height="30.7227" viewBox="0 0 30.72 30.72" enable-background="new 0 0 30.72 30.72" xml:space="preserve">
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 7.68067,9.60084L 7.68066,8.32073L 8.96078,8.32073L 14.7213,14.0812L 14.7213,16.6414L 7.68067,9.60084 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 15.3613,12.8011L 10.8809,8.32073L 12.2144,8.32076L 13.4411,8.32077L 15.3613,10.2409L 17.2815,8.32076L 18.5616,8.32073L 19.8417,8.32073L 15.3613,12.8011 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 23.042,9.60084L 16.0014,16.6415L 16.0014,14.0812L 21.7619,8.32074L 23.042,8.32074L 23.042,9.60084 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 7.68066,14.0812L 7.68066,11.521L 12.161,16.0014L 12.161,18.5616L 7.68066,14.0812 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 23.042,14.0812L 18.5616,18.5616L 18.5616,16.0014L 23.042,11.521L 23.042,14.0812 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 7.68066,18.5616L 7.68066,16.0014L 12.1611,20.4818L 12.1611,23.042L 7.68066,18.5616 Z "/>
-	<path fill="#FF0064" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 23.042,18.5616L 18.5616,23.042L 18.5616,20.4818L 23.042,16.0014L 23.042,18.5616 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 8.96077,12.8011L 8.96077,10.881L 8.96078,8.96078L 14.7213,14.7213L 14.7213,18.5616L 14.0812,17.9216L 8.96077,12.8011 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 15.3613,10.2409L 16.6414,10.2409L 18.5616,10.2409L 15.3613,13.4412L 12.161,10.2409L 14.1345,10.2409L 15.3613,10.2409 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 21.7619,12.8011L 16.6481,17.9149L 16.0014,18.5616L 16.0014,14.7213L 21.7619,8.96078L 21.7619,10.881L 21.7619,12.8011 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 8.96076,18.5616L 8.96076,14.7213L 12.161,17.9216L 12.1611,21.7619L 11.5177,21.1185L 8.96076,18.5616 Z "/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 21.7619,18.5616L 19.1983,21.1252L 18.5616,21.7619L 18.5616,17.9216L 21.7619,14.7213L 21.7619,18.5616 Z "/>
 </svg>

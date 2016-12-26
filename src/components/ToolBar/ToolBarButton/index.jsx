@@ -9,8 +9,8 @@ class ToolBarButton extends Component {
     /**
      * ToolBarButton properties
      * @static
-     * @property {string} icon The icon of the button
      * @property {bool} disabled Is button disabled?
+     * @property {string} icon The icon of the button
      * @property {string} title The title of the button
      * @property {func} onClick Click event handler
      */

@@ -12,7 +12,7 @@ class API {
         if (process.env.NODE_ENV === 'development') {
             const
                 statusCode = 200,
-                delay = 500,
+                delay = 800,
                 mock = new MockAdapter(this.axios, {
                     delayResponse: delay
                 })

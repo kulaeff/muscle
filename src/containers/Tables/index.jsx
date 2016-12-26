@@ -158,17 +158,20 @@ class Tables extends Component {
                         <Toolbar>
                             <ToolBarButton
                                 icon="create"
+                                label="New"
                                 title="Create new table"
                                 onClick={this.onToolBarButtonCreateDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="edit"
+                                label="Edit"
                                 title="Edit table"
                                 onClick={this.onToolBarButtonEditDatabaseClick} />
                             <ToolBarSeparator />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="delete"
+                                label="Delete"
                                 title="Delete table"
                                 onClick={this.onToolBarButtonDeleteDatabaseClick} />
                         </Toolbar>
@@ -177,7 +180,10 @@ class Tables extends Component {
                         <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
-                        <ListView items={sortedItems} onChange={this.onListViewChange}/>
+                        <ListView
+                            icon="table"
+                            items={sortedItems}
+                            onChange={this.onListViewChange} />
                     </div>
                 </div>
                 <div className={b('view')}>

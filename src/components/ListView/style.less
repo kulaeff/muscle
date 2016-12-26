@@ -1,14 +1,27 @@
 @import (reference) '../../styles/variables';
 
-@itemSize: 48px;
+@sIcon: 1.4rem;
 
 .list-view {
     position: relative;
     &__item {
+        border-radius: 0.1rem;
         cursor: pointer;
         display: block;
-        padding: @mDefault / 4 @mDefault / 2;
+        padding: @mDefault / 4 @mDefault / 2 @mDefault / 4 (@mDefault / 2 + @sIcon * 1.5);
         position: relative;
+        svg {
+            bottom: 0;
+            fill: #fff;
+            height: @sIcon;
+            left: @mDefault / 2;
+            margin: auto 0;
+            opacity: 0.5;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: @sIcon;
+        }
         //
         &:hover {
             background: rgba(255, 255, 255, .05);

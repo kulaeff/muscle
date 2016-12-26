@@ -1,6 +1,6 @@
 @import (reference) '../../styles/variables';
 
-@sSmall: 2.2rem;
+@sSmall: 2.8rem;
 @sLarge: 3rem;
 
 .toolbar {
@@ -8,25 +8,31 @@
     position: relative;
     white-space: nowrap;
     &__button {
-        background: @cUndefined;
+        background-color: @cToolButton;
         border: none;
+        border-radius: 50%;
+        box-sizing: border-box;
+        color: #fff;
         cursor: pointer;
         display: inline-block;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        line-height: 1;
         outline: none;
         position: relative;
         svg {
             bottom: 0;
             display: block;
-            left: 0;
-            margin: auto;
+            left: 0.2rem;
             position: absolute;
             right: 0;
-            top: 0;
+            top: 0.2rem;
         }
         //
         &:hover {
-            background-color: negation(@cUndefined, #999999);
+            background-color: @cToolButtonHover;
+        }
+        &:active {
+            background-color: @cToolButtonActive;
         }
     }
     &__separator {
@@ -36,35 +42,24 @@
     }
     //
     &__button + &__button {
-        margin-left: 0.6rem;
+        margin-left: 0.4rem;
     }
     // SIZES
     // Small
     &_size_small &__button {
-        height: @sSmall;
-        width: @sSmall;
+        height: @sSmall + 0.4rem;
+        width: @sSmall + 0.4rem;
         svg {
-            fill: #000;
+            fill: currentColor;
             height: @sSmall;
             width: @sSmall;
         }
     }
-    // THEMES
-    // Dark
-    &_theme_dark &__button {
-        background: @cToolButtonDark;
-        &:hover {
-            background-color: @cToolButtonHoverDark;
-        }
-        &:active {
-            background-color: @cToolButtonActiveDark;
-        }
-
-    }
     // STATES
     // Disabled
     &_theme_dark &__button_state_disabled {
-        background-color: @cToolButtonDisabledDark;
+        background-color: @cToolButtonDisabled;
+        color: fadein(@cToolButtonDisabled, 15%);
         pointer-events: none;
     }
 }
