@@ -33,6 +33,15 @@ class API {
                         }
                     }
                 })
+                .onGet('/columns').reply(statusCode, {
+                    items: [
+                        { name: 'id' },
+                        { name: 'loko' },
+                        { name: 'fsx' },
+                        { name: 'wheels' },
+                        { name: 'money' }
+                    ]
+                })
                 .onGet('/databases').reply(statusCode, {
                     items: [
                         { name: 'mysql' },

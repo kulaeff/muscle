@@ -1,0 +1,133 @@
+@import (reference) '../../styles/variables';
+
+.columns {
+    color: #fff;
+    display: flex;
+    height: 100%;
+    &__buttons {
+        flex: 1;
+        font-size: 0;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+    &__button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        height: 2rem;
+        outline: none;
+        position: relative;
+        width: 2rem;
+        &_action_close {
+            &:before, &:after {
+                background-color: #fff;
+                content: '';
+                display: block;
+                height: 2px;
+                left: 0.4rem;
+                position: absolute;
+                top: 0.9rem;
+                width: 1.2rem;
+            }
+            &:after {
+                transform: rotate(45deg);
+            }
+            &:before {
+                transform: rotate(-45deg);
+            }
+        }
+        &_action_minimize {
+            &:before {
+                background-color: #fff;
+                bottom: 0.5rem;
+                content: '';
+                display: block;
+                height: 2px;
+                left: 0.4rem;
+                position: absolute;
+                width: 1.2rem;
+            }
+        }
+        //
+        &:hover {
+            background: rgba(255, 255, 255, 0.15)
+        }
+        //
+        &_action_close:hover {
+            background: #e04;
+        }
+    }
+    &__container {
+        background: @cSecondary;
+        border-right: 1px solid lighten(@cSecondary, 15%);
+        box-sizing: border-box;
+        min-width: 60rem;
+        max-width: 85rem;
+        padding: @mDefault * 0.75 @mDefault;
+        position: relative;
+    }
+    &__filters {
+        margin: @mDefault 0;
+    }
+    &__header {
+        display: flex;
+    }
+    &__spinner {
+        flex: 1;
+        font-size: 0;
+        padding: 0.3rem @mDefault / 4 0;
+        vertical-align: top;
+    }
+    &__toolbar {
+        margin: @mDefault 0;
+    }
+    &__title {
+        flex: 1 100%;
+        vertical-align: top;
+        &_role_title {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &_role_caption {
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+    &__tree {
+        margin-top: @mDefault / 2;
+        padding: 0 @mDefault / 2;
+    }
+    &__view {
+        //
+    }
+    //
+    &__button + &__button {
+        margin-left: @mDefault / 4;
+    }
+    // STATES
+    &_state_minimized &__container {
+        cursor: pointer;
+        min-width: initial;
+        max-width: initial;
+    }
+    &_state_minimized &__spinner {
+        display: none;
+    }
+    &_state_minimized &__buttons {
+        display: none;
+    }
+    &_state_minimized &__toolbar {
+        display: none;
+    }
+    &_state_minimized &__filters {
+        display: none;
+    }
+    &_state_minimized &__table {
+        display: none;
+    }
+}

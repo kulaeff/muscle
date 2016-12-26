@@ -2,24 +2,23 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
-import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
-import * as tablesActions from '../../actions/tables'
+import * as columnsActions from '../../actions/columns'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
 /**
- * Tables container
+ * Columns container
  * @class
  */
-class Tables extends Component {
+class Columns extends Component {
     /**
-     * Tables container properties
+     * Columns container properties
      * @static
      * @property {bool} fetching Is data fetching
-     * @property {array} items Tables and tables
+     * @property {array} items Columns and columns
      */
     static propTypes = {
         fetching: PropTypes.bool,
@@ -27,7 +26,7 @@ class Tables extends Component {
     }
 
     /**
-     * Creates Tables container
+     * Creates Columns container
      * @constructor
      */
     constructor(props) {
@@ -44,41 +43,29 @@ class Tables extends Component {
     }
 
     /**
-     * Fetches tables for selected database
+     * Fetches columns for selected database
      */
-    refreshTables() {
-        const { getTables } = this.props.tablesActions
+    refreshColumns() {
+        const { getColumns } = this.props.columnsActions
 
-        getTables()
+        getColumns()
     }
 
     /**
-     * Fetches tables when database was selected for the first time
+     * Fetches columns when database was selected for the first time
      * @method
      */
     componentDidMount() {
-        this.refreshTables()
+        this.refreshColumns()
     }
 
     /**
-     * Fetches tables when selected database was changed
+     * Fetches columns when selected database was changed
      * @method
      */
     componentWillReceiveProps(nextProps) {
-        const { items, params } = this.props
-
-        // Set selectedindex if we came from direct url (/databases/<name>)
-        if (items.length !== nextProps.items.length) {
-            const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
-
-            this.setState({
-                selectedIndex: sortedItems.findIndex(item => item.name === params.table)
-            })
-        // Reset selectedIndex if we closed Tables window
-        } else if (params.table !== nextProps.params.table && !nextProps.params.hasOwnProperty('table')) {
-            this.setState({
-                selectedIndex: null
-            })
+        if (this.props.routeParams.database !== nextProps.routeParams.database) {
+            this.refreshColumns()
         }
     }
 
@@ -152,6 +139,8 @@ class Tables extends Component {
             selectedIndex: index
         })
 
+        console.log(this.props)
+
         router.push(`/databases/${routeParams.database}/${sortedItems[index].name}`)
     }
 
@@ -159,13 +148,13 @@ class Tables extends Component {
      * Debounces textbox change handler
      */
     debouncedTextboxFilterChange = (e) => {
-        const { setTablesFilter } = this.props.tablesActions
+        const { setColumnsFilter } = this.props.columnsActions
 
-        setTablesFilter(e.target.value)
+        setColumnsFilter(e.target.value)
     }
 
     /**
-     * Filters tables
+     * Filters columns
      */
     onTextboxFilterChange = (e) => {
         e.persist()
@@ -179,8 +168,8 @@ class Tables extends Component {
      */
     render() {
         const
-            b = block('tables'),
-            { children, fetching, items, routeParams } = this.props,
+            b = block('columns'),
+            { children, fetching, items, params } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
@@ -188,8 +177,8 @@ class Tables extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Tables</span>
-                            <span className={b('title', {role: 'caption'})}>{routeParams.database}</span>
+                            <span className={b('title', {role: 'title'})}>Columns</span>
+                            <span className={b('title', {role: 'caption'})}>{params.table}</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -223,9 +212,6 @@ class Tables extends Component {
                                 onClick={this.onToolBarButtonDeleteDatabaseClick} />
                         </Toolbar>
                     </div>
-                    <div className={b('filters')}>
-                        <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
-                    </div>
                     <div className={b('table')}>
                         <ListView
                             icon="table"
@@ -244,15 +230,15 @@ class Tables extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.tables.fetching,
-        items: state.tables.items
+        fetching: state.columns.fetching,
+        items: state.columns.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        tablesActions: bindActionCreators(tablesActions, dispatch)
+        columnsActions: bindActionCreators(columnsActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tables)
+export default connect(mapStateToProps, mapDispatchToProps)(Columns)

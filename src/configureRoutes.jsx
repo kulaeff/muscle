@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import App from './containers/App';
+import Columns from './containers/Columns';
 import Databases from './containers/Databases';
 import Status from './containers/Status';
 import Tables from './containers/Tables';
@@ -10,7 +11,9 @@ export default function createRoutes () {
         <Route path="/" component={App}>
             <IndexRedirect to="databases" />
             <Route path="databases" component={Databases}>
-                <Route path=":database" component={Tables}/>
+                <Route path=":database" component={Tables}>
+                    <Route path=":table" component={Columns} />
+                </Route>
             </Route>
             <Route path="status" component={Status} />
        </Route>
