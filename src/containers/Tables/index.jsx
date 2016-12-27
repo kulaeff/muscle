@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { debounce } from 'lodash'
+import * as tablesActions from '../../actions/tables'
+import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
-import ListView from '../../components/ListView'
-import * as tablesActions from '../../actions/tables'
-import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
@@ -69,10 +69,8 @@ class Tables extends Component {
 
         // Set selectedindex if we came from direct url (/databases/<name>)
         if (items.length !== nextProps.items.length) {
-            const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
-
             this.setState({
-                selectedIndex: sortedItems.findIndex(item => item.name === params.table)
+                selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
             })
         // Reset selectedIndex if we closed Tables window
         } else if (params.table !== nextProps.params.table && !nextProps.params.hasOwnProperty('table')) {
@@ -143,16 +141,15 @@ class Tables extends Component {
      * @method
      * @param {number} index The index of selected item
      */
-    onListViewChange = (index) => {
+    onDataTableChange = (index) => {
         const
-            { items, router, routeParams } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            { items, router, routeParams } = this.props
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/databases/${routeParams.database}/${sortedItems[index].name}`)
+        router.push(`/databases/${routeParams.database}/${items[index][0]}`)
     }
 
     /**
@@ -180,6 +177,14 @@ class Tables extends Component {
     render() {
         const
             b = block('tables'),
+            columns = [
+                { id: 'table', title: 'Table' },
+                { id: 'rows', title: 'Rows' },
+                { id: 'type', title: 'Type' },
+                { id: 'collation', title: 'Collation' },
+                { id: 'size', title: 'Size' },
+                { id: 'overhead', title: 'Overhead' }
+            ],
             { children, fetching, items, routeParams } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
@@ -227,11 +232,11 @@ class Tables extends Component {
                         <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
-                        <ListView
-                            icon="table"
+                        <DataTable
+                            columns={columns}
                             items={sortedItems}
                             selectedIndex={this.state.selectedIndex}
-                            onChange={this.onListViewChange} />
+                            onChange={this.onDataTableChange} />
                     </div>
                 </div>
                 <div className={b('view')}>

@@ -4,21 +4,33 @@
     border-collapse: collapse;
     position: relative;
     width: 100%;
-    &__column {
+    &__footer {
+        border-top: 1px solid lighten(@cSecondary, 15%);
+    }
+    &__header {
         border-bottom: 1px solid lighten(@cSecondary, 15%);
+    }
+    &__column {
         font-size: 1.1rem;
-        padding: @mDefault / 6 @mDefault / 2;
+        padding: @mDefault / 4 @mDefault / 2;
         text-align: left;
         text-transform: uppercase;
     }
     &__item {
-        //
+        cursor: pointer;
         &-cell {
-            padding: @mDefault / 6 @mDefault / 2;
+            padding: @mDefault / 4 @mDefault / 2;
         }
         //
         &:hover {
             background-color: rgba(255, 255, 255, 0.05);
+        }
+        //
+        &_state_selected {
+            background-color: @cAccent;
+            &:hover {
+                background-color: @cAccent;
+            }
         }
     }
 }

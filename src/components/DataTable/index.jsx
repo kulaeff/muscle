@@ -57,7 +57,7 @@ class DataTable extends Component {
 
         return (
             <table className={b()}>
-                <thead>
+                <thead className={b('header')}>
                     <tr>
                         {
                             columns.map((column, index) =>
@@ -70,7 +70,7 @@ class DataTable extends Component {
                         }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className={b('body')}>
                     {
                         items.map((item, index) =>
                             <DataTableItem
@@ -82,6 +82,11 @@ class DataTable extends Component {
                         )
                     }
                 </tbody>
+                <tfoot className={b('footer')}>
+                    <tr>
+                        <td colSpan={columns.length}></td>
+                    </tr>
+                </tfoot>
             </table>
         )
     }

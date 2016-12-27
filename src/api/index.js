@@ -53,12 +53,11 @@ class API {
                 })
                 .onGet('/tables').reply(statusCode, {
                     items: [
-                        { name: 'columns' },
-                        { name: 'profiles' },
-                        { name: 'messages' },
-                        { name: 'events' },
-                        { name: 'groups' },
-                        { name: 'users' }
+                        [ 'userProfiles', '12', 'InnoDB', 'utf8_general_ci', '16Kb', 0 ],
+                        [ 'userMessages', '75', 'InnoDB', 'utf8_general_ci', '59Kb', 0 ],
+                        [ 'userEvents', '18', 'InnoDB', 'utf8_general_ci', '24Kb', 0 ],
+                        [ 'userGroups', '3', 'InnoDB', 'utf8_general_ci', '12Kb', 0 ],
+                        [ 'itemItems', '154', 'InnoDB', 'utf8_general_ci', '531Kb', 0 ]
                     ]
                 })
         }
