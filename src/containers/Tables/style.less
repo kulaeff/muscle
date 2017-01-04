@@ -84,13 +84,13 @@
     &__title {
         flex: 1 100%;
         vertical-align: top;
-        &_role_title {
+        &-label {
             display: block;
             font-size: 1.4rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-        &_role_caption {
+        &-description {
             color: rgba(255, 255, 255, 0.5);
             display: block;
             font-size: 1.1rem;
@@ -110,24 +110,34 @@
         margin-left: @mDefault / 4;
     }
     // STATES
+    // Minimized
+    &_state_minimized &__buttons {
+        display: none;
+    }
     &_state_minimized &__container {
         cursor: pointer;
         min-width: initial;
         max-width: initial;
-    }
-    &_state_minimized &__spinner {
-        display: none;
-    }
-    &_state_minimized &__buttons {
-        display: none;
-    }
-    &_state_minimized &__toolbar {
-        display: none;
+        padding: @mDefault * 0.75 0;
+        width: @mDefault * 3;
     }
     &_state_minimized &__filters {
         display: none;
     }
+    &_state_minimized &__header {
+        display: block;
+        transform: rotate(-90deg) translate(-50%, 0);
+    }
+    &_state_minimized &__spinner {
+        display: none;
+    }
     &_state_minimized &__table {
+        display: none;
+    }
+    &_state_minimized &__title-description {
+        display: none;
+    }
+    &_state_minimized &__toolbar {
         display: none;
     }
 }

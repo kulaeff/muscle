@@ -33,6 +33,15 @@ class API {
                         }
                     }
                 })
+                .onGet('/column').reply(statusCode, {
+                    items: [
+                        [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],
+                        [ 'group', 'int (5)', '', 'unsigned', 'yes', 'null', '' ],
+                        [ 'title', 'varchar (32)', '', '', 'no', 'none', '' ],
+                        [ 'createdAt', 'timestamp', '', '', 'no', 'none', '' ],
+                        [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
+                    ]
+                })
                 .onGet('/columns').reply(statusCode, {
                     items: [
                         [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],

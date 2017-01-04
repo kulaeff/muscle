@@ -56,6 +56,7 @@ class DataTable extends Component {
             { columns, items, selectedIndex } = this.props
 
         return (
+            items.length ?
             <table className={b()}>
                 <thead className={b('header')}>
                     <tr>
@@ -88,6 +89,7 @@ class DataTable extends Component {
                     </tr>
                 </tfoot>
             </table>
+            : null
         )
     }
 }

@@ -5,7 +5,6 @@ import Spinner from '../../components/Spinner'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import DataTable from '../../components/DataTable'
 import * as columnsActions from '../../actions/columns'
-import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
@@ -18,6 +17,7 @@ class Columns extends Component {
      * Columns container properties
      * @static
      * @property {bool} fetching Is data fetching
+     * @property {bool} minimized Is window minimized
      * @property {array} items Columns and columns
      */
     static propTypes = {
@@ -30,16 +30,11 @@ class Columns extends Component {
      * @constructor
      */
     constructor(props) {
-        const textboxFilterChangeDelay = 700
-
         super(props)
 
         this.state = {
             selectedIndex: null,
-            minimized: false
         }
-
-        this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
     }
 
     /**
@@ -64,7 +59,9 @@ class Columns extends Component {
      * @method
      */
     componentWillReceiveProps(nextProps) {
-        if (this.props.routeParams.database !== nextProps.routeParams.database) {
+        const { params } = this.props
+
+        if (params.table !== nextProps.params.table) {
             this.refreshColumns()
         }
     }
@@ -97,10 +94,12 @@ class Columns extends Component {
      * Minimizes the window
      * @method
      */
-    onWindowButtonMinimizeClick = () => {
-        this.setState({
-            minimized: true
-        })
+    onWindowButtonMinimizeClick = (e) => {
+        const { minimizeWindow } = this.props.columnsActions
+
+        minimizeWindow()
+
+        e.stopPropagation()
     }
 
     /**
@@ -108,9 +107,9 @@ class Columns extends Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { router } = this.props
+        const { router, params } = this.props
 
-        router.push('/databases')
+        router.push(`/databases/${params.database}`)
     }
 
     /**
@@ -118,11 +117,9 @@ class Columns extends Component {
      * @method
      */
     onWindowClick = () => {
-        if (this.state.minimized) {
-            this.setState({
-                minimized: false
-            })
-        }
+        const { restoreWindow } = this.props.columnsActions
+
+        restoreWindow()
     }
 
     /**
@@ -132,32 +129,13 @@ class Columns extends Component {
      */
     onListViewChange = (index) => {
         const
-            { items, router, routeParams } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            { items, router, params } = this.props
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/databases/${routeParams.database}/${sortedItems[index].name}`)
-    }
-
-    /**
-     * Debounces textbox change handler
-     */
-    debouncedTextboxFilterChange = (e) => {
-        const { setColumnsFilter } = this.props.columnsActions
-
-        setColumnsFilter(e.target.value)
-    }
-
-    /**
-     * Filters columns
-     */
-    onTextboxFilterChange = (e) => {
-        e.persist()
-
-        this.debouncedTextboxFilterChange(e)
+        router.push(`/databases/${params.database}/${params.table}/${items[index][0]}`)
     }
 
     /**
@@ -176,15 +154,15 @@ class Columns extends Component {
                 { id: 'default', title: 'Default' },
                 { id: 'extra', title: 'Extra' }
             ],
-            { children, fetching, items, params } = this.props
+            { children, fetching, minimized, items, params } = this.props
 
         return (
-            <div className={b({state: this.state.minimized ? 'minimized' : null})}>
+            <div className={b({state: minimized ? 'minimized' : null})}>
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Columns</span>
-                            <span className={b('title', {role: 'caption'})}>{params.table}</span>
+                            <span className={b('title-label')}>Columns</span>
+                            <span className={b('title-description')}>{params.table}</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -237,6 +215,7 @@ class Columns extends Component {
 function mapStateToProps (state) {
     return {
         fetching: state.columns.fetching,
+        minimized: state.columns.minimized,
         items: state.columns.items
     }
 }

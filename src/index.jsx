@@ -22,7 +22,7 @@ render(
     document.getElementById('root')
 )
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
     console.info(`Version: ${process.env.VERSION}`)
 }
 

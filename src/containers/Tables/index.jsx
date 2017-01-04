@@ -19,10 +19,12 @@ class Tables extends Component {
      * Tables container properties
      * @static
      * @property {bool} fetching Is data fetching
+     * @property {bool} minimized Is window minimized
      * @property {array} items Tables and tables
      */
     static propTypes = {
         fetching: PropTypes.bool,
+        minimized: PropTypes.bool,
         items: PropTypes.array.isRequired,
     }
 
@@ -37,7 +39,6 @@ class Tables extends Component {
 
         this.state = {
             selectedIndex: null,
-            minimized: false
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -67,15 +68,13 @@ class Tables extends Component {
     componentWillReceiveProps(nextProps) {
         const { items, params } = this.props
 
+        // Load tables if selected database has changed
+        if (params.database !== nextProps.params.database) {
+            this.refreshTables()
         // Set selectedindex if we came from direct url (/databases/<name>)
-        if (items.length !== nextProps.items.length) {
+        } else if (items.length !== nextProps.items.length) {
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
-            })
-        // Reset selectedIndex if we closed Tables window
-        } else if (params.table !== nextProps.params.table && !nextProps.params.hasOwnProperty('table')) {
-            this.setState({
-                selectedIndex: null
             })
         }
     }
@@ -108,10 +107,12 @@ class Tables extends Component {
      * Minimizes the window
      * @method
      */
-    onWindowButtonMinimizeClick = () => {
-        this.setState({
-            minimized: true
-        })
+    onWindowButtonMinimizeClick = (e) => {
+        const { minimizeWindow } = this.props.tablesActions
+
+        minimizeWindow()
+
+        e.stopPropagation()
     }
 
     /**
@@ -129,11 +130,9 @@ class Tables extends Component {
      * @method
      */
     onWindowClick = () => {
-        if (this.state.minimized) {
-            this.setState({
-                minimized: false
-            })
-        }
+        const { restoreWindow } = this.props.tablesActions
+
+        restoreWindow()
     }
 
     /**
@@ -185,16 +184,16 @@ class Tables extends Component {
                 { id: 'size', title: 'Size' },
                 { id: 'overhead', title: 'Overhead' }
             ],
-            { children, fetching, items, routeParams } = this.props,
+            { children, fetching, minimized, items, params } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
-            <div className={b({state: this.state.minimized ? 'minimized' : null})}>
+            <div className={b({state: minimized ? 'minimized' : null})}>
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Tables</span>
-                            <span className={b('title', {role: 'caption'})}>{routeParams.database}</span>
+                            <span className={b('title-label')}>Tables</span>
+                            <span className={b('title-description')}>{params.database}</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -250,6 +249,7 @@ class Tables extends Component {
 function mapStateToProps (state) {
     return {
         fetching: state.tables.fetching,
+        minimized: state.tables.minimized,
         items: state.tables.items
     }
 }

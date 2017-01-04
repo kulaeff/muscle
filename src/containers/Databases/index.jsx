@@ -19,10 +19,12 @@ class Databases extends Component {
      * Databases container properties
      * @static
      * @property {bool} fetching Is data fetching
+     * @property {bool} minimized Is window minimized
      * @property {array} items Databases and tables
      */
     static propTypes = {
         fetching: PropTypes.bool,
+        minimized: PropTypes.bool,
         items: PropTypes.array.isRequired,
     }
 
@@ -37,7 +39,6 @@ class Databases extends Component {
 
         this.state = {
             selectedIndex: null,
-            minimized: false
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -104,10 +105,12 @@ class Databases extends Component {
      * Minimizes the window
      * @method
      */
-    onWindowButtonMinimizeClick = () => {
-        this.setState({
-            minimized: true
-        })
+    onWindowButtonMinimizeClick = (e) => {
+        const { minimizeWindow } = this.props.databasesActions
+
+        minimizeWindow()
+
+        e.stopPropagation()
     }
 
     /**
@@ -115,11 +118,9 @@ class Databases extends Component {
      * @method
      */
     onWindowClick = () => {
-        if (this.state.minimized) {
-            this.setState({
-                minimized: false
-            })
-        }
+        const { restoreWindow } = this.props.databasesActions
+
+        restoreWindow()
     }
 
     /**
@@ -164,16 +165,16 @@ class Databases extends Component {
     render() {
         const
             b = block('databases'),
-            { children, fetching, items } = this.props,
+            { children, fetching, minimized, items } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
-            <div className={b({state: this.state.minimized ? 'minimized' : null})}>
+            <div className={b({state: minimized ? 'minimized' : null})}>
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Databases</span>
-                            <span className={b('title', {role: 'caption'})}>Local databases</span>
+                            <span className={b('title-label')}>Databases</span>
+                            <span className={b('title-description')}>Local databases</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -240,6 +241,7 @@ class Databases extends Component {
 function mapStateToProps (state) {
     return {
         fetching: state.databases.fetching,
+        minimized: state.databases.minimized,
         items: state.databases.items
     }
 }
