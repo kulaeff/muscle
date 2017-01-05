@@ -1,5 +1,7 @@
 @import (reference) '../../styles/variables';
 
+@cRequired: #903;
+
 .form {
     margin: 0;
     padding: 0;
@@ -25,6 +27,13 @@
             font-weight: 600;
             padding-bottom: 0.2rem;
             text-transform: uppercase;
+        }
+        //
+        &_required &-label:after {
+            color: @cRequired;
+            content: '•';
+            display: inline;
+            margin-left: 0.5rem;
         }
     }
     &__row {

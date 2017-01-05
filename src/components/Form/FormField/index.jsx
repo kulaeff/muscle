@@ -12,20 +12,19 @@ class FormField extends Component {
      * @static
      * @property {string} id ID
      * @property {string} label Label
+     * @property {bool} required Is required
      */
     static propTypes = {
         id: PropTypes.string,
-        label: PropTypes.string
+        label: PropTypes.string,
+        required: PropTypes.bool
     }
 
     /**
      * FormField's default properties
      * @static
-     * @property {string} label Default label
      */
     static defaults = {
-        id: '',
-        label: ''
     }
 
     /**
@@ -35,10 +34,10 @@ class FormField extends Component {
     render() {
         const
             b = block('form'),
-            { children, id = FormField.defaults.id, label = FormField.defaults.label } = this.props
+            { children, id, label, required } = this.props
 
         return (
-            <div className={b('field')}>
+            <div className={b('field', {required})}>
                 {
                     label ?
                         <label className={b('field-label')} htmlFor={id}>{label}</label>

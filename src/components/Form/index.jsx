@@ -15,7 +15,7 @@ class Form extends Component {
      * Form's properties
      * @static
      * @property {string} action Action
-     * @property {string} placeholder Method
+     * @property {string} method Method
      * @property {function} onSubmit Submit handler
      * @property {function} onReset Reset handler
      */
@@ -34,7 +34,9 @@ class Form extends Component {
      */
     static defaults = {
         action: '',
-        method: 'GET'
+        maxLength: 0,
+        method: 'GET',
+        minLength: 0
     }
 
     /**
@@ -44,7 +46,13 @@ class Form extends Component {
     render() {
         const
             b = block('form'),
-            { children, action, method, onReset, onSubmit } = this.props
+            {
+                children,
+                action,
+                method,
+                onReset,
+                onSubmit
+            } = this.props
 
         return (
             <form

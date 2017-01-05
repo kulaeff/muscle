@@ -12,16 +12,22 @@ class Textbox extends Component {
      * @static
      * @property {string} id The Textbox's id
      * @property {string} name The Textbox's name
+     * @property {string} pattern Validation pattern
      * @property {string} placeholder The Textbox's placeholder
+     * @property {bool} required Is required (value matches the pattern)
      * @property {string} theme The Textbox's theme
+     * @property {string} title Title or pattern description
      * @property {string} value The Textbox's value
      * @property {function} onChange The Textbox's change handler
      */
     static propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string,
+        pattern: PropTypes.string,
         placeholder: PropTypes.string,
+        required: PropTypes.bool,
         theme: PropTypes.oneOf(['dark', 'light']),
+        title: PropTypes.string,
         value: PropTypes.string,
         onChange: PropTypes.func
     }
@@ -29,12 +35,12 @@ class Textbox extends Component {
     /**
      * Textbox's default properties
      * @static
-     * @property {string} theme The Textbox's default theme
+     * @property {bool} required Default is required
+     * @property {string} theme Default theme
      */
     static defaults = {
-        placeholder: '',
-        theme: 'dark',
-        value: ''
+        required: false,
+        theme: 'dark'
     }
 
     /**
@@ -47,9 +53,12 @@ class Textbox extends Component {
             {
                 id,
                 name,
-                placeholder = Textbox.defaults.placeholder,
+                pattern,
+                placeholder,
+                required = Textbox.defaults.required,
                 theme = Textbox.defaults.theme,
-                value = Textbox.defaults.value,
+                title,
+                value,
                 onChange
             } = this.props
 
@@ -57,8 +66,11 @@ class Textbox extends Component {
             <input
                 className={b({theme})}
                 id={id}
+                pattern={pattern}
                 name={name}
                 placeholder={placeholder}
+                required={required}
+                title={title}
                 value={value}
                 onChange={onChange} />
         )

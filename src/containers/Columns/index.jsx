@@ -40,7 +40,7 @@ class Columns extends Component {
     /**
      * Fetches columns for selected database
      */
-    refreshColumns() {
+    refresh() {
         const { getColumns } = this.props.columnsActions
 
         getColumns()
@@ -51,7 +51,7 @@ class Columns extends Component {
      * @method
      */
     componentDidMount() {
-        this.refreshColumns()
+        this.refresh()
     }
 
     /**
@@ -59,11 +59,21 @@ class Columns extends Component {
      * @method
      */
     componentWillReceiveProps(nextProps) {
-        const { params } = this.props
+        const { items, params } = this.props
 
         if (params.table !== nextProps.params.table) {
-            this.refreshColumns()
+            this.refresh()
+        } else if (params.column !== nextProps.params.column && !nextProps.params.hasOwnProperty('column')) {
+            this.setState({
+                selectedIndex: null
+            })
+        // Set selectedindex if we came from direct url (/databases/table/<name>)
+        } else if (items.length !== nextProps.items.length) {
+            this.setState({
+                selectedIndex: nextProps.items.findIndex(item => item[0] === params.column)
+            })
         }
+
     }
 
     /**

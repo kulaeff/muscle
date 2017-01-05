@@ -172,13 +172,13 @@ class Column extends Component {
                     <div className={b('form')}>
                         <Form onReset={this.onFormReset} onSubmit={this.onFormSubmit}>
                             <FormRow>
-                                <FormField id="name" label="Name">
-                                    <Textbox id="name" name="name" value={fields.name}/>
+                                <FormField id="name" label="Name" required={true}>
+                                    <Textbox id="name" name="name" required={true} value={fields.name}/>
                                 </FormField>
                             </FormRow>
                             <FormRow>
-                                <FormField id="type" label="Type">
-                                    <Textbox id="type" name="type" value={fields.type} />
+                                <FormField id="type" label="Type" required={true}>
+                                    <Textbox id="type" name="type" required={true} value={fields.type} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
@@ -192,13 +192,13 @@ class Column extends Component {
                                 </FormField>
                             </FormRow>
                             <FormRow>
-                                <FormField id="null" label="Null">
-                                    <Textbox id="null" name="null" value={fields.null} />
+                                <FormField id="null" label="Null" required={true}>
+                                    <Textbox id="null" name="null" required={true} value={fields.null} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
-                                <FormField id="default" label="Default">
-                                    <Textbox id="default" name="default" value={fields.default} />
+                                <FormField id="default" label="Default" required={true}>
+                                    <Textbox id="default" name="default" required={true} value={fields.default} />
                                 </FormField>
                             </FormRow>
                             <FormRow>

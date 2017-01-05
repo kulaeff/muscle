@@ -47,7 +47,7 @@ class Tables extends Component {
     /**
      * Fetches tables for selected database
      */
-    refreshTables() {
+    refresh() {
         const { getTables } = this.props.tablesActions
 
         getTables()
@@ -58,7 +58,7 @@ class Tables extends Component {
      * @method
      */
     componentDidMount() {
-        this.refreshTables()
+        this.refresh()
     }
 
     /**
@@ -70,7 +70,12 @@ class Tables extends Component {
 
         // Load tables if selected database has changed
         if (params.database !== nextProps.params.database) {
-            this.refreshTables()
+            this.refresh()
+        // Reset selectedindex if we close Table container
+        } else if (params.table !== nextProps.params.table && !nextProps.params.hasOwnProperty('table')) {
+            this.setState({
+                selectedIndex: null
+            })
         // Set selectedindex if we came from direct url (/databases/<name>)
         } else if (items.length !== nextProps.items.length) {
             this.setState({
