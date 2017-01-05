@@ -119,13 +119,21 @@
         max-width: initial;
         padding: @mDefault * 0.75 0;
         width: @mDefault * 3;
+        &:hover {
+            background: lighten(@cSecondary, 3%);
+        }
     }
     &_state_minimized &__filters {
         display: none;
     }
     &_state_minimized &__header {
         display: block;
-        transform: rotate(-90deg) translate(-50%, 0);
+        left: 50%;
+        line-height: 1;
+        position: absolute;
+        top: @mDefault * 0.75;
+        transform: translate(-100%, -25%) rotate(-90deg);
+        transform-origin: 100% 50%;
     }
     &_state_minimized &__spinner {
         display: none;
