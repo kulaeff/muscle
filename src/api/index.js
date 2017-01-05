@@ -34,13 +34,14 @@ class API {
                     }
                 })
                 .onGet('/column').reply(statusCode, {
-                    items: [
-                        [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],
-                        [ 'group', 'int (5)', '', 'unsigned', 'yes', 'null', '' ],
-                        [ 'title', 'varchar (32)', '', '', 'no', 'none', '' ],
-                        [ 'createdAt', 'timestamp', '', '', 'no', 'none', '' ],
-                        [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
-                    ]
+                    name: 'title',
+                    type: 'int',
+                    size: 5,
+                    collation: '',
+                    attributes: 'unsigned',
+                    null: 'no',
+                    default: 'none',
+                    extra: ''
                 })
                 .onGet('/columns').reply(statusCode, {
                     items: [
@@ -74,6 +75,12 @@ class API {
 
     async getStatus() {
         const response = await this.axios.get('status')
+
+        return response
+    }
+
+    async getColumn() {
+        const response = await this.axios.get('column')
 
         return response
     }

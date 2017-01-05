@@ -1,115 +1,42 @@
 @import (reference) '../../styles/variables';
 
-@sDefault: 1rem;
-@sSmall: 1.8rem;
-@sMedium: 3rem;
-@sLarge: 3.6rem;
-
-@dRipple: .2s;
+@cReset: #903;
 
 .button {
-    background-color: @cUndefined;
+    background-color: rgba(255, 255, 255, 0.1);
     border: none;
+    color: #fff;
     cursor: pointer;
-    height: @sDefault;
+    font-family: 'Open Sans';
+    line-height: 1;
+    min-width: 6rem;
     outline: none;
-    padding: 0;
+    padding: 0.7rem @mDefault * 0.5;
     position: relative;
-    svg {
-        position: relative;
-    }
-    //
-    &:before {
-        border: 2px solid @cUndefined;
-        border-radius: 50%;
-        box-sizing: border-box;
-        content: '';
-        display: block;
-        height: 100%;
-        left: 50%;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-    }
-    //
+    white-space: nowrap;
     &:hover {
         background-color: @cAccent;
-        svg {
-            fill: #fff;
-        }
-        &:before {
-            border-color: @cAccent;
-            opacity: 1;
-        }
     }
     &:active {
-        background-color: @cAccent;
-        svg {
-            fill: #fff;
-        }
-        &:before {
-            border-color: @cAccent;
-            height: 175%;
-            opacity: 0;
-            transition: height @dRipple ease-out, width @dRipple ease-out, opacity (@dRipple + .05s) linear;
-            width: 175%;
-        }
+        background-color: darken(@cAccent, 5%);
     }
-    // SIZES
-    &_size_small {
-        height: @sSmall;
-    }
-    &_size_medium {
-        height: @sMedium;
-    }
-    &_size_large {
-        height: @sLarge;
-    }
-    // THEMES
-    &_theme_dark {
-        background-color: #202224;
-    }
-    &_theme_light {
-        background-color: #fff;
-        svg {
-            fill: #000;
-        }
-        //
-        &:before {
-            border-color: #fff;
+    &:disabled {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.3);
+        cursor: default;
+        pointer-events: none;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
         }
     }
     // TYPES
-    &_type_default {
-        //
-    }
-    &_type_icon {
-        border-radius: 50%;
-        width: @sDefault;
-        svg {
-            bottom: 0;
-            display: block;
-            height: @sDefault;
-            left: 0;
-            margin: auto;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: @sDefault;
+    // Reset
+    &_type_reset {
+        &:hover {
+            background-color: @cReset;
         }
-    }
-    &_type_composite {
-        //
-    }
-    // SIZES + TYPES
-    &_size_small&_type_icon {
-        height: @sSmall;
-        width: @sSmall;
-        svg {
-            height: @sSmall;
-            width: @sSmall;
+        &:active {
+            background-color: darken(@cReset, 5%);
         }
     }
 }

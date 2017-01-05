@@ -6,15 +6,15 @@ import {
 
 const initialState = {
     fetching: false,
-    items: []
+    fields: {}
 }
 
-export default function columns(state = initialState, action) {
+export default function column(state = initialState, action) {
     switch(action.type) {
         case GET_COLUMN_REQUEST:
             return { ...state, fetching: true }
         case GET_COLUMN_SUCCESS:
-            return { ...state, fetching: false, items: action.payload.items }
+            return { ...state, fetching: false, fields: action.payload }
         case GET_COLUMN_FAIL:
             return { ...state, fetching: false }
         default:

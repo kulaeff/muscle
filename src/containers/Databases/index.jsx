@@ -220,7 +220,10 @@ class Databases extends Component {
                         </Toolbar>
                     </div>
                     <div className={b('filters')}>
-                        <Textbox name="filter" placeholder="Filter by name..." onChange={this.onTextboxFilterChange}/>
+                        <Textbox
+                            id="filter"
+                            placeholder="Filter by name..."
+                            onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
                         <ListView

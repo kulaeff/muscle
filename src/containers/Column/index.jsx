@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Button from '../../components/Button'
+import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
 import Spinner from '../../components/Spinner'
+import Textbox from '../../components/Textbox'
 import * as columnActions from '../../actions/column'
 import block from 'bem-cn'
 import './style.less';
@@ -15,11 +18,11 @@ class Column extends Component {
      * Column container properties
      * @static
      * @property {bool} fetching Is data fetching
-     * @property {array} items Column and column
+     * @property {json} fields Fields
      */
     static propTypes = {
         fetching: PropTypes.bool,
-        items: PropTypes.array.isRequired,
+        fields: PropTypes.object.isRequired,
     }
 
     /**
@@ -34,10 +37,16 @@ class Column extends Component {
         }
     }
 
+    close = () => {
+        const { router, params } = this.props
+
+        router.push(`/databases/${params.database}/${params.table}`)
+    }
+
     /**
      * Fetches column for selected database
      */
-    refreshColumn() {
+    refresh() {
         const { getColumn } = this.props.columnActions
 
         getColumn()
@@ -48,7 +57,7 @@ class Column extends Component {
      * @method
      */
     componentDidMount() {
-        this.refreshColumn()
+        this.refresh()
     }
 
     /**
@@ -58,9 +67,25 @@ class Column extends Component {
     componentWillReceiveProps(nextProps) {
         const { params } = this.props
 
-        if (params.table !== nextProps.params.table) {
-            this.refreshColumn()
+        if (params.column !== nextProps.params.column) {
+            this.refresh()
         }
+    }
+
+    /**
+     * Resets form and closes window
+     */
+    onFormReset = () => {
+        this.close()
+    }
+
+    /**
+     * Submits form and closes window
+     */
+    onFormSubmit = (e) => {
+        this.close()
+
+        e.preventDefault()
     }
 
     /**
@@ -102,9 +127,7 @@ class Column extends Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { router } = this.props
-
-        router.push('/databases')
+        this.close()
     }
 
     /**
@@ -126,15 +149,15 @@ class Column extends Component {
     render() {
         const
             b = block('column'),
-            { children, fetching, params } = this.props
+            { fetching, fields, params } = this.props
 
         return (
             <div className={b({state: this.state.minimized ? 'minimized' : null})}>
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title', {role: 'title'})}>Column</span>
-                            <span className={b('title', {role: 'caption'})}>{params.column}</span>
+                            <span className={b('title-label')}>Column</span>
+                            <span className={b('title-description')}>{params.column}</span>
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -146,11 +169,53 @@ class Column extends Component {
                                 onClick={this.onWindowButtonCloseClick}></button>
                         </div>
                     </div>
-                    <div className={b('table')}>
+                    <div className={b('form')}>
+                        <Form onReset={this.onFormReset} onSubmit={this.onFormSubmit}>
+                            <FormRow>
+                                <FormField id="name" label="Name">
+                                    <Textbox id="name" name="name" value={fields.name}/>
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="type" label="Type">
+                                    <Textbox id="type" name="type" value={fields.type} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="collation" label="Collation">
+                                    <Textbox id="collation" name="collation" value={fields.collation} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="attributes" label="Attributes">
+                                    <Textbox id="attributes" name="attributes" value={fields.attributes} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="null" label="Null">
+                                    <Textbox id="null" name="null" value={fields.null} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="default" label="Default">
+                                    <Textbox id="default" name="default" value={fields.default} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="extra" label="Extra">
+                                    <Textbox id="extra" name="extra" value={fields.extra} />
+                                </FormField>
+                            </FormRow>
+                            <FormButtons>
+                                <FormButton>
+                                    <Button label="Save" type="submit" />
+                                </FormButton>
+                                <FormButton>
+                                    <Button label="Cancel" type="reset" />
+                                </FormButton>
+                            </FormButtons>
+                        </Form>
                     </div>
-                </div>
-                <div className={b('view')}>
-                    {children}
                 </div>
             </div>
         )
@@ -160,7 +225,7 @@ class Column extends Component {
 function mapStateToProps (state) {
     return {
         fetching: state.column.fetching,
-        items: state.column.items
+        fields: state.column.fields
     }
 }
 

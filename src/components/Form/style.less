@@ -1,0 +1,37 @@
+@import (reference) '../../styles/variables';
+
+.form {
+    margin: 0;
+    padding: 0;
+    &__button {
+        display: table-cell;
+        width: 50%;
+        &:last-child {
+            text-align: right;
+        }
+    }
+    &__buttons {
+        display: table;
+        margin-top: @mDefault * 0.75;
+        width: 100%;
+    }
+    &__field {
+        &-container {
+            //
+        }
+        &-label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            padding-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+    }
+    &__row {
+        //
+    }
+    //
+    &__row + &__row {
+        margin-top: @mDefault / 2;
+    }
+}

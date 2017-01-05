@@ -66,8 +66,8 @@
         padding: @mDefault * 0.75 @mDefault;
         position: relative;
     }
-    &__filters {
-        margin: @mDefault 0;
+    &__form {
+        margin-top: @mDefault;
     }
     &__header {
         display: flex;
@@ -78,29 +78,22 @@
         padding: 0.3rem @mDefault / 4 0;
         vertical-align: top;
     }
-    &__toolbar {
-        margin: @mDefault 0;
-    }
     &__title {
         flex: 1 100%;
         vertical-align: top;
-        &_role_title {
+        &-label {
             display: block;
             font-size: 1.4rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-        &_role_caption {
+        &-description {
             color: rgba(255, 255, 255, 0.5);
             display: block;
             font-size: 1.1rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-    }
-    &__tree {
-        margin-top: @mDefault / 2;
-        padding: 0 @mDefault / 2;
     }
     &__view {
         //

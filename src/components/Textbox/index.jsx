@@ -10,6 +10,7 @@ class Textbox extends Component {
     /**
      * Textbox's properties
      * @static
+     * @property {string} id The Textbox's id
      * @property {string} name The Textbox's name
      * @property {string} placeholder The Textbox's placeholder
      * @property {string} theme The Textbox's theme
@@ -17,6 +18,7 @@ class Textbox extends Component {
      * @property {function} onChange The Textbox's change handler
      */
     static propTypes = {
+        id: PropTypes.string.isRequired,
         name: PropTypes.string,
         placeholder: PropTypes.string,
         theme: PropTypes.oneOf(['dark', 'light']),
@@ -30,7 +32,9 @@ class Textbox extends Component {
      * @property {string} theme The Textbox's default theme
      */
     static defaults = {
+        placeholder: '',
         theme: 'dark',
+        value: ''
     }
 
     /**
@@ -41,16 +45,18 @@ class Textbox extends Component {
         const
             b = block('textbox'),
             {
+                id,
                 name,
-                placeholder,
+                placeholder = Textbox.defaults.placeholder,
                 theme = Textbox.defaults.theme,
-                value,
+                value = Textbox.defaults.value,
                 onChange
             } = this.props
 
         return (
             <input
                 className={b({theme})}
+                id={id}
                 name={name}
                 placeholder={placeholder}
                 value={value}

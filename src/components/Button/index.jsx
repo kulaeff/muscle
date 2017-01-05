@@ -10,29 +10,25 @@ class Button extends Component {
     /**
      * Button's properties
      * @static
-     * @property {string} label The button's label
-     * @property {string} size The button's size
-     * @property {string} theme The button's theme
-     * @property {string} type The button's type
+     * @property {bool} disabled Is disabled
+     * @property {string} label Label
+     * @property {string} type Type
      */
     static propTypes = {
-        icon: PropTypes.string,
-        label: PropTypes.string,
-        size: PropTypes.oneOf(['small', 'medium', 'large']),
-        theme: PropTypes.oneOf(['dark', 'light']),
-        type: PropTypes.oneOf(['default', 'icon', 'composite'])
+        disabled: PropTypes.bool,
+        label: PropTypes.string.isRequired,
+        type: PropTypes.string
     }
 
     /**
      * Button's default properties
      * @static
-     * @property {string} theme The button's default theme
-     * @property {string} type The button's default type
+     * @property {bool} disabled Default state
+     * @property {string} type Default type
      */
     static defaults = {
-        size: 'medium',
-        theme: 'dark',
-        type: 'default'
+        disabled: false,
+        type: 'button'
     }
 
     /**
@@ -43,21 +39,13 @@ class Button extends Component {
         const
             b = block('button'),
             {
-                icon,
+                disabled = Button.defaults.disabled,
                 label,
-                size = 'small',
-                theme = Button.defaults.theme,
                 type = Button.defaults.type
             } = this.props
 
         return (
-            <button className={b({size, theme, type})}>
-                {
-                    type !== 'icon' ?
-                        (label ? label : null)
-                    : <svg><use xlinkHref={`#icon-${icon}`}></use></svg>
-                }
-            </button>
+            <button className={b({type})} type={type} disabled={disabled}>{label}</button>
         )
     }
 }
