@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Button from '../../components/Button'
+import Checkbox from '../../components/Checkbox'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -108,12 +109,12 @@ class Column extends Component {
     }
 
     /**
-     * Updates state on textbox change
+     * Updates state on field change
      * @method
-     * @param {string} field Field that has to be changed
-     * @param {any} value New value
+     * @param {string} field The name of a field that has to be changed
+     * @param {any} value Changed value of a field
      */
-    onTextboxChange = (field, value) => {
+    onFieldChange = (field, value) => {
         const fields = this.state.fields
 
         fields[field] = value
@@ -129,7 +130,7 @@ class Column extends Component {
      * @param {object} e Event
      */
     onTextboxNameChange = (e) => {
-        this.onTextboxChange('name', e.target.value)
+        this.onFieldChange('name', e.target.value)
     }
 
     /**
@@ -138,7 +139,7 @@ class Column extends Component {
      * @param {object} e Event
      */
     onTextboxTypeChange = (e) => {
-        this.onTextboxChange('type', e.target.value)
+        this.onFieldChange('type', e.target.value)
     }
 
     /**
@@ -147,7 +148,7 @@ class Column extends Component {
      * @param {object} e Event
      */
     onTextboxCollationChange = (e) => {
-        this.onTextboxChange('collation', e.target.value)
+        this.onFieldChange('collation', e.target.value)
     }
 
     /**
@@ -156,7 +157,7 @@ class Column extends Component {
      * @param {object} e Event
      */
     onTextboxAttributesChange = (e) => {
-        this.onTextboxChange('attributes', e.target.value)
+        this.onFieldChange('attributes', e.target.value)
     }
 
     /**
@@ -164,8 +165,8 @@ class Column extends Component {
      * @method
      * @param {object} e Event
      */
-    onTextboxNullChange = (e) => {
-        this.onTextboxChange('null', e.target.value)
+    onTextboxNullChange = () => {
+        this.onFieldChange('null', !this.state.fields.null)
     }
 
     /**
@@ -174,7 +175,7 @@ class Column extends Component {
      * @param {object} e Event
      */
     onTextboxDefaultChange = (e) => {
-        this.onTextboxChange('default', e.target.value)
+        this.onFieldChange('default', e.target.value)
     }
 
     /**
@@ -182,8 +183,8 @@ class Column extends Component {
      * @method
      * @param {object} e Event
      */
-    onTextboxExtraChange = (e) => {
-        this.onTextboxChange('extra', e.target.value)
+    onTextboxExtraChange = () => {
+        this.onFieldChange('extra', !this.state.fields.extra)
     }
 
     /**
@@ -308,16 +309,6 @@ class Column extends Component {
                                 </FormField>
                             </FormRow>
                             <FormRow>
-                                <FormField id="null" label="Null" required={true}>
-                                    <Textbox
-                                        id="null"
-                                        name="null"
-                                        required={true}
-                                        value={this.state.fields.null}
-                                        onChange={this.onTextboxNullChange} />
-                                </FormField>
-                            </FormRow>
-                            <FormRow>
                                 <FormField id="default" label="Default" required={true}>
                                     <Textbox
                                         id="default"
@@ -328,11 +319,18 @@ class Column extends Component {
                                 </FormField>
                             </FormRow>
                             <FormRow>
-                                <FormField id="extra" label="Extra">
-                                    <Textbox
-                                        id="extra"
-                                        name="extra"
-                                        value={this.state.fields.extra}
+                                <FormField>
+                                    <Checkbox
+                                        checked={this.state.fields.null}
+                                        label="Allow null"
+                                        onChange={this.onTextboxNullChange} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField>
+                                    <Checkbox
+                                        checked={this.state.fields.extra}
+                                        label="Auto increment"
                                         onChange={this.onTextboxExtraChange} />
                                 </FormField>
                             </FormRow>

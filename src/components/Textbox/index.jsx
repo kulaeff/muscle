@@ -72,6 +72,7 @@ class Textbox extends Component {
                 placeholder={placeholder}
                 required={required}
                 title={title}
+                type="text"
                 value={value}
                 onChange={onChange} />
         )

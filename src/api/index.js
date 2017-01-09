@@ -45,9 +45,9 @@ class API {
                     size: 5,
                     collation: '',
                     attributes: 'unsigned',
-                    null: 'no',
+                    null: true,
                     default: 'none',
-                    extra: ''
+                    extra: false
                 })
                 .onPut('/column').reply(HTTPStatusCodes.OK)
                 .onGet('/columns').reply(HTTPStatusCodes.OK, {
