@@ -28,7 +28,7 @@ class Textbox extends Component {
         required: PropTypes.bool,
         theme: PropTypes.oneOf(['dark', 'light']),
         title: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         onChange: PropTypes.func
     }
 

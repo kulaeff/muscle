@@ -143,6 +143,15 @@ class Column extends Component {
     }
 
     /**
+     * Updates length field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxLengthChange = (e) => {
+        this.onFieldChange('length', e.target.value)
+    }
+
+    /**
      * Updates collation field
      * @method
      * @param {object} e Event
@@ -288,6 +297,16 @@ class Column extends Component {
                                         required={true}
                                         value={this.state.fields.type}
                                         onChange={this.onTextboxTypeChange} />
+                                </FormField>
+                            </FormRow>
+                            <FormRow>
+                                <FormField id="length" label="length" required={true}>
+                                    <Textbox
+                                        id="length"
+                                        name="length"
+                                        required={true}
+                                        value={this.state.fields.length}
+                                        onChange={this.onTextboxLengthChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>

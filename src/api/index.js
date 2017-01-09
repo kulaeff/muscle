@@ -42,7 +42,7 @@ class API {
                 .onGet('/column').reply(HTTPStatusCodes.OK, {
                     name: 'title',
                     type: 'int',
-                    size: 5,
+                    length: 5,
                     collation: '',
                     attributes: 'unsigned',
                     null: true,
