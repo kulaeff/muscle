@@ -1,20 +1,27 @@
 @import (reference) '../../styles/variables';
 
 .textbox {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-sizing: border-box;
     color: #fff;
     font-family: 'Open Sans';
     font-size: 1.3rem;
+    height: @hControl;
     outline: none;
-    padding: @mDefault / 6 @mDefault / 4;
+    padding: 0 @hControl * 0.3;
     position: relative;
+    transition: background-color @dControl linear, border-color @dControl linear;
     width: 100%;
     &:hover {
         border-color: rgba(255, 255, 255, 0.15);
     }
     &:focus {
         border-color: @cAccent;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    &:disabled {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 0.1);
     }
 }

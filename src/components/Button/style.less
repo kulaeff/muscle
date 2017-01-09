@@ -1,24 +1,29 @@
 @import (reference) '../../styles/variables';
 
-@cReset: #903;
+@cReset: #A03;
 
 .button {
     background-color: rgba(255, 255, 255, 0.1);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     cursor: pointer;
     font-family: 'Open Sans';
+    font-size: 1.2rem;
+    font-weight: 600;
     line-height: 1;
     min-width: 6rem;
     outline: none;
-    padding: 0.7rem @mDefault * 0.5;
+    padding: 0.9rem 1.4rem 0.8rem;
     position: relative;
+    text-transform: uppercase;
+    transition: background-color @dControl linear, border-color @dControl linear;
     white-space: nowrap;
     &:hover {
-        background-color: @cAccent;
+        border-color: @cAccent;
     }
     &:active {
-        background-color: darken(@cAccent, 5%);
+        border-color: @cAccent;
+        background-color: @cAccent;
     }
     &:disabled {
         background-color: rgba(255, 255, 255, 0.05);
@@ -33,10 +38,11 @@
     // Reset
     &_type_reset {
         &:hover {
-            background-color: @cReset;
+            border-color: @cReset;
         }
         &:active {
-            background-color: darken(@cReset, 5%);
+            border-color: @cReset;
+            background-color: @cReset;
         }
     }
 }

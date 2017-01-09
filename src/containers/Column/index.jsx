@@ -17,12 +17,14 @@ class Column extends Component {
     /**
      * Column container properties
      * @static
+     * @property {any} error Error object (if presented)
      * @property {bool} fetching Is data fetching
      * @property {json} fields Fields
      */
     static propTypes = {
+        error: PropTypes.any,
         fetching: PropTypes.bool,
-        fields: PropTypes.object.isRequired,
+        fields: PropTypes.object
     }
 
     /**
@@ -33,7 +35,8 @@ class Column extends Component {
         super(props)
 
         this.state = {
-            minimized: false
+            minimized: false,
+            fields: {}
         }
     }
 
@@ -70,12 +73,24 @@ class Column extends Component {
         if (params.column !== nextProps.params.column) {
             this.refresh()
         }
+
+        if (Object.keys(nextProps.fields).length > 0) {
+            this.setState({
+                fields: {
+                    ...nextProps.fields
+                }
+            })
+        }
     }
 
     /**
      * Resets form and closes window
      */
     onFormReset = () => {
+        this.setState({
+            fields: {}
+        })
+
         this.close()
     }
 
@@ -83,9 +98,92 @@ class Column extends Component {
      * Submits form and closes window
      */
     onFormSubmit = (e) => {
-        this.close()
+        const { saveColumn } = this.props.columnActions
+
+        saveColumn(this.state.fields).then(() => {
+            this.close()
+        })
 
         e.preventDefault()
+    }
+
+    /**
+     * Updates state on textbox change
+     * @method
+     * @param {string} field Field that has to be changed
+     * @param {any} value New value
+     */
+    onTextboxChange = (field, value) => {
+        const fields = this.state.fields
+
+        fields[field] = value
+
+        this.setState({
+            fields
+        })
+    }
+
+    /**
+     * Updates name field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxNameChange = (e) => {
+        this.onTextboxChange('name', e.target.value)
+    }
+
+    /**
+     * Updates type field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxTypeChange = (e) => {
+        this.onTextboxChange('type', e.target.value)
+    }
+
+    /**
+     * Updates collation field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxCollationChange = (e) => {
+        this.onTextboxChange('collation', e.target.value)
+    }
+
+    /**
+     * Updates attributes field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxAttributesChange = (e) => {
+        this.onTextboxChange('attributes', e.target.value)
+    }
+
+    /**
+     * Updates null field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxNullChange = (e) => {
+        this.onTextboxChange('null', e.target.value)
+    }
+
+    /**
+     * Updates default field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxDefaultChange = (e) => {
+        this.onTextboxChange('default', e.target.value)
+    }
+
+    /**
+     * Updates extra field
+     * @method
+     * @param {object} e Event
+     */
+    onTextboxExtraChange = (e) => {
+        this.onTextboxChange('extra', e.target.value)
     }
 
     /**
@@ -149,7 +247,7 @@ class Column extends Component {
     render() {
         const
             b = block('column'),
-            { fetching, fields, params } = this.props
+            { fetching, params } = this.props
 
         return (
             <div className={b({state: this.state.minimized ? 'minimized' : null})}>
@@ -173,37 +271,69 @@ class Column extends Component {
                         <Form onReset={this.onFormReset} onSubmit={this.onFormSubmit}>
                             <FormRow>
                                 <FormField id="name" label="Name" required={true}>
-                                    <Textbox id="name" name="name" required={true} value={fields.name}/>
+                                    <Textbox
+                                        id="name"
+                                        name="name"
+                                       required={true}
+                                        value={this.state.fields.name}
+                                        onChange={this.onTextboxNameChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="type" label="Type" required={true}>
-                                    <Textbox id="type" name="type" required={true} value={fields.type} />
+                                    <Textbox
+                                        id="type"
+                                        name="type"
+                                        required={true}
+                                        value={this.state.fields.type}
+                                        onChange={this.onTextboxTypeChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="collation" label="Collation">
-                                    <Textbox id="collation" name="collation" value={fields.collation} />
+                                    <Textbox
+                                        id="collation"
+                                        name="collation"
+                                        value={this.state.fields.collation}
+                                        onChange={this.onTextboxCollationChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="attributes" label="Attributes">
-                                    <Textbox id="attributes" name="attributes" value={fields.attributes} />
+                                    <Textbox
+                                        id="attributes"
+                                        name="attributes"
+                                        value={this.state.fields.attributes}
+                                        onChange={this.onTextboxAttributesChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="null" label="Null" required={true}>
-                                    <Textbox id="null" name="null" required={true} value={fields.null} />
+                                    <Textbox
+                                        id="null"
+                                        name="null"
+                                        required={true}
+                                        value={this.state.fields.null}
+                                        onChange={this.onTextboxNullChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="default" label="Default" required={true}>
-                                    <Textbox id="default" name="default" required={true} value={fields.default} />
+                                    <Textbox
+                                        id="default"
+                                        name="default"
+                                        required={true}
+                                        value={this.state.fields.default}
+                                        onChange={this.onTextboxDefaultChange} />
                                 </FormField>
                             </FormRow>
                             <FormRow>
                                 <FormField id="extra" label="Extra">
-                                    <Textbox id="extra" name="extra" value={fields.extra} />
+                                    <Textbox
+                                        id="extra"
+                                        name="extra"
+                                        value={this.state.fields.extra}
+                                        onChange={this.onTextboxExtraChange} />
                                 </FormField>
                             </FormRow>
                             <FormButtons>
@@ -224,6 +354,7 @@ class Column extends Component {
 
 function mapStateToProps (state) {
     return {
+        error: state.column.error,
         fetching: state.column.fetching,
         fields: state.column.fields
     }

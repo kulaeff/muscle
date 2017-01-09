@@ -40,7 +40,8 @@ class Textbox extends Component {
      */
     static defaults = {
         required: false,
-        theme: 'dark'
+        theme: 'dark',
+        value: ''
     }
 
     /**
@@ -58,7 +59,7 @@ class Textbox extends Component {
                 required = Textbox.defaults.required,
                 theme = Textbox.defaults.theme,
                 title,
-                value,
+                value = Textbox.defaults.value,
                 onChange
             } = this.props
 

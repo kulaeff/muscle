@@ -1,6 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter'
 
+const HTTPStatusCodes = {
+    OK: 200,
+    CREATED: 201,
+    BADREQUEST: 400,
+    NOTFOUND: 404
+}
+
 class API {
     constructor() {
         this.axios = axios.create({
@@ -11,14 +18,13 @@ class API {
 
         if (process.env.NODE_ENV === 'development') {
             const
-                statusCode = 200,
-                delay = 800,
+                delay = 600,
                 mock = new MockAdapter(this.axios, {
                     delayResponse: delay
                 })
 
             mock
-                .onGet('/status').reply(statusCode, {
+                .onGet('/status').reply(HTTPStatusCodes.OK, {
                     server: {
                         upTime: 56456343445,
                         usage: {
@@ -33,7 +39,7 @@ class API {
                         }
                     }
                 })
-                .onGet('/column').reply(statusCode, {
+                .onGet('/column').reply(HTTPStatusCodes.OK, {
                     name: 'title',
                     type: 'int',
                     size: 5,
@@ -43,7 +49,8 @@ class API {
                     default: 'none',
                     extra: ''
                 })
-                .onGet('/columns').reply(statusCode, {
+                .onPut('/column').reply(HTTPStatusCodes.OK)
+                .onGet('/columns').reply(HTTPStatusCodes.OK, {
                     items: [
                         [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],
                         [ 'group', 'int (5)', '', 'unsigned', 'yes', 'null', '' ],
@@ -52,7 +59,7 @@ class API {
                         [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
                     ]
                 })
-                .onGet('/databases').reply(statusCode, {
+                .onGet('/databases').reply(HTTPStatusCodes.OK, {
                     items: [
                         { name: 'mysql' },
                         { name: 'loko' },
@@ -61,7 +68,7 @@ class API {
                         { name: 'money' }
                     ]
                 })
-                .onGet('/tables').reply(statusCode, {
+                .onGet('/tables').reply(HTTPStatusCodes.OK, {
                     items: [
                         [ 'userProfiles', '12', 'InnoDB', 'utf8_general_ci', '16Kb', 0 ],
                         [ 'userMessages', '75', 'InnoDB', 'utf8_general_ci', '59Kb', 0 ],
@@ -79,8 +86,17 @@ class API {
         return response
     }
 
+    /**
+     * Gets column's schema with specified name
+     * @func
+     * @param {string} name Column's name
+     */
     async getColumn() {
-        const response = await this.axios.get('column')
+        return this.axios.get('column')
+    }
+
+    async saveColumn(data) {
+        const response = await this.axios.put('column', data)
 
         return response
     }
