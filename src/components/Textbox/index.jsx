@@ -15,7 +15,6 @@ class Textbox extends Component {
      * @property {string} pattern Validation pattern
      * @property {string} placeholder The Textbox's placeholder
      * @property {bool} required Is required (value matches the pattern)
-     * @property {string} theme The Textbox's theme
      * @property {string} title Title or pattern description
      * @property {string} value The Textbox's value
      * @property {function} onChange The Textbox's change handler
@@ -26,7 +25,6 @@ class Textbox extends Component {
         pattern: PropTypes.string,
         placeholder: PropTypes.string,
         required: PropTypes.bool,
-        theme: PropTypes.oneOf(['dark', 'light']),
         title: PropTypes.string,
         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         onChange: PropTypes.func
@@ -40,7 +38,6 @@ class Textbox extends Component {
      */
     static defaults = {
         required: false,
-        theme: 'dark',
         value: ''
     }
 
@@ -57,7 +54,6 @@ class Textbox extends Component {
                 pattern,
                 placeholder,
                 required = Textbox.defaults.required,
-                theme = Textbox.defaults.theme,
                 title,
                 value = Textbox.defaults.value,
                 onChange
@@ -65,7 +61,7 @@ class Textbox extends Component {
 
         return (
             <input
-                className={b({theme})}
+                className={b()}
                 id={id}
                 pattern={pattern}
                 name={name}
