@@ -3,21 +3,27 @@ import block from 'bem-cn'
 import './style.less'
 
 class Title extends Component {
+    static propTypes = {
+        size: PropTypes.oneOf(['small', 'medium', 'large']),
+        title: PropTypes.string.isRequired,
+    }
+
+    static defaults = {
+        size: 'medium'
+    }
+
     render() {
         const
             b = block('title'),
-            { size = 'small', title, theme } = this.props
+            {
+                size = Title.defaults.size,
+                title
+            } = this.props
 
         return (
-            <span className={b({size, theme})}>{title}</span>
+            <span className={b({size})}>{title}</span>
         )
     }
-}
-
-Title.propTypes = {
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
-    title: PropTypes.string.isRequired,
-    theme: PropTypes.string,
 }
 
 export default Title

@@ -5,19 +5,20 @@ import {
 } from '../constants/settings'
 
 const initialState = {
-    fetching: false,
-    server: {
-    }
+    useSmartFolding: true
 }
 
 export default function settings(state = initialState, action) {
     switch(action.type) {
         case GET_SETTINGS_REQUEST:
-            return { ...state, fetching: true }
+            return { ...state }
         case GET_SETTINGS_SUCCESS:
-            return { ...state, fetching: false, server: action.payload.server }
+            return {
+                ...state,
+                useSmartFolding: action.payload.useSmartFolding
+            }
         case GET_SETTINGS_FAIL:
-            return { ...state, fetching: false }
+            return { ...state }
         default:
             return state
     }

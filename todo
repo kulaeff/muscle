@@ -4,3 +4,4 @@
 4. Feature: Version info in package.json has to be increased when builded
 5. Feature: Add postcss processing
 6. Feature: add themes support
+7. Refactoring: refactor all titles

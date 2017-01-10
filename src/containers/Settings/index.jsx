@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Checkbox from '../../components/Checkbox'
 import Title from '../../components/Title'
-import Spinner from '../../components/Spinner'
 import * as settingsActions from '../../actions/settings'
 import block from 'bem-cn'
 import './style.less';
@@ -15,12 +15,10 @@ class Settings extends Component {
     /**
      * Settings properties
      * @static
-     * @property {bool} fetching Is data fetching
-     * @property {object} server The server's settings
+     * @property {bool} useSmartFolding Use smart folding
      */
     static propTypes = {
-        fetching: PropTypes.bool,
-        server: PropTypes.object.isRequired,
+        useSmartFolding: PropTypes.bool.isRequired
     }
 
     /**
@@ -33,6 +31,14 @@ class Settings extends Component {
         getSettings()
     }
 
+    changeUseSmartFolding = () => {
+        const
+            { useSmartFolding } = this.props,
+            { saveSettingsItem } = this.props.settingsActions
+
+        saveSettingsItem('useSmartFolding', !useSmartFolding)
+    }
+
     /**
      * Renders Settings container
      * @method
@@ -40,17 +46,19 @@ class Settings extends Component {
     render() {
         const
             b = block('settings'),
-            { fetching } = this.props
+            { useSmartFolding } = this.props
 
         return (
             <div className={b()}>
                 <div className={b('title')}>
-                    <div className={b('title-label')}>
-                        <Title size="large" title="Server settings" theme="light" />
-                    </div>
-                    <div className={b('title-spinner')}>
-                        <Spinner active={fetching}/>
-                    </div>
+                    <Title size="medium" title="Settings" />
+                </div>
+                <div className={b('container')}>
+                    <Checkbox
+                        checked={useSmartFolding}
+                        id="useSmartFolding"
+                        label="Use smart folding"
+                        onChange={this.changeUseSmartFolding} />
                 </div>
             </div>
         )
@@ -59,8 +67,7 @@ class Settings extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.settings.fetching,
-        server: state.settings.server
+        useSmartFolding: state.settings.useSmartFolding
     }
 }
 

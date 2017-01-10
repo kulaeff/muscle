@@ -162,7 +162,7 @@ class Tables extends Component {
 
         router.push(`/databases/${routeParams.database}/${items[index][0]}`)
 
-        if (localStorage.getItem('useSmartFolding')) {
+        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
         }
     }
