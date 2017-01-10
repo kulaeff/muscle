@@ -8,13 +8,13 @@
         border-radius: 0.1rem;
         cursor: pointer;
         display: block;
-        padding: @mDefault / 4 @mDefault / 2 @mDefault / 4 (@mDefault / 2 + @sIcon * 1.5);
+        padding: @marginDefault / 4 @marginDefault / 2 @marginDefault / 4 (@marginDefault / 2 + @sIcon * 1.5);
         position: relative;
         svg {
             bottom: 0;
             fill: #fff;
             height: @sIcon;
-            left: @mDefault / 2;
+            left: @marginDefault / 2;
             margin: auto 0;
             opacity: 0.5;
             position: absolute;
@@ -28,9 +28,9 @@
         }
         // States
         &_state_selected {
-            background: @cAccent;
+            background: @colorAccent;
             &:hover {
-                background: @cAccent;
+                background: @colorAccent;
             }
         }
     }

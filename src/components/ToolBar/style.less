@@ -1,43 +1,45 @@
 @import (reference) '../../styles/variables';
 
-@sSmall: 2.8rem;
-@sLarge: 3rem;
-
 .toolbar {
     font-size: 0;
     position: relative;
     white-space: nowrap;
     &__button {
         background-color: transparent;
-        border: 2px solid @cToolButtonBorder;
+        border: 2px solid @toolButtonColorBorder;
         border-radius: 50%;
         box-sizing: border-box;
-        color: @cToolButtonBorder;
+        color: @toolButtonColorBorder;
         cursor: pointer;
         display: inline-block;
+        height: @toolButtonSize;
         font-size: 1.2rem;
         line-height: 1;
         outline: none;
         position: relative;
+        width: @toolButtonSize;
         svg {
             bottom: 0;
             display: block;
+            fill: currentColor;
+            height: @toolButtonSize - .4rem;
             left: 0;
             margin: auto;
             position: absolute;
             right: 0;
             top: 0;
+            width: @toolButtonSize - .4rem;
         }
         //
         &:hover {
-            background-color: @cToolButtonHoverBackground;
-            border-color: @cToolButtonHoverBorder;
-            color: @cToolButtonHoverBorder;
+            background-color: @toolButtonColorHoverBackground;
+            border-color: @toolButtonColorHoverBorder;
+            color: @toolButtonColorHoverBorder;
         }
         &:active {
-            background-color: @cToolButtonActiveBackground;
-            border-color: @cToolButtonActiveBorder;
-            color: negation(@cToolButtonActiveBorder, @cToolButtonActiveBorder);
+            background-color: @toolButtonColorActiveBackground;
+            border-color: @toolButtonColorActiveBorder;
+            color: negation(@toolButtonColorActiveBorder, @toolButtonColorActiveBorder);
         }
     }
     &__separator {
@@ -49,23 +51,12 @@
     &__button + &__button {
         margin-left: 0.4rem;
     }
-    // SIZES
-    // Small
-    &_size_small &__button {
-        height: @sSmall + 0.4rem;
-        width: @sSmall + 0.4rem;
-        svg {
-            fill: currentColor;
-            height: @sSmall;
-            width: @sSmall;
-        }
-    }
     // STATES
     // Disabled
-    &_theme_dark &__button_state_disabled {
-        background-color: @cToolButtonDisabledBackground;
-        border-color: @cToolButtonDisabledBorder;
-        color: @cToolButtonDisabledBorder;
+    &__button_state_disabled {
+        background-color: @toolButtonColorDisabledBackground;
+        border-color: @toolButtonColorDisabledBorder;
+        color: @toolButtonColorDisabledBorder;
         pointer-events: none;
     }
 }

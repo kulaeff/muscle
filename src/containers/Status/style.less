@@ -1,16 +1,16 @@
 @import (reference) '../../styles/variables';
 
 .status {
-    background: @cSecondary;
+    background: @colorMediumGray;
     color: #fff;
     height: 100%;
     &__indicators {
         display: block;
-        margin-top: @mDefault / 2;
-        padding: 0 @mDefault;
+        margin-top: @marginDefault / 2;
+        padding: 0 @marginDefault;
         &-container {
             display: flex;
-            margin-top: @mDefault / 4;
+            margin-top: @marginDefault / 4;
         }
         &-title {
             display: block;
@@ -30,7 +30,7 @@
             color: #707274;
             font-size: 1.8rem;
             font-weight: 600;
-            margin-left: @mDefault / 4;
+            margin-left: @marginDefault / 4;
             text-transform: uppercase;
         }
         &-value {
@@ -41,19 +41,19 @@
         box-sizing: border-box;
         display: table;
         height: 4.8rem;
-        padding: 0 @mDefault;
+        padding: 0 @marginDefault;
         &-label {
             display: table-cell;
             vertical-align: middle;
         }
         &-spinner {
             display: table-cell;
-            padding-left: @mDefault / 2;
+            padding-left: @marginDefault / 2;
             vertical-align: middle;
         }
     }
     //
     &__indicators + &__indicators {
-        margin-top: @mDefault;
+        margin-top: @marginDefault;
     }
 }

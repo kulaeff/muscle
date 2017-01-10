@@ -58,16 +58,16 @@
         }
     }
     &__container {
-        background: @cSecondary;
-        border-right: 1px solid lighten(@cSecondary, 15%);
+        background: @colorMediumGray;
+        border-right: 1px solid lighten(@colorMediumGray, 15%);
         box-sizing: border-box;
         min-width: 70rem;
         max-width: 100rem;
-        padding: @mDefault * 0.75 @mDefault;
+        padding: @marginDefault * 0.75 @marginDefault;
         position: relative;
     }
     &__filters {
-        margin: @mDefault 0;
+        margin: @marginDefault 0;
     }
     &__header {
         display: flex;
@@ -75,11 +75,11 @@
     &__spinner {
         flex: 1;
         font-size: 0;
-        padding: 0.3rem @mDefault / 4 0;
+        padding: 0.3rem @marginDefault / 4 0;
         vertical-align: top;
     }
     &__toolbar {
-        margin: @mDefault 0;
+        margin: @marginDefault 0;
     }
     &__title {
         flex: 1 100%;
@@ -99,12 +99,12 @@
         }
     }
     &__tree {
-        margin-top: @mDefault / 2;
-        padding: 0 @mDefault / 2;
+        margin-top: @marginDefault / 2;
+        padding: 0 @marginDefault / 2;
     }
     //
     &__button + &__button {
-        margin-left: @mDefault / 4;
+        margin-left: @marginDefault / 4;
     }
     // STATES
     // Minimized
@@ -115,10 +115,10 @@
         cursor: pointer;
         min-width: initial;
         max-width: initial;
-        padding: @mDefault * 0.75 0;
-        width: @mDefault * @mDefault;
+        padding: @marginDefault * 0.75 0;
+        width: @marginDefault * @marginDefault;
         &:hover {
-            background: lighten(@cSecondary, 3%);
+            background: lighten(@colorMediumGray, 3%);
         }
     }
     &_state_minimized &__filters {
@@ -129,7 +129,7 @@
         left: 50%;
         line-height: 1;
         position: absolute;
-        top: @mDefault * 0.75;
+        top: @marginDefault * 0.75;
         transform: translate(-100%, -25%) rotate(-90deg);
         transform-origin: 100% 50%;
     }

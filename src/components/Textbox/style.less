@@ -7,17 +7,17 @@
     color: #fff;
     font-family: 'Open Sans';
     font-size: 1.3rem;
-    height: @hControl;
+    height: @controlHeightDefault;
     outline: none;
-    padding: 0 @hControl * 0.3;
+    padding: 0 @controlHeightDefault * 0.3;
     position: relative;
-    transition: background-color @dControl linear, border-color @dControl linear;
+    transition: background-color @animationDelayControl linear, border-color @animationDelayControl linear;
     width: 100%;
     &:hover {
         border-color: rgba(255, 255, 255, 0.15);
     }
     &:focus {
-        border-color: @cAccent;
+        border-color: @colorAccent;
         background-color: rgba(0, 0, 0, 0.2);
     }
     &:disabled {

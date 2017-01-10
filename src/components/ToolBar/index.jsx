@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import ToolBarButton from './ToolBarButton'
 import ToolBarSeparator from './ToolBarSeparator'
 import block from 'bem-cn'
@@ -12,12 +12,8 @@ class ToolBar extends Component {
     /**
      * ToolBar properties
      * @static
-     * @property {string} size The size of the toolbar
-     * @property {string} theme The theme of the toolbar
      */
     static propTypes = {
-        size: PropTypes.oneOf(['small', 'large']),
-        theme: PropTypes.oneOf(['dark', 'light'])
     }
 
     /**
@@ -25,8 +21,6 @@ class ToolBar extends Component {
      * @static
      */
     static defaults = {
-        size: 'small',
-        theme: 'dark'
     }
 
     /**
@@ -36,10 +30,10 @@ class ToolBar extends Component {
     render() {
         const
             b = block('toolbar'),
-            { children, size = ToolBar.defaults.size, theme = ToolBar.defaults.theme } = this.props
+            { children } = this.props
 
         return (
-            <div className={b({size, theme})}>{children}</div>
+            <div className={b()}>{children}</div>
         )
     }
 }

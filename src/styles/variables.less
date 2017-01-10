@@ -1,35 +1,43 @@
-@cAccent: #37C;
-@cPrimary: #1b1d1f;
-@cSecondary: #2a2c2e;
-@cTertiary: #353739;
+// COMMON COLORS
+@colorAccent: #37C;
+@colorDarkGray: #1b1d1f;
+@colorMediumGray: #2a2c2e;
+@colorLightGray: #353739;
 
-// Button
-@cButtonBackground: rgba(0, 0, 0, 0);
-@cButtonBorder: rgba(255, 255, 255, .7);
-@cButtonActiveBackground: @cAccent;
-@cButtonActiveBorder: @cAccent;
-@cButtonDisabledBackground: rgba(0, 0, 0, 0);
-@cButtonDisabledBorder: rgba(255, 255, 255, 0.2);
-@cButtonHoverBackground: rgba(255, 255, 255, .1);
-@cButtonHoverBorder: rgba(255, 255, 255, .7);
+// CONTROL'S HEIGHT
+@controlHeightDefault: 3rem;
 
-@cToolButtonBackground: rgba(0, 0, 0, 0);
-@cToolButtonBorder: rgba(255, 255, 255, .7);
-@cToolButtonDisabledBackground: rgba(0, 0, 0, 0);
-@cToolButtonDisabledBorder: rgba(255, 255, 255, 0.2);
-@cToolButtonHoverBackground: rgba(0, 0, 0, 0);
-@cToolButtonHoverBorder: rgba(255, 255, 255, .85);
-@cToolButtonActiveBackground: rgba(255, 255, 255, 1);
-@cToolButtonActiveBorder: rgba(255, 255, 255, 1);
+// MARGIN
+@marginDefault: 2.4rem;
 
-// Height of control (inputs, buttons, selects...)
-@hControl: 3rem;
+// ANIMATION'S DELAY
+@animationDelayDefault: 0.3s;
+@animationDelayControl: 0.06s;
 
-@mDefault: 2.4rem;
+// BUTTON
+@buttonBorderRadius: 0.4rem;
+@buttonBorderThickness: 2px;
+@buttonHeight: @controlHeightDefault * 1.1;
+@buttonColorBackground: rgba(0, 0, 0, 0);
+@buttonColorBorder: rgba(255, 255, 255, .8);
+@buttonColor: rgba(255, 255, 255, .8);
+@buttonColorActiveBackground: @colorAccent;
+@buttonColorActiveBorder: @colorAccent;
+@buttonColorActive: rgba(255, 255, 255, 1);
+@buttonColorDisabledBackground: rgba(0, 0, 0, 0);
+@buttonColorDisabledBorder: rgba(255, 255, 255, .2);
+@buttonColorDisabled: rgba(255, 255, 255, .2);
+@buttonColorHoverBackground: rgba(255, 255, 255, .1);
+@buttonColorHoverBorder: rgba(255, 255, 255, .8);
+@buttonColorHover: rgba(255, 255, 255, .8);
 
-// ANIMATION
-// Default animation delay
-@dDefault: 0.3s;
-
-// Delay for controls' animations
-@dControl: 0.06s;
+// TOOLBUTTON
+@toolButtonSize: 3.2rem;
+@toolButtonColorBackground: rgba(0, 0, 0, 0);
+@toolButtonColorBorder: rgba(255, 255, 255, .8);
+@toolButtonColorActiveBackground: rgba(255, 255, 255, 1);
+@toolButtonColorActiveBorder: rgba(255, 255, 255, 1);
+@toolButtonColorDisabledBackground: rgba(0, 0, 0, 0);
+@toolButtonColorDisabledBorder: rgba(255, 255, 255, 0.2);
+@toolButtonColorHoverBackground: rgba(0, 0, 0, 0);
+@toolButtonColorHoverBorder: rgba(255, 255, 255, .9);
