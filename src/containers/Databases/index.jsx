@@ -38,6 +38,7 @@ class Databases extends Component {
         super(props)
 
         this.state = {
+            filter: '',
             selectedIndex: null,
         }
 
@@ -141,21 +142,27 @@ class Databases extends Component {
     }
 
     /**
-     * Debounces textbox change handler
+     * Gets the list of databases filtered by string (debounced)
+     * @function
+     * @param {string} filter String used as filter
      */
-    debouncedTextboxFilterChange = (e) => {
-        const { setDatabasesFilter } = this.props.databasesActions
+    debouncedTextboxFilterChange = (token) => {
+        const { getDatabases } = this.props.databasesActions
 
-        setDatabasesFilter(e.target.value)
+        getDatabases(token)
     }
 
     /**
-     * Filters databases
+     * Stores the filter and invokes debounced handler
      */
     onTextboxFilterChange = (e) => {
         e.persist()
 
-        this.debouncedTextboxFilterChange(e)
+        this.setState({
+            filter: e.target.value
+        })
+
+        this.debouncedTextboxFilterChange(this.state.filter)
     }
 
     /**
@@ -223,6 +230,7 @@ class Databases extends Component {
                         <Textbox
                             id="filter"
                             placeholder="Filter by name..."
+                            value={this.state.filter}
                             onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>

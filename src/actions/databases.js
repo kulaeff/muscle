@@ -2,24 +2,22 @@ import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
     GET_DATABASES_FAIL,
-    SET_DATABASES_FILTER_REQUEST,
-    SET_DATABASES_FILTER_SUCCESS,
-    SET_DATABASES_FILTER_FAIL,
     SET_DATABASES_WINDOW_STATE
 } from '../constants/databases'
 
 /**
- * Gets databases
+ * Retrieves the list of databases
  * @function
+ * @param {string} token String used as filter
  */
-export function getDatabases() {
+export function getDatabases(token) {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_DATABASES_REQUEST
         })
 
         try {
-            const response = await api.getDatabases()
+            const response = await api.getDatabases(token)
 
             dispatch({
                 type: GET_DATABASES_SUCCESS,
@@ -59,33 +57,6 @@ export function restoreWindow() {
             dispatch({
                 type: SET_DATABASES_WINDOW_STATE,
                 payload: false,
-            })
-        }
-    }
-}
-
-/**
- * Gets databases filtered by token
- * @function
- * @param {string} token A string as a filter
- */
-export function setDatabasesFilter(token) {
-    return async (dispatch, getState, api) => {
-        dispatch({
-            type: SET_DATABASES_FILTER_REQUEST
-        })
-
-        try {
-            const response = await api.getDatabasesByFilter(token)
-
-            dispatch({
-                type: SET_DATABASES_FILTER_SUCCESS,
-                payload: response.data
-            })
-        } catch(ex) {
-            dispatch({
-                type: SET_DATABASES_FILTER_FAIL,
-                payload: ex
             })
         }
     }

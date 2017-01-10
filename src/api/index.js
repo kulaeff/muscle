@@ -95,38 +95,26 @@ class API {
         return this.axios.get('column')
     }
 
-    async saveColumn(data) {
-        const response = await this.axios.put('column', data)
-
-        return response
-    }
-
     async getColumns() {
         const response = await this.axios.get('columns')
 
         return response
     }
 
-    async getDatabases() {
-        const response = await this.axios.get('databases')
-
-        return response
-    }
-
-    async getDatabasesByFilter(token) {
+    async getDatabases(token) {
         const response = await this.axios.get('databases', { token })
 
         return response
     }
 
-    async getTables() {
-        const response = await this.axios.get('tables')
+    async getTables(database, token) {
+        const response = await this.axios.get('tables', { database, token })
 
         return response
     }
 
-    async getTablesByFilter(token) {
-        const response = await this.axios.get('tables', { token })
+    async saveColumn(data) {
+        const response = await this.axios.put('column', data)
 
         return response
     }

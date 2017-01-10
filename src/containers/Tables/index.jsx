@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 import * as tablesActions from '../../actions/tables'
+import * as databasesActions from '../../actions/databases'
 import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -38,6 +39,7 @@ class Tables extends Component {
         super(props)
 
         this.state = {
+            filter: '',
             selectedIndex: null,
         }
 
@@ -70,8 +72,6 @@ class Tables extends Component {
 
         // Load tables if selected database has changed
         if (params.database !== nextProps.params.database) {
-            console.log('database has changed...')
-
             this.setState({
                 selectedIndex: null
             })
@@ -79,21 +79,15 @@ class Tables extends Component {
             this.refresh()
         // Reset selectedindex if we close Table container
         } else if (!nextProps.params.hasOwnProperty('table')) {
-            console.log('table was closed...')
-
             this.setState({
                 selectedIndex: null
             })
         // Set selectedindex if we came from direct url (/databases/<name>)
         } else if (nextProps.params.hasOwnProperty('table') && items.length !== nextProps.items.length) {
-            console.log('came from direct url...')
-
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
             })
         }
-
-        console.log(this.state, this.props, nextProps)
     }
 
     /**
@@ -159,31 +153,44 @@ class Tables extends Component {
      */
     onDataTableChange = (index) => {
         const
-            { items, router, routeParams } = this.props
+            { items, router, routeParams } = this.props,
+            { minimizeWindow } = this.props.databasesActions
 
         this.setState({
             selectedIndex: index
         })
 
         router.push(`/databases/${routeParams.database}/${items[index][0]}`)
+
+        if (localStorage.getItem('useSmartFolding')) {
+            minimizeWindow()
+        }
     }
 
     /**
-     * Debounces textbox change handler
+     * Gets the list of tables filtered by string (debounced)
+     * @function
+     * @param {string} filter String used as filter
      */
-    debouncedTextboxFilterChange = (e) => {
-        const { setTablesFilter } = this.props.tablesActions
+    debouncedTextboxFilterChange = (token) => {
+        const
+            { params } = this.props,
+            { getTables } = this.props.tablesActions
 
-        setTablesFilter(e.target.value)
+        getTables(params.database, token)
     }
 
     /**
-     * Filters tables
+     * Stores the filter and invokes debounced handler
      */
     onTextboxFilterChange = (e) => {
         e.persist()
 
-        this.debouncedTextboxFilterChange(e)
+        this.setState({
+            filter: e.target.value
+        })
+
+        this.debouncedTextboxFilterChange(this.state.filter)
     }
 
     /**
@@ -203,8 +210,6 @@ class Tables extends Component {
             ],
             { children, fetching, minimized, items, params } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
-
-        console.log(this.state, ' in render')
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -250,6 +255,7 @@ class Tables extends Component {
                         <Textbox
                             id="filter"
                             placeholder="Filter by name..."
+                            value={this.state.filter}
                             onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
@@ -278,7 +284,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        tablesActions: bindActionCreators(tablesActions, dispatch)
+        tablesActions: bindActionCreators(tablesActions, dispatch),
+        databasesActions: bindActionCreators(databasesActions, dispatch)
     }
 }
 
