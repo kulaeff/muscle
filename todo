@@ -1,3 +1,6 @@
-1. Set tabindex
-2. Make font available locally
-3. Animations
+1. Refactoring: Set tabindex
+2. Refactoring: Make font available locally
+3. Feature: Animations
+4. Feature: Version info in package.json has to be increased when builded
+5. Feature: Add postcss processing
+6. Feature: add themes support
