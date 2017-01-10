@@ -355,7 +355,7 @@ class Column extends Component {
                             </FormRow>
                             <FormButtons>
                                 <FormButton>
-                                    <Button label="Save" type="submit" />
+                                    <Button disabled={fetching} label="Save" type="submit" />
                                 </FormButton>
                                 <FormButton>
                                     <Button label="Cancel" type="reset" />

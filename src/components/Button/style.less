@@ -3,31 +3,35 @@
 @cReset: #A03;
 
 .button {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: @cButtonBackground;
+    border: 2px solid @cButtonBorder;
+    border-radius: 2px;
+    box-sizing: border-box;
     color: #fff;
     cursor: pointer;
     font-family: 'Open Sans';
     font-size: 1.2rem;
     font-weight: 600;
+    height: @hControl * 1.1;
     line-height: 1;
-    min-width: 6rem;
+    min-width: 7rem;
     outline: none;
     padding: 0.9rem 1.4rem 0.8rem;
     position: relative;
     text-transform: uppercase;
-    transition: background-color @dControl linear, border-color @dControl linear;
+    transition: color @dControl linear, background-color @dControl linear, border-color @dControl linear;
     white-space: nowrap;
     &:hover {
-        border-color: @cAccent;
+        background-color: @cButtonHoverBackground;
     }
     &:active {
-        border-color: @cAccent;
-        background-color: @cAccent;
+        background-color: @cButtonActiveBackground;
+        border-color: @cButtonActiveBorder;
     }
     &:disabled {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.3);
+        background-color: @cButtonDisabledBackground;
+        border-color: @cButtonDisabledBorder;
+        color: @cButtonDisabledBorder;
         cursor: default;
         pointer-events: none;
         &:hover {
@@ -38,11 +42,11 @@
     // Reset
     &_type_reset {
         &:hover {
-            border-color: @cReset;
+            background-color: @cButtonHoverBackground;
         }
         &:active {
-            border-color: @cReset;
             background-color: @cReset;
+            border-color: @cReset;
         }
     }
 }

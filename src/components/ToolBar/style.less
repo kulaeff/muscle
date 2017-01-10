@@ -8,11 +8,11 @@
     position: relative;
     white-space: nowrap;
     &__button {
-        background-color: @cToolButton;
-        border: none;
+        background-color: transparent;
+        border: 2px solid @cToolButtonBorder;
         border-radius: 50%;
         box-sizing: border-box;
-        color: #fff;
+        color: @cToolButtonBorder;
         cursor: pointer;
         display: inline-block;
         font-size: 1.2rem;
@@ -30,10 +30,14 @@
         }
         //
         &:hover {
-            background-color: @cToolButtonHover;
+            background-color: @cToolButtonHoverBackground;
+            border-color: @cToolButtonHoverBorder;
+            color: @cToolButtonHoverBorder;
         }
         &:active {
-            background-color: @cToolButtonActive;
+            background-color: @cToolButtonActiveBackground;
+            border-color: @cToolButtonActiveBorder;
+            color: negation(@cToolButtonActiveBorder, @cToolButtonActiveBorder);
         }
     }
     &__separator {
@@ -59,8 +63,9 @@
     // STATES
     // Disabled
     &_theme_dark &__button_state_disabled {
-        background-color: @cToolButtonDisabled;
-        color: fadein(@cToolButtonDisabled, 15%);
+        background-color: @cToolButtonDisabledBackground;
+        border-color: @cToolButtonDisabledBorder;
+        color: @cToolButtonDisabledBorder;
         pointer-events: none;
     }
 }

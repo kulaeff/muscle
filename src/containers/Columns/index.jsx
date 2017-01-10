@@ -63,7 +63,7 @@ class Columns extends Component {
 
         if (params.table !== nextProps.params.table) {
             this.refresh()
-        } else if (params.column !== nextProps.params.column && !nextProps.params.hasOwnProperty('column')) {
+        } else if (!nextProps.params.hasOwnProperty('column')) {
             this.setState({
                 selectedIndex: null
             })

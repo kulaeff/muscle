@@ -70,18 +70,30 @@ class Tables extends Component {
 
         // Load tables if selected database has changed
         if (params.database !== nextProps.params.database) {
+            console.log('database has changed...')
+
+            this.setState({
+                selectedIndex: null
+            })
+
             this.refresh()
         // Reset selectedindex if we close Table container
-        } else if (params.table !== nextProps.params.table && !nextProps.params.hasOwnProperty('table')) {
+        } else if (!nextProps.params.hasOwnProperty('table')) {
+            console.log('table was closed...')
+
             this.setState({
                 selectedIndex: null
             })
         // Set selectedindex if we came from direct url (/databases/<name>)
-        } else if (items.length !== nextProps.items.length) {
+        } else if (nextProps.params.hasOwnProperty('table') && items.length !== nextProps.items.length) {
+            console.log('came from direct url...')
+
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
             })
         }
+
+        console.log(this.state, this.props, nextProps)
     }
 
     /**
@@ -141,7 +153,7 @@ class Tables extends Component {
     }
 
     /**
-     * Redirects to selected database details
+     * Redirects to selected table details
      * @method
      * @param {number} index The index of selected item
      */
@@ -191,6 +203,8 @@ class Tables extends Component {
             ],
             { children, fetching, minimized, items, params } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
+
+        console.log(this.state, ' in render')
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
