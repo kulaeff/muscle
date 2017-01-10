@@ -1,27 +1,28 @@
 @import (reference) '../../styles/variables';
 
 .textbox {
-    background-color: rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: @textboxColorBackground;
+    border: @textboxBorderThickness solid @textboxColorBorder;
     box-sizing: border-box;
-    color: #fff;
+    color: @textboxColor;
     font-family: 'Open Sans';
     font-size: 1.3rem;
-    height: @controlHeightDefault;
+    height: @textboxHeight;
     outline: none;
-    padding: 0 @controlHeightDefault * 0.3;
+    padding: 0 @textboxHeight * 0.3;
     position: relative;
     transition: background-color @animationDelayControl linear, border-color @animationDelayControl linear;
     width: 100%;
     &:hover {
-        border-color: rgba(255, 255, 255, 0.15);
+        background-color: @textboxColorHoverBackground;
+        border-color: @textboxColorHoverBorder;
     }
     &:focus {
-        border-color: @colorAccent;
-        background-color: rgba(0, 0, 0, 0.2);
+        border-color: @textboxColorFocusBorder;
+        background-color: @textboxColorFocusBackground;
     }
     &:disabled {
         background-color: transparent;
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: @textboxColorDisabledBorder;
     }
 }

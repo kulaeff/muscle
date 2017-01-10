@@ -17,19 +17,32 @@
 // BUTTON
 @buttonBorderRadius: 0.4rem;
 @buttonBorderThickness: 2px;
+@buttonColor: rgba(255, 255, 255, .8);
 @buttonColorBackground: rgba(0, 0, 0, 0);
 @buttonColorBorder: rgba(255, 255, 255, .8);
-@buttonColor: rgba(255, 255, 255, .8);
+@buttonColorActive: rgba(255, 255, 255, 1);
 @buttonColorActiveBackground: @colorAccent;
 @buttonColorActiveBorder: @colorAccent;
-@buttonColorActive: rgba(255, 255, 255, 1);
+@buttonColorDisabled: rgba(255, 255, 255, .2);
 @buttonColorDisabledBackground: rgba(0, 0, 0, 0);
 @buttonColorDisabledBorder: rgba(255, 255, 255, .2);
-@buttonColorDisabled: rgba(255, 255, 255, .2);
+@buttonColorHover: rgba(255, 255, 255, .8);
 @buttonColorHoverBackground: rgba(255, 255, 255, .1);
 @buttonColorHoverBorder: rgba(255, 255, 255, .8);
-@buttonColorHover: rgba(255, 255, 255, .8);
 @buttonHeight: @controlHeightDefault * 1.1;
+
+// TEXTBOX
+@textboxBorderThickness: 1px;
+@textboxColor: #fff;
+@textboxColorBackground: rgba(0, 0, 0, 0.15);
+@textboxColorBorder: rgba(255, 255, 255, 0.15);
+@textboxColorDisabledBackground: rgba(0, 0, 0, 0);
+@textboxColorDisabledBorder: rgba(255, 255, 255, 0.1);
+@textboxColorFocusBackground: rgba(0, 0, 0, 0.2);
+@textboxColorFocusBorder: @colorAccent;
+@textboxColorHoverBackground: @textboxColorBackground;
+@textboxColorHoverBorder: rgba(255, 255, 255, 0.2);
+@textboxHeight: @controlHeightDefault;
 
 // TOOLBUTTON
 @toolButtonBorderRadius: 50%;
