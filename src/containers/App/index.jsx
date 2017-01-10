@@ -11,8 +11,12 @@ const navigationBarItems = [
     },
     {
         id: 'databases',
-        title: 'databases',
+        title: 'Databases',
     },
+    {
+        id: 'settings',
+        title: 'Settings',
+    }
 ]
 
 class App extends Component {
