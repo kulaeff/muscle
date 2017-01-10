@@ -41,7 +41,7 @@ class App extends Component {
         return (
             <div className={b()}>
                 <div className={b('panel', {position: 'left'})}>
-                    <div className={b('logo')}>
+                    <div className={b('logo')} title="Muscle">
                         <svg>
                             <use xlinkHref="#icon-logo" />
                         </svg>
