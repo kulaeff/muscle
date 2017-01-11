@@ -50,8 +50,10 @@ class Databases extends Component {
      * @method
      */
     componentDidMount() {
-        const { getDatabases } = this.props.databasesActions
+        const
+            { getDatabases, restoreWindow } = this.props.databasesActions
 
+        restoreWindow()
         getDatabases()
     }
 

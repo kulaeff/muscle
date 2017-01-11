@@ -68,21 +68,25 @@ class Tables extends Component {
      * @method
      */
     componentWillReceiveProps(nextProps) {
-        const { items, params } = this.props
+        const
+            { items, params } = this.props,
+            { restoreWindow } = this.props.tablesActions
 
-        // Load tables if selected database has changed
+        // Selected database has changed
         if (params.database !== nextProps.params.database) {
             this.setState({
                 selectedIndex: null
             })
 
+            restoreWindow()
+
             this.refresh()
-        // Reset selectedindex if we close Table container
+        // Table view was closed
         } else if (!nextProps.params.hasOwnProperty('table')) {
             this.setState({
                 selectedIndex: null
             })
-        // Set selectedindex if we came from direct url (/databases/<name>)
+        // Came from direct url (/databases/<name>)
         } else if (nextProps.params.hasOwnProperty('table') && items.length !== nextProps.items.length) {
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)

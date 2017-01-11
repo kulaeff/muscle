@@ -1,7 +1,10 @@
 import {
     GET_SETTINGS_REQUEST,
     GET_SETTINGS_SUCCESS,
-    GET_SETTINGS_FAIL
+    GET_SETTINGS_FAIL,
+    SAVE_SETTINGS_REQUEST,
+    SAVE_SETTINGS_SUCCESS,
+    SAVE_SETTINGS_FAIL
 } from '../constants/settings'
 
 export function getSettings() {
@@ -28,25 +31,26 @@ export function getSettings() {
     }
 }
 
-export function saveSettingsItem(item, value) {
+export function saveSettings(item, value) {
     return async (dispatch, getState) => {
         dispatch({
-            type: GET_SETTINGS_REQUEST
+            type: SAVE_SETTINGS_REQUEST
         })
 
         try {
             const state = getState().settings
 
-            state.useSmartFolding = value;
+            state.useSmartFolding = value
 
             localStorage.setItem(item, value)
 
             dispatch({
-                type: GET_SETTINGS_SUCCESS
+                type: SAVE_SETTINGS_SUCCESS,
+                payload: state
             })
         } catch(ex) {
             dispatch({
-                type: GET_SETTINGS_FAIL,
+                type: SAVE_SETTINGS_FAIL,
                 payload: ex
             })
         }

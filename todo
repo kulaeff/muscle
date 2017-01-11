@@ -5,3 +5,4 @@
 5. Feature: Add postcss processing
 6. Feature: add themes support
 7. Refactoring: refactor all titles
+8. Refactoring: move localStorage methods in a particular lib

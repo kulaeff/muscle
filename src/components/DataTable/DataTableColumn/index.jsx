@@ -36,7 +36,12 @@ class DataTableColumn extends Component {
                 className={b('column')}
                 title={title}
                 onClick={() => onClick(id)}>
-                {title}
+                <span className={b('column-title')}>{title}</span>
+                <span className={b('column-arrow')}>
+                    <svg>
+                        <use xlinkHref="#icon-data-table-column-arrow" />
+                    </svg>
+                </span>
             </th>
         )
     }

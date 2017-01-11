@@ -5,6 +5,7 @@ import Spinner from '../../components/Spinner'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import DataTable from '../../components/DataTable'
 import * as columnsActions from '../../actions/columns'
+import * as tablesActions from '../../actions/tables'
 import block from 'bem-cn'
 import './style.less';
 
@@ -139,13 +140,18 @@ class Columns extends Component {
      */
     onListViewChange = (index) => {
         const
-            { items, router, params } = this.props
+            { items, router, params } = this.props,
+            { minimizeWindow } = this.props.tablesActions
 
         this.setState({
             selectedIndex: index
         })
 
         router.push(`/databases/${params.database}/${params.table}/${items[index][0]}`)
+
+        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
+            minimizeWindow()
+        }
     }
 
     /**
@@ -232,7 +238,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        columnsActions: bindActionCreators(columnsActions, dispatch)
+        columnsActions: bindActionCreators(columnsActions, dispatch),
+        tablesActions: bindActionCreators(tablesActions, dispatch)
     }
 }
 

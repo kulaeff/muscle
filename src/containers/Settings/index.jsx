@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Checkbox from '../../components/Checkbox'
+import Switch from '../../components/Switch'
 import Title from '../../components/Title'
 import * as settingsActions from '../../actions/settings'
 import block from 'bem-cn'
@@ -34,9 +34,9 @@ class Settings extends Component {
     changeUseSmartFolding = () => {
         const
             { useSmartFolding } = this.props,
-            { saveSettingsItem } = this.props.settingsActions
+            { saveSettings } = this.props.settingsActions
 
-        saveSettingsItem('useSmartFolding', !useSmartFolding)
+        saveSettings('useSmartFolding', !useSmartFolding)
     }
 
     /**
@@ -54,11 +54,13 @@ class Settings extends Component {
                     <Title size="medium" title="Settings" />
                 </div>
                 <div className={b('container')}>
-                    <Checkbox
-                        checked={useSmartFolding}
-                        id="useSmartFolding"
-                        label="Use smart folding"
-                        onChange={this.changeUseSmartFolding} />
+                    <div className={b('panel')}>
+                        <Switch
+                            checked={useSmartFolding}
+                            id="useSmartFolding"
+                            label="Use auto folding of windows"
+                            onChange={this.changeUseSmartFolding} />
+                    </div>
                 </div>
             </div>
         )

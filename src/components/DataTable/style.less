@@ -12,10 +12,43 @@
     }
     &__column {
         color: rgba(255, 255, 255, .5);
-        font-size: 1rem;
+        cursor: pointer;
+        font-size: 0;
         padding: @marginDefault / 4 @marginDefault / 2;
+        position: relative;
         text-align: left;
-        text-transform: uppercase;
+        transition: color @animationDelayControl linear;
+        &-arrow {
+            @size: 1.1rem;
+
+            color: #fff;
+            display: block;
+            height: @size - 0.1rem;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: calc(~'50%' - (@size - 0.1rem) / 2);
+            transition: opacity @animationDelayControl linear;
+            width: @size;
+            svg {
+                display: block;
+                fill: currentColor;
+                height: @size - 0.1rem;
+                width: @size;
+            }
+        }
+        &-title {
+            color: currentColor;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        //
+        &:hover {
+            color: rgba(255, 255, 255, .7);
+        }
+        &:hover &-arrow {
+            opacity: 1;
+        }
     }
     &__item {
         cursor: pointer;
