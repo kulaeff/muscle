@@ -34,6 +34,43 @@ class DataTable extends Component {
     }
 
     /**
+     * Creates DataTable component
+     * @constructor
+     * @param {object} props Properties
+     */
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            sorting: {
+                index: null,
+                order: 1
+            }
+        }
+    }
+
+    /**
+     * Sets the index of a sorting column
+     */
+    onColumnClick = (index) => {
+        if (this.state.sorting.index === index) {
+            this.setState({
+                sorting: {
+                    index,
+                    order: 0 - this.state.sorting.order
+                }
+            })
+        } else {
+            this.setState({
+                sorting: {
+                    index,
+                    order: 1
+                }
+            })
+        }
+    }
+
+    /**
      * Handler for DataTableItem click event
      * @method
      * @param {string} id The ID of clicked item
@@ -55,6 +92,16 @@ class DataTable extends Component {
             b = block('data-table'),
             { columns, items, selectedIndex } = this.props
 
+        if (this.state.sorting.index !== null) {
+            items.sort((a, b) => {
+                if (this.state.sorting.order > 0) {
+                    return a[this.state.sorting.index] > b[this.state.sorting.index]
+                } else {
+                    return a[this.state.sorting.index] < b[this.state.sorting.index]
+                }
+            })
+        }
+
         return (
             items.length ?
             <table className={b()}>
@@ -63,10 +110,12 @@ class DataTable extends Component {
                         {
                             columns.map((column, index) =>
                                 <DataTableColumn
-                                    id={column.id}
+                                    id={index}
                                     key={index}
+                                    sorted={this.state.sorting.index === index}
+                                    sortingOrder={this.state.sorting.order}
                                     title={column.title}
-                                    onClick={() => {}} />
+                                    onClick={this.onColumnClick} />
                             )
                         }
                     </tr>
@@ -76,8 +125,8 @@ class DataTable extends Component {
                         items.map((item, index) =>
                             <DataTableItem
                                 cells={item}
-                                key={index}
                                 id={index}
+                                key={index}
                                 selected={selectedIndex === index}
                                 onClick={this.onItemClick} />
                         )

@@ -205,12 +205,12 @@ class Tables extends Component {
         const
             b = block('tables'),
             columns = [
-                { id: 'table', title: 'Table' },
-                { id: 'rows', title: 'Rows' },
-                { id: 'type', title: 'Type' },
-                { id: 'collation', title: 'Collation' },
-                { id: 'size', title: 'Size' },
-                { id: 'overhead', title: 'Overhead' }
+                { name: 'table', title: 'Table' },
+                { name: 'rows', title: 'Rows' },
+                { name: 'type', title: 'Type' },
+                { name: 'collation', title: 'Collation' },
+                { name: 'size', title: 'Size' },
+                { name: 'overhead', title: 'Overhead' }
             ],
             { children, fetching, minimized, items, params } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)

@@ -9,14 +9,23 @@ class DataTableColumn extends Component {
     /**
      * DataTableColumn properties
      * @static
-     * @property {string} id The id of the column
+     * @property {number} id The id of the column
+     * @property {string} name The name of the column
      * @property {string} title The title of the column
+     * @property {object} sorting The sorting info for column
      * @property {func} onClick Click event handler
      */
     static propTypes = {
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        sorted: PropTypes.bool,
+        sortingOrder: PropTypes.oneOf([1, -1]),
         title: PropTypes.string.isRequired,
         onClick: PropTypes.func.isRequired
+    }
+
+    static defaults = {
+        sorted: false,
+        sortingOrder: 1
     }
 
     /**
@@ -27,13 +36,21 @@ class DataTableColumn extends Component {
             b = block('data-table'),
             {
                 id,
+                sorted = DataTableColumn.defaults.sorted,
+                sortingOrder = DataTableColumn.defaults.sortingOrder,
                 title,
                 onClick
             } = this.props
 
+        let order = ''
+
+        if (sorted) {
+            order = sortingOrder > 0 ? 'asc' : 'desc'
+        }
+
         return (
             <th
-                className={b('column')}
+                className={b('column', {state: sorted ? 'sorted' : null, order})}
                 title={title}
                 onClick={() => onClick(id)}>
                 <span className={b('column-title')}>{title}</span>

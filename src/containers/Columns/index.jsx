@@ -162,13 +162,13 @@ class Columns extends Component {
         const
             b = block('columns'),
             columns = [
-                { id: 'name', title: 'Name' },
-                { id: 'type', title: 'Type' },
-                { id: 'collation', title: 'Collation' },
-                { id: 'attributes', title: 'Attributes' },
-                { id: 'null', title: 'Null' },
-                { id: 'default', title: 'Default' },
-                { id: 'extra', title: 'Extra' }
+                { name: 'name', title: 'Name' },
+                { name: 'type', title: 'Type' },
+                { name: 'collation', title: 'Collation' },
+                { name: 'attributes', title: 'Attributes' },
+                { name: 'null', title: 'Null' },
+                { name: 'default', title: 'Default' },
+                { name: 'extra', title: 'Extra' }
             ],
             { children, fetching, minimized, items, params } = this.props
 

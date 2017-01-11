@@ -23,7 +23,7 @@
         "no-debugger": "off",
         "no-console": "off",
         "no-const-assign": "error",
-        "no-magic-numbers": ["error", {"ignore": [0, 1]}],
+        //"no-magic-numbers": ["error", {"ignore": [-1, 0, 1]}],
         "no-multiple-empty-lines": ["error", {"max": 1}],
         "no-trailing-spaces": "error",
         "no-underscore-dangle": "off",
