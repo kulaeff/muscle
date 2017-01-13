@@ -1,123 +1,17 @@
 @import (reference) '../../styles/variables';
+@import (reference) '../../mixins/window';
 
 .column {
-    color: #fff;
-    display: flex;
-    height: 100%;
-    &__buttons {
-        flex: 1;
-        font-size: 0;
-        vertical-align: top;
-        white-space: nowrap;
-    }
-    &__button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        height: 2rem;
-        outline: none;
-        position: relative;
-        width: 2rem;
-        &_action_close {
-            &:before, &:after {
-                background-color: #fff;
-                content: '';
-                display: block;
-                height: 2px;
-                left: 0.4rem;
-                position: absolute;
-                top: 0.9rem;
-                width: 1.2rem;
-            }
-            &:after {
-                transform: rotate(45deg);
-            }
-            &:before {
-                transform: rotate(-45deg);
-            }
-        }
-        &_action_minimize {
-            &:before {
-                background-color: #fff;
-                bottom: 0.5rem;
-                content: '';
-                display: block;
-                height: 2px;
-                left: 0.4rem;
-                position: absolute;
-                width: 1.2rem;
-            }
-        }
-        //
-        &:hover {
-            background: rgba(255, 255, 255, 0.15)
-        }
-        //
-        &_action_close:hover {
-            background: #e04;
-        }
-    }
+    .window();
+
     &__container {
-        background: @colorMediumGray;
-        border-right: 1px solid lighten(@colorMediumGray, 15%);
-        box-sizing: border-box;
         min-width: 40rem;
         max-width: 50rem;
-        padding: @marginDefault * 0.75 @marginDefault;
-        position: relative;
     }
     &__form {
         margin-top: @marginDefault;
     }
-    &__header {
-        display: flex;
-    }
-    &__spinner {
-        flex: 1;
-        font-size: 0;
-        padding: 0.3rem @marginDefault / 4 0;
-        vertical-align: top;
-    }
-    &__title {
-        flex: 1 100%;
-        vertical-align: top;
-        &-label {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        &-description {
-            color: rgba(255, 255, 255, 0.5);
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-    }
-    //
-    &__button + &__button {
-        margin-left: @marginDefault / 4;
-    }
-    // STATES
-    &_state_minimized &__container {
-        cursor: pointer;
-        min-width: initial;
-        max-width: initial;
-    }
-    &_state_minimized &__spinner {
-        display: none;
-    }
-    &_state_minimized &__buttons {
-        display: none;
-    }
-    &_state_minimized &__toolbar {
-        display: none;
-    }
-    &_state_minimized &__filters {
-        display: none;
-    }
-    &_state_minimized &__table {
-        display: none;
+    &__view {
+        border-right: none;
     }
 }
