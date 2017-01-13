@@ -46,10 +46,10 @@ class Status extends Component {
             <div className={b()}>
                 <div className={b('title')}>
                     <div className={b('title-label')}>
-                        <Title size="large" title="Server status" theme="light" />
+                        <Title title="Server status" theme="light" />
                     </div>
                     <div className={b('title-spinner')}>
-                        <Spinner active={fetching}/>
+                        <Spinner active={fetching} type="rect" />
                     </div>
                 </div>
                 <div className={b('indicators')}>
