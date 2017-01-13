@@ -9,7 +9,8 @@ class Title extends Component {
     }
 
     static defaults = {
-        size: 'medium'
+        size: 'medium',
+        title: 'undefined (use title attr)'
     }
 
     render() {
@@ -17,7 +18,7 @@ class Title extends Component {
             b = block('title'),
             {
                 size = Title.defaults.size,
-                title
+                title = Title.defaults.title
             } = this.props
 
         return (
