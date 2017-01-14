@@ -78,4 +78,5 @@ class NavigationBar extends Component {
     }
 }
 
+export { NavigationBarItem }
 export default NavigationBar

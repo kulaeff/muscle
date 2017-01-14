@@ -12,7 +12,7 @@
     }
     &__login {
         background: @colorMediumGray;
-        border: 2px solid @colorAccent;
+        border-top: 3px solid @colorAccent;
         margin: 0 auto;
         padding: @marginDefault @marginDefault * 1.5 @marginDefault * 1.5;
         width: 30rem;
@@ -58,6 +58,11 @@
             top: 0;
             width: @itemSize;
         }
+    }
+    &__logout {
+        bottom: 0;
+        left: 0;
+        position: absolute;
     }
     &__nav {
         position: relative;

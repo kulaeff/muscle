@@ -55,13 +55,14 @@
         }
     }
     &__container {
-        background: @colorMediumGray;
+        background-color: @colorMediumGray;
         border-right: 1px solid lighten(@colorMediumGray, 15%);
         box-sizing: border-box;
         min-width: 40rem;
         max-width: 60rem;
         padding: @marginDefault * 0.75 @marginDefault;
         position: relative;
+        transition: background-color @animationDelayControl linear;
     }
     &__filters {
         margin: @marginDefault 0;

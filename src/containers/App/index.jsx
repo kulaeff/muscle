@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { browserHistory } from 'react-router';
 import Button from '../../components/Button'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
-import NavigationBar from '../../components/NavigationBar'
+import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -31,7 +31,7 @@ class App extends Component {
             buttonDisabled: false,
             password: sessionStorage.getItem('password'),
             selectedIndex: 1,
-            typedUser: '',
+            typedUser: 'root',
             typedPassword: '',
             user: sessionStorage.getItem('user')
         }
@@ -48,6 +48,7 @@ class App extends Component {
         sessionStorage.setItem('password', this.state.typedPassword)
 
         this.setState({
+            buttonDisabled: false,
             password: this.state.typedPassword,
             user: this.state.typedUser
         })
@@ -60,6 +61,17 @@ class App extends Component {
 
         this.setState({
             selectedIndex: navigationBarItems.findIndex(item => item.id === id)
+        })
+    }
+
+    onNavigationBarItemLogoutClick = () => {
+        sessionStorage.removeItem('user')
+        sessionStorage.removeItem('password')
+
+        this.setState({
+            password: null,
+            user: null,
+            typedPassword: ''
         })
     }
 
@@ -93,6 +105,13 @@ class App extends Component {
                                 items={navigationBarItems}
                                 selectedIndex={this.state.selectedIndex}
                                 onChange={this.onNavigationBarChange} />
+                        </div>
+                        <div className={b('logout')}>
+                            <NavigationBarItem
+                                id="logout"
+                                selected={false}
+                                title="Logout"
+                                onClick={this.onNavigationBarItemLogoutClick} />
                         </div>
                     </div>
                     <div className={b('panel', {position: 'middle'})}>

@@ -65,15 +65,15 @@ class Databases extends Component {
     componentWillReceiveProps(nextProps) {
         const { items, params } = this.props
 
-        // Set selectedindex if we came from direct url (/databases/<name>)
-        if (items.length !== nextProps.items.length) {
+        // We came from direct url (/databases/<name>)
+        if (nextProps.params.hasOwnProperty('database') && items.length !== nextProps.items.length) {
             const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
 
             this.setState({
                 selectedIndex: sortedItems.findIndex(item => item.name === params.database)
             })
-        // Reset selectedIndex if we closed Tables window
-        } else if (params.database !== nextProps.params.database && !nextProps.params.hasOwnProperty('database')) {
+        // Tables window was closed
+        } else if (!nextProps.params.hasOwnProperty('database')) {
             this.setState({
                 selectedIndex: null
             })
