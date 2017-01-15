@@ -65,6 +65,8 @@ class App extends Component {
     }
 
     onNavigationBarItemLogoutClick = () => {
+        const { router } = this.props
+
         sessionStorage.removeItem('user')
         sessionStorage.removeItem('password')
 
@@ -73,6 +75,8 @@ class App extends Component {
             user: null,
             typedPassword: ''
         })
+
+        router.push('/')
     }
 
     onTextboxUserChange = (e) => {
