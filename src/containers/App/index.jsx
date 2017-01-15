@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { browserHistory } from 'react-router';
+import * as appActions from '../../actions/app'
 import Button from '../../components/Button'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
@@ -24,34 +27,54 @@ const navigationBarItems = [
 ]
 
 class App extends Component {
+    /**
+     * Databases container properties
+     * @static
+     * @property {bool} fetching Is fetching data
+     * @property {object} credentials Credentials
+     */
+    static propTypes = {
+        fetching: PropTypes.bool,
+        credentials: PropTypes.shape({
+            user: PropTypes.string,
+            password: PropTypes.string
+        })
+    }
+
     constructor(props) {
         super(props)
 
         this.state = {
             buttonDisabled: false,
-            password: sessionStorage.getItem('password'),
             selectedIndex: 1,
-            typedUser: 'root',
-            typedPassword: '',
-            user: sessionStorage.getItem('user')
+            user: 'root',
+            password: ''
         }
     }
 
+    componentDidMount() {
+        const { getCredentials } = this.props.appActions
+
+        getCredentials()
+    }
+
     onFormSubmit = (e) => {
+        const
+            { saveCredentials } = this.props.appActions,
+            { router } = this.props
+
         this.setState({
             buttonDisabled: true
         })
 
-        // REFACTOR
-        // Check specified user/password and if they exist, save them to sessionStorage
-        sessionStorage.setItem('user', this.state.typedUser)
-        sessionStorage.setItem('password', this.state.typedPassword)
+        saveCredentials(this.state.user, this.state.password)
+            .then(() => {
+                this.setState({
+                    buttonDisabled: false,
+                })
 
-        this.setState({
-            buttonDisabled: false,
-            password: this.state.typedPassword,
-            user: this.state.typedUser
-        })
+                router.push('/databases')
+            })
 
         e.preventDefault()
     }
@@ -72,8 +95,7 @@ class App extends Component {
 
         this.setState({
             password: null,
-            user: null,
-            typedPassword: ''
+            user: null
         })
 
         router.push('/')
@@ -81,21 +103,22 @@ class App extends Component {
 
     onTextboxUserChange = (e) => {
         this.setState({
-            typedUser: e.target.value
+            user: e.target.value
         })
     }
 
     onTextboxPasswordChange = (e) => {
         this.setState({
-            typedPassword: e.target.value
+            password: e.target.value
         })
     }
 
     render() {
         const
-            b = block('app')
+            b = block('app'),
+            { credentials } = this.props
 
-        if (this.state.user !== null && this.state.password !== null) {
+        if (credentials.user !== null && credentials.password !== null) {
             return (
                 <div className={b()}>
                     <div className={b('panel', {position: 'left'})}>
@@ -146,7 +169,7 @@ class App extends Component {
                                                 id="user"
                                                 name="user"
                                                 required={true}
-                                                value={this.state.typedUser}
+                                                value={this.state.user}
                                                 onChange={this.onTextboxUserChange} />
                                         </FormField>
                                     </FormRow>
@@ -155,9 +178,8 @@ class App extends Component {
                                             <Textbox
                                                 id="password"
                                                 name="password"
-                                                required={true}
                                                 type="password"
-                                                value={this.state.typedPassword}
+                                                value={this.state.password}
                                                 onChange={this.onTextboxPasswordChange} />
                                         </FormField>
                                     </FormRow>
@@ -179,4 +201,17 @@ class App extends Component {
     }
 }
 
-export default App
+function mapStateToProps (state) {
+    return {
+        credentials: state.app.credentials,
+        fetching: state.app.fetching
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        appActions: bindActionCreators(appActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

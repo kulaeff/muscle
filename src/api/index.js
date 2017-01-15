@@ -24,21 +24,6 @@ class API {
                 })
 
             mock
-                .onGet('/status').reply(HTTPStatusCodes.OK, {
-                    server: {
-                        upTime: 56456343445,
-                        usage: {
-                            received: 245,
-                            sent: 129,
-                            total: 416
-                        },
-                        connections: {
-                            aborted: 6,
-                            failed: 25,
-                            total: 364
-                        }
-                    }
-                })
                 .onGet('/column').reply(HTTPStatusCodes.OK, {
                     name: 'title',
                     type: 'int',
@@ -59,6 +44,10 @@ class API {
                         [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
                     ]
                 })
+                .onGet('/credentials').reply(HTTPStatusCodes.OK, {
+                    user: 'test',
+                    password: 'test'
+                })
                 .onGet('/databases').reply(HTTPStatusCodes.OK, {
                     items: [
                         { name: 'mysql' },
@@ -67,6 +56,21 @@ class API {
                         { name: 'wheels' },
                         { name: 'money' }
                     ]
+                })
+                .onGet('/status').reply(HTTPStatusCodes.OK, {
+                    server: {
+                        upTime: 56456343445,
+                        usage: {
+                            received: 245,
+                            sent: 129,
+                            total: 416
+                        },
+                        connections: {
+                            aborted: 6,
+                            failed: 25,
+                            total: 364
+                        }
+                    }
                 })
                 .onGet('/tables').reply(HTTPStatusCodes.OK, {
                     items: [
@@ -78,6 +82,12 @@ class API {
                     ]
                 })
         }
+    }
+
+    async checkCredentials(user, password) {
+        const response = await this.axios.get('credentials', { user, password })
+
+        return response
     }
 
     async getStatus() {
