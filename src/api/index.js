@@ -16,7 +16,7 @@ class API {
             withCredentials: false
         })
 
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'prototyping') {
             const
                 delay = 400,
                 mock = new MockAdapter(this.axios, {

@@ -1,4 +1,4 @@
-var
+const
     path = require('path'),
     webpack = require('webpack'),
     svgStore = require('webpack-svgstore-plugin');
@@ -9,17 +9,20 @@ module.exports = {
             index: '/',
         },
     },
-    devtool: 'cheap-module-eval-source-map',
-    entry: [
+    devtool: process.env.NODE_ENV === 'development' ? 'source-map' : null,
+    entry: process.env.NODE_ENV === 'prototyping' ? [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
         'babel-polyfill',
         './src/index.jsx'
+    ] : [
+        'babel-polyfill',
+        './src/index.jsx'
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'build'),
         filename: 'bundle.js',
-        publicPath: '/static/'
+        publicPath: '/build/'
     },
     module: {
         preLoaders: [
@@ -59,7 +62,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.VERSION': JSON.stringify('1.0.0')
         }),
         new webpack.optimize.OccurenceOrderPlugin(),

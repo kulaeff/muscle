@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router';
 import * as appActions from '../../actions/app'
 import Button from '../../components/Button'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
@@ -80,7 +79,9 @@ class App extends Component {
     }
 
     onNavigationBarChange = (id) => {
-        browserHistory.push(`/${id}`)
+        const { router } = this.props
+
+        router.push(`/${id}`)
 
         this.setState({
             selectedIndex: navigationBarItems.findIndex(item => item.id === id)

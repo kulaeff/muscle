@@ -13,7 +13,7 @@ const
     store = configureStore(new API()),
     routes = configureRoutes(),
     history = syncHistoryWithStore(browserHistory, store),
-    __svg__ = { name: 'icons.svg', path: './**/*.svg' }
+    __svg__ = { name: './assets/icons.svg', path: './**/*.svg' }
 
 render(
     <Provider store={store}>
