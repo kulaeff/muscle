@@ -88,17 +88,19 @@ class App extends Component {
     }
 
     onNavigationBarItemLogoutClick = () => {
-        const { router } = this.props
+        const
+            { router } = this.props,
+            { removeCredentials } = this.props.appActions
 
-        sessionStorage.removeItem('user')
-        sessionStorage.removeItem('password')
+        removeCredentials()
+            .then(() => {
+                this.setState({
+                    password: '',
+                    user: 'root'
+                })
 
-        this.setState({
-            password: null,
-            user: null
-        })
-
-        router.push('/')
+                router.push('/')
+            })
     }
 
     onTextboxUserChange = (e) => {

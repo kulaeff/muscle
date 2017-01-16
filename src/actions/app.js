@@ -2,13 +2,40 @@ import {
     GET_CREDENTIALS_REQUEST,
     GET_CREDENTIALS_SUCCESS,
     GET_CREDENTIALS_FAIL,
+    REMOVE_CREDENTIALS_REQUEST,
+    REMOVE_CREDENTIALS_SUCCESS,
     SAVE_CREDENTIALS_REQUEST,
     SAVE_CREDENTIALS_SUCCESS,
     SAVE_CREDENTIALS_FAIL
 } from '../constants/app'
 
 /**
- * Checks credentials and save them to sessionStorage
+ * Remove credentials from sessionStorage (logout)
+ * @function
+ * @param {string} user User name
+ * @param {string} password Password
+ */
+export function removeCredentials() {
+    return async (dispatch) => {
+        dispatch({
+            type: REMOVE_CREDENTIALS_REQUEST
+        })
+
+        sessionStorage.removeItem('user')
+        sessionStorage.removeItem('password')
+
+        dispatch({
+            type: REMOVE_CREDENTIALS_SUCCESS,
+            payload: {
+                user: null,
+                password: null
+            }
+        })
+    }
+}
+
+/**
+ * Checks credentials and save them to sessionStorage (login)
  * @function
  * @param {string} user User name
  * @param {string} password Password
