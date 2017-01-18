@@ -53356,8 +53356,10 @@
 	         * @static
 	         * @property {number} id The id of the column
 	         * @property {string} name The name of the column
+	         * @property {bool} sorted Is sorting enabled
+	         * @property {number} sortingOrder Sorting order
+	         * @property {object} style Style
 	         * @property {string} title The title of the column
-	         * @property {object} sorting The sorting info for column
 	         * @property {func} onClick Click event handler
 	         */
 	        value: function render() {
