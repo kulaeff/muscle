@@ -12,8 +12,7 @@ class API {
     constructor() {
         this.axios = axios.create({
             baseURL: '/api',
-            responseType: 'json',
-            withCredentials: false
+            responseType: 'json'
         })
 
         if (process.env.NODE_ENV === 'prototyping') {
@@ -85,7 +84,7 @@ class API {
     }
 
     async checkCredentials(user, password) {
-        const response = await this.axios.get('credentials', { user, password })
+        const response = await this.axios.get('credentials', { params: { user, password }})
 
         return response
     }
@@ -106,21 +105,15 @@ class API {
     }
 
     async getColumns() {
-        const response = await this.axios.get('columns')
-
-        return response
+        return this.axios.get('columns')
     }
 
     async getDatabases(token) {
-        const response = await this.axios.get('databases', { token })
-
-        return response
+        return this.axios.get('databases', { token })
     }
 
     async getTables(database, token) {
-        const response = await this.axios.get('tables', { database, token })
-
-        return response
+        return this.axios.get('tables', { params: { database, token }})
     }
 
     async saveColumn(data) {

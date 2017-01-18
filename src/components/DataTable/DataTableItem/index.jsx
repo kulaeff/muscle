@@ -16,9 +16,11 @@ class DataTableItem extends Component {
      */
     static propTypes = {
         cells: PropTypes.array.isRequired,
+        columns: PropTypes.array.isRequired,
         id: PropTypes.number.isRequired,
         selected: PropTypes.bool.isRequired,
-        onClick: PropTypes.func.isRequired
+        onClick: PropTypes.func.isRequired,
+        onValueTransform: PropTypes.func
     }
 
     constructor(props) {
@@ -32,22 +34,30 @@ class DataTableItem extends Component {
         const
             b = block('data-table'),
             {
-                id,
                 cells,
+                columns,
+                id,
                 selected = DataTableItem.defaults.selected,
-                onClick
+                onClick,
+                onValueTransform
             } = this.props
 
         return (
             <tr
-                className={b('item', {state: selected ? 'selected' : null})}
+                className={b('item', { state: selected ? 'selected' : null })}
                 onClick={() => onClick(id)}>
                 {
-                    cells.map((cell, index) =>
-                        <td className={b('item-cell')} key={index}>
-                            {cell}
+                    cells.map((cell, index) => {
+                        const column = columns[index]
+
+                        return <td className={b('item-cell', {
+                            alignment: column.style ? column.style.alignment : null
+                        })} key={index}>
+                            {
+                                onValueTransform ? onValueTransform(column.name, cell) : cell
+                            }
                         </td>
-                    )
+                    })
                 }
             </tr>
         )

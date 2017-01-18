@@ -19,13 +19,19 @@ class DataTableColumn extends Component {
         id: PropTypes.number.isRequired,
         sorted: PropTypes.bool,
         sortingOrder: PropTypes.oneOf([1, -1]),
+        style: PropTypes.shape({
+            alignment: PropTypes.string
+        }),
         title: PropTypes.string.isRequired,
         onClick: PropTypes.func.isRequired
     }
 
     static defaults = {
         sorted: false,
-        sortingOrder: 1
+        sortingOrder: 1,
+        style: {
+            alignment: 'left'
+        }
     }
 
     /**
@@ -38,6 +44,7 @@ class DataTableColumn extends Component {
                 id,
                 sorted = DataTableColumn.defaults.sorted,
                 sortingOrder = DataTableColumn.defaults.sortingOrder,
+                style = DataTableColumn.defaults.style,
                 title,
                 onClick
             } = this.props
@@ -50,7 +57,11 @@ class DataTableColumn extends Component {
 
         return (
             <th
-                className={b('column', {state: sorted ? 'sorted' : null, order})}
+                className={b('column', {
+                    alignment: style.alignment,
+                    order,
+                    state: sorted ? 'sorted' : null
+                })}
                 title={title}
                 onClick={() => onClick(id)}>
                 <span className={b('column-title')}>{title}</span>

@@ -41,6 +41,7 @@ class Status extends Component {
         const
             b = block('status'),
             { fetching, server } = this.props
+            // received = bytesToString(server.usage.received)
 
         return (
             <div className={b()}>

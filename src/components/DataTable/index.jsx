@@ -21,7 +21,8 @@ class DataTable extends Component {
         columns: PropTypes.array.isRequired,
         items: PropTypes.array,
         selectedIndex: PropTypes.number,
-        onChange: PropTypes.func.isRequired
+        onChange: PropTypes.func.isRequired,
+        onValueTransform: PropTypes.func
     }
 
     /**
@@ -90,14 +91,16 @@ class DataTable extends Component {
     render() {
         const
             b = block('data-table'),
-            { columns, items, selectedIndex } = this.props
+            { columns, items, selectedIndex, onValueTransform } = this.props
 
         if (this.state.sorting.index !== null) {
             items.sort((a, b) => {
-                if (this.state.sorting.order > 0) {
-                    return a[this.state.sorting.index] > b[this.state.sorting.index]
+                if (a[this.state.sorting.index] > b[this.state.sorting.index]) {
+                    return this.state.sorting.order
+                } else if (a[this.state.sorting.index] < b[this.state.sorting.index]) {
+                    return -this.state.sorting.order
                 } else {
-                    return a[this.state.sorting.index] < b[this.state.sorting.index]
+                    return 0
                 }
             })
         }
@@ -114,6 +117,7 @@ class DataTable extends Component {
                                     key={index}
                                     sorted={this.state.sorting.index === index}
                                     sortingOrder={this.state.sorting.order}
+                                    style={column.style}
                                     title={column.title}
                                     onClick={this.onColumnClick} />
                             )
@@ -125,10 +129,12 @@ class DataTable extends Component {
                         items.map((item, index) =>
                             <DataTableItem
                                 cells={item}
+                                columns={columns}
                                 id={index}
                                 key={index}
                                 selected={selectedIndex === index}
-                                onClick={this.onItemClick} />
+                                onClick={this.onItemClick}
+                                onValueTransform={onValueTransform} />
                         )
                     }
                 </tbody>

@@ -7,3 +7,4 @@
 7. Refactoring: refactor all titles
 8. Refactoring: move localStorage methods in a particular lib
 9. Bug: DataTableColumn sort doesn't work in Edge browser
+10. Test: write tests

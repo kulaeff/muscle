@@ -33755,15 +33755,18 @@
 	                _props = this.props,
 	                columns = _props.columns,
 	                items = _props.items,
-	                selectedIndex = _props.selectedIndex;
+	                selectedIndex = _props.selectedIndex,
+	                onValueTransform = _props.onValueTransform;
 	
 	
 	            if (this.state.sorting.index !== null) {
 	                items.sort(function (a, b) {
-	                    if (_this2.state.sorting.order > 0) {
-	                        return a[_this2.state.sorting.index] > b[_this2.state.sorting.index];
+	                    if (a[_this2.state.sorting.index] > b[_this2.state.sorting.index]) {
+	                        return _this2.state.sorting.order;
+	                    } else if (a[_this2.state.sorting.index] < b[_this2.state.sorting.index]) {
+	                        return -_this2.state.sorting.order;
 	                    } else {
-	                        return a[_this2.state.sorting.index] < b[_this2.state.sorting.index];
+	                        return 0;
 	                    }
 	                });
 	            }
@@ -33783,6 +33786,7 @@
 	                                key: index,
 	                                sorted: _this2.state.sorting.index === index,
 	                                sortingOrder: _this2.state.sorting.order,
+	                                style: column.style,
 	                                title: column.title,
 	                                onClick: _this2.onColumnClick });
 	                        })
@@ -33794,10 +33798,12 @@
 	                    items.map(function (item, index) {
 	                        return _react2.default.createElement(_DataTableItem2.default, {
 	                            cells: item,
+	                            columns: columns,
 	                            id: index,
 	                            key: index,
 	                            selected: selectedIndex === index,
-	                            onClick: _this2.onItemClick });
+	                            onClick: _this2.onItemClick,
+	                            onValueTransform: onValueTransform });
 	                    })
 	                ),
 	                _react2.default.createElement(
@@ -33820,7 +33826,8 @@
 	    columns: _react.PropTypes.array.isRequired,
 	    items: _react.PropTypes.array,
 	    selectedIndex: _react.PropTypes.number,
-	    onChange: _react.PropTypes.func.isRequired
+	    onChange: _react.PropTypes.func.isRequired,
+	    onValueTransform: _react.PropTypes.func
 	};
 	DataTable.defaults = {
 	    selectedIndex: null
@@ -40918,7 +40925,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".data-table {\n  border-collapse: collapse;\n  position: relative;\n  width: 100%;\n}\n.data-table__footer {\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\n}\n.data-table__header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n}\n.data-table__column {\n  color: rgba(255, 255, 255, 0.5);\n  cursor: pointer;\n  font-size: 0;\n  padding: 0.6rem;\n  position: relative;\n  text-align: left;\n  transition: color 0.06s linear;\n}\n.data-table__column-arrow {\n  color: #ffffff;\n  display: block;\n  height: 1rem;\n  opacity: 0;\n  position: absolute;\n  right: 0.6rem;\n  top: calc(50% - 0.5rem);\n  transition: opacity 0.06s linear;\n  width: 1.1rem;\n}\n.data-table__column-arrow svg {\n  display: block;\n  fill: currentColor;\n  height: 1rem;\n  width: 1.1rem;\n}\n.data-table__column-title {\n  color: currentColor;\n  font-size: 1rem;\n  text-transform: uppercase;\n}\n.data-table__column:first-child {\n  padding-left: 1.2rem;\n}\n.data-table__column:last-child {\n  padding-right: 1.2rem;\n}\n.data-table__column:last-child .data-table__column-arrow {\n  right: 1.2rem;\n}\n.data-table__column:hover {\n  color: rgba(255, 255, 255, 0.7);\n}\n.data-table__column:hover .data-table__column-arrow {\n  opacity: 1;\n}\n.data-table__column_state_sorted .data-table__column-arrow {\n  opacity: 1;\n}\n.data-table__column_order_desc .data-table__column-arrow {\n  margin-top: 1px;\n  transform: rotate(180deg);\n}\n.data-table__item {\n  cursor: pointer;\n  transition: background-color 0.06s linear;\n}\n.data-table__item-cell {\n  padding: 0.6rem;\n}\n.data-table__item-cell:first-child {\n  padding-left: 1.2rem;\n}\n.data-table__item-cell:last-child {\n  padding-right: 1.2rem;\n}\n.data-table__item:hover {\n  background-color: rgba(255, 255, 255, 0.05);\n}\n.data-table__item_state_selected {\n  background-color: #37C;\n}\n.data-table__item_state_selected:hover {\n  background-color: #37C;\n}\n", ""]);
+	exports.push([module.id, ".data-table {\n  border-collapse: collapse;\n  position: relative;\n  width: 100%;\n}\n.data-table__footer {\n  border-top: 1px solid rgba(255, 255, 255, 0.1);\n}\n.data-table__header {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n}\n.data-table__column {\n  color: rgba(255, 255, 255, 0.5);\n  cursor: pointer;\n  font-size: 0;\n  min-width: 5rem;\n  padding: 0.6rem;\n  position: relative;\n  text-align: left;\n  transition: color 0.06s linear;\n}\n.data-table__column-arrow {\n  color: #ffffff;\n  display: block;\n  height: 1rem;\n  opacity: 0;\n  position: absolute;\n  top: calc(50% - 0.5rem);\n  transition: opacity 0.06s linear;\n  width: 1.1rem;\n}\n.data-table__column-arrow svg {\n  display: block;\n  fill: currentColor;\n  height: 1rem;\n  width: 1.1rem;\n}\n.data-table__column-title {\n  color: currentColor;\n  font-size: 1rem;\n  text-transform: uppercase;\n}\n.data-table__column:first-child {\n  padding-left: 1.2rem;\n}\n.data-table__column:last-child {\n  padding-right: 1.2rem;\n}\n.data-table__column:last-child .data-table__column-arrow {\n  right: 1.2rem;\n}\n.data-table__column:hover {\n  color: rgba(255, 255, 255, 0.7);\n}\n.data-table__column:hover .data-table__column-arrow {\n  opacity: 1;\n}\n.data-table__column_alignment_left {\n  text-align: left;\n}\n.data-table__column_alignment_right {\n  text-align: right;\n}\n.data-table__column_alignment_left .data-table__column-arrow {\n  right: 0.6rem;\n}\n.data-table__column_alignment_right .data-table__column-arrow {\n  left: 0.6rem;\n}\n.data-table__column_order_desc .data-table__column-arrow {\n  margin-top: 1px;\n  transform: rotate(180deg);\n}\n.data-table__column_state_sorted .data-table__column-arrow {\n  opacity: 1;\n}\n.data-table__item {\n  cursor: pointer;\n  transition: background-color 0.06s linear;\n}\n.data-table__item-cell {\n  padding: 0.6rem;\n}\n.data-table__item-cell:first-child {\n  padding-left: 1.2rem;\n}\n.data-table__item-cell:last-child {\n  padding-right: 1.2rem;\n}\n.data-table__item-cell_alignment_left {\n  text-align: left;\n}\n.data-table__item-cell_alignment_right {\n  text-align: right;\n}\n.data-table__item:hover {\n  background-color: rgba(255, 255, 255, 0.05);\n}\n.data-table__item_state_selected {\n  background-color: #37C;\n}\n.data-table__item_state_selected:hover {\n  background-color: #37C;\n}\n", ""]);
 	
 	// exports
 
@@ -40960,7 +40967,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".navigation-bar {\n  position: relative;\n}\n.navigation-bar__item {\n  box-sizing: border-box;\n  cursor: pointer;\n  display: block;\n  height: 48px;\n  position: relative;\n  width: 48px;\n}\n.navigation-bar__item svg {\n  display: block;\n  fill: #fff;\n  height: 48px;\n  margin: auto;\n  opacity: 0.7;\n  width: 48px;\n}\n.navigation-bar__item:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.navigation-bar__item_icon_status svg {\n  fill: none;\n  stroke: #fff;\n}\n.navigation-bar__item_state_selected {\n  background: #37C;\n}\n.navigation-bar__item_state_selected svg {\n  opacity: 1;\n}\n.navigation-bar__item_state_selected:hover {\n  background: #37C;\n}\n", ""]);
+	exports.push([module.id, ".navigation-bar {\n  position: relative;\n}\n.navigation-bar__item {\n  box-sizing: border-box;\n  cursor: pointer;\n  display: block;\n  height: 48px;\n  position: relative;\n  width: 48px;\n}\n.navigation-bar__item svg {\n  display: block;\n  fill: #fff;\n  height: 48px;\n  margin: auto;\n  opacity: 0.7;\n  width: 48px;\n}\n.navigation-bar__item:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.navigation-bar__item_icon_logout svg {\n  fill: none;\n  stroke: #fff;\n}\n.navigation-bar__item_icon_status svg {\n  fill: none;\n  stroke: #fff;\n}\n.navigation-bar__item_state_selected {\n  background: #37C;\n}\n.navigation-bar__item_state_selected svg {\n  opacity: 1;\n}\n.navigation-bar__item_state_selected:hover {\n  background: #37C;\n}\n", ""]);
 	
 	// exports
 
@@ -52912,8 +52919,7 @@
 	
 	        this.axios = _axios2.default.create({
 	            baseURL: '/api',
-	            responseType: 'json',
-	            withCredentials: false
+	            responseType: 'json'
 	        });
 	
 	        if (false) {
@@ -52968,7 +52974,7 @@
 	                        switch (_context.prev = _context.next) {
 	                            case 0:
 	                                _context.next = 2;
-	                                return this.axios.get('credentials', { user: user, password: password });
+	                                return this.axios.get('credentials', { params: { user: user, password: password } });
 	
 	                            case 2:
 	                                response = _context.sent;
@@ -53053,19 +53059,13 @@
 	        key: 'getColumns',
 	        value: function () {
 	            var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
-	                var response;
 	                return regeneratorRuntime.wrap(function _callee4$(_context4) {
 	                    while (1) {
 	                        switch (_context4.prev = _context4.next) {
 	                            case 0:
-	                                _context4.next = 2;
-	                                return this.axios.get('columns');
+	                                return _context4.abrupt('return', this.axios.get('columns'));
 	
-	                            case 2:
-	                                response = _context4.sent;
-	                                return _context4.abrupt('return', response);
-	
-	                            case 4:
+	                            case 1:
 	                            case 'end':
 	                                return _context4.stop();
 	                        }
@@ -53083,19 +53083,13 @@
 	        key: 'getDatabases',
 	        value: function () {
 	            var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(token) {
-	                var response;
 	                return regeneratorRuntime.wrap(function _callee5$(_context5) {
 	                    while (1) {
 	                        switch (_context5.prev = _context5.next) {
 	                            case 0:
-	                                _context5.next = 2;
-	                                return this.axios.get('databases', { token: token });
+	                                return _context5.abrupt('return', this.axios.get('databases', { token: token }));
 	
-	                            case 2:
-	                                response = _context5.sent;
-	                                return _context5.abrupt('return', response);
-	
-	                            case 4:
+	                            case 1:
 	                            case 'end':
 	                                return _context5.stop();
 	                        }
@@ -53113,19 +53107,13 @@
 	        key: 'getTables',
 	        value: function () {
 	            var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(database, token) {
-	                var response;
 	                return regeneratorRuntime.wrap(function _callee6$(_context6) {
 	                    while (1) {
 	                        switch (_context6.prev = _context6.next) {
 	                            case 0:
-	                                _context6.next = 2;
-	                                return this.axios.get('tables', { database: database, token: token });
+	                                return _context6.abrupt('return', this.axios.get('tables', { params: { database: database, token: token } }));
 	
-	                            case 2:
-	                                response = _context6.sent;
-	                                return _context6.abrupt('return', response);
-	
-	                            case 4:
+	                            case 1:
 	                            case 'end':
 	                                return _context6.stop();
 	                        }
@@ -53380,6 +53368,8 @@
 	                sorted = _props$sorted === undefined ? DataTableColumn.defaults.sorted : _props$sorted,
 	                _props$sortingOrder = _props.sortingOrder,
 	                sortingOrder = _props$sortingOrder === undefined ? DataTableColumn.defaults.sortingOrder : _props$sortingOrder,
+	                _props$style = _props.style,
+	                style = _props$style === undefined ? DataTableColumn.defaults.style : _props$style,
 	                title = _props.title,
 	                _onClick = _props.onClick;
 	
@@ -53393,7 +53383,11 @@
 	            return _react2.default.createElement(
 	                'th',
 	                {
-	                    className: b('column', { state: sorted ? 'sorted' : null, order: order }),
+	                    className: b('column', {
+	                        alignment: style.alignment,
+	                        order: order,
+	                        state: sorted ? 'sorted' : null
+	                    }),
 	                    title: title,
 	                    onClick: function onClick() {
 	                        return _onClick(id);
@@ -53423,12 +53417,18 @@
 	    id: _react.PropTypes.number.isRequired,
 	    sorted: _react.PropTypes.bool,
 	    sortingOrder: _react.PropTypes.oneOf([1, -1]),
+	    style: _react.PropTypes.shape({
+	        alignment: _react.PropTypes.string
+	    }),
 	    title: _react.PropTypes.string.isRequired,
 	    onClick: _react.PropTypes.func.isRequired
 	};
 	DataTableColumn.defaults = {
 	    sorted: false,
-	    sortingOrder: 1
+	    sortingOrder: 1,
+	    style: {
+	        alignment: 'left'
+	    }
 	};
 	exports.default = DataTableColumn;
 	
@@ -53496,11 +53496,13 @@
 	        value: function render() {
 	            var b = (0, _bemCn2.default)('data-table'),
 	                _props = this.props,
-	                id = _props.id,
 	                cells = _props.cells,
+	                columns = _props.columns,
+	                id = _props.id,
 	                _props$selected = _props.selected,
 	                selected = _props$selected === undefined ? DataTableItem.defaults.selected : _props$selected,
-	                _onClick = _props.onClick;
+	                _onClick = _props.onClick,
+	                onValueTransform = _props.onValueTransform;
 	
 	
 	            return _react2.default.createElement(
@@ -53511,10 +53513,14 @@
 	                        return _onClick(id);
 	                    } },
 	                cells.map(function (cell, index) {
+	                    var column = columns[index];
+	
 	                    return _react2.default.createElement(
 	                        'td',
-	                        { className: b('item-cell'), key: index },
-	                        cell
+	                        { className: b('item-cell', {
+	                                alignment: column.style ? column.style.alignment : null
+	                            }), key: index },
+	                        onValueTransform ? onValueTransform(column.name, cell) : cell
 	                    );
 	                })
 	            );
@@ -53526,9 +53532,11 @@
 	
 	DataTableItem.propTypes = {
 	    cells: _react.PropTypes.array.isRequired,
+	    columns: _react.PropTypes.array.isRequired,
 	    id: _react.PropTypes.number.isRequired,
 	    selected: _react.PropTypes.bool.isRequired,
-	    onClick: _react.PropTypes.func.isRequired
+	    onClick: _react.PropTypes.func.isRequired,
+	    onValueTransform: _react.PropTypes.func
 	};
 	exports.default = DataTableItem;
 	
@@ -56730,7 +56738,7 @@
 	                _props = this.props,
 	                fetching = _props.fetching,
 	                server = _props.server;
-	
+	            // received = bytesToString(server.usage.received)
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -56956,6 +56964,10 @@
 	
 	var _bemCn2 = _interopRequireDefault(_bemCn);
 	
+	var _bytes = __webpack_require__(694);
+	
+	var _bytes2 = _interopRequireDefault(_bytes);
+	
 	__webpack_require__(687);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -57040,6 +57052,14 @@
 	            }
 	        };
 	
+	        _this.onDataTableValueTransform = function (column, value) {
+	            if (column === 'size' || column === 'overhead') {
+	                return (0, _bytes2.default)(value);
+	            } else {
+	                return value;
+	            }
+	        };
+	
 	        _this.debouncedTextboxFilterChange = function (token) {
 	            var params = _this.props.params,
 	                getTables = _this.props.tablesActions.getTables;
@@ -57068,7 +57088,8 @@
 	    }
 	
 	    /**
-	     * Fetches tables for selected database
+	     * Fetches tables when database was selected for the first time
+	     * @method
 	     */
 	
 	    /**
@@ -57081,23 +57102,13 @@
 	
 	
 	    _createClass(Tables, [{
-	        key: 'refresh',
-	        value: function refresh() {
-	            var getTables = this.props.tablesActions.getTables;
-	
-	
-	            getTables();
-	        }
-	
-	        /**
-	         * Fetches tables when database was selected for the first time
-	         * @method
-	         */
-	
-	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            this.refresh();
+	            var params = this.props.params,
+	                getTables = this.props.tablesActions.getTables;
+	
+	
+	            getTables(params.database, this.state.filter);
 	        }
 	
 	        /**
@@ -57111,7 +57122,9 @@
 	            var _props = this.props,
 	                items = _props.items,
 	                params = _props.params,
-	                restoreWindow = this.props.tablesActions.restoreWindow;
+	                _props$tablesActions = this.props.tablesActions,
+	                getTables = _props$tablesActions.getTables,
+	                restoreWindow = _props$tablesActions.restoreWindow;
 	
 	            // Selected database has changed
 	
@@ -57122,7 +57135,7 @@
 	
 	                restoreWindow();
 	
-	                this.refresh();
+	                getTables(nextProps.params.database, this.state.filter);
 	                // Table view was closed
 	            } else if (!nextProps.params.hasOwnProperty('table')) {
 	                this.setState({
@@ -57202,16 +57215,13 @@
 	         */
 	        value: function render() {
 	            var b = (0, _bemCn2.default)('tables'),
-	                columns = [{ name: 'table', title: 'Table' }, { name: 'rows', title: 'Rows' }, { name: 'type', title: 'Type' }, { name: 'collation', title: 'Collation' }, { name: 'size', title: 'Size' }, { name: 'overhead', title: 'Overhead' }],
+	                columns = [{ name: 'table', title: 'Table' }, { name: 'rows', title: 'Rows', style: { alignment: 'right' } }, { name: 'type', title: 'Type' }, { name: 'collation', title: 'Collation' }, { name: 'size', title: 'Size', style: { alignment: 'right' } }, { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }],
 	                _props2 = this.props,
 	                children = _props2.children,
 	                fetching = _props2.fetching,
 	                minimized = _props2.minimized,
 	                items = _props2.items,
-	                params = _props2.params,
-	                sortedItems = items.sort(function (a, b) {
-	                return a.name > b.name;
-	            });
+	                params = _props2.params;
 	
 	
 	            return _react2.default.createElement(
@@ -57293,9 +57303,10 @@
 	                        { className: b('table') },
 	                        _react2.default.createElement(_DataTable2.default, {
 	                            columns: columns,
-	                            items: sortedItems,
+	                            items: items,
 	                            selectedIndex: this.state.selectedIndex,
-	                            onChange: this.onDataTableChange })
+	                            onChange: this.onDataTableChange,
+	                            onValueTransform: this.onDataTableValueTransform })
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -63605,6 +63616,34 @@
 	
 	module.exports = svgXHR;
 
+
+/***/ },
+/* 694 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("c:\\openserver\\domains\\muscle\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("c:\\openserver\\domains\\muscle\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = bytes;
+	function bytes(value) {
+	    if (value === 0) return '0';
+	
+	    var denominator = 1024,
+	        suffixes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB'],
+	        i = parseInt(Math.floor(Math.log(value) / Math.log(denominator)), 10);
+	
+	    if (i === 0) {
+	        return value + ' ' + suffixes[i];
+	    } else {
+	        return parseFloat((value / Math.pow(denominator, i)).toFixed(1)) + ' ' + suffixes[i];
+	    }
+	}
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("c:\\openserver\\domains\\muscle\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "bytes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

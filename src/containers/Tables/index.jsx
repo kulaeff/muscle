@@ -9,6 +9,7 @@ import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import block from 'bem-cn'
+import bytes from '../../helpers/bytes'
 import './style.less';
 
 /**
@@ -47,20 +48,15 @@ class Tables extends Component {
     }
 
     /**
-     * Fetches tables for selected database
-     */
-    refresh() {
-        const { getTables } = this.props.tablesActions
-
-        getTables()
-    }
-
-    /**
      * Fetches tables when database was selected for the first time
      * @method
      */
     componentDidMount() {
-        this.refresh()
+        const
+            { params } = this.props,
+            { getTables } = this.props.tablesActions
+
+        getTables(params.database, this.state.filter)
     }
 
     /**
@@ -70,7 +66,7 @@ class Tables extends Component {
     componentWillReceiveProps(nextProps) {
         const
             { items, params } = this.props,
-            { restoreWindow } = this.props.tablesActions
+            { getTables, restoreWindow } = this.props.tablesActions
 
         // Selected database has changed
         if (params.database !== nextProps.params.database) {
@@ -80,7 +76,7 @@ class Tables extends Component {
 
             restoreWindow()
 
-            this.refresh()
+            getTables(nextProps.params.database, this.state.filter)
         // Table view was closed
         } else if (!nextProps.params.hasOwnProperty('table')) {
             this.setState({
@@ -171,6 +167,14 @@ class Tables extends Component {
         }
     }
 
+    onDataTableValueTransform = (column, value) => {
+        if (column === 'size' || column === 'overhead') {
+            return bytes(value)
+        } else {
+            return value
+        }
+    }
+
     /**
      * Gets the list of tables filtered by string (debounced)
      * @function
@@ -206,14 +210,13 @@ class Tables extends Component {
             b = block('tables'),
             columns = [
                 { name: 'table', title: 'Table' },
-                { name: 'rows', title: 'Rows' },
+                { name: 'rows', title: 'Rows', style: { alignment: 'right' } },
                 { name: 'type', title: 'Type' },
                 { name: 'collation', title: 'Collation' },
-                { name: 'size', title: 'Size' },
-                { name: 'overhead', title: 'Overhead' }
+                { name: 'size', title: 'Size', style: { alignment: 'right' } },
+                { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }
             ],
-            { children, fetching, minimized, items, params } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            { children, fetching, minimized, items, params } = this.props
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -265,9 +268,10 @@ class Tables extends Component {
                     <div className={b('table')}>
                         <DataTable
                             columns={columns}
-                            items={sortedItems}
+                            items={items}
                             selectedIndex={this.state.selectedIndex}
-                            onChange={this.onDataTableChange} />
+                            onChange={this.onDataTableChange}
+                            onValueTransform={this.onDataTableValueTransform} />
                     </div>
                 </div>
                 <div className={b('view')}>
