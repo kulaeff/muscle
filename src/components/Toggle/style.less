@@ -13,7 +13,7 @@
         right: 0;
         top: calc(~'50% - ' @sDefault / 2);
         &-knob {
-            background-color: #fff;
+            background-color: @toggleBorderColor;
             border-radius: 50%;
             height: @sDefault - 0.6rem;
             left: 0.1rem;
@@ -23,8 +23,8 @@
             width: @sDefault - 0.6rem;
         }
         &-rectangle {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(255, 255, 255, 1);
+            background-color: @toggleBackgroundColor;
+            border: @toggleBorderThickness solid @toggleBorderColor;
             border-radius: @sDefault;
             box-sizing: border-box;
             height: @sDefault;
@@ -38,15 +38,15 @@
         font-size: 1.3rem;
         padding-right: @sDefault * 2 + 1rem;
     }
-    //
+    // PSEUDO
     &:hover &__control-rectangle {
-        border-color: rgba(255, 255, 255, 1);
+        border-color: @toggleBorderColorHover;
     }
     // STATES
     &_state_checked &__control-knob {
         transform: translate(100%, 0);
     }
     &_state_checked &__control-rectangle {
-        background-color: @colorAccent;
+        background-color: @toggleBackgroundColorChecked;
     }
 }

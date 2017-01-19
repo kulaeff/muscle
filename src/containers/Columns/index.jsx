@@ -163,7 +163,7 @@ class Columns extends Component {
                 { name: 'type', title: 'Type' },
                 { name: 'size', title: 'Size' },
                 { name: 'collation', title: 'Collation' },
-                { name: 'attributes', title: 'Attributes' },
+                { name: 'attribute', title: 'Attribute' },
                 { name: 'null', title: 'Null' },
                 { name: 'default', title: 'Default' },
                 { name: 'extra', title: 'Extra' }

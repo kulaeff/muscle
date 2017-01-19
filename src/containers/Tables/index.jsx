@@ -170,6 +170,10 @@ class Tables extends Component {
     onDataTableValueTransform = (column, value) => {
         if (column === 'size' || column === 'overhead') {
             return bytes(value)
+        } else if (column === 'type' || column === 'collation') {
+            return (
+                <em>{value}</em>
+            )
         } else {
             return value
         }
