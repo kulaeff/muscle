@@ -9,7 +9,8 @@ module.exports = {
             index: '/',
         },
     },
-    devtool: process.env.NODE_ENV === 'development' ? 'cheap-module-eval-source-map' : null,
+    devtool: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'prototyping'
+        ? 'cheap-module-eval-source-map' : null,
     entry: process.env.NODE_ENV === 'prototyping' ? [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',

@@ -14,7 +14,6 @@
         color: @dataTableColumnColor;
         cursor: pointer;
         font-size: 0;
-        min-width: 5rem;
         padding: @marginDefault / 4;
         position: relative;
         text-align: left;
@@ -64,6 +63,12 @@
         }
         &_alignment_right {
             text-align: right;
+        }
+        &_alignment_left &-title {
+            margin-right: 2rem;
+        }
+        &_alignment_right &-title {
+            margin-left: 2rem;
         }
         &_alignment_left &-arrow {
             right: @marginDefault / 4;

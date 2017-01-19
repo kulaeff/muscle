@@ -39,20 +39,15 @@ class Columns extends Component {
     }
 
     /**
-     * Fetches columns for selected database
-     */
-    refresh() {
-        const { getColumns } = this.props.columnsActions
-
-        getColumns()
-    }
-
-    /**
      * Fetches columns when database was selected for the first time
      * @method
      */
     componentDidMount() {
-        this.refresh()
+        const
+            { params } = this.props,
+            { getColumns } = this.props.columnsActions
+
+        getColumns(params.database, params.table)
     }
 
     /**
@@ -60,10 +55,12 @@ class Columns extends Component {
      * @method
      */
     componentWillReceiveProps(nextProps) {
-        const { items, params } = this.props
+        const
+            { items, params } = this.props,
+            { getColumns } = this.props.columnsActions
 
         if (params.table !== nextProps.params.table) {
-            this.refresh()
+            getColumns(params.database, nextProps.params.table)
         } else if (!nextProps.params.hasOwnProperty('column')) {
             this.setState({
                 selectedIndex: null
@@ -164,6 +161,7 @@ class Columns extends Component {
             columns = [
                 { name: 'name', title: 'Name' },
                 { name: 'type', title: 'Type' },
+                { name: 'size', title: 'Size' },
                 { name: 'collation', title: 'Collation' },
                 { name: 'attributes', title: 'Attributes' },
                 { name: 'null', title: 'Null' },

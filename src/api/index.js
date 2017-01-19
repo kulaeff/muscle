@@ -36,11 +36,11 @@ class API {
                 .onPut('/column').reply(HTTPStatusCodes.OK)
                 .onGet('/columns').reply(HTTPStatusCodes.OK, {
                     items: [
-                        [ 'id', 'int (5)', '', 'unsigned', 'no', 'none', 'auto_inc' ],
-                        [ 'group', 'int (5)', '', 'unsigned', 'yes', 'null', '' ],
-                        [ 'title', 'varchar (32)', '', '', 'no', 'none', '' ],
-                        [ 'createdAt', 'timestamp', '', '', 'no', 'none', '' ],
-                        [ 'updatedAt', 'timestamp', '', '', 'no', 'none', '' ]
+                        [ 'id', 'int', 5, '', 'unsigned', 'no', 'none', 'auto_increment' ],
+                        [ 'group', 'int', 5, '', 'unsigned', 'yes', 'null', '' ],
+                        [ 'title', 'varchar', 32, '', '', 'no', 'none', '' ],
+                        [ 'createdAt', 'timestamp', null, '', '', 'no', 'none', '' ],
+                        [ 'updatedAt', 'timestamp', null, '', '', 'no', 'none', '' ]
                     ]
                 })
                 .onGet('/credentials').reply(HTTPStatusCodes.OK, {
@@ -104,8 +104,8 @@ class API {
         return this.axios.get('column')
     }
 
-    async getColumns() {
-        return this.axios.get('columns')
+    async getColumns(database, table) {
+        return this.axios.get('columns', { params: { database, table }})
     }
 
     async getDatabases(token) {

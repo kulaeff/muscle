@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Switch from '../../components/Switch'
 import Title from '../../components/Title'
+import Toggle from '../../components/Toggle'
 import * as settingsActions from '../../actions/settings'
 import block from 'bem-cn'
 import './style.less';
@@ -55,7 +55,7 @@ class Settings extends Component {
                 </div>
                 <div className={b('container')}>
                     <div className={b('panel')}>
-                        <Switch
+                        <Toggle
                             checked={useSmartFolding}
                             id="useSmartFolding"
                             label="Use auto folding of windows"

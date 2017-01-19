@@ -2,5 +2,6 @@ RewriteEngine on
 RewriteRule ^api/(\w+)$ /api/$1.php [L]
 RewriteRule ^databases$ /$1 [L]
 RewriteRule ^databases/\w+$ /$1 [L]
+RewriteRule ^databases/\w+/\w+$ /$1 [L]
 RewriteRule ^status$ /$1 [L]
 RewriteRule ^settings$ /$1 [L]

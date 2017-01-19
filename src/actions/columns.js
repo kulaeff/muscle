@@ -5,14 +5,14 @@ import {
     SET_COLUMNS_WINDOW_STATE
 } from '../constants/columns'
 
-export function getColumns() {
+export function getColumns(database, table) {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_COLUMNS_REQUEST
         })
 
         try {
-            const response = await api.getColumns()
+            const response = await api.getColumns(database, table)
 
             dispatch({
                 type: GET_COLUMNS_SUCCESS,
