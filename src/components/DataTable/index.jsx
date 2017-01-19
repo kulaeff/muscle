@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import DataTableColumn from './DataTableColumn'
-import DataTableItem from './DataTableItem'
+import DataTableRow from './DataTableRow'
 import block from 'bem-cn'
 import './style.less'
 
@@ -127,7 +127,7 @@ class DataTable extends Component {
                 <tbody className={b('body')}>
                     {
                         items.map((item, index) =>
-                            <DataTableItem
+                            <DataTableRow
                                 cells={item}
                                 columns={columns}
                                 id={index}

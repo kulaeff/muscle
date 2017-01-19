@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import block from 'bem-cn'
 
 /**
- * DataTableItem Component
+ * DataTableRow Component
  * @class
  */
-class DataTableItem extends Component {
+class DataTableRow extends Component {
     /**
-     * DataTableItem properties
+     * DataTableRow properties
      * @static
      * @property {array} cells Cells (data) of the item
      * @property {number} id The id of the item
@@ -28,7 +28,7 @@ class DataTableItem extends Component {
     }
 
     /**
-     * Renders DataTableItem component
+     * Renders DataTableRow component
      */
     render() {
         const
@@ -37,20 +37,20 @@ class DataTableItem extends Component {
                 cells,
                 columns,
                 id,
-                selected = DataTableItem.defaults.selected,
+                selected = DataTableRow.defaults.selected,
                 onClick,
                 onValueTransform
             } = this.props
 
         return (
             <tr
-                className={b('item', { state: selected ? 'selected' : null })}
+                className={b('row', { state: selected ? 'selected' : null })}
                 onClick={() => onClick(id)}>
                 {
                     cells.map((cell, index) => {
                         const column = columns[index]
 
-                        return <td className={b('item-cell', {
+                        return <td className={b('row-cell', {
                             alignment: column.style ? column.style.alignment : null
                         })} key={index}>
                             {
@@ -64,4 +64,4 @@ class DataTableItem extends Component {
     }
 }
 
-export default DataTableItem
+export default DataTableRow
