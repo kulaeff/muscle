@@ -40,7 +40,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.less$/,
-                loader: 'style!css!less',
+                loader: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'prototyping'
+                    ? 'style!css!postcss!less' : 'style!css?minimize=true!postcss!less',
             },
             {
                 loaders: [
@@ -83,6 +84,11 @@ module.exports = {
             prefix: 'icon-'
         })
     ],
+    postcss: () => {
+        return [
+            require('autoprefixer')
+        ]
+    },
     resolve: {
         extensions: ['', '.js', '.jsx']
     }
