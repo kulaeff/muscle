@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
+import Tabs from '../../components/Tabs'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import DataTable from '../../components/DataTable'
@@ -36,6 +37,7 @@ class Columns extends Component {
 
         this.state = {
             selectedIndex: null,
+            selectedTab: null,
         }
     }
 
@@ -153,6 +155,19 @@ class Columns extends Component {
     }
 
     /**
+     * Redirects to selected tab
+     * */
+    onTabsChange = (name) => {
+        const { router, params } = this.props
+
+        this.setState({
+            selectedTab: name
+        })
+
+        router.push(`/databases/${params.database}/${params.table}/${name}`)
+    }
+
+    /**
      * Renders Summary container
      * @method
      */
@@ -169,6 +184,10 @@ class Columns extends Component {
                 { name: 'default', title: 'Default' },
                 { name: 'extra', title: 'Extra' }
             ],
+            tabs = [
+                { name: 'columns', label: 'Columns'},
+                { name: 'rows', label: 'Rows'}
+            ],
             { children, fetching, minimized, items, params } = this.props
 
         return (
@@ -176,7 +195,11 @@ class Columns extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title primaryTitle="Columns" secondaryTitle={params.table} />
+                            <Title secondaryTitle={params.table} />
+                            <Tabs
+                                items={tabs}
+                                selected={this.state.selectedTab}
+                                onChange={this.onTabsChange} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>

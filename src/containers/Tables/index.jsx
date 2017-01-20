@@ -6,6 +6,7 @@ import * as tablesActions from '../../actions/tables'
 import * as databasesActions from '../../actions/databases'
 import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
+import Tabs from '../../components/Tabs'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
@@ -43,6 +44,7 @@ class Tables extends Component {
         this.state = {
             filter: '',
             selectedIndex: null,
+            selectedTab: null,
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -194,6 +196,19 @@ class Tables extends Component {
     }
 
     /**
+     * Redirects to selected tab
+     * */
+    onTabsChange = (name) => {
+        const { router, params } = this.props
+
+        this.setState({
+            selectedTab: name
+        })
+
+        router.push(`/databases/${params.database}/${name}`)
+    }
+
+    /**
      * Stores the filter and invokes debounced handler
      */
     onTextboxFilterChange = (e) => {
@@ -221,6 +236,10 @@ class Tables extends Component {
                 { name: 'size', title: 'Size', style: { alignment: 'right' } },
                 { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }
             ],
+            tabs = [
+                { name: 'tables', label: 'Tables'},
+                { name: 'query', label: 'query'}
+            ],
             { children, fetching, minimized, items, params } = this.props
 
         return (
@@ -228,7 +247,11 @@ class Tables extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title primaryTitle="Tables" secondaryTitle={params.database} />
+                            <Title secondaryTitle={params.database} />
+                            <Tabs
+                                items={tabs}
+                                selected={this.state.selectedTab}
+                                onChange={this.onTabsChange} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>

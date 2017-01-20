@@ -1,0 +1,38 @@
+@import (reference) '../../styles/variables';
+
+.tabs {
+    display: inline-block;
+    position: relative;
+    &__item {
+        color: @colorSemiTransparent;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1.4rem;
+        font-weight: 600;
+        position: relative;
+        text-transform: uppercase;
+        // Pseudo
+        &:after {
+            background-color: transparent;
+            bottom: -4px;
+            content: '';
+            display: block;
+            height: 2px;
+            left: 0;
+            position: absolute;
+            transition: background-color @animationDelayControl linear, color @animationDelayControl linear;
+            width: 100%;
+        }
+        // States
+        &_state_selected {
+            color: #fff;
+            &:after {
+                background-color: @colorPrimary;
+            }
+        }
+    }
+    //
+    &__item + &__item {
+        margin-left: 1rem;
+    }
+}

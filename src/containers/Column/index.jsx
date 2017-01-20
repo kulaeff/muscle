@@ -6,6 +6,7 @@ import Checkbox from '../../components/Checkbox'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
+import Title from '../../components/Title'
 import * as columnActions from '../../actions/column'
 import block from 'bem-cn'
 import './style.less';
@@ -264,8 +265,7 @@ class Column extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title-label')}>Column</span>
-                            <span className={b('title-description')}>{params.column}</span>
+                            <Title primaryTitle={params.column} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
