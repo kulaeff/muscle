@@ -31,7 +31,7 @@ class Settings extends Component {
         getSettings()
     }
 
-    changeUseSmartFolding = () => {
+    onChangeUseSmartFolding = () => {
         const
             { useSmartFolding } = this.props,
             { saveSettings } = this.props.settingsActions
@@ -51,7 +51,7 @@ class Settings extends Component {
         return (
             <div className={b()}>
                 <div className={b('title')}>
-                    <Title size="medium" title="Settings" />
+                    <Title primaryTitle="Settings" />
                 </div>
                 <div className={b('container')}>
                     <div className={b('panel')}>
@@ -59,7 +59,7 @@ class Settings extends Component {
                             checked={useSmartFolding}
                             id="useSmartFolding"
                             label="Use auto folding of windows"
-                            onChange={this.changeUseSmartFolding} />
+                            onChange={this.onChangeUseSmartFolding} />
                     </div>
                 </div>
             </div>

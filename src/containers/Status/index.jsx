@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Tabs from '../../components/Tabs'
 import Title from '../../components/Title'
 import Spinner from '../../components/Spinner'
 import * as statusActions from '../../actions/status'
@@ -24,6 +25,18 @@ class Status extends Component {
     }
 
     /**
+     * Creates Status container
+     * @constructor
+     */
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selectedTab: null,
+        }
+    }
+
+    /**
      * Invoked after the component was mounted
      * @method
      */
@@ -34,12 +47,30 @@ class Status extends Component {
     }
 
     /**
+     * Redirects to selected tab
+     * */
+    onTabsChange = (name) => {
+        const { router } = this.props
+
+        this.setState({
+            selectedTab: name
+        })
+
+        router.push(`/status/${name}`)
+    }
+
+    /**
      * Renders Status container
      * @method
      */
     render() {
         const
             b = block('status'),
+            tabs = [
+                { name: 'summary', label: 'Summary'},
+                { name: 'usage', label: 'Usage'},
+                { name: 'connections', label: 'Connections'}
+            ],
             { fetching, server } = this.props
             // received = bytesToString(server.usage.received)
 
@@ -47,7 +78,11 @@ class Status extends Component {
             <div className={b()}>
                 <div className={b('title')}>
                     <div className={b('title-label')}>
-                        <Title title="Server status" theme="light" />
+                        <Title secondaryTitle="Server status" />
+                        <Tabs
+                            items={tabs}
+                            selected={this.state.selectedTab}
+                            onChange={this.onTabsChange} />
                     </div>
                     <div className={b('title-spinner')}>
                         <Spinner active={fetching} type="rect" />
@@ -55,7 +90,7 @@ class Status extends Component {
                 </div>
                 <div className={b('indicators')}>
                     <span className={b('indicators-title')}>
-                        <Title size="small" title="Network traffic" theme="light" />
+                        <Title size="small" primaryTitle="Network traffic"  />
                     </span>
                     <div className={b('indicators-container')}>
                         <div className={b('indicator')}>
@@ -89,7 +124,7 @@ class Status extends Component {
                 </div>
                 <div className={b('indicators')}>
                     <span className={b('indicators-title')}>
-                        <Title size="small" title="Connections" theme="light" />
+                        <Title size="small" primaryTitle="Connections"  />
                     </span>
                     <div className={b('indicators-container')}>
                         <div className={b('indicator')}>
