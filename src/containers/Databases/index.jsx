@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
+import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
 import * as databasesActions from '../../actions/databases'
@@ -182,8 +183,7 @@ class Databases extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title-label')}>Databases</span>
-                            <span className={b('title-description')}>Local databases</span>
+                            <Title primaryTitle="Databases" />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>

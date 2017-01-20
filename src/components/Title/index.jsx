@@ -3,26 +3,53 @@ import block from 'bem-cn'
 import './style.less'
 
 class Title extends Component {
+    /**
+     * Title properties
+     * @static
+     * @prop {string} primaryTitle Primary title
+     * @prop {string} secondaryTitle Secondary title
+     * @prop {string} size Size
+     */
     static propTypes = {
+        primaryTitle: PropTypes.string,
+        secondaryTitle: PropTypes.string,
         size: PropTypes.oneOf(['small', 'medium', 'large']),
-        title: PropTypes.string.isRequired,
     }
 
+    /**
+     * Default Title properties
+     * @static
+     * @prop {string} size Default size
+     */
     static defaults = {
-        size: 'medium',
-        title: 'undefined (use title attr)'
+        size: 'medium'
     }
 
+    /**
+     * Renders Title
+     */
     render() {
         const
             b = block('title'),
             {
-                size = Title.defaults.size,
-                title = Title.defaults.title
+                primaryTitle = Title.defaults.primaryTitle,
+                secondaryTitle = Title.defaults.secondaryTitle,
+                size = Title.defaults.size
             } = this.props
 
         return (
-            <span className={b({size})}>{title}</span>
+            <span className={b({size})}>
+                {
+                    secondaryTitle ?
+                        <span className={b('label', {context: 'secondary'})}>{secondaryTitle}</span>
+                    : null
+                }
+                {
+                    primaryTitle ?
+                        <span className={b('label',  {context: 'primary'})}>{primaryTitle}</span>
+                    : null
+                }
+            </span>
         )
     }
 }

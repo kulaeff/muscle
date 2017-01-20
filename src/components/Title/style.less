@@ -1,7 +1,25 @@
 @import (reference) '../../styles/variables';
 
 .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
+    &__label {
+        display: inline;
+        // Contexts
+        &_context_primary {
+            color: currentColor;
+        }
+        &_context_secondary {
+            color: @colorSemiTransparent;
+            // Pseudo
+            &:after {
+                content: ' ➝ ';
+                display: inline;
+            }
+        }
+    }
     // Sizes
     &_size_large {
         font-size: 1.8rem;

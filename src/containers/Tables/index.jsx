@@ -7,6 +7,7 @@ import * as databasesActions from '../../actions/databases'
 import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
+import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import block from 'bem-cn'
 import bytes from '../../helpers/bytes'
@@ -227,8 +228,7 @@ class Tables extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title-label')}>Tables</span>
-                            <span className={b('title-description')}>{params.database}</span>
+                            <Title primaryTitle="Tables" secondaryTitle={params.database} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>

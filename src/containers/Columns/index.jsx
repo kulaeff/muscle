@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
+import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import DataTable from '../../components/DataTable'
 import * as columnsActions from '../../actions/columns'
@@ -175,8 +176,7 @@ class Columns extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <span className={b('title-label')}>Columns</span>
-                            <span className={b('title-description')}>{params.table}</span>
+                            <Title primaryTitle="Columns" secondaryTitle={params.table} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
