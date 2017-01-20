@@ -161,7 +161,7 @@ class Columns extends Component {
             columns = [
                 { name: 'name', title: 'Name' },
                 { name: 'type', title: 'Type' },
-                { name: 'size', title: 'Size' },
+                { name: 'size', title: 'Size', style: { alignment: 'right' }},
                 { name: 'collation', title: 'Collation' },
                 { name: 'attribute', title: 'Attribute' },
                 { name: 'null', title: 'Null' },

@@ -5,11 +5,11 @@
     position: relative;
     white-space: nowrap;
     &__button {
-        background-color: transparent;
+        background-color: @toolButtonColorBackground;
         border: @toolButtonBorderThickness solid @toolButtonColorBorder;
         border-radius: @toolButtonBorderRadius;
         box-sizing: border-box;
-        color: @toolButtonColorBorder;
+        color: @toolButtonForegroundColor;
         cursor: pointer;
         display: inline-block;
         height: @toolButtonSize;
@@ -34,12 +34,12 @@
         &:hover {
             background-color: @toolButtonColorHoverBackground;
             border-color: @toolButtonColorHoverBorder;
-            color: @toolButtonColorHoverBorder;
+            color: @toolButtonForegroundColorHover;
         }
         &:active {
             background-color: @toolButtonColorActiveBackground;
             border-color: @toolButtonColorActiveBorder;
-            color: negation(@toolButtonColorActiveBorder, @toolButtonColorActiveBorder);
+            color: @toolButtonForegroundColorActive;
         }
     }
     &__separator {

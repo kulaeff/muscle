@@ -46,12 +46,13 @@
     // TYPES
     // Reset
     &_type_reset {
+        background-color: @cReset;
         &:hover {
-            background-color: @buttonColorHoverBackground;
+            background-color: darken(@cReset, 3%);
         }
         &:active {
-            background-color: @cReset;
-            border-color: @cReset;
+            background-color: @buttonColorActiveBackground;
+            border-color: @buttonColorActiveBorder;
         }
     }
 }

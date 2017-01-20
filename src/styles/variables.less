@@ -1,5 +1,5 @@
 // Common colors
-@colorAccent: #37D;
+@colorPrimary: #48F;
 @colorDarkGray: #1b1d1f;
 @colorMediumGray: #2a2c2e;
 @colorLightGray: #353739;
@@ -17,18 +17,18 @@
 
 // Button
 @buttonBorderRadius: 0;
-@buttonBorderThickness: 2px;
-@buttonColor: rgba(255, 255, 255, .8);
-@buttonColorBackground: rgba(0, 0, 0, 0);
+@buttonBorderThickness: 0;
+@buttonColor: rgba(255, 255, 255, 1);
+@buttonColorBackground: @colorPrimary;
 @buttonColorBorder: rgba(255, 255, 255, .8);
-@buttonColorActive: rgba(255, 255, 255, 1);
-@buttonColorActiveBackground: @colorAccent;
-@buttonColorActiveBorder: @colorAccent;
+@buttonColorActive: #000;
+@buttonColorActiveBackground: #fff;
+@buttonColorActiveBorder: @colorPrimary;
 @buttonColorDisabled: rgba(255, 255, 255, .2);
 @buttonColorDisabledBackground: rgba(0, 0, 0, 0);
 @buttonColorDisabledBorder: rgba(255, 255, 255, .2);
-@buttonColorHover: rgba(255, 255, 255, .8);
-@buttonColorHoverBackground: rgba(255, 255, 255, .1);
+@buttonColorHover: rgba(255, 255, 255, 1);
+@buttonColorHoverBackground: darken(@colorPrimary, 3%);
 @buttonColorHoverBorder: rgba(255, 255, 255, .8);
 @buttonHeight: @controlHeightDefault * 1.1;
 
@@ -39,19 +39,19 @@
 @dataTableFooterColorBorder: rgba(255, 255, 255, .1);
 @dataTableHeaderColorBorder: rgba(255, 255, 255, .1);
 @dataTableItemColorHoverBackground: rgba(255, 255, 255, .05);
-@dataTableItemColorSelectedBackground: @colorAccent;
+@dataTableItemColorSelectedBackground: @colorPrimary;
 
 // Textbox
 @textboxBorderThickness: 1px;
 @textboxColor: #fff;
 @textboxColorBackground: rgba(0, 0, 0, 0.15);
-@textboxColorBorder: rgba(255, 255, 255, 0.15);
+@textboxColorBorder: rgba(255, 255, 255, 0.1);
 @textboxColorDisabledBackground: rgba(0, 0, 0, 0);
 @textboxColorDisabledBorder: rgba(255, 255, 255, 0.1);
 @textboxColorFocusBackground: rgba(0, 0, 0, 0.2);
-@textboxColorFocusBorder: @colorAccent;
+@textboxColorFocusBorder: @colorPrimary;
 @textboxColorHoverBackground: @textboxColorBackground;
-@textboxColorHoverBorder: rgba(255, 255, 255, 0.2);
+@textboxColorHoverBorder: rgba(255, 255, 255, 0.15);
 @textboxHeight: @controlHeightDefault;
 
 // Toggle
@@ -59,17 +59,20 @@
 @toggleBorderColor: #fff;
 @toggleBorderColorHover: #fff;
 @toggleBackgroundColor: rgba(0, 0, 0, .2);
-@toggleBackgroundColorChecked: @colorAccent;
+@toggleBackgroundColorChecked: @colorPrimary;
 
 // Toolbar
 @toolButtonBorderRadius: 50%;
-@toolButtonBorderThickness: 2px;
-@toolButtonColorBackground: rgba(0, 0, 0, 0);
-@toolButtonColorBorder: rgba(255, 255, 255, .8);
+@toolButtonBorderThickness: 0;
+@toolButtonForegroundColor: #fff;
+@toolButtonForegroundColorActive: #000;
+@toolButtonForegroundColorHover: #fff;
+@toolButtonColorBackground: @colorPrimary; //rgba(0, 0, 0, 0);
+@toolButtonColorBorder: rgba(255, 255, 255, .9);
 @toolButtonColorActiveBackground: rgba(255, 255, 255, 1);
 @toolButtonColorActiveBorder: rgba(255, 255, 255, 1);
-@toolButtonColorDisabledBackground: rgba(0, 0, 0, 0);
+@toolButtonColorDisabledBackground: rgba(255, 255, 255, .1);
 @toolButtonColorDisabledBorder: rgba(255, 255, 255, 0.2);
-@toolButtonColorHoverBackground: rgba(0, 0, 0, 0);
-@toolButtonColorHoverBorder: rgba(255, 255, 255, .9);
+@toolButtonColorHoverBackground: darken(@colorPrimary, 3%);
+@toolButtonColorHoverBorder: rgba(255, 255, 255, 1);
 @toolButtonSize: 3.2rem;

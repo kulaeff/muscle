@@ -36,11 +36,11 @@ class API {
                 .onPut('/column').reply(HTTPStatusCodes.OK)
                 .onGet('/columns').reply(HTTPStatusCodes.OK, {
                     items: [
-                        [ 'id', 'int', 5, '', 'unsigned', 'no', 'none', 'auto_increment' ],
+                        [ 'id', 'int', 5, '', 'unsigned', 'no', '', 'auto_increment' ],
                         [ 'group', 'int', 5, '', 'unsigned', 'yes', 'null', '' ],
-                        [ 'title', 'varchar', 32, '', '', 'no', 'none', '' ],
-                        [ 'createdAt', 'timestamp', null, '', '', 'no', 'none', '' ],
-                        [ 'updatedAt', 'timestamp', null, '', '', 'no', 'none', '' ]
+                        [ 'title', 'varchar', 32, '', '', 'no', '', '' ],
+                        [ 'createdAt', 'timestamp', null, '', '', 'no', '', '' ],
+                        [ 'updatedAt', 'timestamp', null, '', '', 'no', '', '' ]
                     ]
                 })
                 .onGet('/credentials').reply(HTTPStatusCodes.OK, {
