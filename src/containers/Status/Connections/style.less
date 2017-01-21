@@ -1,7 +1,9 @@
 @import (reference) '../../../styles/variables';
+@import '../mixin';
 
 .status-connections {
-    background: @colorMediumGray;
+    .status-mixin();
+
     &__indicators {
         display: block;
         &-container {
@@ -31,20 +33,6 @@
         }
         &-value {
             font-size: 3rem;
-        }
-    }
-    &__title {
-        box-sizing: border-box;
-        display: table;
-        &-label {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        &-spinner {
-            display: table-cell;
-            line-height: 1;
-            padding-left: @marginDefault / 2;
-            vertical-align: middle;
         }
     }
     //

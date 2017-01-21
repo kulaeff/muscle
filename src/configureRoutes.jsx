@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 import App from './containers/App';
 import Column from './containers/Column';
 import Columns from './containers/Columns';
@@ -23,6 +23,7 @@ export default function createRoutes () {
             </Route>
             <Route path="settings" component={Settings} />
             <Route path="status" component={Status}>
+                <IndexRedirect to="summary" />
                 <Route path="connections" component={StatusConnections} />
                 <Route path="summary" component={StatusSummary} />
                 <Route path="usage" component={StatusUsage} />

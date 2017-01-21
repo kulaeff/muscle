@@ -17,7 +17,7 @@ class API {
 
         if (process.env.NODE_ENV === 'prototyping') {
             const
-                delay = 400,
+                delay = 200,
                 mock = new MockAdapter(this.axios, {
                     delayResponse: delay
                 })
@@ -56,19 +56,25 @@ class API {
                         { name: 'money' }
                     ]
                 })
-                .onGet('/status').reply(HTTPStatusCodes.OK, {
-                    server: {
+                .onGet('/status/connections').reply(HTTPStatusCodes.OK, {
+                    connections: {
                         upTime: 56456343445,
-                        usage: {
-                            received: 245,
-                            sent: 129,
-                            total: 416
-                        },
-                        connections: {
-                            aborted: 6,
-                            failed: 25,
-                            total: 364
-                        }
+                        usage: 1356416,
+                        connections: 364
+                    }
+                })
+                .onGet('/status/summary').reply(HTTPStatusCodes.OK, {
+                    summary: {
+                        upTime: 56456343445,
+                        usage: 1356416,
+                        connections: 364
+                    }
+                })
+                .onGet('/status/usage').reply(HTTPStatusCodes.OK, {
+                    usage: {
+                        upTime: 56456343445,
+                        usage: 1356416,
+                        connections: 364
                     }
                 })
                 .onGet('/tables').reply(HTTPStatusCodes.OK, {
@@ -89,8 +95,20 @@ class API {
         return response
     }
 
-    async getStatus() {
-        const response = await this.axios.get('status')
+    async getStatusSummary() {
+        const response = await this.axios.get('status/summary')
+
+        return response
+    }
+
+    async getStatusUsage() {
+        const response = await this.axios.get('status/usage')
+
+        return response
+    }
+
+    async getStatusConnections() {
+        const response = await this.axios.get('status/connections')
 
         return response
     }
