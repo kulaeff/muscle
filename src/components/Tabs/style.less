@@ -12,6 +12,7 @@
         font-weight: 600;
         position: relative;
         text-transform: uppercase;
+        transition: color @animationDelayControl linear;
         // Pseudo
         &:after {
             background-color: transparent;
@@ -21,8 +22,11 @@
             height: 2px;
             left: 0;
             position: absolute;
-            transition: background-color @animationDelayControl linear, color @animationDelayControl linear;
+            transition: background-color @animationDelayControl linear;
             width: 100%;
+        }
+        &:hover {
+            color: #fff;
         }
         // States
         &_state_selected {

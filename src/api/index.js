@@ -65,9 +65,11 @@ class API {
                 })
                 .onGet('/status/summary').reply(HTTPStatusCodes.OK, {
                     summary: {
+                        connections: 364,
+                        queries: 1485,
                         upTime: 56456343445,
                         usage: 1356416,
-                        connections: 364
+                        user: 'root@localhost'
                     }
                 })
                 .onGet('/status/usage').reply(HTTPStatusCodes.OK, {
@@ -90,27 +92,19 @@ class API {
     }
 
     async checkCredentials(user, password) {
-        const response = await this.axios.get('credentials', { params: { user, password }})
-
-        return response
+        return this.axios.get('credentials', { params: { user, password }})
     }
 
     async getStatusSummary() {
-        const response = await this.axios.get('status/summary')
-
-        return response
+        return this.axios.get('status/summary')
     }
 
     async getStatusUsage() {
-        const response = await this.axios.get('status/usage')
-
-        return response
+        return this.axios.get('status/usage')
     }
 
     async getStatusConnections() {
-        const response = await this.axios.get('status/connections')
-
-        return response
+        return this.axios.get('status/connections')
     }
 
     /**
@@ -135,9 +129,7 @@ class API {
     }
 
     async saveColumn(data) {
-        const response = await this.axios.put('column', data)
-
-        return response
+        return this.axios.put('column', data)
     }
 }
 

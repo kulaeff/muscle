@@ -1,0 +1,22 @@
+@import (reference) '../../styles/variables';
+
+@sIcon: 1.4rem;
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    &__item {
+        flex: 1;
+    }
+    //
+    &__item + &__item {
+
+    }
+    // DIRECTIONS
+    &_orientation_horizontal {
+        flex-direction: row;
+    }
+    &_orientation_vertical {
+        flex-direction: column;
+    }
+}

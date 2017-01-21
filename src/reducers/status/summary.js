@@ -7,9 +7,11 @@ import {
 const initialState = {
     fetching: false,
     summary: {
+        connections: 0,
+        queries: 0,
         upTime: 0,
         usage: 0,
-        connections: 0
+        user: ''
     }
 }
 

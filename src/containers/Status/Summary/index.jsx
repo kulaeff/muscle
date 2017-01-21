@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Title from '../../../components/Title'
-import Spinner from '../../../components/Spinner'
 import * as statusSummaryActions from '../../../actions/status/summary'
+import Grid, { GridItem } from '../../../components/Grid'
+import Indicator from '../../../components/Indicator'
+import Spinner from '../../../components/Spinner'
 import block from 'bem-cn'
+import bytes from '../../../helpers/bytes'
 import './style.less';
 
 /**
@@ -80,40 +82,20 @@ class StatusSummary extends Component {
                         </div>
                         :
                         <div className={b('container')}>
-                            <div className={b('indicators')}>
-                                <span className={b('indicators-title')}>
-                                    <Title size="small" primaryTitle="Network traffic"  />
-                                </span>
-                                <div className={b('indicators-container')}>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Received</span>
-                                        <span className={b('indicator-value')}>
-                                            {summary.connections}
-                                        </span>
-                                        <span className={b('indicator-unit')}>
-                                            Kb
-                                        </span>
-                                    </div>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Sent</span>
-                                        <span className={b('indicator-value')}>
-                                            {summary.usage}
-                                        </span>
-                                        <span className={b('indicator-unit')}>
-                                            Kb
-                                        </span>
-                                    </div>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Total</span>
-                                        <span className={b('indicator-value')}>
-                                            {summary.usage}
-                                        </span>
-                                        <span className={b('indicator-unit')}>
-                                            Kb
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <Grid>
+                                <GridItem>
+                                    <Indicator title="Server" value={summary.upTime}/>
+                                </GridItem>
+                                <GridItem>
+                                    <Indicator title="Connections" value={summary.connections}/>
+                                </GridItem>
+                                <GridItem>
+                                    <Indicator title="Usage" value={bytes(summary.usage)} />
+                                </GridItem>
+                                <GridItem>
+                                    <Indicator title="Queries" value={summary.queries} />
+                                </GridItem>
+                            </Grid>
                         </div>
                 }
             </div>
