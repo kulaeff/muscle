@@ -52,7 +52,15 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const { getCredentials } = this.props.appActions
+        const
+            { location } = this.props,
+            { getCredentials } = this.props.appActions
+
+        this.setState({
+            selectedIndex: navigationBarItems.findIndex(item =>
+                location.pathname.indexOf(item.id) >= 0
+            )
+        })
 
         getCredentials()
     }

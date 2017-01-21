@@ -4,7 +4,7 @@ import {
     GET_STATUS_FAIL
 } from '../constants/status'
 
-export function getStatus() {
+export function getStatusSummary() {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_STATUS_REQUEST

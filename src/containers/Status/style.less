@@ -3,56 +3,14 @@
 .status {
     background: @colorMediumGray;
     box-sizing: border-box;
+    font-size: 0;
     height: 100%;
     padding: @marginDefault * 0.75 @marginDefault;
-    &__indicators {
-        display: block;
-        margin-top: @marginDefault / 2;
-        &-container {
-            display: flex;
-            margin-top: @marginDefault / 4;
-        }
-        &-title {
-            display: block;
-        }
-    }
-    &__indicator {
-        //flex: 1;
-        min-width: 20rem;
-        &-title {
-            color: #a0a2a4;
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        &-unit {
-            color: #707274;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-left: @marginDefault / 4;
-            text-transform: uppercase;
-        }
-        &-value {
-            font-size: 3rem;
-        }
-    }
     &__title {
-        box-sizing: border-box;
-        display: table;
-        &-label {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        &-spinner {
-            display: table-cell;
-            line-height: 1;
-            padding-left: @marginDefault / 2;
-            vertical-align: middle;
-        }
+        display: block;
     }
-    //
-    &__indicators + &__indicators {
+    &__view {
+        display: block;
         margin-top: @marginDefault;
     }
 }

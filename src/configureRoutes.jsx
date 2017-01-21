@@ -6,6 +6,9 @@ import Columns from './containers/Columns';
 import Databases from './containers/Databases';
 import Settings from './containers/Settings';
 import Status from './containers/Status';
+import StatusConnections from './containers/Status/Connections';
+import StatusSummary from './containers/Status/Summary';
+import StatusUsage from './containers/Status/Usage';
 import Tables from './containers/Tables';
 
 export default function createRoutes () {
@@ -19,7 +22,11 @@ export default function createRoutes () {
                 </Route>
             </Route>
             <Route path="settings" component={Settings} />
-            <Route path="status" component={Status} />
+            <Route path="status" component={Status}>
+                <Route path="connections" component={StatusConnections} />
+                <Route path="summary" component={StatusSummary} />
+                <Route path="usage" component={StatusUsage} />
+            </Route>
        </Route>
     );
 }

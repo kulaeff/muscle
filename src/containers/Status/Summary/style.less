@@ -1,0 +1,54 @@
+@import (reference) '../../../styles/variables';
+
+.status-summary {
+    background: @colorMediumGray;
+    &__indicators {
+        display: block;
+        &-container {
+            display: flex;
+            margin-top: @marginDefault / 4;
+        }
+        &-title {
+            display: block;
+        }
+    }
+    &__indicator {
+        //flex: 1;
+        min-width: 20rem;
+        &-title {
+            color: #a0a2a4;
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &-unit {
+            color: #707274;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-left: @marginDefault / 4;
+            text-transform: uppercase;
+        }
+        &-value {
+            font-size: 3rem;
+        }
+    }
+    &__title {
+        box-sizing: border-box;
+        display: table;
+        &-label {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        &-spinner {
+            display: table-cell;
+            line-height: 1;
+            padding-left: @marginDefault / 2;
+            vertical-align: middle;
+        }
+    }
+    //
+    &__indicators + &__indicators {
+        margin-top: @marginDefault;
+    }
+}

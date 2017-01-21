@@ -1,10 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
 import Tabs from '../../components/Tabs'
 import Title from '../../components/Title'
-import Spinner from '../../components/Spinner'
-import * as statusActions from '../../actions/status'
 import block from 'bem-cn'
 import './style.less';
 
@@ -16,13 +12,15 @@ class Status extends Component {
     /**
      * Status properties
      * @static
-     * @property {bool} fetching Is data fetching
-     * @property {object} server The server's status
      */
     static propTypes = {
-        fetching: PropTypes.bool,
-        server: PropTypes.object.isRequired,
     }
+
+    static tabs = [
+        { name: 'summary', label: 'Summary'},
+        { name: 'usage', label: 'Usage'},
+        { name: 'connections', label: 'Connections'}
+    ]
 
     /**
      * Creates Status container
@@ -41,9 +39,11 @@ class Status extends Component {
      * @method
      */
     componentDidMount() {
-        const { getStatus } = this.props.statusActions
+        const { location } = this.props
 
-        getStatus()
+        this.setState({
+            selectedTab: Status.tabs.find(tab => location.pathname.indexOf(tab.name) >= 0).name
+        })
     }
 
     /**
@@ -66,103 +66,21 @@ class Status extends Component {
     render() {
         const
             b = block('status'),
-            tabs = [
-                { name: 'summary', label: 'Summary'},
-                { name: 'usage', label: 'Usage'},
-                { name: 'connections', label: 'Connections'}
-            ],
-            { fetching, server } = this.props
-            // received = bytesToString(server.usage.received)
+            { children } = this.props
 
         return (
             <div className={b()}>
                 <div className={b('title')}>
-                    <div className={b('title-label')}>
-                        <Title secondaryTitle="Server status" />
-                        <Tabs
-                            items={tabs}
-                            selected={this.state.selectedTab}
-                            onChange={this.onTabsChange} />
-                    </div>
-                    <div className={b('title-spinner')}>
-                        <Spinner active={fetching} type="rect" />
-                    </div>
+                    <Title secondaryTitle="Server status" />
+                    <Tabs
+                        items={Status.tabs}
+                        selected={this.state.selectedTab}
+                        onChange={this.onTabsChange} />
                 </div>
-                <div className={b('indicators')}>
-                    <span className={b('indicators-title')}>
-                        <Title size="small" primaryTitle="Network traffic"  />
-                    </span>
-                    <div className={b('indicators-container')}>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Received</span>
-                            <span className={b('indicator-value')}>
-                                {server.usage.received}
-                            </span>
-                            <span className={b('indicator-unit')}>
-                                Kb
-                            </span>
-                        </div>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Sent</span>
-                            <span className={b('indicator-value')}>
-                                {server.usage.sent}
-                            </span>
-                            <span className={b('indicator-unit')}>
-                                Kb
-                            </span>
-                        </div>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Total</span>
-                            <span className={b('indicator-value')}>
-                                {server.usage.total}
-                            </span>
-                            <span className={b('indicator-unit')}>
-                                Kb
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div className={b('indicators')}>
-                    <span className={b('indicators-title')}>
-                        <Title size="small" primaryTitle="Connections"  />
-                    </span>
-                    <div className={b('indicators-container')}>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Failed</span>
-                            <div className={b('indicator-value')}>
-                                {server.connections.failed}
-                            </div>
-                        </div>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Aborted</span>
-                            <div className={b('indicator-value')}>
-                                {server.connections.aborted}
-                            </div>
-                        </div>
-                        <div className={b('indicator')}>
-                            <span className={b('indicator-title')}>Total</span>
-                            <div className={b('indicator-value')}>
-                                {server.connections.total}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div className={b('view')}>{children}</div>
             </div>
         )
     }
 }
 
-function mapStateToProps (state) {
-    return {
-        fetching: state.status.fetching,
-        server: state.status.server
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        statusActions: bindActionCreators(statusActions, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Status)
+export default Status
