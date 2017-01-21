@@ -238,7 +238,7 @@ class Tables extends Component {
             ],
             tabs = [
                 { name: 'tables', label: 'Tables'},
-                { name: 'query', label: 'query'}
+                { name: 'query', label: 'Query'}
             ],
             { children, fetching, minimized, items, params } = this.props
 
@@ -249,6 +249,7 @@ class Tables extends Component {
                         <div className={b('title')}>
                             <Title secondaryTitle={params.database} />
                             <Tabs
+                                collapsed={minimized}
                                 items={tabs}
                                 selected={this.state.selectedTab}
                                 onChange={this.onTabsChange} />

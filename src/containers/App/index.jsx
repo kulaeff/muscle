@@ -155,14 +155,7 @@ class App extends Component {
                     <div className={b('container')}>
                         <div className={b('login')}>
                             <div className={b('login-header')}>
-                                <div className={b('login-title')}>
-                                    <Title title="Authorization" />
-                                </div>
-                                <div className={b('login-logo')}>
-                                    <svg>
-                                        <use xlinkHref="#icon-logo" />
-                                    </svg>
-                                </div>
+                                <Title primaryTitle="Authorization" />
                             </div>
                             <div className={b('login-form')}>
                                 <Form onSubmit={this.onFormSubmit}>
@@ -189,6 +182,7 @@ class App extends Component {
                                     <FormButtons>
                                         <FormButton>
                                             <Button
+                                                autoSize={true}
                                                 disabled={this.state.buttonDisabled}
                                                 label="Login"
                                                 type="submit" />

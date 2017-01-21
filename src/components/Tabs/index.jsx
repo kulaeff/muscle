@@ -11,11 +11,13 @@ class Tabs extends Component {
     /**
      * Tabs properties
      * @static
+     * @property {bool} collapsed Is tabs collapsed
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
      * @property {func} onChange Change event handler
      */
     static propTypes = {
+        collapsed: PropTypes.bool,
         items: PropTypes.array.isRequired,
         selected: PropTypes.string,
         onChange: PropTypes.func.isRequired
@@ -24,9 +26,11 @@ class Tabs extends Component {
     /**
      * Default values of Tabs properties
      * @static
+     * @property {bool} collapsed Is tabs collapsed by default
      * @property {number} selectedIndex The default index of selected item
      */
     static defaults = {
+        collapsed: false,
         selected: null
     }
 
@@ -61,13 +65,14 @@ class Tabs extends Component {
         const
             b = block('tabs'),
             {
+                collapsed = Tabs.defaults.collapsed,
                 items,
                 selected = Tabs.defaults.selected
             } = this.props
 
         return (
             /// Refactor: if items is defined use items.map, else use children
-            <div className={b()}>
+            <div className={b({mode: collapsed ? 'collapsed' : null})}>
             {
                 items.map((item, index) =>
                     <TabsItem

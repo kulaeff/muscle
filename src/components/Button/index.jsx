@@ -10,11 +10,13 @@ class Button extends Component {
     /**
      * Button's properties
      * @static
+     * @property {bool} autoSize Full width of parent
      * @property {bool} disabled Is disabled
      * @property {string} label Label
      * @property {string} type Type
      */
     static propTypes = {
+        autoSize: PropTypes.bool,
         disabled: PropTypes.bool,
         label: PropTypes.string.isRequired,
         type: PropTypes.string
@@ -27,6 +29,7 @@ class Button extends Component {
      * @property {string} type Default type
      */
     static defaults = {
+        autoSize: false,
         disabled: false,
         type: 'button'
     }
@@ -39,13 +42,20 @@ class Button extends Component {
         const
             b = block('button'),
             {
+                autoSize = Button.defaults.autoSize,
                 disabled = Button.defaults.disabled,
                 label,
                 type = Button.defaults.type
             } = this.props
 
         return (
-            <button className={b({type})} type={type} disabled={disabled}>{label}</button>
+            <button
+                className={b({type, size: autoSize ? 'auto' : null})}
+                disabled={disabled}
+                type={type}
+            >
+                {label}
+            </button>
         )
     }
 }

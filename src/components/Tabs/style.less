@@ -3,6 +3,7 @@
 .tabs {
     display: inline-block;
     position: relative;
+    white-space: nowrap;
     &__item {
         color: @colorSemiTransparent;
         cursor: pointer;
@@ -34,5 +35,18 @@
     //
     &__item + &__item {
         margin-left: 1rem;
+    }
+    // MODES
+    &_mode_collapsed &__item {
+        display: none;
+        margin-left: 0;
+        &_state_selected {
+            display: inline-block;
+            cursor: default;
+            pointer-events: none;
+            &:after {
+                display: none;
+            }
+        }
     }
 }

@@ -197,6 +197,7 @@ class Columns extends Component {
                         <div className={b('title')}>
                             <Title secondaryTitle={params.table} />
                             <Tabs
+                                collapsed={minimized}
                                 items={tabs}
                                 selected={this.state.selectedTab}
                                 onChange={this.onTabsChange} />
