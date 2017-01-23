@@ -42,9 +42,9 @@
 @dataTableItemColorSelectedBackground: @colorPrimary;
 
 // Indicator
-@indicatorBorderThickness: 0;
-@indicatorBackgroundColor: rgba(255, 255, 255, .05);
-@indicatorBorderColor: @colorPrimary;
+@indicatorBorderThickness: 1px;
+@indicatorBackgroundColor: transparent;
+@indicatorBorderColor: rgba(255, 255, 255, .2);
 @indicatorTitleColor: rgba(255, 255, 255, .5);
 
 // Textbox
@@ -69,16 +69,16 @@
 
 // Toolbar
 @toolButtonBorderRadius: 50%;
-@toolButtonBorderThickness: 2px;
+@toolButtonBorderThickness: 0;
 @toolButtonForegroundColor: #fff;
 @toolButtonForegroundColorActive: #000;
 @toolButtonForegroundColorHover: #fff;
-@toolButtonColorBackground: rgba(0, 0, 0, 0);
+@toolButtonColorBackground: @colorPrimary;
 @toolButtonColorBorder: rgba(255, 255, 255, .9);
 @toolButtonColorActiveBackground: rgba(255, 255, 255, 1);
 @toolButtonColorActiveBorder: rgba(255, 255, 255, 1);
-@toolButtonColorDisabledBackground: rgba(0, 0, 0, 0);
-@toolButtonColorDisabledBorder: rgba(255, 255, 255, 0.2);
-@toolButtonColorHoverBackground: rgba(0, 0, 0, 0);
+@toolButtonColorDisabledBackground: rgba(255, 255, 255, .1);
+@toolButtonColorDisabledBorder: rgba(255, 255, 255, .2);
+@toolButtonColorHoverBackground: darken(@colorPrimary, 5%);
 @toolButtonColorHoverBorder: rgba(255, 255, 255, 1);
 @toolButtonSize: 3.2rem;

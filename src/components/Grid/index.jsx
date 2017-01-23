@@ -39,7 +39,7 @@ class Grid extends Component {
             } = this.props
 
         return (
-            <div className={b({orientation})}>{children}</div>
+            <div className={b({orientation, count: children.length})}>{children}</div>
         )
     }
 }

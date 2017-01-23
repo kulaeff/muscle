@@ -78,6 +78,7 @@ class App extends Component {
             .then(() => {
                 this.setState({
                     buttonDisabled: false,
+                    selectedIndex: 1
                 })
 
                 router.push('/databases')
