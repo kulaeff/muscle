@@ -1,8 +1,9 @@
 // Common colors
-@colorPrimary: #37D;
-@colorDarkGray: #1b1d1f;
-@colorMediumGray: #2a2c2e;
-@colorLightGray: #353739;
+@colorPrimary: #48f;
+@colorText: #fff;
+@colorDarkGray: #202224;
+@colorMediumGray: #303234;
+@colorLightGray: #404244;
 @colorSemiTransparent: rgba(255, 255, 255, .5);
 
 // Heights
@@ -47,17 +48,25 @@
 @indicatorBorderColor: rgba(255, 255, 255, .2);
 @indicatorTitleColor: rgba(255, 255, 255, .5);
 
+// NavigationBar
+@navigationBarBackgroundColor: transparent;
+@navigationBarForegroundColor: @colorText;
+@navigationBarItemBackgroundColorHover: rgba(255, 255, 255, .05);
+@navigationBarItemBackgroundColorSelected: @colorPrimary;
+@navigationBarItemForegroundColorHover: @colorText;
+@navigationBarItemForegroundColorSelected: #fff;
+
 // Textbox
 @textboxBorderThickness: 1px;
 @textboxColor: #fff;
-@textboxColorBackground: rgba(0, 0, 0, 0.15);
-@textboxColorBorder: rgba(255, 255, 255, 0.1);
+@textboxColorBackground: rgba(0, 0, 0, .1);
+@textboxColorBorder: rgba(255, 255, 255, .1);
 @textboxColorDisabledBackground: rgba(0, 0, 0, 0);
 @textboxColorDisabledBorder: rgba(255, 255, 255, 0.1);
-@textboxColorFocusBackground: rgba(0, 0, 0, 0.2);
+@textboxColorFocusBackground: rgba(0, 0, 0, 0.1);
 @textboxColorFocusBorder: @colorPrimary;
 @textboxColorHoverBackground: @textboxColorBackground;
-@textboxColorHoverBorder: rgba(255, 255, 255, 0.15);
+@textboxColorHoverBorder: rgba(255, 255, 255, .2);
 @textboxHeight: @controlHeightDefault;
 
 // Toggle
@@ -70,15 +79,23 @@
 // Toolbar
 @toolButtonBorderRadius: 50%;
 @toolButtonBorderThickness: 0;
-@toolButtonForegroundColor: #fff;
+@toolButtonForegroundColor: #000;
 @toolButtonForegroundColorActive: #000;
-@toolButtonForegroundColorHover: #fff;
-@toolButtonColorBackground: @colorPrimary;
+@toolButtonForegroundColorHover: #000;
+@toolButtonColorBackground: #c0c2c4;
 @toolButtonColorBorder: rgba(255, 255, 255, .9);
 @toolButtonColorActiveBackground: rgba(255, 255, 255, 1);
 @toolButtonColorActiveBorder: rgba(255, 255, 255, 1);
-@toolButtonColorDisabledBackground: rgba(255, 255, 255, .1);
-@toolButtonColorDisabledBorder: rgba(255, 255, 255, .2);
-@toolButtonColorHoverBackground: darken(@colorPrimary, 5%);
-@toolButtonColorHoverBorder: rgba(255, 255, 255, 1);
+@toolButtonColorDisabledBackground: rgba(255, 255, 255, .06);
+@toolButtonColorDisabledBorder: rgba(0, 0, 0, .15);
+@toolButtonColorHoverBackground: lighten(@toolButtonColorBackground, 5%);
+@toolButtonColorHoverBorder: #000;
 @toolButtonSize: 3.2rem;
+
+// Window
+@windowBackgroundColor: @colorMediumGray;
+@windowBackgroundColorHover: lighten(@colorMediumGray, 2%);
+@windowBorderColor: lighten(@colorMediumGray, 10%);
+@windowForegroundColor: @colorText;
+@windowButtonBackgroundColor: transparent;
+@windowButtonBackgroundColorHover: rgba(0, 0, 0, 0.1);

@@ -3,48 +3,50 @@
 @itemSize: 48px;
 
 .navigation-bar {
+    background-color: @navigationBarBackgroundColor;
     position: relative;
     &__item {
         box-sizing: border-box;
+        color: @navigationBarForegroundColor;
         cursor: pointer;
         display: block;
         height: @itemSize;
         position: relative;
+        transition: background-color @animationDelayControl linear;
         width: @itemSize;
         svg {
             display: block;
-            fill: #fff;
+            fill: currentColor;
             height: @itemSize;
             margin: auto;
-            opacity: 0.7;
             width: @itemSize;
         }
         &:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: @navigationBarItemBackgroundColorHover;
+            color: @navigationBarItemForegroundColorHover;
         }
         // ICONS
         &_icon_logout {
             svg {
                 fill: none;
-                stroke: #fff;
+                stroke: currentColor;
             }
         }
         // Status
         &_icon_status {
             svg {
                 fill: none;
-                stroke: #fff;
+                stroke: currentColor;
             }
         }
         // STATES
         // Selected
         &_state_selected {
-            background: @colorPrimary;
-            svg {
-                opacity: 1;
-            }
+            background: @navigationBarItemBackgroundColorSelected;
+            color: @navigationBarItemForegroundColorSelected;
             &:hover {
-                background: @colorPrimary;
+                background: @navigationBarItemBackgroundColorSelected;
+                color: @navigationBarItemForegroundColorSelected;
             }
         }
     }

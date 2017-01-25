@@ -1,4 +1,7 @@
+@import (reference) '../styles/variables';
+
 .window {
+    color: @windowForegroundColor;
     display: flex;
     height: 100%;
     &__buttons {
@@ -8,8 +11,9 @@
         white-space: nowrap;
     }
     &__button {
-        background: none;
+        background: @windowButtonBackgroundColor;
         border: none;
+        color: @windowForegroundColor;
         cursor: pointer;
         height: 2rem;
         outline: none;
@@ -17,7 +21,7 @@
         width: 2rem;
         &_action_close {
             &:before, &:after {
-                background-color: #fff;
+                background-color: currentColor;
                 content: '';
                 display: block;
                 height: 2px;
@@ -35,7 +39,7 @@
         }
         &_action_minimize {
             &:before {
-                background-color: #fff;
+                background-color: currentColor;
                 bottom: 0.5rem;
                 content: '';
                 display: block;
@@ -47,16 +51,12 @@
         }
         //
         &:hover {
-            background: rgba(255, 255, 255, 0.15)
-        }
-        //
-        &_action_close:hover {
-            background: #e04;
+            background-color: @windowButtonBackgroundColorHover;
         }
     }
     &__container {
-        background-color: @colorMediumGray;
-        border-right: 1px solid lighten(@colorMediumGray, 15%);
+        background-color: @windowBackgroundColor;
+        border-right: 1px solid @windowBorderColor;
         box-sizing: border-box;
         min-width: 40rem;
         max-width: 60rem;
@@ -88,7 +88,7 @@
         padding: 0 @marginDefault / 2;
     }
     &__view {
-        border-right: 1px solid lighten(@colorMediumGray, 15%);
+        border-right: 1px solid @windowBorderColor;
     }
     //
     &__button + &__button {
@@ -106,7 +106,7 @@
         padding: @marginDefault * 0.75 0;
         width: @marginDefault * @marginDefault;
         &:hover {
-            background: lighten(@colorMediumGray, 3%);
+            background: @windowBackgroundColorHover;
         }
     }
     &_state_minimized &__filters {

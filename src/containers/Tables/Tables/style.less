@@ -1,0 +1,14 @@
+@import (reference) '../../styles/variables';
+@import (reference) '../../mixins/window';
+
+.tables {
+    .window();
+
+    &__container {
+        min-width: 70rem;
+        max-width: 100rem;
+    }
+    &__view {
+        border-right: none;
+    }
+}
