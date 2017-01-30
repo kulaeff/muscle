@@ -5,7 +5,7 @@
     display: flex;
     height: 100%;
     &__buttons {
-        flex: 1;
+        display: inline-block;
         font-size: 0;
         vertical-align: top;
         white-space: nowrap;
@@ -64,6 +64,18 @@
         position: relative;
         transition: background-color @animationDelayControl linear;
     }
+    &__content {
+        display: block;
+        //
+        &_visibility_hidden {
+            display: none;
+        }
+    }
+    &__controls {
+        position: absolute;
+        right: @marginDefault;
+        top: @marginDefault * 0.75;
+    }
     &__filters {
         margin: @marginDefault 0;
     }
@@ -71,13 +83,10 @@
         display: flex;
     }
     &__spinner {
-        flex: 1;
+        display: inline-block;
         font-size: 0;
-        padding: 0.3rem @marginDefault / 4 0;
+        padding: 0.3rem @marginDefault / 4;
         vertical-align: top;
-    }
-    &__tabs {
-        margin: @marginDefault / 2 0;
     }
     &__toolbar {
         margin: @marginDefault 0;
@@ -128,6 +137,9 @@
         display: none;
     }
     &_state_minimized &__table {
+        display: none;
+    }
+    &_state_minimized &__tabs {
         display: none;
     }
     &_state_minimized &__title-description {

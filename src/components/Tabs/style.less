@@ -37,17 +37,21 @@
             }
         }
     }
+    &__items {
+        display: inline-block;
+    }
+    &__title {
+        display: inline-block;
+    }
     //
     &__item + &__item {
         margin-left: 1rem;
     }
-    // MODES
-    &_mode_collapsed &__item {
+    // STATES
+    &_state_collapsed &__item {
         display: none;
-        margin-left: 0;
         &_state_selected {
             display: inline-block;
-            cursor: default;
             pointer-events: none;
             &:after {
                 display: none;

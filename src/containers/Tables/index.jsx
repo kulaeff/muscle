@@ -44,6 +44,7 @@ class Tables extends Component {
         this.state = {
             filter: '',
             selectedIndex: null,
+            selectedTab: null
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -57,6 +58,10 @@ class Tables extends Component {
         const
             { params } = this.props,
             { getTables } = this.props.tablesActions
+
+        this.setState({
+            selectedTab: 'tables'
+        })
 
         getTables(params.database, this.state.filter)
     }
@@ -114,6 +119,22 @@ class Tables extends Component {
      */
     onToolBarButtonDeleteDatabaseClick = () => {
         console.log('toolbar button Delete cliked')
+    }
+
+    /**
+     * Show export window
+     * @method
+     */
+    onToolBarButtonExportTableClick = () => {
+        console.log('toolbar button Export cliked')
+    }
+
+    /**
+     * Show import window
+     * @method
+     */
+    onToolBarButtonImportTableClick = () => {
+        console.log('toolbar button Export cliked')
     }
 
     /**
@@ -198,13 +219,13 @@ class Tables extends Component {
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        const { router, params } = this.props
+        //const { router, params } = this.props
 
         this.setState({
             selectedTab: name
         })
 
-        router.push(`/databases/${params.database}/${name}`)
+        //router.push(`/databases/${params.database}/${name}`)
     }
 
     /**
@@ -246,7 +267,14 @@ class Tables extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title primaryTitle={params.database} />
+                            <Tabs
+                                collapsed={minimized}
+                                items={tabs}
+                                selected={this.state.selectedTab}
+                                title={
+                                    <Title secondaryTitle={params.database} />
+                                }
+                                onChange={this.onTabsChange} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
@@ -258,49 +286,58 @@ class Tables extends Component {
                                 onClick={this.onWindowButtonCloseClick}></button>
                         </div>
                     </div>
-                    <div className={b('tabs')}>
-                        <Tabs
-                            collapsed={minimized}
-                            items={tabs}
-                            selected={this.state.selectedTab}
-                            onChange={this.onTabsChange} />
-                    </div>
-                    <div className={b('toolbar')}>
-                        <Toolbar>
-                            <ToolBarButton
-                                icon="create"
-                                label="New"
-                                title="Create new table"
-                                onClick={this.onToolBarButtonCreateDatabaseClick} />
-                            <ToolBarButton
-                                disabled={this.state.selectedIndex === null}
-                                icon="edit"
-                                label="Edit"
-                                title="Edit table"
-                                onClick={this.onToolBarButtonEditDatabaseClick} />
-                            <ToolBarSeparator />
-                            <ToolBarButton
-                                disabled={this.state.selectedIndex === null}
-                                icon="delete"
-                                label="Delete"
-                                title="Delete table"
-                                onClick={this.onToolBarButtonDeleteDatabaseClick} />
-                        </Toolbar>
-                    </div>
-                    <div className={b('filters')}>
-                        <Textbox
-                            id="filter"
-                            placeholder="Filter by name..."
-                            value={this.state.filter}
-                            onChange={this.onTextboxFilterChange}/>
-                    </div>
-                    <div className={b('table')}>
-                        <DataTable
-                            columns={columns}
-                            items={items}
-                            selectedIndex={this.state.selectedIndex}
-                            onChange={this.onDataTableChange}
-                            onValueTransform={this.onDataTableValueTransform} />
+                    <div className={b('content', {
+                        visibility: this.state.selectedTab !== 'tables' ? 'hidden' : null})
+                    }>
+                        <div className={b('toolbar')}>
+                            <Toolbar>
+                                <ToolBarButton
+                                    icon="create"
+                                    label="New"
+                                    title="Create new table"
+                                    onClick={this.onToolBarButtonCreateDatabaseClick} />
+                                <ToolBarButton
+                                    disabled={this.state.selectedIndex === null}
+                                    icon="edit"
+                                    label="Edit"
+                                    title="Edit table"
+                                    onClick={this.onToolBarButtonEditDatabaseClick} />
+                                <ToolBarButton
+                                    disabled={this.state.selectedIndex === null}
+                                    icon="delete"
+                                    label="Delete"
+                                    title="Delete table"
+                                    onClick={this.onToolBarButtonDeleteDatabaseClick} />
+                                <ToolBarSeparator />
+                                <ToolBarButton
+                                    disabled={this.state.selectedIndex === null}
+                                    icon="import"
+                                    label="Import"
+                                    title="Import table"
+                                    onClick={this.onToolBarButtonImportDatabaseClick} />
+                                <ToolBarButton
+                                    disabled={this.state.selectedIndex === null}
+                                    icon="export"
+                                    label="Export"
+                                    title="Export table"
+                                    onClick={this.onToolBarButtonExportDatabaseClick} />
+                            </Toolbar>
+                        </div>
+                        <div className={b('filters')}>
+                            <Textbox
+                                id="filter"
+                                placeholder="Filter by name..."
+                                value={this.state.filter}
+                                onChange={this.onTextboxFilterChange}/>
+                        </div>
+                        <div className={b('table')}>
+                            <DataTable
+                                columns={columns}
+                                items={items}
+                                selectedIndex={this.state.selectedIndex}
+                                onChange={this.onDataTableChange}
+                                onValueTransform={this.onDataTableValueTransform} />
+                        </div>
                     </div>
                 </div>
                 <div className={b('view')}>

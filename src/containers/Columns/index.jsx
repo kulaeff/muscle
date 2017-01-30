@@ -158,13 +158,11 @@ class Columns extends Component {
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        const { router, params } = this.props
+        //const { router, params } = this.props
 
         this.setState({
             selectedTab: name
         })
-
-        router.push(`/databases/${params.database}/${params.table}/${name}`)
     }
 
     /**
@@ -195,11 +193,13 @@ class Columns extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title secondaryTitle={params.table} />
                             <Tabs
                                 collapsed={minimized}
                                 items={tabs}
                                 selected={this.state.selectedTab}
+                                title={
+                                    <Title secondaryTitle={params.table} />
+                                }
                                 onChange={this.onTabsChange} />
                         </div>
                         <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>

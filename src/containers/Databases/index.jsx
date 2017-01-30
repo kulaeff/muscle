@@ -206,7 +206,6 @@ class Databases extends Component {
                                 label="Edit"
                                 title="Edit database"
                                 onClick={this.onToolBarButtonEditDatabaseClick} />
-                            <ToolBarSeparator />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="delete"

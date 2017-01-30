@@ -42,12 +42,12 @@ class TabsItem extends Component {
             } = this.props
 
         return (
-            <span
+            <a
                 className={b('item', {state: selected ? 'selected' : null})}
                 title={label}
                 onClick={() => onClick(name)}>
                 {label}
-            </span>
+            </a>
         )
     }
 }
