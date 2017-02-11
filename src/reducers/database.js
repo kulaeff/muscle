@@ -1,9 +1,9 @@
 import {
-    GET_DATABASES_REQUEST,
-    GET_DATABASES_SUCCESS,
-    GET_DATABASES_FAIL,
-    SET_DATABASES_WINDOW_STATE
-} from '../constants/databases'
+    GET_DATABASE_REQUEST,
+    GET_DATABASE_SUCCESS,
+    GET_DATABASE_FAIL,
+    SET_DATABASE_WINDOW_STATE
+} from '../constants/database'
 
 const initialState = {
     fetching: false,
@@ -11,15 +11,15 @@ const initialState = {
     items: []
 }
 
-export default function databases(state = initialState, action) {
+export default function database(state = initialState, action) {
     switch(action.type) {
-        case GET_DATABASES_REQUEST:
+        case GET_DATABASE_REQUEST:
             return { ...state, fetching: true }
-        case GET_DATABASES_SUCCESS:
+        case GET_DATABASE_SUCCESS:
             return { ...state, fetching: false, items: action.payload.items }
-        case GET_DATABASES_FAIL:
+        case GET_DATABASE_FAIL:
             return { ...state, fetching: false }
-        case SET_DATABASES_WINDOW_STATE:
+        case SET_DATABASE_WINDOW_STATE:
             return { ...state, minimized: action.payload }
         default:
             return state

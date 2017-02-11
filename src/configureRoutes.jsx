@@ -2,21 +2,21 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import App from './containers/App';
 import Column from './containers/Column';
-import Columns from './containers/Columns';
-import Databases from './containers/Databases';
+import Table from './containers/Table';
+import Server from './containers/Server';
 import Settings from './containers/Settings';
 import Status from './containers/Status';
 import StatusConnections from './containers/Status/Connections';
 import StatusSummary from './containers/Status/Summary';
 import StatusUsage from './containers/Status/Usage';
-import Tables from './containers/Tables';
+import Database from './containers/Database';
 
 export default function createRoutes () {
     return (
         <Route path="/" component={App}>
-            <Route path="databases" component={Databases}>
-                <Route path=":database" component={Tables}>
-                    <Route path=":table" component={Columns}>
+            <Route path="server" component={Server}>
+                <Route path=":database" component={Database}>
+                    <Route path=":table" component={Table}>
                         <Route path=":column" component={Column} />
                     </Route>
                 </Route>

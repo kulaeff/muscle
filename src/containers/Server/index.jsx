@@ -6,22 +6,22 @@ import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
-import * as databasesActions from '../../actions/databases'
+import * as serverActions from '../../actions/server'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
 /**
- * Databases container
+ * Server container
  * @class
  */
-class Databases extends Component {
+class Server extends Component {
     /**
-     * Databases container properties
+     * Server container properties
      * @static
      * @property {bool} fetching Is data fetching
      * @property {bool} minimized Is window minimized
-     * @property {array} items Databases and tables
+     * @property {array} items Server and tables
      */
     static propTypes = {
         fetching: PropTypes.bool,
@@ -30,7 +30,7 @@ class Databases extends Component {
     }
 
     /**
-     * Creates Databases container
+     * Creates Server container
      * @constructor
      */
     constructor(props) {
@@ -52,21 +52,21 @@ class Databases extends Component {
      */
     componentDidMount() {
         const
-            { getDatabases, restoreWindow } = this.props.databasesActions
+            { getServer, restoreWindow } = this.props.serverActions
 
         restoreWindow()
-        getDatabases()
+        getServer()
     }
 
     /**
-     * Refreshes databases view
+     * Refreshes server view
      * @method
      * @param {object} nextProps New properties
      */
     componentWillReceiveProps(nextProps) {
         const { items, params } = this.props
 
-        // We came from direct url (/databases/<name>)
+        // We came from direct url (/server/<name>)
         if (nextProps.params.hasOwnProperty('database') && items.length !== nextProps.items.length) {
             const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
 
@@ -110,7 +110,7 @@ class Databases extends Component {
      * @method
      */
     onWindowButtonMinimizeClick = (e) => {
-        const { minimizeWindow } = this.props.databasesActions
+        const { minimizeWindow } = this.props.serverActions
 
         minimizeWindow()
 
@@ -118,11 +118,21 @@ class Databases extends Component {
     }
 
     /**
+     * Closes the window and goes to previous route
+     * @method
+     */
+    onWindowButtonCloseClick = () => {
+        const { router } = this.props
+
+        router.push('/')
+    }
+
+    /**
      * Restores the window
      * @method
      */
     onWindowClick = () => {
-        const { restoreWindow } = this.props.databasesActions
+        const { restoreWindow } = this.props.serverActions
 
         restoreWindow()
     }
@@ -141,18 +151,18 @@ class Databases extends Component {
             selectedIndex: index
         })
 
-        router.push(`/databases/${sortedItems[index].name}`)
+        router.push(`/server/${sortedItems[index].name}`)
     }
 
     /**
-     * Gets the list of databases filtered by string (debounced)
+     * Gets the list of server filtered by string (debounced)
      * @function
      * @param {string} filter String used as filter
      */
     debouncedTextboxFilterChange = (token) => {
-        const { getDatabases } = this.props.databasesActions
+        const { getServer } = this.props.serverActions
 
-        getDatabases(token)
+        getServer(token)
     }
 
     /**
@@ -174,7 +184,7 @@ class Databases extends Component {
      */
     render() {
         const
-            b = block('databases'),
+            b = block('server'),
             { children, fetching, minimized, items } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
@@ -183,14 +193,18 @@ class Databases extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title primaryTitle="Databases" />
+                            <Title primaryTitle="Server" />
                         </div>
-                        <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
+                        <div className={b('spinner')}>
+                            <Spinner active={fetching} type="rect" />
+                        </div>
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
                                 onClick={this.onWindowButtonMinimizeClick}></button>
-                            <button className={b('button', {action: 'close'})}></button>
+                            <button
+                                className={b('button', {action: 'close'})}
+                                onClick={this.onWindowButtonCloseClick}></button>
                         </div>
                     </div>
                     <div className={b('toolbar')}>
@@ -252,16 +266,16 @@ class Databases extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.databases.fetching,
-        minimized: state.databases.minimized,
-        items: state.databases.items
+        fetching: state.server.fetching,
+        minimized: state.server.minimized,
+        items: state.server.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        databasesActions: bindActionCreators(databasesActions, dispatch)
+        serverActions: bindActionCreators(serverActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Databases)
+export default connect(mapStateToProps, mapDispatchToProps)(Server)

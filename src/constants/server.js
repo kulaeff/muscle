@@ -1,0 +1,9 @@
+/**
+ * Unique actions names
+ * @constant
+ */
+export const
+    GET_SERVER_REQUEST = 'GET_SERVER_REQUEST',
+    GET_SERVER_SUCCESS = 'GET_SERVER_SUCCESS',
+    GET_SERVER_FAIL = 'GET_SERVER_FAIL',
+    SET_SERVER_WINDOW_STATE = 'SET_SERVER_WINDOW_STATE'

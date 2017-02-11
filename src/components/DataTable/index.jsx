@@ -138,11 +138,11 @@ class DataTable extends Component {
                         )
                     }
                 </tbody>
-                <tfoot className={b('footer')}>
+                {/*<tfoot className={b('footer')}>
                     <tr>
                         <td colSpan={columns.length}></td>
                     </tr>
-                </tfoot>
+                </tfoot>*/}
             </table>
             : null
         )

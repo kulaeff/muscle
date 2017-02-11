@@ -8,6 +8,7 @@
 
 // Heights
 @controlHeightDefault: 3rem;
+@controlBorderColor: lighten(@colorMediumGray, 10%);
 
 // Margins
 @marginDefault: 2.4rem;
@@ -34,13 +35,17 @@
 @buttonHeight: @controlHeightDefault * 1.1;
 
 // DataTable
+@dataTableBackgroundColor: rgba(0, 0, 0, 0);
+@dataTableBorderColor: @controlBorderColor;
+@dataTableBorderThickness: 1px;
 @dataTableColumnColor: @colorSemiTransparent;
 @dataTableColumnColorHover: rgba(255, 255, 255, .7);
 @dataTableColumnArrowColor: rgba(255, 255, 255, 1);
-@dataTableFooterColorBorder: rgba(255, 255, 255, .1);
-@dataTableHeaderColorBorder: rgba(255, 255, 255, .1);
+@dataTableFooterColorBorder: @controlBorderColor;
+@dataTableHeaderColorBorder: @controlBorderColor;
 @dataTableItemColorHoverBackground: rgba(255, 255, 255, .05);
 @dataTableItemColorSelectedBackground: @colorPrimary;
+@dataTableRowBackgroundColor: rgba(0, 0, 0, 0);
 
 // Indicator
 @indicatorBorderThickness: 1px;
@@ -60,7 +65,7 @@
 @textboxBorderThickness: 1px;
 @textboxColor: #fff;
 @textboxColorBackground: rgba(0, 0, 0, .1);
-@textboxColorBorder: rgba(255, 255, 255, .1);
+@textboxColorBorder: @controlBorderColor;
 @textboxColorDisabledBackground: rgba(0, 0, 0, 0);
 @textboxColorDisabledBorder: rgba(255, 255, 255, 0.1);
 @textboxColorFocusBackground: rgba(0, 0, 0, 0.1);

@@ -16,8 +16,8 @@ const navigationBarItems = [
         title: 'Status',
     },
     {
-        id: 'databases',
-        title: 'Databases',
+        id: 'server',
+        title: 'server',
     },
     {
         id: 'settings',
@@ -81,7 +81,7 @@ class App extends Component {
                     selectedIndex: 1
                 })
 
-                router.push('/databases')
+                router.push('/server')
             })
 
         e.preventDefault()

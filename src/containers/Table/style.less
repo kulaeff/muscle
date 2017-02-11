@@ -1,10 +1,14 @@
 @import (reference) '../../styles/variables';
 @import (reference) '../../mixins/window';
 
-.databases {
+.table {
     .window();
 
+    &__container {
+        min-width: 70rem;
+        max-width: 100rem;
+    }
     &__view {
-        border-right: 2px solid @colorPrimary;
+        border-right: none;
     }
 }

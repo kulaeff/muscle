@@ -1,31 +1,31 @@
 import {
-    GET_DATABASES_REQUEST,
-    GET_DATABASES_SUCCESS,
-    GET_DATABASES_FAIL,
-    SET_DATABASES_WINDOW_STATE
-} from '../constants/databases'
+    GET_SERVER_REQUEST,
+    GET_SERVER_SUCCESS,
+    GET_SERVER_FAIL,
+    SET_SERVER_WINDOW_STATE
+} from '../constants/server'
 
 /**
- * Retrieves the list of databases
+ * Retrieves the list of SERVER
  * @function
  * @param {string} token String used as filter
  */
-export function getDatabases(token) {
+export function getServer(token) {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: GET_DATABASES_REQUEST
+            type: GET_SERVER_REQUEST
         })
 
         try {
-            const response = await api.getDatabases(token)
+            const response = await api.getServer(token)
 
             dispatch({
-                type: GET_DATABASES_SUCCESS,
+                type: GET_SERVER_SUCCESS,
                 payload: response.data
             })
         } catch(ex) {
             dispatch({
-                type: GET_DATABASES_FAIL,
+                type: GET_SERVER_FAIL,
                 payload: ex
             })
         }
@@ -39,7 +39,7 @@ export function getDatabases(token) {
 export function minimizeWindow() {
     return async (dispatch) => {
         dispatch({
-            type: SET_DATABASES_WINDOW_STATE,
+            type: SET_SERVER_WINDOW_STATE,
             payload: true,
         })
     }
@@ -51,11 +51,11 @@ export function minimizeWindow() {
  */
 export function restoreWindow() {
     return async (dispatch, getState) => {
-        const { minimized } = getState().databases
+        const { minimized } = getState().server
 
         if (minimized) {
             dispatch({
-                type: SET_DATABASES_WINDOW_STATE,
+                type: SET_SERVER_WINDOW_STATE,
                 payload: false,
             })
         }

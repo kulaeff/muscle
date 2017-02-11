@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
-import * as tablesActions from '../../actions/tables'
-import * as databasesActions from '../../actions/databases'
+import * as databaseActions from '../../actions/database'
+import * as serverActions from '../../actions/server'
 import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
 import Tabs from '../../components/Tabs'
@@ -15,12 +15,12 @@ import bytes from '../../helpers/bytes'
 import './style.less';
 
 /**
- * Tables container
+ * Database container
  * @class
  */
-class Tables extends Component {
+class Database extends Component {
     /**
-     * Tables container properties
+     * Database container properties
      * @static
      * @property {bool} fetching Is data fetching
      * @property {bool} minimized Is window minimized
@@ -33,7 +33,7 @@ class Tables extends Component {
     }
 
     /**
-     * Creates Tables container
+     * Creates Database container
      * @constructor
      */
     constructor(props) {
@@ -44,36 +44,32 @@ class Tables extends Component {
         this.state = {
             filter: '',
             selectedIndex: null,
-            selectedTab: null
+            selectedTab: 'tables'
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
     }
 
     /**
-     * Fetches tables when database was selected for the first time
+     * Fetches database when database was selected for the first time
      * @method
      */
     componentDidMount() {
         const
             { params } = this.props,
-            { getTables } = this.props.tablesActions
+            { getDatabase } = this.props.databaseActions
 
-        this.setState({
-            selectedTab: 'tables'
-        })
-
-        getTables(params.database, this.state.filter)
+        getDatabase(params.database, this.state.filter)
     }
 
     /**
-     * Fetches tables when selected database was changed
+     * Fetches database when selected database was changed
      * @method
      */
     componentWillReceiveProps(nextProps) {
         const
             { items, params } = this.props,
-            { getTables, restoreWindow } = this.props.tablesActions
+            { getDatabase, restoreWindow } = this.props.databaseActions
 
         // Selected database has changed
         if (params.database !== nextProps.params.database) {
@@ -83,7 +79,7 @@ class Tables extends Component {
 
             restoreWindow()
 
-            getTables(nextProps.params.database, this.state.filter)
+            getDatabase(nextProps.params.database, this.state.filter)
         // Table view was closed
         } else if (!nextProps.params.hasOwnProperty('table')) {
             this.setState({
@@ -142,7 +138,7 @@ class Tables extends Component {
      * @method
      */
     onWindowButtonMinimizeClick = (e) => {
-        const { minimizeWindow } = this.props.tablesActions
+        const { minimizeWindow } = this.props.databaseActions
 
         minimizeWindow()
 
@@ -164,7 +160,7 @@ class Tables extends Component {
      * @method
      */
     onWindowClick = () => {
-        const { restoreWindow } = this.props.tablesActions
+        const { restoreWindow } = this.props.databaseActions
 
         restoreWindow()
     }
@@ -177,13 +173,13 @@ class Tables extends Component {
     onDataTableChange = (index) => {
         const
             { items, router, routeParams } = this.props,
-            { minimizeWindow } = this.props.databasesActions
+            { minimizeWindow } = this.props.serverActions
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/databases/${routeParams.database}/${items[index][0]}`)
+        router.push(`/server/${routeParams.database}/${items[index][0]}`)
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
@@ -203,29 +199,25 @@ class Tables extends Component {
     }
 
     /**
-     * Gets the list of tables filtered by string (debounced)
+     * Gets the list of database filtered by string (debounced)
      * @function
      * @param {string} filter String used as filter
      */
     debouncedTextboxFilterChange = (token) => {
         const
             { params } = this.props,
-            { getTables } = this.props.tablesActions
+            { getDatabase } = this.props.databaseActions
 
-        getTables(params.database, token)
+        getDatabase(params.database, token)
     }
 
     /**
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        //const { router, params } = this.props
-
         this.setState({
             selectedTab: name
         })
-
-        //router.push(`/databases/${params.database}/${name}`)
     }
 
     /**
@@ -247,7 +239,7 @@ class Tables extends Component {
      */
     render() {
         const
-            b = block('tables'),
+            b = block('database'),
             columns = [
                 { name: 'table', title: 'Table' },
                 { name: 'rows', title: 'Rows', style: { alignment: 'right' } },
@@ -287,8 +279,8 @@ class Tables extends Component {
                         </div>
                     </div>
                     <div className={b('content', {
-                        visibility: this.state.selectedTab !== 'tables' ? 'hidden' : null})
-                    }>
+                        visibility: this.state.selectedTab !== 'tables' ? 'hidden' : null
+                    })}>
                         <div className={b('toolbar')}>
                             <Toolbar>
                                 <ToolBarButton
@@ -350,17 +342,17 @@ class Tables extends Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.tables.fetching,
-        minimized: state.tables.minimized,
-        items: state.tables.items
+        fetching: state.database.fetching,
+        minimized: state.database.minimized,
+        items: state.database.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        tablesActions: bindActionCreators(tablesActions, dispatch),
-        databasesActions: bindActionCreators(databasesActions, dispatch)
+        databaseActions: bindActionCreators(databaseActions, dispatch),
+        serverActions: bindActionCreators(serverActions, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tables)
+export default connect(mapStateToProps, mapDispatchToProps)(Database)

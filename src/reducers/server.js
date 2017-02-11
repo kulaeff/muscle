@@ -1,9 +1,9 @@
 import {
-    GET_COLUMNS_REQUEST,
-    GET_COLUMNS_SUCCESS,
-    GET_COLUMNS_FAIL,
-    SET_COLUMNS_WINDOW_STATE
-} from '../constants/columns'
+    GET_SERVER_REQUEST,
+    GET_SERVER_SUCCESS,
+    GET_SERVER_FAIL,
+    SET_SERVER_WINDOW_STATE
+} from '../constants/server'
 
 const initialState = {
     fetching: false,
@@ -11,15 +11,15 @@ const initialState = {
     items: []
 }
 
-export default function columns(state = initialState, action) {
+export default function server(state = initialState, action) {
     switch(action.type) {
-        case GET_COLUMNS_REQUEST:
+        case GET_SERVER_REQUEST:
             return { ...state, fetching: true }
-        case GET_COLUMNS_SUCCESS:
+        case GET_SERVER_SUCCESS:
             return { ...state, fetching: false, items: action.payload.items }
-        case GET_COLUMNS_FAIL:
+        case GET_SERVER_FAIL:
             return { ...state, fetching: false }
-        case SET_COLUMNS_WINDOW_STATE:
+        case SET_SERVER_WINDOW_STATE:
             return { ...state, minimized: action.payload }
         default:
             return state

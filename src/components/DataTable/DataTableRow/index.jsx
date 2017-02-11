@@ -50,9 +50,7 @@ class DataTableRow extends Component {
                     cells.map((cell, index) => {
                         const column = columns[index]
 
-                        return <td className={b('row-cell', {
-                            alignment: column.style ? column.style.alignment : null
-                        })} key={index}>
+                        return <td className={b('row-cell')} key={index}>
                             {
                                 onValueTransform ? onValueTransform(column.name, cell) : cell
                             }

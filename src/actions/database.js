@@ -1,9 +1,9 @@
 import {
-    GET_TABLES_REQUEST,
-    GET_TABLES_SUCCESS,
-    GET_TABLES_FAIL,
-    SET_TABLES_WINDOW_STATE
-} from '../constants/tables'
+    GET_DATABASE_REQUEST,
+    GET_DATABASE_SUCCESS,
+    GET_DATABASE_FAIL,
+    SET_DATABASE_WINDOW_STATE
+} from '../constants/database'
 
 /**
  * Retrieves the list of tables
@@ -11,22 +11,22 @@ import {
  * @param {string} database Database name
  * @param {string} token String used to filter tables
  */
-export function getTables(database, token) {
+export function getDatabase(database, token) {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: GET_TABLES_REQUEST
+            type: GET_DATABASE_REQUEST
         })
 
         try {
-            const response = await api.getTables(database, token)
+            const response = await api.getDatabase(database, token)
 
             dispatch({
-                type: GET_TABLES_SUCCESS,
+                type: GET_DATABASE_SUCCESS,
                 payload: response.data
             })
         } catch(ex) {
             dispatch({
-                type: GET_TABLES_FAIL,
+                type: GET_DATABASE_FAIL,
                 payload: ex
             })
         }
@@ -40,7 +40,7 @@ export function getTables(database, token) {
 export function minimizeWindow() {
     return async (dispatch) => {
         dispatch({
-            type: SET_TABLES_WINDOW_STATE,
+            type: SET_DATABASE_WINDOW_STATE,
             payload: true,
         })
     }
@@ -52,11 +52,11 @@ export function minimizeWindow() {
  */
 export function restoreWindow() {
     return async (dispatch, getState) => {
-        const { minimized } = getState().tables
+        const { minimized } = getState().database
 
         if (minimized) {
             dispatch({
-                type: SET_TABLES_WINDOW_STATE,
+                type: SET_DATABASE_WINDOW_STATE,
                 payload: false,
             })
         }
