@@ -6,25 +6,25 @@
     display: flex;
     height: 100%;
     &__container {
-        background: @colorDarkGray;
+        background: @cSidebar;
         display: table-cell;
         vertical-align: middle;
     }
     &__login {
-        background: @colorMediumGray;
-        border-top: 3px solid @colorPrimary;
+        background: @cWindow;
+        border-top: 3px solid @cPrimary;
         margin: 0 auto;
-        padding: @marginDefault * 1.2 @marginDefault * 1.4 @marginDefault * 1.4;
+        padding: @mDefault * 1.2 @mDefault * 1.4 @mDefault * 1.4;
         width: 30rem;
         &-form {
-            margin-top: @marginDefault / 2;
+            margin-top: @mDefault / 2;
         }
         &-header {
             display: block;
         }
     }
     &__logo {
-        color: saturate(@colorPrimary, 10%);
+        color: saturate(@cPrimary, 10%);
         height: @itemSize;
         line-height: @itemSize;
         position: relative;
@@ -53,12 +53,11 @@
     &__panel {
         flex: 1;
         &_position_left {
-            background: @colorDarkGray;
+            background: @cSidebar;
             min-width: @itemSize;
         }
         &_position_middle {
-            background: @colorLightGray url('images/bg.svg');
-            border-left: 2px solid @colorPrimary;
+            border-left: 2px solid @cPrimary;
             flex: 1 100%;
             overflow: hidden;
         }

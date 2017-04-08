@@ -119,7 +119,7 @@ class Table extends Component {
     onWindowButtonCloseClick = () => {
         const { router, params } = this.props
 
-        router.push(`/databases/${params.database}`)
+        router.push(`/server/${params.database}`)
     }
 
     /**

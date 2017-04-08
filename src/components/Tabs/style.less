@@ -5,7 +5,7 @@
     position: relative;
     white-space: nowrap;
     &__item {
-        color: @colorSemiTransparent;
+        color: @cBorder;
         cursor: pointer;
         display: inline-block;
         font-size: 1.4rem;
@@ -13,7 +13,7 @@
         line-height: 1;
         position: relative;
         text-transform: uppercase;
-        transition: color @animationDelayControl linear;
+        transition: color @dDefault linear;
         // Pseudo
         &:after {
             background-color: transparent;
@@ -23,7 +23,7 @@
             height: 2px;
             left: 0;
             position: absolute;
-            transition: background-color @animationDelayControl linear;
+            transition: background-color @dDefault linear;
             width: 100%;
         }
         &:hover {
@@ -33,7 +33,7 @@
         &_state_selected {
             color: #fff;
             &:after {
-                background-color: @colorPrimary;
+                background-color: @cPrimary;
             }
         }
     }

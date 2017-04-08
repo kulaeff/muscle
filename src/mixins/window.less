@@ -60,9 +60,9 @@
         box-sizing: border-box;
         min-width: 40rem;
         max-width: 60rem;
-        padding: @marginDefault * 0.75 @marginDefault;
+        padding: @mDefault * 0.75 @mDefault;
         position: relative;
-        transition: background-color @animationDelayControl linear;
+        transition: background-color @dDefault linear;
     }
     &__content {
         display: block;
@@ -72,7 +72,7 @@
         }
     }
     &__filters {
-        margin: @marginDefault 0;
+        margin: @mDefault 0;
     }
     &__header {
         display: flex;
@@ -80,26 +80,26 @@
     &__spinner {
         display: inline-block;
         font-size: 0;
-        padding: 0.3rem @marginDefault / 4;
+        padding: 0.3rem @mDefault / 4;
         vertical-align: top;
     }
     &__toolbar {
-        margin: @marginDefault 0;
+        margin: @mDefault 0;
     }
     &__title {
         display: block;
         flex: 1 100%;
     }
     &__tree {
-        margin-top: @marginDefault / 2;
-        padding: 0 @marginDefault / 2;
+        margin-top: @mDefault / 2;
+        padding: 0 @mDefault / 2;
     }
     &__view {
         border-right: 1px solid @windowBorderColor;
     }
     //
     &__button + &__button {
-        margin-left: @marginDefault / 4;
+        margin-left: @mDefault / 4;
     }
     // STATES
     // Minimized
@@ -108,10 +108,10 @@
     }
     &_state_minimized &__container {
         cursor: pointer;
-        min-width: @marginDefault * @marginDefault;
+        min-width: @mDefault * @mDefault;
         max-width: initial;
-        padding: @marginDefault * 0.75 0;
-        width: @marginDefault * @marginDefault;
+        padding: @mDefault * 0.75 0;
+        width: @mDefault * @mDefault;
         &:hover {
             background: @windowBackgroundColorHover;
         }
@@ -124,7 +124,7 @@
         left: 50%;
         line-height: 1;
         position: absolute;
-        top: @marginDefault * 0.75;
+        top: @mDefault * 0.75;
         transform: translate(-100%, -25%) rotate(-90deg);
         transform-origin: 100% 50%;
     }

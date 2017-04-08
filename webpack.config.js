@@ -72,7 +72,7 @@ module.exports = {
             svgoOptions: {
                 plugins: [
                     { cleanupEnableBackground: true },
-                    { removeAttrs: { attrs: ['fill', 'stroke'] }},
+                    //{ removeAttrs: { attrs: ['fill', 'stroke'] }},
                     { removeComments: true },
                     { removeDoctype: true },
                     { removeMetadata: true },

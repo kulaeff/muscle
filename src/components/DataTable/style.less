@@ -15,10 +15,10 @@
         color: @dataTableColumnColor;
         cursor: pointer;
         font-size: 0;
-        padding: @marginDefault / 4 (@marginDefault / 2 + 1.1rem) @marginDefault / 4 @marginDefault / 4;
+        padding: @mDefault / 4 (@mDefault / 2 + 1.1rem) @mDefault / 4 @mDefault / 4;
         position: relative;
         text-align: left;
-        transition: color @animationDelayControl linear;
+        transition: color @dDefault linear;
         &-arrow {
             @size: 1.1rem;
 
@@ -27,9 +27,9 @@
             height: @size - 0.1rem;
             opacity: 0;
             position: absolute;
-            right: @marginDefault / 4;
+            right: @mDefault / 4;
             top: calc(~'50%' - (@size - 0.1rem) / 2);
-            transition: opacity @animationDelayControl linear;
+            transition: opacity @dDefault linear;
             width: @size;
             svg {
                 display: block;
@@ -45,13 +45,13 @@
         }
         //
         &:first-child {
-            padding-left: @marginDefault / 2;
+            padding-left: @mDefault / 2;
         }
         &:last-child {
-            padding-right: @marginDefault / 2;
+            padding-right: @mDefault / 2;
         }
         &:last-child &-arrow {
-            right: @marginDefault / 2;
+            right: @mDefault / 2;
         }
         &:hover {
             color: @dataTableColumnColorHover;
@@ -70,15 +70,15 @@
     }
     &__row {
         cursor: pointer;
-        transition: background-color @animationDelayControl linear;
+        transition: background-color @dDefault linear;
         &-cell {
-            padding: @marginDefault / 4;
+            padding: @mDefault / 4;
             user-select: none;
             &:first-child {
-                padding-left: @marginDefault / 2;
+                padding-left: @mDefault / 2;
             }
             &:last-child {
-                padding-right: @marginDefault / 2;
+                padding-right: @mDefault / 2;
             }
         }
         //

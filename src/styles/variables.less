@@ -1,50 +1,76 @@
-// Common colors
-@colorPrimary: #48f;
-@colorText: #fff;
-@colorDarkGray: #202224;
-@colorMediumGray: #303234;
-@colorLightGray: #202224;
-@colorSemiTransparent: rgba(255, 255, 255, .5);
+/***************************************************************/
+/* COMMON COLORS                                               */
+/* These are global colors used across application             */
+/***************************************************************/
 
-// Heights
-@controlHeightDefault: 3rem;
-@controlBorderColor: lighten(@colorMediumGray, 10%);
+// Primary color
+@cPrimary: #69f;
 
-// Margins
-@marginDefault: 2.4rem;
+// Secondary color
+@cSecondary: #F93;
 
-// Delays
-@animationDelayDefault: 0.3s;
-@animationDelayControl: 0.06s;
+// Foreground color
+@cForeground: #000;
+
+// Background color
+@cBackground: #e0e2e4;
+
+// Sidebar background color
+@cSidebar: #fff;
+
+// Window background color
+@cWindow: #f0f2f4;
+
+// Border color
+@cBorder: rgba(0, 0, 0, .1);
+
+/***************************************************************/
+/* DEFAULT PROPERTIES                                          */
+/* Used as defaults                                            */
+/***************************************************************/
+
+// Control
+@hDefault: 3rem;
+
+// Margin
+@mDefault: 2.4rem;
+
+// Duration
+@dDefault: 0.05s;
+
+/***************************************************************/
+/* COMPONENTS PROPERTIES                                       */
+/* The properties of the components                            */
+/***************************************************************/
 
 // Button
 @buttonBorderRadius: 0;
 @buttonBorderThickness: 0;
 @buttonColor: rgba(255, 255, 255, 1);
-@buttonColorBackground: @colorPrimary;
+@buttonColorBackground: @cPrimary;
 @buttonColorBorder: rgba(255, 255, 255, .8);
 @buttonColorActive: #000;
 @buttonColorActiveBackground: #fff;
-@buttonColorActiveBorder: @colorPrimary;
+@buttonColorActiveBorder: @cPrimary;
 @buttonColorDisabled: rgba(255, 255, 255, .2);
 @buttonColorDisabledBackground: rgba(255, 255, 255, .1);
 @buttonColorDisabledBorder: rgba(255, 255, 255, .2);
 @buttonColorHover: rgba(255, 255, 255, 1);
-@buttonColorHoverBackground: darken(@colorPrimary, 3%);
+@buttonColorHoverBackground: darken(@cPrimary, 3%);
 @buttonColorHoverBorder: rgba(255, 255, 255, .8);
-@buttonHeight: @controlHeightDefault * 1.1;
+@buttonHeight: @hDefault * 1.1;
 
 // DataTable
 @dataTableBackgroundColor: rgba(0, 0, 0, 0);
-@dataTableBorderColor: @controlBorderColor;
+@dataTableBorderColor: @cBorder;
 @dataTableBorderThickness: 1px;
-@dataTableColumnColor: @colorSemiTransparent;
+@dataTableColumnColor: @cBorder;
 @dataTableColumnColorHover: rgba(255, 255, 255, .7);
 @dataTableColumnArrowColor: rgba(255, 255, 255, 1);
-@dataTableFooterColorBorder: @controlBorderColor;
-@dataTableHeaderColorBorder: @controlBorderColor;
+@dataTableFooterColorBorder: @cBorder;
+@dataTableHeaderColorBorder: @cBorder;
 @dataTableItemColorHoverBackground: rgba(255, 255, 255, .05);
-@dataTableItemColorSelectedBackground: @colorPrimary;
+@dataTableItemColorSelectedBackground: @cPrimary;
 @dataTableRowBackgroundColor: rgba(0, 0, 0, 0);
 
 // Indicator
@@ -55,31 +81,31 @@
 
 // NavigationBar
 @navigationBarBackgroundColor: transparent;
-@navigationBarForegroundColor: @colorText;
-@navigationBarItemBackgroundColorHover: rgba(255, 255, 255, .05);
-@navigationBarItemBackgroundColorSelected: @colorPrimary;
-@navigationBarItemForegroundColorHover: @colorText;
+@navigationBarForegroundColor: rgba(255, 255, 255, .8);
+@navigationBarItemBackgroundColorHover: rgba(255, 255, 255, .1);
+@navigationBarItemBackgroundColorSelected: @cPrimary;
+@navigationBarItemForegroundColorHover: #fff;
 @navigationBarItemForegroundColorSelected: #fff;
 
 // Textbox
 @textboxBorderThickness: 1px;
 @textboxColor: #fff;
-@textboxColorBackground: rgba(0, 0, 0, .1);
-@textboxColorBorder: @controlBorderColor;
+@textboxColorBackground: rgba(0, 0, 0, 0);
+@textboxColorBorder: @cBorder;
 @textboxColorDisabledBackground: rgba(0, 0, 0, 0);
 @textboxColorDisabledBorder: rgba(255, 255, 255, 0.1);
-@textboxColorFocusBackground: rgba(0, 0, 0, 0.1);
-@textboxColorFocusBorder: @colorPrimary;
+@textboxColorFocusBackground: @textboxColorBackground;
+@textboxColorFocusBorder: @cPrimary;
 @textboxColorHoverBackground: @textboxColorBackground;
-@textboxColorHoverBorder: rgba(255, 255, 255, .2);
-@textboxHeight: @controlHeightDefault;
+@textboxColorHoverBorder: darken(@cBorder, 10%);
+@textboxHeight: @hDefault;
 
 // Toggle
 @toggleBorderThickness: 2px;
 @toggleBorderColor: #fff;
 @toggleBorderColorHover: #fff;
 @toggleBackgroundColor: rgba(0, 0, 0, .2);
-@toggleBackgroundColorChecked: @colorPrimary;
+@toggleBackgroundColorChecked: @cPrimary;
 
 // Toolbar
 @toolButtonBorderRadius: 50%;
@@ -87,20 +113,20 @@
 @toolButtonForegroundColor: #fff;
 @toolButtonForegroundColorActive: #000;
 @toolButtonForegroundColorHover: #fff;
-@toolButtonColorBackground: @colorPrimary;
+@toolButtonColorBackground: @cSecondary;
 @toolButtonColorBorder: rgba(255, 255, 255, .9);
 @toolButtonColorActiveBackground: rgba(255, 255, 255, 1);
 @toolButtonColorActiveBorder: rgba(255, 255, 255, 1);
-@toolButtonColorDisabledBackground: rgba(255, 255, 255, .06);
+@toolButtonColorDisabledBackground: rgba(0, 0, 0, .1);
 @toolButtonColorDisabledBorder: rgba(0, 0, 0, .15);
 @toolButtonColorHoverBackground: lighten(@toolButtonColorBackground, 5%);
 @toolButtonColorHoverBorder: #000;
 @toolButtonSize: 3.2rem;
 
 // Window
-@windowBackgroundColor: @colorMediumGray;
-@windowBackgroundColorHover: lighten(@colorMediumGray, 2%);
-@windowBorderColor: lighten(@colorMediumGray, 10%);
-@windowForegroundColor: @colorText;
+@windowBackgroundColor: @cWindow;
+@windowBackgroundColorHover: lighten(@cWindow, 2%);
+@windowBorderColor: lighten(@cWindow, 10%);
+@windowForegroundColor: @cForeground;
 @windowButtonBackgroundColor: transparent;
 @windowButtonBackgroundColorHover: rgba(255, 255, 255, .1);

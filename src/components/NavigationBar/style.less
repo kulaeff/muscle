@@ -12,7 +12,7 @@
         display: block;
         height: @itemSize;
         position: relative;
-        transition: background-color @animationDelayControl linear;
+        transition: background-color @dDefault linear;
         width: @itemSize;
         svg {
             display: block;
@@ -32,11 +32,17 @@
                 stroke: currentColor;
             }
         }
+        &_icon_server {
+            svg use {
+                    fill: @cPrimary;
+                    color: @cSecondary;
+            }
+        }
         // Status
         &_icon_status {
-            svg {
-                fill: none;
-                stroke: currentColor;
+            svg use {
+                    fill: @cPrimary;
+                    color: @cSecondary;
             }
         }
         // STATES
