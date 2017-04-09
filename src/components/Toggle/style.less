@@ -6,47 +6,59 @@
     cursor: pointer;
     display: table;
     position: relative;
+    user-select: none;
     width: 100%;
     &__control {
-        display: block;
-        position: absolute;
-        right: 0;
-        top: calc(~'50% - ' @sDefault / 2);
+        display: table-cell;
+        vertical-align: middle;
+        width: calc(@sDefault * 2 ~'-' @btToggle * 2);
         &-knob {
-            background-color: @toggleBorderColor;
-            border-radius: 50%;
-            height: @sDefault - 0.6rem;
-            left: 0.1rem;
+            background-color: @cToggleHandleBackground;
+            height: calc(@sDefault ~'-' @btToggle * 2);
+            left: 0;
             position: absolute;
-            top: 0.1rem;
+            top: 0;
             transition: transform @dDefault ease-out;
-            width: @sDefault - 0.6rem;
+            width: calc(@sDefault ~'-' @btToggle * 2);
         }
         &-rectangle {
-            background-color: @toggleBackgroundColor;
-            border: @toggleBorderThickness solid @toggleBorderColor;
-            border-radius: @sDefault;
+            background-color: @cToggleBackground;
+            border: @btToggle solid @cToggleBorder;
+            border-radius: 0;
             box-sizing: border-box;
             height: @sDefault;
             position: relative;
             transition: background-color @dDefault linear, border-color @dDefault linear;
-            width: @sDefault * 2 - 0.6rem;
+            width: calc(@sDefault * 2 ~'-' @btToggle * 2);
         }
     }
     &__label {
-        display: block;
-        font-size: 1.3rem;
-        padding-right: @sDefault * 2 + 1rem;
+        display: table-cell;
+        vertical-align: middle;
     }
     // PSEUDO
     &:hover &__control-rectangle {
-        border-color: @toggleBorderColorHover;
+        background-color: @cToggleHandleBackgroundHover;
+    }
+    &:hover &__control-rectangle {
+        background-color: @cToggleBackgroundHover;
+        border-color: @cToggleBorderHover;
     }
     // STATES
     &_state_checked &__control-knob {
+        background-color: @cToggleHandleBackgroundChecked;
         transform: translate(100%, 0);
     }
     &_state_checked &__control-rectangle {
-        background-color: @toggleBackgroundColorChecked;
+        background-color: @cToggleBackgroundChecked;
+        border-color: @cToggleBorderChecked;
+    }
+    &_state_checked:hover &__control-knob {
+        background-color: @cToggleHandleBackgroundChecked;
+        transform: translate(100%, 0);
+    }
+    &_state_checked:hover &__control-rectangle {
+        background-color: @cToggleBackgroundChecked;
+        border-color: @cToggleBorderChecked;
     }
 }

@@ -133,7 +133,10 @@ class App extends Component {
         if (credentials.user !== null && credentials.password !== null) {
             return (
                 <div className={b()}>
-                    <div className={b('panel', {position: 'left'})}>
+                    <div className={b('content')}>
+                        {this.props.children}
+                    </div>
+                    <div className={b('sidebar')}>
                         <div className={b('logo')} title="Muscle">
                             <svg>
                                 <use xlinkHref="#icon-logo" />
@@ -152,9 +155,6 @@ class App extends Component {
                                 title="Logout"
                                 onClick={this.onNavigationBarItemLogoutClick} />
                         </div>
-                    </div>
-                    <div className={b('panel', {position: 'middle'})}>
-                        {this.props.children}
                     </div>
                 </div>
             )

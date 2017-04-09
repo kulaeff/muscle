@@ -4,7 +4,7 @@
     background-color: @textboxColorBackground;
     border: @textboxBorderThickness solid @textboxColorBorder;
     box-sizing: border-box;
-    color: @textboxColor;
+    color: @textboxColorForeground;
     font-family: 'Open Sans';
     font-size: 1.3rem;
     height: @textboxHeight;
@@ -13,16 +13,16 @@
     position: relative;
     transition: background-color @dDefault linear, border-color @dDefault linear;
     width: 100%;
-    &:hover {
-        background-color: @textboxColorHoverBackground;
-        border-color: @textboxColorHoverBorder;
-    }
     &:focus {
-        border-color: @textboxColorFocusBorder;
-        background-color: @textboxColorFocusBackground;
+        border-color: @textboxColorBorderActive;
+        background-color: @textboxColorBackgroundActive;
+    }
+    &:hover {
+        background-color: @textboxColorBackgroundHover;
+        border-color: @textboxColorBorderHover;
     }
     &:disabled {
         background-color: transparent;
-        border-color: @textboxColorDisabledBorder;
+        border-color: @textboxColorBorderDisabled;
     }
 }

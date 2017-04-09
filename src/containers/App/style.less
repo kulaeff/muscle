@@ -3,8 +3,8 @@
 @itemSize: 48px;
 
 .app {
-    display: flex;
     height: 100%;
+    position: relative;
     &__container {
         background: @cSidebar;
         display: table-cell;
@@ -50,17 +50,20 @@
     &__nav {
         position: relative;
     }
-    &__panel {
-        flex: 1;
-        &_position_left {
-            background: @cSidebar;
-            min-width: @itemSize;
-        }
-        &_position_middle {
-            border-left: 2px solid @cPrimary;
-            flex: 1 100%;
-            overflow: hidden;
-        }
+    &__sidebar {
+        background: @cSidebar;
+        height: 100%;
+        left: 0;
+        min-width: @itemSize;
+        position: absolute;
+        top: 0;
+        width: @itemSize;
+    }
+    &__content {
+        border-left: 2px solid @cPrimary;
+        height: 100%;
+        overflow: hidden;
+        margin-left: @itemSize;
     }
     //
     &_state_unauthorized {

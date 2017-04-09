@@ -193,7 +193,7 @@ class Server extends Component {
                 <div className={b('container')} onClick={this.onWindowClick}>
                     <div className={b('header')}>
                         <div className={b('title')}>
-                            <Title primaryTitle="Server" />
+                            <Title primaryTitle="Local databases" />
                         </div>
                         <div className={b('spinner')}>
                             <Spinner active={fetching} type="rect" />

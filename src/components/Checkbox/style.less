@@ -1,6 +1,8 @@
 @import (reference) '../../styles/variables';
 
-@sRectangle: 1.8rem;
+@sDefault: 1.6rem;
+@hCross: 0.2rem;
+@wCross: 1rem;
 
 .checkbox {
     display: inline-block;
@@ -11,13 +13,13 @@
         display: inline-block;
         vertical-align: middle;
         &-rectangle {
-            background-color: rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: @checkboxBackgroundColor;
+            border: @checkboxBorderThickness solid @checkboxBorderColor;
             box-sizing: border-box;
-            height: @sRectangle;
+            height: @sDefault;
             position: relative;
-            transition: background-color @dDefault linear, border-color @dDefault linear;
-            width: @sRectangle;
+            transition: background-color @dDefault, border-color @dDefault;
+            width: @sDefault;
         }
     }
     &__label {
@@ -27,23 +29,28 @@
         padding-left: 0.8rem;
         vertical-align: middle;
     }
-    //
+    // PSEUDO
     &:hover &__control-rectangle {
-        border-color: rgba(255, 255, 255, 0.15);
+        background-color: @checkboxBackgroundColorHover;
+        border: @checkboxBorderThickness solid @checkboxBorderColorHover;
+    }
+    &:active &__control-rectangle {
+        background-color: @checkboxBackgroundColorActive;
+        border: @checkboxBorderThickness solid @checkboxBorderColorActive;
     }
     // STATES
     &_state_checked &__control-rectangle {
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: @checkboxBackgroundColorChecked;
         &:after,&:before {
-            background-color: #fff;
-            border-radius: 2px;
+            background-color: @checkboxForegroundColorChecked;
+            border-radius: @hCross;
             content: '';
             display: block;
-            height: 2px;
-            left: 0.2rem;
+            height: @hCross;
+            left: @sDefault / 2 - @wCross / 2;
             position: absolute;
-            top: @sRectangle / 2 - 0.2rem;
-            width: @sRectangle - 0.6rem;
+            top: @sDefault / 2 - @hCross / 2;
+            width: @wCross;
         }
         &:after {
             transform: rotate(45deg);

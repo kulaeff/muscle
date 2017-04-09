@@ -1,13 +1,11 @@
 @import (reference) '../../styles/variables';
 
-@cReset: #A03;
-
 .button {
-    background-color: @buttonColorBackground;
-    border: @buttonBorderThickness solid @buttonColorBorder;
+    background-color: @buttonBackgroundColor;
+    border: @buttonBorderThickness solid @buttonBorderColor;
     border-radius: @buttonBorderRadius;
     box-sizing: border-box;
-    color: @buttonColor;
+    color: @buttonForegroundColor;
     cursor: pointer;
     font-family: 'Open Sans';
     font-size: 1.2rem;
@@ -21,25 +19,25 @@
     transition: color @dDefault linear, background-color @dDefault linear, border-color @dDefault linear;
     white-space: nowrap;
     &:hover {
-        background-color: @buttonColorHoverBackground;
-        border-color: @buttonColorHoverBorder;
-        color: @buttonColorHover;
+        background-color: @buttonBackgroundColorHover;
+        border-color: @buttonBorderColorHover;
+        color: @buttonForegroundColorHover;
     }
     &:active {
-        background-color: @buttonColorActiveBackground;
-        border-color: @buttonColorActiveBorder;
-        color: @buttonColorActive;
+        background-color: @buttonBackgroundColorActive;
+        border-color: @buttonBorderColorActive;
+        color: @buttonForegroundColorActive;
     }
     &:disabled {
-        background-color: @buttonColorDisabledBackground;
-        border-color: @buttonColorDisabledBorder;
-        color: @buttonColorDisabled;
+        background-color: @buttonBackgroundColorDisabled;
+        border-color: @buttonBorderColorDisabled;
+        color: @buttonForegroundColorDisabled;
         cursor: default;
         pointer-events: none;
         &:hover {
-            background-color: @buttonColorDisabledBackground;
-            border-color: @buttonColorDisabledBorder;
-            color: @buttonColorDisabled;
+            background-color: @buttonBackgroundColorDisabled;
+            border-color: @buttonBorderColorDisabled;
+            color: @buttonForegroundColorDisabled;
         }
     }
     // SIZES
@@ -49,13 +47,13 @@
     // TYPES
     // Reset
     &_type_reset {
-        background-color: @cReset;
+        background-color: @cSecondary;
         &:hover {
-            background-color: darken(@cReset, 3%);
+            background-color: darken(@cSecondary, 5%);
         }
         &:active {
-            background-color: @buttonColorActiveBackground;
-            border-color: @buttonColorActiveBorder;
+            background-color: @buttonBackgroundColorActive;
+            border-color: @buttonBorderColorActive;
         }
     }
 }
