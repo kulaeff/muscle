@@ -4,10 +4,10 @@
 /***************************************************************/
 
 // Primary color
-@cPrimary: #59f;
+@cPrimary: #59e;
 
 // Secondary color
-@cSecondary: #f06;
+@cSecondary: #e06;
 
 // Foreground color
 @cForeground: #000;
@@ -29,6 +29,12 @@
 
 // Control color
 @cControl: #f0f1f2;
+
+// Hover color
+@cHover: #f0f1f2;
+
+// Selected color
+@cSelected: @cPrimary;
 
 // Gray colors
 @cGrayDark: #707172;
@@ -106,20 +112,28 @@
 @dataTableRowBackgroundColor: transparent;
 
 // Indicator
-@indicatorBorderThickness: 1px;
-@indicatorBackgroundColor: transparent;
-@indicatorBorderColor: rgba(255, 255, 255, .2);
-@indicatorTitleColor: rgba(255, 255, 255, .5);
+@indicatorBorderThickness: 0;
+@indicatorBackgroundColor: @cControl;
+@indicatorBorderColor: @cBorder;
+@indicatorTitleColor: @cGrayMedium;
 
-// NavigationBar
+// ListView & ListViewItem
+@listViewItemBackgroundColor: transparent;
+@listViewItemBackgroundColorActive: @cPrimary;
+@listViewItemBackgroundColorHover: @cHover;
+@listViewItemForegroundColor: @cForeground;
+@listViewItemForegroundColorActive: #fff;
+@listViewItemForegroundColorHover: @listViewItemForegroundColor;
+
+// NavigationBar & NavigationBarItem
 @navigationBarBackgroundColor: transparent;
 @navigationBarForegroundColor: rgba(255, 255, 255, .8);
-@navigationBarItemBackgroundColorHover: rgba(255, 255, 255, .1);
+@navigationBarItemBackgroundColorHover: rgba(0, 0, 0, .05);
 @navigationBarItemBackgroundColorSelected: @cPrimary;
 @navigationBarItemForegroundColorHover: #fff;
 @navigationBarItemForegroundColorSelected: #fff;
 
-// TEXTBOX
+// Textbox
 @textboxBorderThickness: 0;
 @textboxColorBackground: @cControl;
 @textboxColorBorder: @cBorder;
@@ -134,7 +148,7 @@
 @textboxColorForegroundHover: @textboxColorForeground;
 @textboxHeight: @hDefault;
 
-// TOGGLE
+// Toggle
 @btToggle: 2px;
 @cToggleBorder: darken(@cControl, 5%);
 @cToggleBorderChecked: @cPrimary;
@@ -146,7 +160,7 @@
 @cToggleHandleBackgroundChecked: @cToggleHandleBackground;
 @cToggleHandleBackgroundHover: @cToggleHandleBackground;
 
-// TOOL BUTTON
+// ToolButton
 @brToolButton: 50%;
 @btToolButton: 0;
 @cToolButtonBackground: @cPrimary;
@@ -163,10 +177,13 @@
 @cToolButtonForegroundHover: #fff;
 @sToolButton: 3.2rem;
 
-// WINDOW
+// Window
 @cWindowBackground: @cWindow;
 @cWindowBackgroundHover: darken(@cWindow, 2%);
 @cWindowBorder: @cBorder;
 @cWindowForeground: @cForeground;
 @cWindowButtonBackground: transparent;
+@cWindowButtonBackgroundActive: @cActive;
 @cWindowButtonBackgroundHover: darken(@cWindow, 5%);
+@cWindowButtonForeground: @cForeground;
+@cWindowButtonForegroundActive: #fff;

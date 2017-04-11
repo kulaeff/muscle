@@ -13,12 +13,12 @@
     &__button {
         background: @cWindowButtonBackground;
         border: none;
-        color: @cWindowForeground;
+        color: @cWindowButtonForeground;
         cursor: pointer;
         height: 2rem;
         outline: none;
         position: relative;
-        transition: background-color @dDefault;
+        transition: background-color @dDefault, color @dDefault;
         width: 2rem;
         &_action_close {
             &:before, &:after {
@@ -53,6 +53,10 @@
         //
         &:hover {
             background-color: @cWindowButtonBackgroundHover;
+        }
+        &:active {
+            background-color: @cWindowButtonBackgroundActive;
+            color: @cWindowButtonForegroundActive;
         }
     }
     &__container {
