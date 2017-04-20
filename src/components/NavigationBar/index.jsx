@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import NavigationBarItem from './NavigationBarItem'
 import block from 'bem-cn'
 import './style.less'
@@ -7,7 +8,7 @@ import './style.less'
  * NavigationBar Component
  * @class
  */
-class NavigationBar extends Component {
+class NavigationBar extends React.Component {
     /**
      * NavigationBar properties
      * @static

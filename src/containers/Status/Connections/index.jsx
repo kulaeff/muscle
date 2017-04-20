@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../../components/Spinner'
@@ -10,7 +11,7 @@ import './style.less';
  * StatusConnections container
  * @class
  */
-class StatusConnections extends Component {
+class StatusConnections extends React.Component {
     /**
      * StatusConnections properties
      * @static

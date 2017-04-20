@@ -11,7 +11,7 @@ import statusUsage from './status/usage'
 import database from './database'
 
 export default combineReducers({
-    routing: routerReducer,
+    router: routerReducer,
     app,
     column,
     table,

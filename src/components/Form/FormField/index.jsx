@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 import '../style.less'
 
@@ -6,7 +7,7 @@ import '../style.less'
  * FormField component
  * @class
  */
-class FormField extends Component {
+class FormField extends React.Component {
     /**
      * FormField's properties
      * @static

@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * TreeViewItem Component
  * @class
  */
-class TreeViewItem extends Component {
+class TreeViewItem extends React.Component {
     /**
      * TreeViewItem properties
      * @static

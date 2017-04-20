@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../components/Spinner'
@@ -15,7 +16,7 @@ import './style.less';
  * Server container
  * @class
  */
-class Server extends Component {
+class Server extends React.Component {
     /**
      * Server container properties
      * @static

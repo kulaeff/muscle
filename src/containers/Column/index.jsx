@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Button from '../../components/Button'
@@ -15,7 +16,7 @@ import './style.less';
  * Column container
  * @class
  */
-class Column extends Component {
+class Column extends React.Component {
     /**
      * Column container properties
      * @static

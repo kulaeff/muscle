@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * GridItem Component
  * @class
  */
-class GridItem extends Component {
+class GridItem extends React.Component {
     /**
      * GridItem properties
      * @static

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
@@ -18,7 +19,7 @@ import './style.less';
  * Database container
  * @class
  */
-class Database extends Component {
+class Database extends React.Component {
     /**
      * Database container properties
      * @static

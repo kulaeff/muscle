@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ToolBarButton from './ToolBarButton'
 import ToolBarSeparator from './ToolBarSeparator'
 import block from 'bem-cn'
@@ -8,7 +8,7 @@ import './style.less'
  * ToolBar Component
  * @class
  */
-class ToolBar extends Component {
+class ToolBar extends React.Component {
     /**
      * ToolBar properties
      * @static

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import block from 'bem-cn'
 import '../style.less'
 
@@ -6,7 +6,7 @@ import '../style.less'
  * FormButtons component
  * @class
  */
-class FormButtons extends Component {
+class FormButtons extends React.Component {
     /**
      * FormButtons's properties
      * @static

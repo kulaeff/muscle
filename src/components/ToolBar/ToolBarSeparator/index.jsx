@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import block from 'bem-cn'
 
 /**
  * ToolBarSeparator Component
  * @class
  */
-class ToolBarSeparator extends Component {
+class ToolBarSeparator extends React.Component {
     /**
      * Renders ToolBarSeparator component
      */

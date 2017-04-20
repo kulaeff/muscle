@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as appActions from '../../actions/app'
@@ -25,7 +26,7 @@ const navigationBarItems = [
     }
 ]
 
-class App extends Component {
+class App extends React.Component {
     /**
      * Databases container properties
      * @static

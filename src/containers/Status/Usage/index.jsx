@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Title from '../../../components/Title'
@@ -11,7 +12,7 @@ import './style.less';
  * StatusUsage container
  * @class
  */
-class StatusUsage extends Component {
+class StatusUsage extends React.Component {
     /**
      * StatusUsage properties
      * @static

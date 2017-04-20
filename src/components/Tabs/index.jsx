@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import TabsItem from './TabsItem'
 import Title from '../Title'
 import block from 'bem-cn'
@@ -8,7 +9,7 @@ import './style.less'
  * Tabs Component
  * @class
  */
-class Tabs extends Component {
+class Tabs extends React.Component {
     /**
      * Tabs properties
      * @static

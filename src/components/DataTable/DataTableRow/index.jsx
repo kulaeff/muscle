@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import DataTableCell from '../DataTableCell'
 import block from 'bem-cn'
 
@@ -6,7 +7,7 @@ import block from 'bem-cn'
  * DataTableRow Component
  * @class
  */
-class DataTableRow extends Component {
+class DataTableRow extends React.Component {
     /**
      * DataTableRow properties
      * @static

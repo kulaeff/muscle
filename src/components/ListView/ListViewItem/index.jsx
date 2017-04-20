@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * ListViewItem Component
  * @class
  */
-class ListViewItem extends Component {
+class ListViewItem extends React.Component {
     /**
      * ListViewItem properties
      * @static

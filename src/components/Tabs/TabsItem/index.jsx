@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * TabsItem Component
  * @class
  */
-class TabsItem extends Component {
+class TabsItem extends React.Component {
     /**
      * TabsItem properties
      * @static

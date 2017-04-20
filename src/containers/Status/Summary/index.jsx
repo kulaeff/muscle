@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as statusSummaryActions from '../../../actions/status/summary'
@@ -14,7 +15,7 @@ import './style.less';
  * StatusSummary container
  * @class
  */
-class StatusSummary extends Component {
+class StatusSummary extends React.Component {
     /**
      * StatusSummary properties
      * @static

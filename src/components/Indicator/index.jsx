@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 import './style.less'
 
@@ -6,7 +7,7 @@ import './style.less'
  * Indicator component
  * @class
  */
-class Indicator extends Component {
+class Indicator extends React.Component {
     /**
      * Indicator's properties
      * @static

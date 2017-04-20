@@ -2,7 +2,7 @@
 2. Refactoring: Make font available locally
 3. Feature: Animations
 4. Feature: Version info in package.json has to be increased when builded
-5. Feature: Add postcss processing
+5. Feature: Add postcss processing +
 6. Feature: add themes support
 7. Refactoring: refactor all titles
 8. Refactoring: move localStorage methods in a particular lib

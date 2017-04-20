@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * ToolBarButton Component
  * @class
  */
-class ToolBarButton extends Component {
+class ToolBarButton extends React.Component {
     /**
      * ToolBarButton properties
      * @static

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Tabs from '../../components/Tabs'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -8,7 +8,7 @@ import './style.less';
  * Status container
  * @class
  */
-class Status extends Component {
+class Status extends React.Component {
     /**
      * Status properties
      * @static

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import FormButton from './FormButton'
 import FormButtons from './FormButtons'
 import FormField from './FormField'
@@ -10,7 +11,7 @@ import './style.less'
  * Form component
  * @class
  */
-class Form extends Component {
+class Form extends React.Component {
     /**
      * Form's properties
      * @static

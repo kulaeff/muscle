@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import TreeViewItem from './TreeViewItem'
 import block from 'bem-cn'
 import './style.less'
@@ -7,7 +8,7 @@ import './style.less'
  * TreeView Component
  * @class
  */
-class TreeView extends Component {
+class TreeView extends React.Component {
     /**
      * TreeView properties
      * @static

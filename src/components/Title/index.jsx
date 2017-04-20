@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 import './style.less'
 
-class Title extends Component {
+class Title extends React.Component {
     /**
      * Title properties
      * @static

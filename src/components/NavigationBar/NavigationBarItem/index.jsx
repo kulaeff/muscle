@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
 /**
  * NavigationBarItem Component
  * @class
  */
-class NavigationBarItem extends Component {
+class NavigationBarItem extends React.Component {
     /**
      * NavigationBarItem properties
      * @static
