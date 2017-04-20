@@ -14,7 +14,7 @@ class Indicator extends Component {
      */
     static propTypes = {
         title: PropTypes.string.isRequired,
-        value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+        value: PropTypes.string.isRequired,
     }
 
     /**

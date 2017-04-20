@@ -45,7 +45,7 @@ class Column extends Component {
     close = () => {
         const { router, params } = this.props
 
-        router.push(`/databases/${params.database}/${params.table}`)
+        router.push(`/server/${params.database}/${params.table}`)
     }
 
     /**

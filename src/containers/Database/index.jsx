@@ -152,7 +152,7 @@ class Database extends Component {
     onWindowButtonCloseClick = () => {
         const { router } = this.props
 
-        router.push('/databases')
+        router.push('/server')
     }
 
     /**
@@ -189,10 +189,6 @@ class Database extends Component {
     onDataTableValueTransform = (column, value) => {
         if (column === 'size' || column === 'overhead') {
             return bytes(value)
-        /*} else if (column === 'type' || column === 'collation') {
-            return (
-                <em>{value}</em>
-            )*/
         } else {
             return value
         }
@@ -272,10 +268,10 @@ class Database extends Component {
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
-                                onClick={this.onWindowButtonMinimizeClick}></button>
+                                onClick={this.onWindowButtonMinimizeClick} />
                             <button
                                 className={b('button', {action: 'close'})}
-                                onClick={this.onWindowButtonCloseClick}></button>
+                                onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
                     <div className={b('content', {

@@ -13,12 +13,14 @@ class DataTable extends Component {
      * DataTable properties
      * @static
      * @property {array} columns The array of columns
+     * @property {string} icon The icon's name to use in DataTableItem
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
      * @property {func} onChange Change event handler
      */
     static propTypes = {
         columns: PropTypes.array.isRequired,
+        icon: PropTypes.string,
         items: PropTypes.array,
         selectedIndex: PropTypes.number,
         onChange: PropTypes.func.isRequired,
@@ -91,7 +93,7 @@ class DataTable extends Component {
     render() {
         const
             b = block('data-table'),
-            { columns, items, selectedIndex, onValueTransform } = this.props
+            { columns, icon, items, selectedIndex, onValueTransform } = this.props
 
         if (this.state.sorting.index !== null) {
             items.sort((a, b) => {
@@ -130,8 +132,9 @@ class DataTable extends Component {
                             <DataTableRow
                                 cells={item}
                                 columns={columns}
-                                id={index}
+                                icon={icon}
                                 key={index}
+                                row={index}
                                 selected={selectedIndex === index}
                                 onClick={this.onItemClick}
                                 onValueTransform={onValueTransform} />

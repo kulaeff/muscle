@@ -7,6 +7,7 @@ import Indicator from '../../../components/Indicator'
 import Spinner from '../../../components/Spinner'
 import block from 'bem-cn'
 import bytes from '../../../helpers/bytes'
+import moment from 'moment'
 import './style.less';
 
 /**
@@ -67,8 +68,8 @@ class StatusSummary extends Component {
     render() {
         const
             b = block('status-summary'),
-            { fetching, summary } = this.props
-            // received = bytesToString(server.usage.received)
+            { fetching, summary } = this.props,
+            uptime = moment.duration(moment() - summary.upTime)
 
         return (
             <div className={b()}>
@@ -84,16 +85,16 @@ class StatusSummary extends Component {
                         <div className={b('container')}>
                             <Grid>
                                 <GridItem>
-                                    <Indicator title="Server" value={summary.upTime}/>
+                                    <Indicator title="Up time" value={uptime.humanize()}/>
                                 </GridItem>
                                 <GridItem>
-                                    <Indicator title="Connections" value={summary.connections}/>
+                                    <Indicator title="Connections" value={summary.connections.toLocaleString()}/>
                                 </GridItem>
                                 <GridItem>
                                     <Indicator title="Usage" value={bytes(summary.usage)} />
                                 </GridItem>
                                 <GridItem>
-                                    <Indicator title="Queries" value={summary.queries} />
+                                    <Indicator title="Queries" value={summary.queries.toLocaleString()} />
                                 </GridItem>
                             </Grid>
                         </div>

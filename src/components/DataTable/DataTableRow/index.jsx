@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import DataTableCell from '../DataTableCell'
 import block from 'bem-cn'
 
 /**
@@ -10,14 +11,17 @@ class DataTableRow extends Component {
      * DataTableRow properties
      * @static
      * @property {array} cells Cells (data) of the item
-     * @property {number} id The id of the item
+     * @property {number} column The index of the column
+     * @property {string} icon The icon's name to use in DataTableItem
+     * @property {number} row The index of the row
      * @property {bool} selected Is the item selected
      * @property {func} onClick Click event handler
      */
     static propTypes = {
         cells: PropTypes.array.isRequired,
         columns: PropTypes.array.isRequired,
-        id: PropTypes.number.isRequired,
+        icon: PropTypes.string,
+        row: PropTypes.number.isRequired,
         selected: PropTypes.bool.isRequired,
         onClick: PropTypes.func.isRequired,
         onValueTransform: PropTypes.func
@@ -36,7 +40,8 @@ class DataTableRow extends Component {
             {
                 cells,
                 columns,
-                id,
+                icon,
+                row,
                 selected = DataTableRow.defaults.selected,
                 onClick,
                 onValueTransform
@@ -45,16 +50,16 @@ class DataTableRow extends Component {
         return (
             <tr
                 className={b('row', { state: selected ? 'selected' : null })}
-                onClick={() => onClick(id)}>
+                onClick={() => onClick(row)}>
                 {
                     cells.map((cell, index) => {
-                        const column = columns[index]
-
-                        return <td className={b('row-cell')} key={index}>
-                            {
-                                onValueTransform ? onValueTransform(column.name, cell) : cell
-                            }
-                        </td>
+                        return <DataTableCell
+                            key={index}
+                            column={columns[index]}
+                            icon={icon}
+                            //row={row}
+                            onValueTransform={onValueTransform}
+                        >{cell}</DataTableCell>
                     })
                 }
             </tr>

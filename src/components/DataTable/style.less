@@ -12,6 +12,29 @@
     &__header {
         border-bottom: @dataTableBorderThickness solid @dataTableHeaderColorBorder;
     }
+    &__cell {
+        padding: @mDefault / 4;
+        user-select: none;
+        svg {
+            bottom: 0;
+            fill: currentColor;
+            height: 1.4rem;
+            left: 1.2rem;
+            margin: auto 0;
+            opacity: .5;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: opacity 0.06s;
+            width: 1.4rem;
+        }
+        &:first-child {
+            padding-left: @mDefault / 2;
+        }
+        &:last-child {
+            padding-right: @mDefault / 2;
+        }
+    }
     &__column {
         background-color: @dataTableColumnColorBackground;
         color: @dataTableColumnColorForeground;
@@ -73,16 +96,6 @@
     &__row {
         cursor: pointer;
         transition: background-color @dDefault linear;
-        &-cell {
-            padding: @mDefault / 4;
-            user-select: none;
-            &:first-child {
-                padding-left: @mDefault / 2;
-            }
-            &:last-child {
-                padding-right: @mDefault / 2;
-            }
-        }
         //
         &:nth-child(2n) {
             background-color: @dataTableRowBackgroundColor;
@@ -94,6 +107,7 @@
         //
         &_state_selected {
             background-color: @dataTableItemColorBackgroundSelected;
+            color: @dataTableItemColorForegroundSelected;
             &:nth-child(2n) {
                 background-color: @dataTableItemColorBackgroundSelected;
             }

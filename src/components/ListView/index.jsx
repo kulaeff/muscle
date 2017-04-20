@@ -11,7 +11,7 @@ class ListView extends Component {
     /**
      * ListView properties
      * @static
-     * @property {string} icons The icon's name to use in ListViewItem
+     * @property {string} icon The icon's name to use in ListViewItem
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
      * @property {func} onChange Change event handler

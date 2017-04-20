@@ -4,7 +4,7 @@
 /***************************************************************/
 
 // Primary color
-@cPrimary: #59e;
+@cPrimary: #48d;
 
 // Secondary color
 @cSecondary: #e06;
@@ -30,6 +30,9 @@
 // Control color
 @cControl: #f0f1f2;
 
+// Disabled color
+@cDisabled: #d0d1d2;
+
 // Hover color
 @cHover: #f0f1f2;
 
@@ -37,8 +40,8 @@
 @cSelected: @cPrimary;
 
 // Gray colors
-@cGrayDark: #707172;
-@cGrayMedium: #909192;
+@cGrayDark: rgba(0, 0, 0, .5);
+@cGrayMedium: rgba(0, 0, 0, .3);
 
 /***************************************************************/
 /* DEFAULT PROPERTIES                                          */
@@ -62,17 +65,17 @@
 // Button
 @buttonBackgroundColor: @cPrimary;
 @buttonBackgroundColorActive: @cActive;
-@buttonBackgroundColorDisabled: rgba(255, 255, 255, .1);
+@buttonBackgroundColorDisabled: @cDisabled;
 @buttonBackgroundColorHover: darken(@buttonBackgroundColor, 5%);
-@buttonBorderColor: rgba(255, 255, 255, .8);
-@buttonBorderColorActive: @cPrimary;
-@buttonBorderColorDisabled: rgba(255, 255, 255, .2);
-@buttonBorderColorHover: rgba(255, 255, 255, .8);
+@buttonBorderColor: @cPrimary;
+@buttonBorderColorActive: @cActive;
+@buttonBorderColorDisabled: @cDisabled;
+@buttonBorderColorHover: darken(@buttonBorderColor, 5%);
 @buttonBorderRadius: 0;
 @buttonBorderThickness: 0;
 @buttonForegroundColor: #fff;
 @buttonForegroundColorActive: @buttonForegroundColor;
-@buttonForegroundColorDisabled: rgba(255, 255, 255, .2);
+@buttonForegroundColorDisabled: darken(@buttonBackgroundColorDisabled, 20%);
 @buttonForegroundColorHover: @buttonForegroundColor;
 @buttonHeight: @hDefault * 1.1;
 
@@ -101,7 +104,7 @@
 @dataTableColorBorder: @cBorder;
 @dataTableColorForeground: @cForeground;
 @dataTableColumnColorBackground: transparent;
-@dataTableColumnColorForeground: @cGrayMedium;
+@dataTableColumnColorForeground: @cGrayDark;
 @dataTableColumnColorBackgroundHover: @dataTableColumnColorBackground;
 @dataTableColumnColorForegroundHover: @cGrayDark;
 @dataTableColumnArrowColor: @cForeground;
@@ -109,6 +112,7 @@
 @dataTableHeaderColorBorder: @cBorder;
 @dataTableItemColorBackgroundHover: rgba(0, 0, 0, 0.05);
 @dataTableItemColorBackgroundSelected: @cPrimary;
+@dataTableItemColorForegroundSelected: #fff;
 @dataTableRowBackgroundColor: transparent;
 
 // Indicator
@@ -149,33 +153,33 @@
 @textboxHeight: @hDefault;
 
 // Toggle
-@btToggle: 2px;
-@cToggleBorder: darken(@cControl, 5%);
-@cToggleBorderChecked: @cPrimary;
-@cToggleBorderHover: @cToggleBorder;
-@cToggleBackground: darken(@cControl, 5%);
-@cToggleBackgroundChecked: @cPrimary;
-@cToggleBackgroundHover: @cToggleBackground;
-@cToggleHandleBackground: #fff;
-@cToggleHandleBackgroundChecked: @cToggleHandleBackground;
-@cToggleHandleBackgroundHover: @cToggleHandleBackground;
+@toggleBorderThickness: 2px;
+@toggleBorderColor: darken(@cControl, 5%);
+@toggleBorderColorChecked: @cPrimary;
+@toggleBorderColorHover: @toggleBorderColor;
+@toggleBackgroundColor: darken(@cControl, 5%);
+@toggleBackgroundColorChecked: @cPrimary;
+@toggleBackgroundColorHover: @toggleBackgroundColor;
+@toggleHandleBackgroundColor: #fff;
+@toggleHandleBackgroundColorChecked: @toggleHandleBackgroundColor;
+@toggleHandleBackgroundColorHover: @toggleHandleBackgroundColor;
 
 // ToolButton
-@brToolButton: 50%;
-@btToolButton: 0;
-@cToolButtonBackground: @cPrimary;
-@cToolButtonBackgroundActive: @cActive;
-@cToolButtonBackgroundDisabled: rgba(0, 0, 0, .05);
-@cToolButtonBackgroundHover: darken(@cToolButtonBackground, 5%);
-@cToolButtonBorder: transparent;
-@cToolButtonBorderActive: @cActive;
-@cToolButtonBorderDisabled: rgba(0, 0, 0, .15);
-@cToolButtonBorderHover: #000;
-@cToolButtonForeground: #fff;
-@cToolButtonForegroundActive: @cToolButtonForeground;
-@cToolButtonForegroundDisabled: rgba(0, 0, 0, .15);
-@cToolButtonForegroundHover: #fff;
-@sToolButton: 3.2rem;
+@toolButtonBorderRadius: 50%;
+@toolButtonBorderThickness: 0;
+@toolButtonBackgroundColor: @cPrimary;
+@toolButtonBackgroundColorActive: @cActive;
+@toolButtonBackgroundColorDisabled: @cDisabled;
+@toolButtonBackgroundColorHover: darken(@toolButtonBackgroundColor, 5%);
+@toolButtonBorderColor: transparent;
+@toolButtonBorderColorActive: @cActive;
+@toolButtonBorderColorDisabled: rgba(0, 0, 0, .15);
+@toolButtonBorderColorHover: #000;
+@toolButtonForegroundColor: #fff;
+@toolButtonForegroundColorActive: @toolButtonForegroundColor;
+@toolButtonForegroundColorDisabled: darken(@toolButtonBackgroundColorDisabled, 20%);
+@toolButtonForegroundColorHover: #fff;
+@toolButtonSize: 3.2rem;
 
 // Window
 @cWindowBackground: @cWindow;

@@ -5,14 +5,14 @@
     position: relative;
     white-space: nowrap;
     &__button {
-        background-color: @cToolButtonBackground;
-        border: @btToolButton solid @cToolButtonBorder;
-        border-radius: @brToolButton;
+        background-color: @toolButtonBackgroundColor;
+        border: @toolButtonBorderThickness solid @toolButtonBorderColor;
+        border-radius: @toolButtonBorderRadius;
         box-sizing: border-box;
-        color: @cToolButtonForeground;
+        color: @toolButtonForegroundColor;
         cursor: pointer;
         display: inline-block;
-        height: @sToolButton;
+        height: @toolButtonSize;
         font-size: 1.2rem;
         line-height: 1;
         outline: none;
@@ -20,36 +20,36 @@
         transition: color @dDefault,
             background-color @dDefault,
             border-color @dDefault;
-        width: @sToolButton;
+        width: @toolButtonSize;
         svg {
             bottom: 0;
             display: block;
             fill: currentColor;
-            height: @sToolButton - .4rem;
+            height: @toolButtonSize - .4rem;
             left: 0;
             margin: auto;
             position: absolute;
             right: 0;
             top: 0;
-            width: @sToolButton - .4rem;
+            width: @toolButtonSize - .4rem;
         }
         //
         &:hover {
-            background-color: @cToolButtonBackgroundHover;
-            border-color: @cToolButtonBorderHover;
-            color: @cToolButtonForegroundHover;
+            background-color: @toolButtonBackgroundColorHover;
+            border-color: @toolButtonBorderColorHover;
+            color: @toolButtonForegroundColorHover;
         }
         &:active {
-            background-color: @cToolButtonBackgroundActive;
-            border-color: @cToolButtonBorderActive;
-            color: @cToolButtonForegroundActive;
+            background-color: @toolButtonBackgroundColorActive;
+            border-color: @toolButtonBorderColorActive;
+            color: @toolButtonForegroundColorActive;
         }
         // STATES
         // Disabled
         &_state_disabled {
-            background-color: @cToolButtonBackgroundDisabled;
-            border-color: @cToolButtonBorderDisabled;
-            color: @cToolButtonForegroundDisabled;
+            background-color: @toolButtonBackgroundColorDisabled;
+            border-color: @toolButtonBorderColorDisabled;
+            color: @toolButtonForegroundColorDisabled;
             pointer-events: none;
         }
     }

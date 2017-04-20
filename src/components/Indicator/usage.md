@@ -11,6 +11,6 @@ This component is designed to display a simple value.
 ### Params
 
 * title: `string` — *required*
-* value: `number|string` - *required* 
+* value: `string` - *required* 
 
 Edited on 11.04.2017

@@ -93,7 +93,7 @@ class API {
                     summary: {
                         connections: 364,
                         queries: 1485,
-                        upTime: 56456343445,
+                        upTime: (new Date()).setHours(3),
                         usage: 1356416,
                         user: 'root@localhost'
                     }
