@@ -1,5 +1,6 @@
 const
     autoprefixer = require('autoprefixer'),
+    package = require('./package.json'),
     path = require('path'),
     webpack = require('webpack'),
     SvgStorePlugin = require('webpack-svgstore-plugin'),
@@ -7,19 +8,16 @@ const
     env = process.env.NODE_ENV;
 
 module.exports = {
-    devServer: {
-        historyApiFallback: {
-            index: '/',
-        },
-    },
     devtool: env === 'development' ? 'cheap-module-eval-source-map' : false,
-    entry: [
-        'babel-polyfill',
-        './src/index.jsx'
-    ],
+    entry: {
+        bundle: [
+            'babel-polyfill',
+            './src/index.jsx'
+        ]
+    },
     output: {
         path: path.join(__dirname, 'build'),
-        filename: 'bundle.min.js',
+        filename: '[name].min.js',
         publicPath: '/build/'
     },
     module: {
@@ -84,10 +82,12 @@ module.exports = {
         ]
     },
     plugins: [
-        /*new webpack.DefinePlugin({
-            'env': JSON.stringify(env),
-            'version': JSON.stringify('1.0.0')
-        }),*/
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(env || 'development'),
+                'VERSION': JSON.stringify(package.version)
+            }
+        }),
         new webpack.LoaderOptionsPlugin({
             options: {
                 postcss: [
@@ -120,4 +120,22 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx']
     }
+}
+
+if (env === 'production') {
+    module.exports.plugins.push(
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        })
+    )
+    module.exports.plugins.push(
+        //new webpack.NoEmitOnErrorsPlugin()
+    )
+    module.exports.plugins.push(
+        new webpack.optimize.UglifyJsPlugin()
+    )
 }

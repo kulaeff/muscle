@@ -34,8 +34,8 @@ ReactDOM.render(
     document.getElementById('root')
 )
 
-/*if (env === 'production') {
-    console.info(`Version: ${version}`)
-}*/
+if (process.env.NODE_ENV === 'production') {
+    console.info(`Version: ${process.env.VERSION}`)
+}
 
 require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);
