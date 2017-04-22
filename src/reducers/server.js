@@ -16,7 +16,7 @@ export default function server(state = initialState, action) {
         case GET_SERVER_REQUEST:
             return { ...state, fetching: true }
         case GET_SERVER_SUCCESS:
-            return { ...state, fetching: false, items: action.payload.items }
+            return { ...state, fetching: false, items: action.payload }
         case GET_SERVER_FAIL:
             return { ...state, fetching: false }
         case SET_SERVER_WINDOW_STATE:

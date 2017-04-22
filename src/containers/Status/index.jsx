@@ -1,4 +1,8 @@
 import React from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import Connections from './Connections'
+import Summary from './Summary'
+import Usage from './Usage'
 import Tabs from '../../components/Tabs'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -39,24 +43,24 @@ class Status extends React.Component {
      * @method
      */
     componentDidMount() {
-        const { location } = this.props
+        //const { location } = this.props
 
-        this.setState({
+        /*this.setState({
             selectedTab: Status.tabs.find(tab => location.pathname.indexOf(tab.name) >= 0).name
-        })
+        })*/
     }
 
     /**
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        const { router } = this.props
+        const { history, match } = this.props
 
         this.setState({
             selectedTab: name
         })
 
-        router.push(`/status/${name}`)
+        history.push(`${match.url}/${name}`)
     }
 
     /**
@@ -66,7 +70,7 @@ class Status extends React.Component {
     render() {
         const
             b = block('status'),
-            { children } = this.props
+            { match } = this.props
 
         return (
             <div className={b()}>
@@ -77,7 +81,16 @@ class Status extends React.Component {
                         selected={this.state.selectedTab}
                         onChange={this.onTabsChange} />
                 </div>
-                <div className={b('view')}>{children}</div>
+                <div className={b('view')}>
+                    <Switch>
+                        <Route path={`${match.url}/connection`} component={Connections} />
+                        <Route path={`${match.url}/summary`} component={Summary} />
+                        <Route path={`${match.url}/usage`} component={Usage} />
+                    </Switch>
+                    {
+                        !this.state.selectedTab ? <Redirect to={`${match.url}/summary`}/> : null
+                    }
+                </div>
             </div>
         )
     }

@@ -14,9 +14,9 @@ const initialState = {
 export default function database(state = initialState, action) {
     switch(action.type) {
         case GET_DATABASE_REQUEST:
-            return { ...state, fetching: true }
+            return { ...state, fetching: true, items: [] }
         case GET_DATABASE_SUCCESS:
-            return { ...state, fetching: false, items: action.payload.items }
+            return { ...state, fetching: false, items: action.payload }
         case GET_DATABASE_FAIL:
             return { ...state, fetching: false }
         case SET_DATABASE_WINDOW_STATE:

@@ -50,19 +50,6 @@ class StatusSummary extends React.Component {
     }
 
     /**
-     * Redirects to selected tab
-     * */
-    onTabsChange = (name) => {
-        const { router } = this.props
-
-        this.setState({
-            selectedTab: name
-        })
-
-        router.push(`/status/${name}`)
-    }
-
-    /**
      * Renders StatusSummary container
      * @method
      */
@@ -70,7 +57,7 @@ class StatusSummary extends React.Component {
         const
             b = block('status-summary'),
             { fetching, summary } = this.props,
-            uptime = moment.duration(moment() - summary.upTime)
+            uptime = moment.duration(summary.uptime * 1000)
 
         return (
             <div className={b()}>
@@ -92,7 +79,7 @@ class StatusSummary extends React.Component {
                                     <Indicator title="Connections" value={summary.connections.toLocaleString()}/>
                                 </GridItem>
                                 <GridItem>
-                                    <Indicator title="Usage" value={bytes(summary.usage)} />
+                                    <Indicator title="Traffic" value={bytes(summary.usage)} />
                                 </GridItem>
                                 <GridItem>
                                     <Indicator title="Queries" value={summary.queries.toLocaleString()} />

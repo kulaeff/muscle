@@ -71,7 +71,7 @@ class ListView extends React.Component {
                                 </svg>
                             : null
                         }
-                        {item.name}
+                        {item}
                     </ListViewItem>
                 )
             }

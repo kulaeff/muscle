@@ -57,10 +57,10 @@ class Database extends React.Component {
      */
     componentDidMount() {
         const
-            { params } = this.props,
+            { match } = this.props,
             { getDatabase } = this.props.databaseActions
 
-        getDatabase(params.database, this.state.filter)
+        getDatabase(match.params.database)
     }
 
     /**
@@ -69,20 +69,20 @@ class Database extends React.Component {
      */
     componentWillReceiveProps(nextProps) {
         const
-            { items, params } = this.props,
+            { match } = this.props,
             { getDatabase, restoreWindow } = this.props.databaseActions
 
         // Selected database has changed
-        if (params.database !== nextProps.params.database) {
+        if (match.params.database !== nextProps.match.params.database) {
             this.setState({
                 selectedIndex: null
             })
 
             restoreWindow()
 
-            getDatabase(nextProps.params.database, this.state.filter)
+            getDatabase(nextProps.match.params.database, this.state.filter)
         // Table view was closed
-        } else if (!nextProps.params.hasOwnProperty('table')) {
+        } /*else if (!nextProps.params.hasOwnProperty('table')) {
             this.setState({
                 selectedIndex: null
             })
@@ -91,7 +91,7 @@ class Database extends React.Component {
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
             })
-        }
+        }*/
     }
 
     /**
@@ -151,9 +151,9 @@ class Database extends React.Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { router } = this.props
+        const { history } = this.props
 
-        router.push('/server')
+        history.push('/server')
     }
 
     /**
@@ -249,7 +249,7 @@ class Database extends React.Component {
                 { name: 'tables', label: 'Tables'},
                 { name: 'query', label: 'Query'}
             ],
-            { children, fetching, minimized, items, params } = this.props
+            { children, fetching, minimized, items, match } = this.props
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -261,7 +261,7 @@ class Database extends React.Component {
                                 items={tabs}
                                 selected={this.state.selectedTab}
                                 title={
-                                    <Title secondaryTitle={params.database} />
+                                    <Title secondaryTitle={match.params.database} />
                                 }
                                 onChange={this.onTabsChange} />
                         </div>

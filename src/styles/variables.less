@@ -28,13 +28,13 @@
 @cBorder: #e0e1e2;
 
 // Control color
-@cControl: #f0f1f2;
+@cControl: #f3f4f5;
 
 // Disabled color
-@cDisabled: #d0d1d2;
+@cDisabled: #e7e8e9;
 
 // Hover color
-@cHover: #f0f1f2;
+@cHover: #f3f4f5;
 
 // Selected color
 @cSelected: @cPrimary;
@@ -119,7 +119,7 @@
 @indicatorBorderThickness: 0;
 @indicatorBackgroundColor: @cControl;
 @indicatorBorderColor: @cBorder;
-@indicatorTitleColor: @cGrayMedium;
+@indicatorTitleColor: @cGrayDark;
 
 // ListView & ListViewItem
 @listViewItemBackgroundColor: transparent;
@@ -140,15 +140,15 @@
 // Textbox
 @textboxBorderThickness: 0;
 @textboxColorBackground: @cControl;
-@textboxColorBorder: @cBorder;
-@textboxColorForeground: @cForeground;
-@textboxColorBackgroundDisabled: lighten(@textboxColorBackground, 10%);
-@textboxColorBorderDisabled: rgba(255, 255, 255, 0.1);
-@textboxColorForegroundDisabled: @textboxColorForeground;
 @textboxColorBackgroundActive: darken(@textboxColorBackground, 3%);
-@textboxColorBorderActive: @cPrimary;
+@textboxColorBackgroundDisabled: lighten(@textboxColorBackground, 10%);
 @textboxColorBackgroundHover: @textboxColorBackgroundActive;
+@textboxColorBorder: @cBorder;
+@textboxColorBorderActive: @cPrimary;
+@textboxColorBorderDisabled: rgba(255, 255, 255, 0.1);
 @textboxColorBorderHover: darken(@cBorder, 10%);
+@textboxColorForeground: @cForeground;
+@textboxColorForegroundDisabled: @textboxColorForeground;
 @textboxColorForegroundHover: @textboxColorForeground;
 @textboxHeight: @hDefault;
 

@@ -20,7 +20,7 @@ export default function statusSummary(state = initialState, action) {
         case GET_STATUS_SUMMARY_REQUEST:
             return { ...state, fetching: true }
         case GET_STATUS_SUMMARY_SUCCESS:
-            return { ...state, fetching: false, summary: action.payload.summary }
+            return { ...state, fetching: false, summary: action.payload }
         case GET_STATUS_SUMMARY_FAIL:
             return { ...state, fetching: false }
         default:

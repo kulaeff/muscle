@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Route } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Database from '../../containers/Database'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -65,17 +67,17 @@ class Server extends React.Component {
      * @param {object} nextProps New properties
      */
     componentWillReceiveProps(nextProps) {
-        const { items, params } = this.props
+        const { items, location, match } = nextProps
 
-        // We came from direct url (/server/<name>)
-        if (nextProps.params.hasOwnProperty('database') && items.length !== nextProps.items.length) {
-            const sortedItems = nextProps.items.sort((a, b) => a.name > b.name)
+        // If we came from direct url (/server/<name>)
+        if (items.length > 0) {
+            const sortedItems = items.sort((a, b) => a > b)
 
             this.setState({
-                selectedIndex: sortedItems.findIndex(item => item.name === params.database)
+                selectedIndex: sortedItems.findIndex(item => location.pathname.includes(item))
             })
-        // Tables window was closed
-        } else if (!nextProps.params.hasOwnProperty('database')) {
+        // If database window was closed
+        } else if (match.isExact) {
             this.setState({
                 selectedIndex: null
             })
@@ -123,9 +125,9 @@ class Server extends React.Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { router } = this.props
+        const { history } = this.props
 
-        router.push('/')
+        history.push('/')
     }
 
     /**
@@ -145,14 +147,14 @@ class Server extends React.Component {
      */
     onListViewChange = (index) => {
         const
-            { items, router } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            { items, history } = this.props,
+            sortedItems = items.sort((a, b) => a > b)
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/server/${sortedItems[index].name}`)
+        history.push(`/server/${sortedItems[index]}`)
     }
 
     /**
@@ -176,7 +178,7 @@ class Server extends React.Component {
             filter: e.target.value
         })
 
-        this.debouncedTextboxFilterChange(this.state.filter)
+        this.debouncedTextboxFilterChange(e.target.value)
     }
 
     /**
@@ -186,7 +188,7 @@ class Server extends React.Component {
     render() {
         const
             b = block('server'),
-            { children, fetching, minimized, items } = this.props,
+            { fetching, match, minimized, items } = this.props,
             sortedItems = items.sort((a, b) => a.name > b.name)
 
         return (
@@ -202,10 +204,10 @@ class Server extends React.Component {
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
-                                onClick={this.onWindowButtonMinimizeClick}></button>
+                                onClick={this.onWindowButtonMinimizeClick} />
                             <button
                                 className={b('button', {action: 'close'})}
-                                onClick={this.onWindowButtonCloseClick}></button>
+                                onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
                     <div className={b('toolbar')}>
@@ -258,7 +260,7 @@ class Server extends React.Component {
                     </div>
                 </div>
                 <div className={b('view')}>
-                    {children}
+                    <Route path={`${match.url}/:database`} component={Database} />
                 </div>
             </div>
         )

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import Title from '../../components/Title'
 import Toggle from '../../components/Toggle'
 import * as settingsActions from '../../actions/settings'
@@ -80,4 +81,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Settings))

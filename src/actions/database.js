@@ -11,14 +11,14 @@ import {
  * @param {string} database Database name
  * @param {string} token String used to filter tables
  */
-export function getDatabase(database, token) {
+export function getDatabase(name, token = '') {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_DATABASE_REQUEST
         })
 
         try {
-            const response = await api.getDatabase(database, token)
+            const response = await api.getDatabase(name, token)
 
             dispatch({
                 type: GET_DATABASE_SUCCESS,

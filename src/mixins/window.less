@@ -61,7 +61,6 @@
     }
     &__container {
         background-color: @cWindowBackground;
-        border-right: 1px solid @cWindowBorder;
         box-sizing: border-box;
         min-width: 40rem;
         max-width: 60rem;
@@ -99,8 +98,8 @@
         margin-top: @mDefault / 2;
         padding: 0 @mDefault / 2;
     }
-    &__view {
-        border-right: 1px solid @cWindowBorder;
+    &__view:not(:empty) {
+        border-left: 2px solid @cWindowBorder;
     }
     //
     &__button + &__button {

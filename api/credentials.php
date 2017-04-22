@@ -1,12 +1,12 @@
-<?
+<?php
     session_start();
 
     $_SESSION['user'] = $_GET['user'];
     $_SESSION['password'] = $_GET['password'];
 
     $json = array(
-            'user' => '',
-            'password' => ''
+        'user' => '',
+        'password' => ''
     );
 
     $mysqli = new mysqli('localhost', $_GET['user'], $_GET['password']);

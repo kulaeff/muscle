@@ -38,15 +38,15 @@ class API {
     }
 
     async getServer(token) {
-        return this.axios.get('server', { token })
+        return this.axios.get('server', { params: { token }})
     }
 
     async getIndexes(database, table) {
         return this.axios.get('indexes', { params: { database, table }})
     }
 
-    async getDatabase(database, token) {
-        return this.axios.get('database', { params: { database, token }})
+    async getDatabase(name, token) {
+        return this.axios.get('database', { params: { name, token }})
     }
 
     async saveColumn(data) {

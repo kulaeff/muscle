@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
@@ -12,13 +13,11 @@ class TabsItem extends React.Component {
      * @static
      * @property {string} label The label of the item
      * @property {string} name Name
-     * @property {bool} selected Is the item selected
      * @property {func} onClick Click event handler
      */
     static propTypes = {
         label: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
         onClick: PropTypes.func.isRequired
     }
 
@@ -38,17 +37,18 @@ class TabsItem extends React.Component {
             {
                 label = TabsItem.defaultProps.label,
                 name,
-                selected,
                 onClick
             } = this.props
 
         return (
-            <a
-                className={b('item', {state: selected ? 'selected' : null})}
-                title={label}
-                onClick={() => onClick(name)}>
-                {label}
-            </a>
+            <Route to={name} children={({ match }) => (
+                <Link
+                    className={b('item', {state: match ? 'selected' : null})}
+                    title={match}
+                    to={name}>
+                    {label}
+                </Link>
+            )}/>
         )
     }
 }

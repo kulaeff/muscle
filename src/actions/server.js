@@ -10,7 +10,7 @@ import {
  * @function
  * @param {string} token String used as filter
  */
-export function getServer(token) {
+export function getServer(token = '') {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_SERVER_REQUEST

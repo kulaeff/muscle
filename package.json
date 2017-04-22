@@ -4,7 +4,7 @@
   "description": "The MySQL management tool",
   "main": "index.jsx",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --colors",
+    "dev": "cross-env NODE_ENV=development webpack --progress --colors --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --display-error-details"
   },
   "author": "Timur Kulaev",
@@ -46,6 +46,7 @@
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0"

@@ -90,7 +90,6 @@ class Tabs extends React.Component {
                                 key={index}
                                 label={item.label}
                                 name={item.name}
-                                selected={selected === item.name}
                                 onClick={this.onItemClick} />
 
                         )

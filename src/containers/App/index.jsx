@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as appActions from '../../actions/app'
+import Settings from '../../containers/Settings'
+import Server from '../../containers/Server'
+import Status from '../../containers/Status'
 import Button from '../../components/Button'
 import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
@@ -69,7 +73,7 @@ class App extends React.Component {
     onFormSubmit = (e) => {
         const
             { saveCredentials } = this.props.appActions,
-            { router } = this.props
+            { history } = this.props
 
         this.setState({
             buttonDisabled: true
@@ -82,16 +86,16 @@ class App extends React.Component {
                     selectedIndex: 1
                 })
 
-                router.push('/server')
+                history.push('/server')
             })
 
         e.preventDefault()
     }
 
     onNavigationBarChange = (id) => {
-        const { router } = this.props
+        const { history } = this.props
 
-        router.push(`/${id}`)
+        history.push(`/${id}`)
 
         this.setState({
             selectedIndex: navigationBarItems.findIndex(item => item.id === id)
@@ -100,7 +104,7 @@ class App extends React.Component {
 
     onNavigationBarItemLogoutClick = () => {
         const
-            { router } = this.props,
+            { history } = this.props,
             { removeCredentials } = this.props.appActions
 
         removeCredentials()
@@ -110,7 +114,7 @@ class App extends React.Component {
                     user: 'root'
                 })
 
-                router.push('/')
+                history.push('/')
             })
     }
 
@@ -135,7 +139,11 @@ class App extends React.Component {
             return (
                 <div className={b()}>
                     <div className={b('content')}>
-                        {this.props.children}
+                        <Switch>
+                            <Route path="/settings" component={Settings}/>
+                            <Route path="/server" component={Server}/>
+                            <Route path="/status" component={Status}/>
+                        </Switch>
                     </div>
                     <div className={b('sidebar')}>
                         <div className={b('logo')} title="Muscle">
@@ -221,4 +229,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
