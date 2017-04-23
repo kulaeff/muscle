@@ -33,8 +33,8 @@ class API {
         return this.axios.get('column')
     }
 
-    async getColumns(database, table) {
-        return this.axios.get('columns', { params: { database, table }})
+    async getTableColumns(database, table) {
+        return this.axios.get('table/columns', { params: { database, table }})
     }
 
     async getServer(token) {

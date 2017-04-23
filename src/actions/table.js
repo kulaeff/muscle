@@ -15,7 +15,7 @@ export function getColumns(database, table) {
         })
 
         try {
-            const response = await api.getColumns(database, table)
+            const response = await api.getTableColumns(database, table)
 
             dispatch({
                 type: GET_COLUMNS_SUCCESS,

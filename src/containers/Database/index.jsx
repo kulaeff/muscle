@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Route } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { debounce } from 'lodash'
 import * as databaseActions from '../../actions/database'
 import * as serverActions from '../../actions/server'
+import Table from '../../containers/Table'
 import DataTable from '../../components/DataTable'
 import Spinner from '../../components/Spinner'
 import Tabs from '../../components/Tabs'
@@ -69,11 +71,18 @@ class Database extends React.Component {
      */
     componentWillReceiveProps(nextProps) {
         const
-            { match } = this.props,
+            { items, location, match } = nextProps,
             { getDatabase, restoreWindow } = this.props.databaseActions
 
-        // Selected database has changed
-        if (match.params.database !== nextProps.match.params.database) {
+        // If we came from direct url (/server/<name>)
+        if (items.length > 0) {
+//            const sortedItems = items.sort((a, b) => a > b)
+
+            this.setState({
+                selectedIndex: items.findIndex(item => location.pathname.includes(item[0]))
+            })
+            // if selected database was changed
+        } else if (match.params.database !== nextProps.match.params.database) {
             this.setState({
                 selectedIndex: null
             })
@@ -81,12 +90,13 @@ class Database extends React.Component {
             restoreWindow()
 
             getDatabase(nextProps.match.params.database, this.state.filter)
-        // Table view was closed
-        } /*else if (!nextProps.params.hasOwnProperty('table')) {
+            // If database window was closed
+        } else if (match.isExact) {
             this.setState({
                 selectedIndex: null
             })
-        // Came from direct url (/databases/<name>)
+        }
+        /*// Came from direct url (/databases/<name>)
         } else if (nextProps.params.hasOwnProperty('table') && items.length !== nextProps.items.length) {
             this.setState({
                 selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
@@ -173,14 +183,14 @@ class Database extends React.Component {
      */
     onDataTableChange = (index) => {
         const
-            { items, router, routeParams } = this.props,
+            { items, history, match } = this.props,
             { minimizeWindow } = this.props.serverActions
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/server/${routeParams.database}/${items[index][0]}`)
+        history.push(`${match.url}/${items[index][0]}`)
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
@@ -202,10 +212,10 @@ class Database extends React.Component {
      */
     debouncedTextboxFilterChange = (token) => {
         const
-            { params } = this.props,
+            { match } = this.props,
             { getDatabase } = this.props.databaseActions
 
-        getDatabase(params.database, token)
+        getDatabase(match.params.database, token)
     }
 
     /**
@@ -249,7 +259,7 @@ class Database extends React.Component {
                 { name: 'tables', label: 'Tables'},
                 { name: 'query', label: 'Query'}
             ],
-            { children, fetching, minimized, items, match } = this.props
+            { fetching, minimized, items, match } = this.props
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -330,7 +340,7 @@ class Database extends React.Component {
                     </div>
                 </div>
                 <div className={b('view')}>
-                    {children}
+                    <Route path={`${match.path}/:table`} component={Table} />
                 </div>
             </div>
         )

@@ -48,10 +48,10 @@ class Table extends React.Component {
      */
     componentDidMount() {
         const
-            { params } = this.props,
+            { match } = this.props,
             { getColumns } = this.props.tableActions
 
-        getColumns(params.database, params.table)
+        getColumns(match.params.database, match.params.table)
     }
 
     /**
@@ -60,19 +60,19 @@ class Table extends React.Component {
      */
     componentWillReceiveProps(nextProps) {
         const
-            { items, params } = this.props,
+            { items, match } = this.props,
             { getColumns } = this.props.tableActions
 
-        if (params.table !== nextProps.params.table) {
-            getColumns(params.database, nextProps.params.table)
-        } else if (!nextProps.params.hasOwnProperty('column')) {
+        if (match.params.table !== nextProps.match.params.table) {
+            getColumns(match.params.database, nextProps.match.params.table)
+        } else if (!nextProps.match.params.hasOwnProperty('column')) {
             this.setState({
                 selectedIndex: null
             })
         // Set selectedindex if we came from direct url (/databases/table/<name>)
         } else if (items.length !== nextProps.items.length) {
             this.setState({
-                selectedIndex: nextProps.items.findIndex(item => item[0] === params.column)
+                selectedIndex: nextProps.items.findIndex(item => item[0] === match.params.column)
             })
         }
 
@@ -118,9 +118,9 @@ class Table extends React.Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { router, params } = this.props
+        const { history, match } = this.props
 
-        router.push(`/server/${params.database}`)
+        history.push(`/server/${match.params.database}`)
     }
 
     /**
@@ -140,14 +140,14 @@ class Table extends React.Component {
      */
     onDataTableChange = (index) => {
         const
-            { items, router, params } = this.props,
+            { items, history, match } = this.props,
             { minimizeWindow } = this.props.databaseActions
 
         this.setState({
             selectedIndex: index
         })
 
-        router.push(`/server/${params.database}/${params.table}/${items[index][0]}`)
+        history.push(`${match.url}/${items[index][0]}`)
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
@@ -159,7 +159,7 @@ class Table extends React.Component {
      * */
     onTabsChange = (name) => {
         const
-            { params } = this.props,
+            { match } = this.props,
             { getColumns, getIndexes } = this.props.tableActions
 
         this.setState({
@@ -168,10 +168,10 @@ class Table extends React.Component {
 
         switch (name) {
             case 'columns':
-                getColumns(params.database, params.table)
+                getColumns(match.params.database, match.params.table)
                 break;
             case 'indexes':
-                getIndexes(params.database, params.table)
+                getIndexes(match.params.database, match.params.table)
                 break;
             case 'rows':
                 break;
@@ -211,7 +211,7 @@ class Table extends React.Component {
                 { name: 'indexes', label: 'Indexes'},
                 { name: 'rows', label: 'Rows'}
             ],
-            { children, fetching, minimized, items, params } = this.props
+            { children, fetching, minimized, items, match } = this.props
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -223,7 +223,7 @@ class Table extends React.Component {
                                 items={tabs}
                                 selected={this.state.selectedTab}
                                 title={
-                                    <Title secondaryTitle={params.table} />
+                                    <Title secondaryTitle={match.params.table} />
                                 }
                                 onChange={this.onTabsChange} />
                         </div>
@@ -231,10 +231,10 @@ class Table extends React.Component {
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
-                                onClick={this.onWindowButtonMinimizeClick}></button>
+                                onClick={this.onWindowButtonMinimizeClick}/>
                             <button
                                 className={b('button', {action: 'close'})}
-                                onClick={this.onWindowButtonCloseClick}></button>
+                                onClick={this.onWindowButtonCloseClick}/>
                         </div>
                     </div>
                     {
