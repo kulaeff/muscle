@@ -276,7 +276,7 @@ class Server extends React.Component {
                 </div>
                 <ReactModal
                     ariaHideApp={true}
-                    className="ReactModal__Content"
+                    className="ReactModal__Content-Small"
                     contentLabel="Create new database modal"
                     isOpen={this.state.showCreateDatabaseModal}
                     overlayClassName="ReactModal__Overlay"
