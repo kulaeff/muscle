@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
 @import (reference) './styles/variables';
+@import './styles/modal';
 
 html {
     font-size: 10px;
@@ -17,4 +18,8 @@ body {
 
 #root {
     height: 100%;
+    // react-modal
+    .ReactModal__Body--open & {
+        filter: blur(1px) grayscale(20%);
+    }
 }

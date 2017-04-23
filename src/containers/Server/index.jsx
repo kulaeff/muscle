@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactModal from 'react-modal'
 import { Route } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
+import Button from '../../components/Button'
+import Form, { FormRow, FormField, FormButtons, FormButton }  from '../../components/Form'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -42,11 +45,18 @@ class Server extends React.Component {
         super(props)
 
         this.state = {
+            showCreateDatabaseModal: false,
             filter: '',
-            selectedIndex: null,
+            selectedIndex: null
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
+    }
+
+    onCloseCreateDatabaseModal = () => {
+        this.setState({
+            showCreateDatabaseModal: false
+        })
     }
 
     /**
@@ -89,7 +99,9 @@ class Server extends React.Component {
      * @method
      */
     onToolBarButtonCreateDatabaseClick = () => {
-        console.log('toolbar button Create cliked')
+        this.setState({
+            showCreateDatabaseModal: true
+        })
     }
 
     /**
@@ -262,6 +274,33 @@ class Server extends React.Component {
                 <div className={b('view')}>
                     <Route path={`${match.url}/:database`} component={Database} />
                 </div>
+                <ReactModal
+                    ariaHideApp={true}
+                    className="ReactModal__Content"
+                    contentLabel="Create new database modal"
+                    isOpen={this.state.showCreateDatabaseModal}
+                    overlayClassName="ReactModal__Overlay"
+                    onRequestClose={this.onCloseCreateDatabaseModal}
+                    parentSelector={() => document.body}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <Title primaryTitle="New database" />
+                    <Form onReset={this.onCloseCreateDatabaseModal}>
+                        <FormRow>
+                            <FormField id="databaseName" label="Database name">
+                                <Textbox id="databaseName" name="name" required={true} />
+                            </FormField>
+                            <FormButtons>
+                                <FormButton>
+                                    <Button label="Create" />
+                                </FormButton>
+                                <FormButton>
+                                    <Button label="Cancel" type="reset"/>
+                                </FormButton>
+                            </FormButtons>
+                        </FormRow>
+                    </Form>
+                </ReactModal>
             </div>
         )
     }
