@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'query-string'
 
 class API {
     constructor() {
@@ -10,6 +11,15 @@ class API {
 
     async checkCredentials(user, password) {
         return this.axios.get('credentials', { params: { user, password }})
+    }
+
+    /**
+     * Creates a database with specified name
+     * @function
+     * @param {string} name Database's name
+     */
+    async createDatabase(name) {
+        return this.axios.post('server', qs.stringify({ name }))
     }
 
     async getStatusSummary() {

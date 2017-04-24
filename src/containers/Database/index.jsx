@@ -8,6 +8,7 @@ import * as databaseActions from '../../actions/database'
 import * as serverActions from '../../actions/server'
 import Table from '../../containers/Table'
 import DataTable from '../../components/DataTable'
+import Placeholder from '../../components/Placeholder'
 import Spinner from '../../components/Spinner'
 import Tabs from '../../components/Tabs'
 import Textbox from '../../components/Textbox'
@@ -71,18 +72,19 @@ class Database extends React.Component {
      */
     componentWillReceiveProps(nextProps) {
         const
-            { items, location, match } = nextProps,
+            { match } = this.props,
+            { items, location } = nextProps,
             { getDatabase, restoreWindow } = this.props.databaseActions
 
         // If we came from direct url (/server/<name>)
         if (items.length > 0) {
-//            const sortedItems = items.sort((a, b) => a > b)
-
             this.setState({
                 selectedIndex: items.findIndex(item => location.pathname.includes(item[0]))
             })
-            // if selected database was changed
-        } else if (match.params.database !== nextProps.match.params.database) {
+        }
+
+        // If selected database was changed
+        if (match.params.database !== nextProps.match.params.database) {
             this.setState({
                 selectedIndex: null
             })
@@ -91,17 +93,11 @@ class Database extends React.Component {
 
             getDatabase(nextProps.match.params.database, this.state.filter)
             // If database window was closed
-        } else if (match.isExact) {
+        } else if (nextProps.match.isExact) {
             this.setState({
                 selectedIndex: null
             })
         }
-        /*// Came from direct url (/databases/<name>)
-        } else if (nextProps.params.hasOwnProperty('table') && items.length !== nextProps.items.length) {
-            this.setState({
-                selectedIndex: nextProps.items.findIndex(item => item[0] === params.table)
-            })
-        }*/
     }
 
     /**
@@ -184,7 +180,7 @@ class Database extends React.Component {
     onDataTableChange = (index) => {
         const
             { items, history, match } = this.props,
-            { minimizeWindow } = this.props.serverActions
+            { minimizeWindow } = this.props.actions
 
         this.setState({
             selectedIndex: index
@@ -330,12 +326,18 @@ class Database extends React.Component {
                                 onChange={this.onTextboxFilterChange}/>
                         </div>
                         <div className={b('table')}>
-                            <DataTable
-                                columns={columns}
-                                items={items}
-                                selectedIndex={this.state.selectedIndex}
-                                onChange={this.onDataTableChange}
-                                onValueTransform={this.onDataTableValueTransform} />
+                            {
+                                items.length
+                                    ?
+                                    <DataTable
+                                        columns={columns}
+                                        items={items}
+                                        selectedIndex={this.state.selectedIndex}
+                                        onChange={this.onDataTableChange}
+                                        onValueTransform={this.onDataTableValueTransform}/>
+                                    :
+                                    <Placeholder text="There are no tables in this database" />
+                            }
                         </div>
                     </div>
                 </div>
@@ -358,7 +360,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps(dispatch) {
     return {
         databaseActions: bindActionCreators(databaseActions, dispatch),
-        serverActions: bindActionCreators(serverActions, dispatch)
+        actions: bindActionCreators(serverActions, dispatch)
     }
 }
 

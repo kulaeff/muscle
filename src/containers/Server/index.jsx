@@ -12,7 +12,7 @@ import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
-import * as serverActions from '../../actions/server'
+import * as actions from '../../actions/server'
 import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
@@ -45,16 +45,19 @@ class Server extends React.Component {
         super(props)
 
         this.state = {
-            showCreateDatabaseModal: false,
-            filter: '',
-            selectedIndex: null
+            textboxDatabaseNameDisabled: '',
+            textboxDatabaseNameValue: '',
+            textboxFilterValue: '',
+            selectedIndex: null,
+            showCreateDatabaseModal: false
         }
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
     }
 
-    onCloseCreateDatabaseModal = () => {
+    onCreateDatabaseModalClose = () => {
         this.setState({
+            textboxDatabaseNameValue: '',
             showCreateDatabaseModal: false
         })
     }
@@ -65,7 +68,7 @@ class Server extends React.Component {
      */
     componentDidMount() {
         const
-            { getServer, restoreWindow } = this.props.serverActions
+            { getServer, restoreWindow } = this.props.actions
 
         restoreWindow()
         getServer()
@@ -81,10 +84,8 @@ class Server extends React.Component {
 
         // If we came from direct url (/server/<name>)
         if (items.length > 0) {
-            const sortedItems = items.sort((a, b) => a > b)
-
             this.setState({
-                selectedIndex: sortedItems.findIndex(item => location.pathname.includes(item))
+                selectedIndex: items.findIndex(item => location.pathname.includes(item))
             })
         // If database window was closed
         } else if (match.isExact) {
@@ -125,7 +126,7 @@ class Server extends React.Component {
      * @method
      */
     onWindowButtonMinimizeClick = (e) => {
-        const { minimizeWindow } = this.props.serverActions
+        const { minimizeWindow } = this.props.actions
 
         minimizeWindow()
 
@@ -147,7 +148,7 @@ class Server extends React.Component {
      * @method
      */
     onWindowClick = () => {
-        const { restoreWindow } = this.props.serverActions
+        const { restoreWindow } = this.props.actions
 
         restoreWindow()
     }
@@ -159,14 +160,13 @@ class Server extends React.Component {
      */
     onListViewChange = (index) => {
         const
-            { items, history } = this.props,
-            sortedItems = items.sort((a, b) => a > b)
+            { items, history } = this.props
 
         this.setState({
             selectedIndex: index
         })
 
-        history.push(`/server/${sortedItems[index]}`)
+        history.push(`/server/${items[index]}`)
     }
 
     /**
@@ -175,22 +175,42 @@ class Server extends React.Component {
      * @param {string} filter String used as filter
      */
     debouncedTextboxFilterChange = (token) => {
-        const { getServer } = this.props.serverActions
+        const { getServer } = this.props.actions
 
         getServer(token)
     }
 
     /**
      * Stores the filter and invokes debounced handler
+     * @param {Event} e
      */
     onTextboxFilterChange = (e) => {
-        e.persist()
-
         this.setState({
-            filter: e.target.value
+            textboxFilterValue: e.target.value
         })
 
         this.debouncedTextboxFilterChange(e.target.value)
+    }
+
+    /**
+     * Stores the database name in the local state
+     * @param {Event} e
+     */
+    onTextboxDatabaseNameChange = (e) => {
+        this.setState({
+            textboxDatabaseNameValue: e.target.value
+        })
+    }
+
+    onCreateDatabaseFormSubmit = (e) => {
+        const { createDatabase } = this.props.actions
+
+        createDatabase(this.state.textboxDatabaseNameValue)
+            .then(() => {
+                this.onCreateDatabaseModalClose()
+            })
+
+        e.preventDefault()
     }
 
     /**
@@ -200,8 +220,7 @@ class Server extends React.Component {
     render() {
         const
             b = block('server'),
-            { fetching, match, minimized, items } = this.props,
-            sortedItems = items.sort((a, b) => a.name > b.name)
+            { fetching, match, minimized, items } = this.props
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -258,15 +277,15 @@ class Server extends React.Component {
                     </div>
                     <div className={b('filters')}>
                         <Textbox
-                            id="filter"
+                            id="textboxFilter"
                             placeholder="Filter by name..."
-                            value={this.state.filter}
+                            value={this.state.textboxFilterValue}
                             onChange={this.onTextboxFilterChange}/>
                     </div>
                     <div className={b('table')}>
                         <ListView
                             icon="database"
-                            items={sortedItems}
+                            items={items}
                             selectedIndex={this.state.selectedIndex}
                             onChange={this.onListViewChange} />
                     </div>
@@ -280,22 +299,35 @@ class Server extends React.Component {
                     contentLabel="Create new database modal"
                     isOpen={this.state.showCreateDatabaseModal}
                     overlayClassName="ReactModal__Overlay"
-                    onRequestClose={this.onCloseCreateDatabaseModal}
+                    onRequestClose={this.onCreateDatabaseModalClose}
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <Title primaryTitle="New database" />
-                    <Form onReset={this.onCloseCreateDatabaseModal}>
+                    <Title primaryTitle="New database" size="large" />
+                    <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
                         <FormRow>
-                            <FormField id="databaseName" label="Database name">
-                                <Textbox id="databaseName" name="name" required={true} />
+                            <FormField id="textboxDatabaseName" label="Database name">
+                                <Textbox
+                                    id="textboxDatabaseName"
+                                    name="name"
+                                    required={true}
+                                    value={this.state.textboxDatabaseNameValue}
+                                    onChange={this.onTextboxDatabaseNameChange}
+                                />
                             </FormField>
                             <FormButtons>
                                 <FormButton>
-                                    <Button label="Create" />
+                                    <Button
+                                        disabled={this.state.textboxDatabaseNameValue.length === 0}
+                                        label="Create"
+                                        type="submit"
+                                    />
                                 </FormButton>
                                 <FormButton>
-                                    <Button label="Cancel" type="reset"/>
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
                                 </FormButton>
                             </FormButtons>
                         </FormRow>
@@ -316,7 +348,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        serverActions: bindActionCreators(serverActions, dispatch)
+        actions: bindActionCreators(actions, dispatch)
     }
 }
 

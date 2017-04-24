@@ -2,6 +2,9 @@ import {
     GET_SERVER_REQUEST,
     GET_SERVER_SUCCESS,
     GET_SERVER_FAIL,
+    CREATE_DATABASE_REQUEST,
+    CREATE_DATABASE_SUCCESS,
+    CREATE_DATABASE_FAIL,
     SET_SERVER_WINDOW_STATE
 } from '../constants/server'
 
@@ -33,6 +36,36 @@ export function getServer(token = '') {
 }
 
 /**
+ * Creates the database with specified name
+ * @function
+ * @param {string} name Database name
+ */
+export function createDatabase(name) {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: CREATE_DATABASE_REQUEST
+        })
+
+        try {
+            const response = await api.createDatabase(name)
+
+            dispatch({
+                type: CREATE_DATABASE_SUCCESS,
+                payload: response.data
+            })
+        } catch(ex) {
+            dispatch({
+                type: CREATE_DATABASE_FAIL,
+                payload: ex
+            })
+        }
+    }
+}
+/*------------------------------------------------------------------------------------*/
+/* UI                                                                                 */
+/*------------------------------------------------------------------------------------*/
+/**
+ *
  * Minimizes window
  * @function
  */
