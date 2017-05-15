@@ -9,3 +9,4 @@
 9. Bug: DataTableColumn sort doesn't work in Edge browser
 10. Test: write tests
 11. Use decorators (in Babel 7 Stage-0 plugin, info at https://babeljs.io/docs/plugins/transform-decorators/)
+12. Replace default with defaultProps
