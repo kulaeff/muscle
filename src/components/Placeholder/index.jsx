@@ -5,7 +5,7 @@ import './style.less'
 
 class Placeholder extends React.Component {
     /**
-     * Placeholder properties
+     * Properties
      * @static
      * @prop {string} text Text
      */
@@ -14,8 +14,8 @@ class Placeholder extends React.Component {
     }
 
     /**
-     * Renders Placeholder
-     * @function
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

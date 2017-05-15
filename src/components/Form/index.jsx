@@ -13,7 +13,7 @@ import './style.less'
  */
 class Form extends React.Component {
     /**
-     * Form's properties
+     * Properties
      * @static
      * @property {string} action Action
      * @property {string} method Method
@@ -28,12 +28,12 @@ class Form extends React.Component {
     }
 
     /**
-     * Form's default properties
+     * Default properties
      * @static
      * @property {string} action Default action
      * @property {string} action Default method
      */
-    static defaults = {
+    static defaultProps = {
         action: '',
         maxLength: 0,
         method: 'GET',
@@ -41,8 +41,8 @@ class Form extends React.Component {
     }
 
     /**
-     * Renders the Form component
-     * @method
+     * Render component
+     * @returns {XML} Rendered element
      */
     render() {
         const

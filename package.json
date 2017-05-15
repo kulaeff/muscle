@@ -5,9 +5,11 @@
   "main": "index.jsx",
   "scripts": {
     "dev": "webpack --env.development --progress --colors --watch",
-    "build": "webpack -p --env.production --progress --colors --display-error-details"
+    "build": "webpack -p --env.production --progress --colors --display-error-details",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags"
   },
-  "author": "Timur Kulaev",
+  "author": "Timur Kulaev <kulaeff@live.ru>",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.7.7",

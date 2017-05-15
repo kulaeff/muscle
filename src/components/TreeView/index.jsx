@@ -10,7 +10,7 @@ import './style.less'
  */
 class TreeView extends React.Component {
     /**
-     * TreeView properties
+     * Properties
      * @static
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
@@ -23,16 +23,16 @@ class TreeView extends React.Component {
     }
 
     /**
-     * Default values of TreeView properties
+     * Default properties
      * @static
      * @property {number} selectedIndex The default index of selected item
      */
-    static defaults = {
+    static defaultProps = {
         selectedIndex: null
     }
 
     /**
-     * Creates TreeView
+     * Create the component
      * @constructor
      */
     constructor (props) {
@@ -63,8 +63,8 @@ class TreeView extends React.Component {
     }
 
     /**
-     * Renders TreeView component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

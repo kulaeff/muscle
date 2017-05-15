@@ -10,7 +10,7 @@ import './style.less'
  */
 class Grid extends React.Component {
     /**
-     * Grid properties
+     * Properties
      * @static
      * @property {string} orientation Direction
      */
@@ -19,17 +19,17 @@ class Grid extends React.Component {
     }
 
     /**
-     * Default Grid properties
+     * Default properties
      * @static
      * @property {string} orientation Default orientation
      */
-    static defaults = {
+    static defaultProps = {
         orientation: 'horizontal'
     }
 
     /**
-     * Renders Grid component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

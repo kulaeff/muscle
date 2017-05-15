@@ -11,7 +11,7 @@ import './style.less'
  */
 class DataTable extends React.Component {
     /**
-     * DataTable properties
+     * Properties
      * @static
      * @property {array} columns The array of columns
      * @property {string} icon The icon's name to use in DataTableItem
@@ -29,16 +29,16 @@ class DataTable extends React.Component {
     }
 
     /**
-     * Default values of DataTable properties
+     * Default properties
      * @static
      * @property {number} selectedIndex The default index of selected item
      */
-    static defaults = {
+    static defaultProps = {
         selectedIndex: null
     }
 
     /**
-     * Creates DataTable component
+     * Create DataTable component
      * @constructor
      * @param {object} props Properties
      */
@@ -89,7 +89,7 @@ class DataTable extends React.Component {
 
     /**
      * Renders DataTable component
-     * @method
+     * @returns {XMl} Rendered element
      */
     render() {
         const

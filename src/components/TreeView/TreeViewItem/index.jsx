@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class TreeViewItem extends React.Component {
     /**
-     * TreeViewItem properties
+     * Properties
      * @static
      * @property {number} id The id of the item
      * @property {string} label The label of the item
@@ -22,12 +22,16 @@ class TreeViewItem extends React.Component {
         onClick: PropTypes.func.isRequired
     }
 
+    /**
+     * Create the components
+     * @param {object} props
+     */
     constructor(props) {
         super(props)
     }
 
     /**
-     * Renders TreeViewItem component
+     * Render component
      */
     render() {
         const

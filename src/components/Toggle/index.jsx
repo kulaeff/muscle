@@ -9,7 +9,7 @@ import './style.less'
  */
 class Toggle extends React.Component {
     /**
-     * Toggle's properties
+     * Properties
      * @static
      * @property {bool} checked Is checked
      * @property {string} label Label
@@ -22,11 +22,11 @@ class Toggle extends React.Component {
     }
 
     /**
-     * Toggle's default properties
+     * Default properties
      * @static
      * @property {bool} checked Default is checked
      */
-    static defaults = {
+    static defaultProps = {
         checked: false,
         label: ''
     }
@@ -44,8 +44,8 @@ class Toggle extends React.Component {
     }
 
     /**
-     * Renders the Toggle component
-     * @method
+     * Render the component
+     * @returns {XML} Component
      */
     render() {
         const

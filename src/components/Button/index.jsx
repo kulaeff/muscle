@@ -9,7 +9,7 @@ import './style.less'
  */
 class Button extends React.Component {
     /**
-     * Button's properties
+     * Properties
      * @static
      * @property {bool} autoSize Full width of parent
      * @property {bool} disabled Is disabled
@@ -24,20 +24,20 @@ class Button extends React.Component {
     }
 
     /**
-     * Button's default properties
+     * Default properties
      * @static
      * @property {bool} disabled Default state
      * @property {string} type Default type
      */
-    static defaults = {
+    static defaultProps = {
         autoSize: false,
         disabled: false,
         type: 'button'
     }
 
     /**
-     * Renders the Button component
-     * @method
+     * Render the component
+     * @returns {XML}
      */
     render() {
         const

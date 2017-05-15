@@ -8,19 +8,24 @@ import block from 'bem-cn'
  */
 class GridItem extends React.Component {
     /**
-     * GridItem properties
+     * Properties
      * @static
      */
     static propTypes = {
         size: PropTypes.number,
     }
 
+    /**
+     * Create the component
+     * @param props
+     */
     constructor(props) {
         super(props)
     }
 
     /**
-     * Renders GridItem component
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

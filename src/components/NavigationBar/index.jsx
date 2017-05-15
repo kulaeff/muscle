@@ -10,7 +10,7 @@ import './style.less'
  */
 class NavigationBar extends React.Component {
     /**
-     * NavigationBar properties
+     * Properties
      * @static
      * @property {array} items The array of items
      * @property {number} selectedIndex The index of selected item
@@ -23,17 +23,18 @@ class NavigationBar extends React.Component {
     }
 
     /**
-     * Default values of NavigationBar properties
+     * Default properties
      * @static
      * @property {number} selectedIndex The default index of selected item
      */
-    static defaults = {
+    static defaultProps = {
         selectedIndex: 0
     }
 
     /**
-     * Creates NavigationBar
+     * Create the components
      * @constructor
+     * @param {object} props
      */
     constructor (props) {
         super(props);
@@ -55,8 +56,8 @@ class NavigationBar extends React.Component {
     }
 
     /**
-     * Renders NavigationBar component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

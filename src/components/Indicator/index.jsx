@@ -9,7 +9,7 @@ import './style.less'
  */
 class Indicator extends React.Component {
     /**
-     * Indicator's properties
+     * Properties
      * @static
      * @property {string} title Title
      */
@@ -19,15 +19,15 @@ class Indicator extends React.Component {
     }
 
     /**
-     * Indicator's default properties
+     * Default properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
     }
 
     /**
-     * Renders the Indicator component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

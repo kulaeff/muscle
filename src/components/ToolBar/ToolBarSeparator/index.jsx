@@ -7,7 +7,7 @@ import block from 'bem-cn'
  */
 class ToolBarSeparator extends React.Component {
     /**
-     * Renders ToolBarSeparator component
+     * Render the component
      */
     render() {
         const b = block('toolbar')

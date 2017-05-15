@@ -9,7 +9,7 @@ import '../style.less'
  */
 class FormField extends React.Component {
     /**
-     * FormField's properties
+     * Properties
      * @static
      * @property {string} id ID
      * @property {string} label Label
@@ -22,15 +22,15 @@ class FormField extends React.Component {
     }
 
     /**
-     * FormField's default properties
+     * Default properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
     }
 
     /**
-     * Renders the FormField component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

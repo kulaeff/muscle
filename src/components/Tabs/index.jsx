@@ -11,7 +11,7 @@ import './style.less'
  */
 class Tabs extends React.Component {
     /**
-     * Tabs properties
+     * Properties
      * @static
      * @property {bool} collpased Is collapsed
      * @property {array} items The array of items
@@ -30,7 +30,7 @@ class Tabs extends React.Component {
     }
 
     /**
-     * Default values of Tabs properties
+     * Default properties
      * @static
      * @property {bool} collapsed Is collapsed by default
      * @property {string} titl The default index of selected item
@@ -43,7 +43,7 @@ class Tabs extends React.Component {
     }
 
     /**
-     * Creates Tabs
+     * Create the component
      * @constructor
      */
     constructor (props) {
@@ -66,8 +66,8 @@ class Tabs extends React.Component {
     }
 
     /**
-     * Renders Tabs component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

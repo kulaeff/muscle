@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class NavigationBarItem extends React.Component {
     /**
-     * NavigationBarItem properties
+     * Properties
      * @static
      * @property {number} id The ID of the item
      * @property {bool} selected Is the item selected
@@ -23,16 +23,17 @@ class NavigationBarItem extends React.Component {
     }
 
     /**
-     * Default values of NavigationBarItem properties
+     * Default properties
      * @static
      * @property {string} title The title of the item
      */
-    static defaults = {
+    static defaultProps = {
         title: 'undefined',
     }
 
     /**
-     * Renders NavigationBarItem component
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

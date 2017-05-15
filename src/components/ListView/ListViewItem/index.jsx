@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class ListViewItem extends React.Component {
     /**
-     * ListViewItem properties
+     * Properties
      * @static
      * @property {number} id The id of the item
      * @property {string} label The label of the item
@@ -21,12 +21,17 @@ class ListViewItem extends React.Component {
         onClick: PropTypes.func.isRequired
     }
 
+    /**
+     * Create the component
+     * @param props
+     */
     constructor(props) {
         super(props)
     }
 
     /**
-     * Renders ListViewItem component
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

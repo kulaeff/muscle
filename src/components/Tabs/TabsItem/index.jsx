@@ -25,7 +25,7 @@ class TabsItem extends React.Component {
      * Default values of TabsItem properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
     }
 
     /**

@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class ToolBarButton extends React.Component {
     /**
-     * ToolBarButton properties
+     * Properties
      * @static
      * @property {bool} disabled Is button disabled?
      * @property {string} icon The icon of the button
@@ -23,15 +23,16 @@ class ToolBarButton extends React.Component {
     }
 
     /**
-     * Default values of ToolBarButton properties
+     * Default properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
         title: 'undefined'
     }
 
     /**
-     * Renders ToolBarButton component
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

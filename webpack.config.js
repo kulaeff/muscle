@@ -1,6 +1,5 @@
 const
     autoprefixer = require('autoprefixer'),
-    package = require('./package.json'),
     path = require('path'),
     webpack = require('webpack'),
     SvgStorePlugin = require('webpack-svgstore-plugin'),
@@ -129,7 +128,7 @@ module.exports = (env) => {
 
     if (env.production) {
         config.plugins.push(
-            //new webpack.NoEmitOnErrorsPlugin()
+            new webpack.NoEmitOnErrorsPlugin()
         )
     }
 

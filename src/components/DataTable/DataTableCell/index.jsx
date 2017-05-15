@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class DataTableCell extends React.Component {
     /**
-     * DataTableCell properties
+     * Properties
      * @static
      * @property {string} icon The icon's name to use in DataTableItem
      * @property {func} onClick Click event handler
@@ -25,7 +25,7 @@ class DataTableCell extends React.Component {
     }
 
     /**
-     * Renders DataTableCell component
+     * Render component
      */
     render() {
         const

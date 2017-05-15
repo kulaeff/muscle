@@ -10,7 +10,7 @@ import './style.less'
  */
 class ListView extends React.Component {
     /**
-     * ListView properties
+     * Properties
      * @static
      * @property {string} icon The icon's name to use in ListViewItem
      * @property {array} items The array of items
@@ -25,11 +25,11 @@ class ListView extends React.Component {
     }
 
     /**
-     * Default values of ListView properties
+     * Default properties
      * @static
      * @property {number} selectedIndex The default index of selected item
      */
-    static defaults = {
+    static defaultProps = {
         selectedIndex: null
     }
 
@@ -47,8 +47,8 @@ class ListView extends React.Component {
     }
 
     /**
-     * Renders ListView component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

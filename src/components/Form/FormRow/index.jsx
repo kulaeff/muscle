@@ -8,22 +8,20 @@ import '../style.less'
  */
 class FormRow extends React.Component {
     /**
-     * FormRow's properties
+     * Properties
      * @static
      */
-    static propTypes = {
-    }
+    static propTypes = {}
 
     /**
-     * FormRow's default properties
+     * Default properties
      * @static
      */
-    static defaults = {
-    }
+    static defaultProps = {}
 
     /**
-     * Renders the FormRow component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

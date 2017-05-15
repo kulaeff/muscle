@@ -8,7 +8,7 @@ import block from 'bem-cn'
  */
 class DataTableColumn extends React.Component {
     /**
-     * DataTableColumn properties
+     * Properties
      * @static
      * @property {number} id The id of the column
      * @property {string} name The name of the column
@@ -25,13 +25,20 @@ class DataTableColumn extends React.Component {
         onClick: PropTypes.func.isRequired
     }
 
-    static defaults = {
+    /**
+     * Default properties
+     * @static
+     * @property {bool} Is sorted
+     * @property {number} Sorting order
+     */
+    static defaultProps = {
         sorted: false,
         sortingOrder: 1
     }
 
     /**
-     * Renders DataTableColumn component
+     * Render component
+     * @returns {XML} Rendered element
      */
     render() {
         const

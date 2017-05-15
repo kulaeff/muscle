@@ -9,7 +9,7 @@ import './style.less'
  */
 class Textbox extends React.Component {
     /**
-     * Textbox's properties
+     * Properties
      * @static
      * @property {string} id The Textbox's id
      * @property {string} name The Textbox's name
@@ -34,20 +34,20 @@ class Textbox extends React.Component {
     }
 
     /**
-     * Textbox's default properties
+     * Default properties
      * @static
      * @property {bool} required Default is required
      * @property {string} theme Default theme
      */
-    static defaults = {
+    static defaultProps = {
         required: false,
         type: 'text',
         value: ''
     }
 
     /**
-     * Renders the Textbox component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

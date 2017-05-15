@@ -9,7 +9,7 @@ import block from 'bem-cn'
  */
 class DataTableRow extends React.Component {
     /**
-     * DataTableRow properties
+     * Properties
      * @static
      * @property {array} cells Cells (data) of the item
      * @property {number} column The index of the column
@@ -28,12 +28,17 @@ class DataTableRow extends React.Component {
         onValueTransform: PropTypes.func
     }
 
+    /**
+     * Create the component
+     * @param props
+     */
     constructor(props) {
         super(props)
     }
 
     /**
-     * Renders DataTableRow component
+     * Render component
+     * @returns {XML} Rendered element
      */
     render() {
         const

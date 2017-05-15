@@ -10,22 +10,22 @@ import './style.less'
  */
 class ToolBar extends React.Component {
     /**
-     * ToolBar properties
+     * Properties
      * @static
      */
     static propTypes = {
     }
 
     /**
-     * Default values of ToolBar properties
+     * Default properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
     }
 
     /**
-     * Renders ToolBar component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

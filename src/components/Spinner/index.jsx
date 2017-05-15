@@ -9,7 +9,7 @@ import './style.less'
  */
 class Spinner extends React.Component {
     /**
-     * Spinner properties
+     * Properties
      * @static
      * @property {bool} active Is spinner active
      * @property {string} theme The theme of the spinner
@@ -22,21 +22,21 @@ class Spinner extends React.Component {
     }
 
     /**
-     * Default values of Spinner properties
+     * Default properties
      * @static
      * @property {bool} active Is spinner active by default
      * @property {string} size The default size of the spinner
      * @property {string} theme The default theme of the spinner
      */
-    static defaults = {
+    static defaultProps = {
         active: false,
         theme: 'dark',
         type: 'ellipse'
     }
 
     /**
-     * Renders Spinner component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

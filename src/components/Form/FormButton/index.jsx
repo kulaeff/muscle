@@ -8,22 +8,22 @@ import '../style.less'
  */
 class FormButton extends React.Component {
     /**
-     * FormButton's properties
+     * Properties
      * @static
      */
     static propTypes = {
     }
 
     /**
-     * FormButton's default properties
+     * Default properties
      * @static
      */
-    static defaults = {
+    static defaultProps = {
     }
 
     /**
-     * Renders the FormButton component
-     * @method
+     * Render component
+     * @returns {XML} Component
      */
     render() {
         const

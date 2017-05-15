@@ -5,7 +5,7 @@ import './style.less'
 
 class Title extends React.Component {
     /**
-     * Title properties
+     * Properties
      * @static
      * @prop {string} primaryTitle Primary title
      * @prop {string} secondaryTitle Secondary title
@@ -18,16 +18,17 @@ class Title extends React.Component {
     }
 
     /**
-     * Default Title properties
+     * Default properties
      * @static
      * @prop {string} size Default size
      */
-    static defaults = {
+    static defaultProps = {
         size: 'medium'
     }
 
     /**
-     * Renders Title
+     * Render the component
+     * @returns {XML} Component
      */
     render() {
         const
