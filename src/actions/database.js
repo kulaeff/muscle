@@ -2,8 +2,13 @@ import {
     GET_DATABASE_REQUEST,
     GET_DATABASE_SUCCESS,
     GET_DATABASE_FAIL,
+    CLOSE_DATABASE_WINDOW,
     SET_DATABASE_WINDOW_STATE
 } from '../constants/database'
+import { SET_SELECTED_DATABASE } from '../constants/server'
+import {
+    restoreWindow as restoreServerWindow
+} from '../actions/server'
 
 /**
  * Retrieves the list of tables
@@ -34,15 +39,32 @@ export function getDatabase(name, token = '') {
 }
 
 /**
+ * Closes window, resets selected database and restores Server window
+ * @func
+ */
+export function closeWindow() {
+    return async (dispatch) => {
+        dispatch({
+            type: CLOSE_DATABASE_WINDOW
+        });
+
+        dispatch({
+            type: SET_SELECTED_DATABASE,
+            payload: null
+        });
+
+        dispatch(restoreServerWindow());
+    };
+}
+
+/**
  * Minimizes window
  * @func
  */
 export function minimizeWindow() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_DATABASE_WINDOW_STATE,
-            payload: true,
-        })
+    return {
+        type: SET_DATABASE_WINDOW_STATE,
+        payload: true
     }
 }
 
@@ -51,14 +73,8 @@ export function minimizeWindow() {
  * @func
  */
 export function restoreWindow() {
-    return async (dispatch, getState) => {
-        const { minimized } = getState().database
-
-        if (minimized) {
-            dispatch({
-                type: SET_DATABASE_WINDOW_STATE,
-                payload: false,
-            })
-        }
+    return {
+        type: SET_DATABASE_WINDOW_STATE,
+        payload: false
     }
 }

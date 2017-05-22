@@ -41,24 +41,24 @@ class Spinner extends React.Component {
     render() {
         const
             b = block('spinner'),
-            { active, theme = Spinner.defaults.theme, type = Spinner.defaults.type } = this.props
+            { active, theme, type } = this.props
 
         return (
             <div className={b({state: active ? 'active' : null, theme, type})}>
             {
                 type === 'rect' ?
                     <div className={b('container')}>
-                        <div className={b('rect', {position: 'lt'})}></div>
-                        <div className={b('rect', {position: 'rt'})}></div>
-                        <div className={b('rect', {position: 'rb'})}></div>
-                        <div className={b('rect', {position: 'lb'})}></div>
+                        <div className={b('rect', {position: 'lt'})} />
+                        <div className={b('rect', {position: 'rt'})} />
+                        <div className={b('rect', {position: 'rb'})} />
+                        <div className={b('rect', {position: 'lb'})} />
                     </div>
                 :
                     <div className={b('container')}>
-                        <div className={b('ellipse', {position: 'top'})}></div>
-                        <div className={b('ellipse', {position: 'right'})}></div>
-                        <div className={b('ellipse', {position: 'bottom'})}></div>
-                        <div className={b('ellipse', {position: 'left'})}></div>
+                        <div className={b('ellipse', {position: 'top'})} />
+                        <div className={b('ellipse', {position: 'right'})} />
+                        <div className={b('ellipse', {position: 'bottom'})} />
+                        <div className={b('ellipse', {position: 'left'})} />
                     </div>
 
             }

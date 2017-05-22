@@ -1,9 +1,10 @@
 const
     autoprefixer = require('autoprefixer'),
     path = require('path'),
+    pkg = require('./package.json'),
     webpack = require('webpack'),
     SvgStorePlugin = require('webpack-svgstore-plugin'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin')
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
     const config = {
@@ -53,6 +54,11 @@ module.exports = (env) => {
                         }, {
                             loader: 'postcss-loader',
                             options: {
+                                plugins: [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })
+                                ],
                                 sourceMap: env.development ? 'inline' : false
                             }
                         }, {
@@ -87,20 +93,6 @@ module.exports = (env) => {
                     return module.context && module.context.indexOf('node_modules') !== -1;
                 }
             }),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    'VERSION': JSON.stringify(package.version)
-                }
-            }),
-            new webpack.LoaderOptionsPlugin({
-                options: {
-                    postcss: [
-                        autoprefixer({
-                            browsers: ['last 2 versions']
-                        })
-                    ]
-                }
-            }),
             new ExtractTextPlugin({
                 allChunks: true,
                 filename: 'bundle.min.css'
@@ -124,13 +116,18 @@ module.exports = (env) => {
         resolve: {
             extensions: ['.js', '.jsx']
         }
-    }
+    };
 
     if (env.production) {
         config.plugins.push(
+            new webpack.DefinePlugin({
+                'process.env.VERSION': JSON.stringify(pkg.version)
+            })
+        );
+        config.plugins.push(
             new webpack.NoEmitOnErrorsPlugin()
-        )
+        );
     }
 
     return config
-}
+};

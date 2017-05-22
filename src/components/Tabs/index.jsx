@@ -21,13 +21,11 @@ class Tabs extends React.Component {
      */
     static propTypes = {
         collapsed: PropTypes.bool,
-        items: PropTypes.array.isRequired,
-        selected: PropTypes.string,
+        items: PropTypes.array,
         title: PropTypes.shape({
             type: PropTypes.oneOf([Title])
-        }),
-        onChange: PropTypes.func.isRequired
-    }
+        })
+    };
 
     /**
      * Default properties
@@ -40,7 +38,7 @@ class Tabs extends React.Component {
         collapsed: false,
         selected: null,
         title: null,
-    }
+    };
 
     /**
      * Create the component
@@ -48,21 +46,6 @@ class Tabs extends React.Component {
      */
     constructor (props) {
         super(props);
-
-        this.onItemClick = this.onItemClick.bind(this)
-    }
-
-    /**
-     * Handler for TabsItem click event
-     * @method
-     * @param {string} id The ID of clicked item
-     */
-    onItemClick(name) {
-        const { onChange } = this.props
-
-        if (onChange) {
-            onChange(name)
-        }
     }
 
     /**
@@ -73,25 +56,27 @@ class Tabs extends React.Component {
         const
             b = block('tabs'),
             {
+                children,
                 collapsed,
                 items,
-                selected,
                 title,
-            } = this.props
+            } = this.props;
 
         return (
-            /// Refactor: if items is defined use items.map, else use children
             <div className={b({state: collapsed ? 'collapsed' : null})}>
                 <div className={b('title')}>{title}</div>
                 <div className={b('items')}>
                     {
-                        items.map((item, index) =>
-                            <TabsItem
-                                key={index}
-                                label={item.label}
-                                name={item.name}
-                                onClick={this.onItemClick} />
-
+                        children ? (
+                            children
+                        ) : (
+                            items && items.map((item, index) =>
+                                <TabsItem
+                                    key={index}
+                                    label={item.label}
+                                    url={item.url}
+                                />
+                            )
                         )
                     }
                 </div>

@@ -17,16 +17,14 @@ class TabsItem extends React.Component {
      */
     static propTypes = {
         label: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired
-    }
+        url: PropTypes.string.isRequired,
+    };
 
     /**
      * Default values of TabsItem properties
      * @static
      */
-    static defaultProps = {
-    }
+    static defaultProps = {};
 
     /**
      * Renders TabsItem component
@@ -34,18 +32,14 @@ class TabsItem extends React.Component {
     render() {
         const
             b = block('tabs'),
-            {
-                label = TabsItem.defaultProps.label,
-                name,
-                onClick
-            } = this.props
+            { label, url } = this.props;
 
         return (
-            <Route to={name} children={({ match }) => (
+            <Route path={url} children={({ match }) => (
                 <Link
                     className={b('item', {state: match ? 'selected' : null})}
                     title={match}
-                    to={name}>
+                    to={url}>
                     {label}
                 </Link>
             )}/>

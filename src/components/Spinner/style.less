@@ -41,16 +41,16 @@
         top: 0;
         width: 100%;
         &_position_bottom {
-            border-bottom-color: @color;
+            border-bottom-color: @spinnerColor;
         }
         &_position_left {
-            border-left-color: @color;
+            border-left-color: @spinnerColor;
         }
         &_position_right {
-            border-right-color: @color;
+            border-right-color: @spinnerColor;
         }
         &_position_top {
-            border-top-color: @color;
+            border-top-color: @spinnerColor;
         }
     }
     &__rect {
@@ -79,8 +79,11 @@
     }
     // TYPES
     &_type_ellipse {
-        height: 2.4rem;
-        width: 2.4rem;
+        height: @spinnerSize;
+        left: calc(50% - @spinnerSize / 2);
+        position: absolute;
+        top: calc(50% - @spinnerSize / 2);
+        width: @spinnerSize;
     }
     &_type_rect {
         height: 1.4rem;

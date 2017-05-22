@@ -34,10 +34,10 @@ class Title extends React.Component {
         const
             b = block('title'),
             {
-                primaryTitle = Title.defaults.primaryTitle,
-                secondaryTitle = Title.defaults.secondaryTitle,
-                size = Title.defaults.size
-            } = this.props
+                primaryTitle,
+                secondaryTitle,
+                size
+            } = this.props;
 
         return (
             <span className={b({size})}>

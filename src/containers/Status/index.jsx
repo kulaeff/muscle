@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import Connections from './Connections'
 import Summary from './Summary'
 import Usage from './Usage'
-import Tabs from '../../components/Tabs'
+import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import block from 'bem-cn'
 import './style.less';
@@ -17,25 +17,18 @@ class Status extends React.Component {
      * Status properties
      * @static
      */
-    static propTypes = {
-    }
-
-    static tabs = [
-        { name: 'summary', label: 'Summary'},
-        { name: 'usage', label: 'Usage'},
-        { name: 'connections', label: 'Connections'}
-    ]
+    static propTypes = {};
 
     /**
      * Creates Status container
      * @constructor
      */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             selectedTab: null,
-        }
+        };
     }
 
     /**
@@ -51,35 +44,26 @@ class Status extends React.Component {
     }
 
     /**
-     * Redirects to selected tab
-     * */
-    onTabsChange = (name) => {
-        const { history, match } = this.props
-
-        this.setState({
-            selectedTab: name
-        })
-
-        history.push(`${match.url}/${name}`)
-    }
-
-    /**
      * Renders Status container
      * @method
      */
     render() {
         const
             b = block('status'),
-            { match } = this.props
+            { match } = this.props;
 
         return (
             <div className={b()}>
                 <div className={b('title')}>
-                    <Title secondaryTitle="Server status" />
                     <Tabs
-                        items={Status.tabs}
-                        selected={this.state.selectedTab}
-                        onChange={this.onTabsChange} />
+                        title={
+                            <Title secondaryTitle="Server status" />
+                        }
+                    >
+                        <TabsItem label="Summary" url={`${match.url}/summary`} />
+                        <TabsItem label="Usage" url={`${match.url}/usage`} />
+                        <TabsItem label="Connections" url={`${match.url}/connections`} />
+                    </Tabs>
                 </div>
                 <div className={b('view')}>
                     <Switch>

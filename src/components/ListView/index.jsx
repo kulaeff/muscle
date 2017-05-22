@@ -36,13 +36,14 @@ class ListView extends React.Component {
     /**
      * Handler for ListViewItem click event
      * @method
+     * @param {Event} event Event
      * @param {string} id The ID of clicked item
      */
-    onItemClick = (id) => {
-        const { selectedIndex, onChange } = this.props
+    onItemClick = (event, id) => {
+        const {selectedIndex, onChange} = this.props;
 
         if (onChange && selectedIndex !== id) {
-            onChange(id)
+            onChange(event, id)
         }
     }
 

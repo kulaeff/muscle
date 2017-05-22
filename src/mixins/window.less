@@ -17,6 +17,7 @@
         cursor: pointer;
         height: 2rem;
         outline: none;
+        padding: 0;
         position: relative;
         transition: background-color @dDefault, color @dDefault;
         width: 2rem;
@@ -81,18 +82,13 @@
     &__header {
         display: flex;
     }
-    &__spinner {
-        display: inline-block;
-        font-size: 0;
-        padding: 0.3rem @mDefault / 4;
-        vertical-align: top;
-    }
     &__toolbar {
         margin: @mDefault 0;
     }
     &__title {
         display: block;
         flex: 1 100%;
+        font-size: 0;
     }
     &__tree {
         margin-top: @mDefault / 2;

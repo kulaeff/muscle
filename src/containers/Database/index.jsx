@@ -1,21 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { debounce } from 'lodash'
-import * as databaseActions from '../../actions/database'
-import * as serverActions from '../../actions/server'
-import Table from '../../containers/Table'
-import DataTable from '../../components/DataTable'
-import Placeholder from '../../components/Placeholder'
-import Spinner from '../../components/Spinner'
-import Tabs from '../../components/Tabs'
-import Textbox from '../../components/Textbox'
+import * as actions from '../../actions/database'
+import DatabaseTables from './DatabaseTables'
+//import Table from '../Table'
+import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
-import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import block from 'bem-cn'
-import bytes from '../../helpers/bytes'
 import './style.less';
 
 /**
@@ -24,238 +17,53 @@ import './style.less';
  */
 class Database extends React.Component {
     /**
-     * Database container properties
+     * Properties
      * @static
-     * @property {bool} fetching Is data fetching
      * @property {bool} minimized Is window minimized
-     * @property {array} items Items
      */
     static propTypes = {
-        fetching: PropTypes.bool,
-        minimized: PropTypes.bool,
-        items: PropTypes.array.isRequired,
-    }
-
-    /**
-     * Creates Database container
-     * @constructor
-     */
-    constructor(props) {
-        const textboxFilterChangeDelay = 700
-
-        super(props)
-
-        this.state = {
-            filter: '',
-            selectedIndex: null,
-            selectedTab: 'tables'
-        }
-
-        this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
-    }
-
-    /**
-     * Fetches database when database was selected for the first time
-     * @method
-     */
-    componentDidMount() {
-        const
-            { match } = this.props,
-            { getDatabase } = this.props.databaseActions
-
-        getDatabase(match.params.database)
-    }
-
-    /**
-     * Fetches database when selected database was changed
-     * @method
-     */
-    componentWillReceiveProps(nextProps) {
-        const
-            { match } = this.props,
-            { items, location } = nextProps,
-            { getDatabase, restoreWindow } = this.props.databaseActions
-
-        // If we came from direct url (/server/<name>)
-        if (items.length > 0) {
-            this.setState({
-                selectedIndex: items.findIndex(item => location.pathname.includes(item[0]))
-            })
-        }
-
-        // If selected database was changed
-        if (match.params.database !== nextProps.match.params.database) {
-            this.setState({
-                selectedIndex: null
-            })
-
-            restoreWindow()
-
-            getDatabase(nextProps.match.params.database, this.state.filter)
-            // If database window was closed
-        } else if (nextProps.match.isExact) {
-            this.setState({
-                selectedIndex: null
-            })
-        }
-    }
-
-    /**
-     * Show modal when toolbar button Create clicked
-     * @method
-     */
-    onToolBarButtonCreateDatabaseClick = () => {
-        console.log('toolbar button Create cliked')
-    }
-
-    /**
-     * Show modal when toolbar button Edit clicked
-     * @method
-     */
-    onToolBarButtonEditDatabaseClick = () => {
-        console.log('toolbar button Edit cliked')
-    }
-
-    /**
-     * Show confirm modal when toolbar button Delete clicked
-     * @method
-     */
-    onToolBarButtonDeleteDatabaseClick = () => {
-        console.log('toolbar button Delete cliked')
-    }
-
-    /**
-     * Show export window
-     * @method
-     */
-    onToolBarButtonExportTableClick = () => {
-        console.log('toolbar button Export cliked')
-    }
-
-    /**
-     * Show import window
-     * @method
-     */
-    onToolBarButtonImportTableClick = () => {
-        console.log('toolbar button Export cliked')
-    }
-
-    /**
-     * Minimizes the window
-     * @method
-     */
-    onWindowButtonMinimizeClick = (e) => {
-        const { minimizeWindow } = this.props.databaseActions
-
-        minimizeWindow()
-
-        e.stopPropagation()
-    }
-
-    /**
-     * Closes the window and goes to previous route
-     * @method
-     */
-    onWindowButtonCloseClick = () => {
-        const { history } = this.props
-
-        history.push('/server')
-    }
+        minimized: PropTypes.bool
+    };
 
     /**
      * Restores the window
-     * @method
      */
     onWindowClick = () => {
-        const { restoreWindow } = this.props.databaseActions
+        const { restoreWindow } = this.props;
 
-        restoreWindow()
-    }
+        restoreWindow();
+    };
 
     /**
-     * Redirects to selected table details
-     * @method
-     * @param {number} index The index of selected item
+     * Minimizes the window
      */
-    onDataTableChange = (index) => {
-        const
-            { items, history, match } = this.props,
-            { minimizeWindow } = this.props.actions
+    onWindowButtonMinimizeClick = (e) => {
+        const { minimizeWindow } = this.props;
 
-        this.setState({
-            selectedIndex: index
-        })
+        minimizeWindow();
 
-        history.push(`${match.url}/${items[index][0]}`)
-
-        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
-            minimizeWindow()
-        }
-    }
-
-    onDataTableValueTransform = (column, value) => {
-        if (column === 'size' || column === 'overhead') {
-            return bytes(value)
-        } else {
-            return value
-        }
-    }
+        e.stopPropagation();
+    };
 
     /**
-     * Gets the list of database filtered by string (debounced)
-     * @function
-     * @param {string} filter String used as filter
+     * Closes the window
      */
-    debouncedTextboxFilterChange = (token) => {
-        const
-            { match } = this.props,
-            { getDatabase } = this.props.databaseActions
+    onWindowButtonCloseClick = () => {
+        const { history, closeWindow } = this.props;
 
-        getDatabase(match.params.database, token)
-    }
+        closeWindow();
 
-    /**
-     * Redirects to selected tab
-     * */
-    onTabsChange = (name) => {
-        this.setState({
-            selectedTab: name
-        })
-    }
+        history.push('/server');
+    };
 
     /**
-     * Stores the filter and invokes debounced handler
-     */
-    onTextboxFilterChange = (e) => {
-        e.persist()
-
-        this.setState({
-            filter: e.target.value
-        })
-
-        this.debouncedTextboxFilterChange(this.state.filter)
-    }
-
-    /**
-     * Renders Summary container
-     * @method
+     * Renders the container
+     * @returns {XML} Database
      */
     render() {
         const
             b = block('database'),
-            columns = [
-                { name: 'table', title: 'Table' },
-                { name: 'rows', title: 'Rows', style: { alignment: 'right' } },
-                { name: 'type', title: 'Type' },
-                { name: 'collation', title: 'Collation' },
-                { name: 'size', title: 'Size', style: { alignment: 'right' } },
-                { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }
-            ],
-            tabs = [
-                { name: 'tables', label: 'Tables'},
-                { name: 'query', label: 'Query'}
-            ],
-            { fetching, minimized, items, match } = this.props
+            { match, minimized } = this.props;
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -264,14 +72,14 @@ class Database extends React.Component {
                         <div className={b('title')}>
                             <Tabs
                                 collapsed={minimized}
-                                items={tabs}
-                                selected={this.state.selectedTab}
                                 title={
                                     <Title secondaryTitle={match.params.database} />
                                 }
-                                onChange={this.onTabsChange} />
+                            >
+                                <TabsItem label="Tables" url={`${match.url}/tables`} />
+                                <TabsItem label="Query" url={`${match.url}/query`} />
+                            </Tabs>
                         </div>
-                        <div className={b('spinner')}><Spinner active={fetching} type="rect" /></div>
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
@@ -281,68 +89,15 @@ class Database extends React.Component {
                                 onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
-                    <div className={b('content', {
-                        visibility: this.state.selectedTab !== 'tables' ? 'hidden' : null
-                    })}>
-                        <div className={b('toolbar')}>
-                            <Toolbar>
-                                <ToolBarButton
-                                    icon="create"
-                                    label="New"
-                                    title="Create new table"
-                                    onClick={this.onToolBarButtonCreateDatabaseClick} />
-                                <ToolBarButton
-                                    disabled={this.state.selectedIndex === null}
-                                    icon="edit"
-                                    label="Edit"
-                                    title="Edit table"
-                                    onClick={this.onToolBarButtonEditDatabaseClick} />
-                                <ToolBarButton
-                                    disabled={this.state.selectedIndex === null}
-                                    icon="delete"
-                                    label="Delete"
-                                    title="Delete table"
-                                    onClick={this.onToolBarButtonDeleteDatabaseClick} />
-                                <ToolBarSeparator />
-                                <ToolBarButton
-                                    disabled={this.state.selectedIndex === null}
-                                    icon="import"
-                                    label="Import"
-                                    title="Import table"
-                                    onClick={this.onToolBarButtonImportDatabaseClick} />
-                                <ToolBarButton
-                                    disabled={this.state.selectedIndex === null}
-                                    icon="export"
-                                    label="Export"
-                                    title="Export table"
-                                    onClick={this.onToolBarButtonExportDatabaseClick} />
-                            </Toolbar>
-                        </div>
-                        <div className={b('filters')}>
-                            <Textbox
-                                id="filter"
-                                placeholder="Filter by name..."
-                                value={this.state.filter}
-                                onChange={this.onTextboxFilterChange}/>
-                        </div>
-                        <div className={b('table')}>
-                            {
-                                items.length
-                                    ?
-                                    <DataTable
-                                        columns={columns}
-                                        items={items}
-                                        selectedIndex={this.state.selectedIndex}
-                                        onChange={this.onDataTableChange}
-                                        onValueTransform={this.onDataTableValueTransform}/>
-                                    :
-                                    <Placeholder text="There are no tables in this database" />
-                            }
-                        </div>
+                    <div className={b('content')}>
+                        <Switch>
+                            <Route path={`${match.path}/tables`} component={DatabaseTables}/>
+                            <Route path={`${match.path}/query`} component={DatabaseTables}/>
+                            <Redirect to={`${match.url}/tables`} />
+                        </Switch>
                     </div>
                 </div>
                 <div className={b('view')}>
-                    <Route path={`${match.path}/:table`} component={Table} />
                 </div>
             </div>
         )
@@ -351,17 +106,18 @@ class Database extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.database.fetching,
-        minimized: state.database.minimized,
-        items: state.database.items
+        minimized: state.database.minimized
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        databaseActions: bindActionCreators(databaseActions, dispatch),
-        actions: bindActionCreators(serverActions, dispatch)
-    }
+    const { closeWindow, minimizeWindow, restoreWindow } = actions;
+
+    return bindActionCreators({
+        closeWindow,
+        minimizeWindow,
+        restoreWindow
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Database)

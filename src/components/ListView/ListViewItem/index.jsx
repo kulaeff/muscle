@@ -39,16 +39,14 @@ class ListViewItem extends React.Component {
             {
                 children,
                 id,
-                label,
-                selected = ListViewItem.defaults.selected,
+                selected,
                 onClick
-            } = this.props
+            } = this.props;
 
         return (
             <div
                 className={b('item', {state: selected ? 'selected' : null})}
-                title={label}
-                onClick={() => onClick(id)}>
+                onClick={(event) => onClick(event, id)}>
                 {children}
             </div>
         )
