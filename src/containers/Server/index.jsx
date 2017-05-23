@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
 import Form, { FormRow, FormField, FormButtons, FormButton }  from '../../components/Form'
+import Grid, { GridItem } from '../../components/Grid'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -31,17 +32,25 @@ class Server extends React.Component {
      * @property {number} selectedDatabase Selected database index
      */
     static propTypes = {
-        createDatabaseModalVisible: PropTypes.bool.isRequired,
-        createDatabaseTextboxNameValue: PropTypes.string.isRequired,
+        closeModalCreateDatabase: PropTypes.func.isRequired,
+        closeModalDeleteDatabase: PropTypes.func.isRequired,
         fetching: PropTypes.bool.isRequired,
+        saving: PropTypes.bool.isRequired,
         databases: PropTypes.array.isRequired,
         minimized: PropTypes.bool.isRequired,
+        modalCreateDatabaseTextboxNameValue: PropTypes.string.isRequired,
+        modalDeleteDatabaseTextboxNameValue: PropTypes.string.isRequired,
+        modalCreateDatabaseVisible: PropTypes.bool.isRequired,
+        modalDeleteDatabaseVisible: PropTypes.bool.isRequired,
+        createDatabase: PropTypes.func.isRequired,
+        deleteDatabase: PropTypes.func.isRequired,
         selectedDatabase: PropTypes.number,
-        closeCreateDatabaseModal: PropTypes.func.isRequired,
         getDatabases: PropTypes.func.isRequired,
         selectDatabase: PropTypes.func.isRequired,
-        showCreateDatabaseModal: PropTypes.func.isRequired,
+        showModalCreateDatabase: PropTypes.func.isRequired,
+        showModalDeleteDatabase: PropTypes.func.isRequired,
         updateCreateDatabaseTextboxName: PropTypes.func.isRequired,
+        updateDeleteDatabaseTextboxName: PropTypes.func.isRequired,
         initWindow: PropTypes.func.isRequired,
         minimizeWindow: PropTypes.func.isRequired,
         restoreWindow: PropTypes.func.isRequired
@@ -79,9 +88,15 @@ class Server extends React.Component {
     }
 
     onCreateDatabaseModalClose = () => {
-        const { closeCreateDatabaseModal } = this.props;
+        const { closeModalCreateDatabase } = this.props;
 
-        closeCreateDatabaseModal();
+        closeModalCreateDatabase();
+    };
+
+    onDeleteDatabaseModalClose = () => {
+        const { closeModalDeleteDatabase } = this.props;
+
+        closeModalDeleteDatabase();
     };
 
     /**
@@ -89,9 +104,9 @@ class Server extends React.Component {
      * @method
      */
     onToolBarButtonCreateDatabaseClick = () => {
-        const { showCreateDatabaseModal } = this.props;
+        const { showModalCreateDatabase } = this.props;
 
-        showCreateDatabaseModal();
+        showModalCreateDatabase();
     };
 
     /**
@@ -107,7 +122,9 @@ class Server extends React.Component {
      * @method
      */
     onToolBarButtonDeleteDatabaseClick = () => {
-        console.log('toolbar button Delete cliked');
+        const { showModalDeleteDatabase } = this.props;
+
+        showModalDeleteDatabase();
     };
 
     /**
@@ -184,21 +201,34 @@ class Server extends React.Component {
      * Stores the database name in the local state
      * @param {Event} e
      */
-    onCreateDatabaseTextboxNameChange = (e) => {
+    onCreateDatabaseTextboxNameChange = (event) => {
         const { updateCreateDatabaseTextboxName } = this.props;
 
-        updateCreateDatabaseTextboxName(e.target.value);
+        updateCreateDatabaseTextboxName(event.target.value);
     };
 
-    onCreateDatabaseFormSubmit = (e) => {
-        const { createDatabase } = this.props.actions;
+    /**
+     * Creates a database
+     * @param {Event} event Event
+     */
+    onCreateDatabaseFormSubmit = (event) => {
+        const { createDatabase, modalCreateDatabaseTextboxNameValue } = this.props;
 
-        createDatabase(this.state.textboxDatabaseNameValue)
-            .then(() => {
-                this.onCreateDatabaseModalClose()
-            });
+        createDatabase(modalCreateDatabaseTextboxNameValue);
 
-        e.preventDefault()
+        event.preventDefault();
+    };
+
+    /**
+     * Deletes the selected database
+     * @param {Event} event Event
+     */
+    onDeleteDatabaseFormSubmit = (event) => {
+        const { deleteDatabase } = this.props;
+
+        deleteDatabase();
+
+        event.preventDefault();
     };
 
     /**
@@ -210,11 +240,14 @@ class Server extends React.Component {
             b = block('server'),
             {
                 match,
-                createDatabaseModalVisible,
-                createDatabaseTextboxNameValue,
+                modalCreateDatabaseTextboxNameValue,
+                modalDeleteDatabaseTextboxNameValue,
+                modalCreateDatabaseVisible,
+                modalDeleteDatabaseVisible,
                 fetching,
                 databases,
                 minimized,
+                saving,
                 selectedDatabase
             } = this.props;
 
@@ -299,28 +332,81 @@ class Server extends React.Component {
                     ariaHideApp={true}
                     className="ReactModal__Content-Small"
                     contentLabel="Create new database modal"
-                    isOpen={createDatabaseModalVisible}
+                    isOpen={modalCreateDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
                     onRequestClose={this.onCreateDatabaseModalClose}
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <Title primaryTitle="New database" size="large" />
+                    <Grid>
+                        <GridItem>
+                            <Title primaryTitle="New database" size="large" />
+                        </GridItem>
+                        <GridItem size="auto">
+                            <Spinner active={saving} type="rect" />
+                        </GridItem>
+                    </Grid>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
                         <FormRow>
-                            <FormField id="textboxDatabaseName" label="Database name">
+                            <FormField id="textboxDatabaseName" label="Name">
                                 <Textbox
                                     id="textboxDatabaseName"
                                     name="name"
                                     required={true}
-                                    value={createDatabaseTextboxNameValue}
+                                    value={modalCreateDatabaseTextboxNameValue}
                                     onChange={this.onCreateDatabaseTextboxNameChange}
                                 />
                             </FormField>
                             <FormButtons>
                                 <FormButton>
                                     <Button
-                                        disabled={createDatabaseTextboxNameValue.length === 0}
+                                        disabled={modalCreateDatabaseTextboxNameValue.length === 0 || saving}
+                                        label="Create"
+                                        type="submit"
+                                    />
+                                </FormButton>
+                                <FormButton>
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
+                                </FormButton>
+                            </FormButtons>
+                        </FormRow>
+                    </Form>
+                </ReactModal>
+                {/* Delete Database */}
+                <ReactModal
+                    ariaHideApp={true}
+                    className="ReactModal__Content-Small"
+                    contentLabel="Delete database modal"
+                    isOpen={modalDeleteDatabaseVisible}
+                    overlayClassName="ReactModal__Overlay"
+                    onRequestClose={this.onDeleteDatabaseModalClose}
+                    parentSelector={() => document.body}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <Grid>
+                        <GridItem>
+                            <Title primaryTitle="Delete database" size="large" />
+                        </GridItem>
+                        <GridItem size="auto">
+                            <Spinner active={saving} type="rect" />
+                        </GridItem>
+                    </Grid>
+                    <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
+                        <FormRow>
+                            <FormField id="textboxDatabaseName">
+                                Are you sure you want to delete this database?
+                                <input type="hidden"
+                                    name="name"
+                                    required={true}
+                                    value={modalDeleteDatabaseTextboxNameValue}
+                                />
+                            </FormField>
+                            <FormButtons>
+                                <FormButton>
+                                    <Button
                                         label="Create"
                                         type="submit"
                                     />
@@ -342,33 +428,46 @@ class Server extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        createDatabaseModalVisible: state.server.createDatabaseModalVisible,
-        createDatabaseTextboxNameValue: state.server.createDatabaseTextboxNameValue,
         fetching: state.server.fetching,
         databases: state.server.databases,
         minimized: state.server.minimized,
+        modalCreateDatabaseTextboxNameValue: state.server.modalCreateDatabaseTextboxNameValue,
+        modalDeleteDatabaseTextboxNameValue: state.server.modalDeleteDatabaseTextboxNameValue,
+        modalCreateDatabaseVisible: state.server.modalCreateDatabaseVisible,
+        modalDeleteDatabaseVisible: state.server.modalDeleteDatabaseVisible,
+        saving: state.server.saving,
         selectedDatabase: state.server.selectedDatabase
     }
 }
 
 function mapDispatchToProps(dispatch) {
     const {
-        closeCreateDatabaseModal,
+        closeModalCreateDatabase,
+        closeModalDeleteDatabase,
+        createDatabase,
+        deleteDatabase,
         getDatabases,
         selectDatabase,
-        showCreateDatabaseModal,
+        showModalCreateDatabase,
+        showModalDeleteDatabase,
         updateCreateDatabaseTextboxName,
+        updateDeleteDatabaseTextboxName,
         initWindow,
         minimizeWindow,
         restoreWindow
     } = actions;
 
     return bindActionCreators({
-        closeCreateDatabaseModal,
+        closeModalCreateDatabase,
+        closeModalDeleteDatabase,
+        createDatabase,
+        deleteDatabase,
         getDatabases,
         selectDatabase,
-        showCreateDatabaseModal,
+        showModalCreateDatabase,
+        showModalDeleteDatabase,
         updateCreateDatabaseTextboxName,
+        updateDeleteDatabaseTextboxName,
         initWindow,
         minimizeWindow,
         restoreWindow

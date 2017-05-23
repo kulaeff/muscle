@@ -1,20 +1,17 @@
 @import (reference) '../../styles/variables';
 
-.make-cells(@n, @i: 1) when (@i =< @n) {
-  &_count_@{i} &__item {
-    max-width: calc(100% / @i ~'-' @mDefault / 2);
-  }
-  .make-cells(@n, (@i + 1));
-}
-
 .grid {
     display: flex;
     justify-content: space-between;
     &__item {
-        flex: 1;
+        // SIZES
+        &_size_default {
+            //
+        }
+        &_size_default {
+            flex: 1;
+        }
     }
-    // COUNT
-    .make-cells(8);
     // DIRECTIONS
     &_orientation_horizontal {
         flex-direction: row;

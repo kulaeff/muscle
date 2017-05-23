@@ -1,8 +1,7 @@
 @import (reference) '../../styles/variables';
 
-@color: #000;
-@speed: .4s;
-@sizeRect: 0.6rem;
+@speed: @dDefault * 7;
+@sizeRect: 0.4rem;
 
 @keyframes pulsateEllipse {
     0% {
@@ -54,7 +53,7 @@
         }
     }
     &__rect {
-        background-color: @color;
+        background-color: @cForeground;
         display: inline-block;
         height: @sizeRect;
         opacity: 0;
@@ -86,8 +85,8 @@
         width: @spinnerSize;
     }
     &_type_rect {
-        height: 1.4rem;
-        width: 1.4rem;
+        height: 1rem;
+        width: 1rem;
     }
     // STATES
     &_state_active &__ellipse {

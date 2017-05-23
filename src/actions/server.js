@@ -5,10 +5,15 @@ import {
     CREATE_DATABASE_REQUEST,
     CREATE_DATABASE_SUCCESS,
     CREATE_DATABASE_FAIL,
+    DELETE_DATABASE_REQUEST,
+    DELETE_DATABASE_SUCCESS,
+    DELETE_DATABASE_FAIL,
     SET_CREATE_DATABASE_MODAL_VISIBILITY,
+    SET_DELETE_DATABASE_MODAL_VISIBILITY,
     SET_SELECTED_DATABASE,
     SET_SERVER_WINDOW_STATE,
-    UPDATE_CREATE_DATABASE_TEXTBOX_NAME_VALUE
+    UPDATE_CREATE_DATABASE_TEXTBOX_NAME_VALUE,
+    UPDATE_DELETE_DATABASE_TEXTBOX_NAME_VALUE
 } from '../constants/server'
 /*------------------------------------------------------------------------------------*/
 /* DATA                                                                               */
@@ -25,7 +30,7 @@ export function getDatabases(token = '') {
         });
 
         try {
-            const response = await api.getServer(token);
+            const response = await api.getDatabases(token);
 
             dispatch({
                 type: GET_DATABASES_SUCCESS,
@@ -50,19 +55,58 @@ export function createDatabase(name) {
             type: CREATE_DATABASE_REQUEST
         });
 
-        try {
-            const response = await api.createDatabase(name);
+        api.createDatabase(name)
+            .then(response => {
+                if (response.data.status === 'ok') {
+                    dispatch({
+                        type: CREATE_DATABASE_SUCCESS
+                    });
 
-            dispatch({
-                type: CREATE_DATABASE_SUCCESS,
-                payload: response.data
+                    dispatch(closeModalCreateDatabase());
+                    dispatch(getDatabases());
+                }
+            })
+            .catch(error => {
+                dispatch({
+                    type: CREATE_DATABASE_FAIL,
+                    payload: error
+                });
             });
-        } catch(ex) {
-            dispatch({
-                type: CREATE_DATABASE_FAIL,
-                payload: ex
+    }
+}
+
+/**
+ * Deletes selected database
+ */
+export function deleteDatabase() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: DELETE_DATABASE_REQUEST
+        });
+
+        const
+            state = getState(),
+            index = state.server.selectedDatabase,
+            name = state.server.databases[index];
+
+        api.deleteDatabase(name)
+            .then(response => {
+                console.log(response);
+                if (response.data.status === 'ok') {
+                    dispatch({
+                        type: DELETE_DATABASE_SUCCESS
+                    });
+
+                    dispatch(closeModalDeleteDatabase());
+                    dispatch(getDatabases());
+                }
+            })
+            .catch(error => {
+                dispatch({
+                    type: DELETE_DATABASE_FAIL,
+                    payload: error
+                });
             });
-        }
     }
 }
 
@@ -143,7 +187,7 @@ export function selectDatabase(index) {
 /**
  * Closes Create Database modal
  */
-export function closeCreateDatabaseModal() {
+export function closeModalCreateDatabase() {
     return async (dispatch) => {
         dispatch({
             type: SET_CREATE_DATABASE_MODAL_VISIBILITY,
@@ -158,12 +202,36 @@ export function closeCreateDatabaseModal() {
 }
 
 /**
+ * Closes Delete Database modal
+ */
+export function closeModalDeleteDatabase() {
+    return async (dispatch) => {
+        dispatch({
+            type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
+            payload: false
+        });
+    };
+}
+
+/**
  * Shows Create Database modal
  */
-export function showCreateDatabaseModal() {
+export function showModalCreateDatabase() {
     return async (dispatch) => {
         dispatch({
             type: SET_CREATE_DATABASE_MODAL_VISIBILITY,
+            payload: true
+        });
+    };
+}
+
+/**
+ * Shows Delete Database modal
+ */
+export function showModalDeleteDatabase() {
+    return async (dispatch) => {
+        dispatch({
+            type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
             payload: true
         });
     };
@@ -184,3 +252,15 @@ export function updateCreateDatabaseTextboxName(name) {
     };
 }
 
+/**
+ * Updates database name textbox value
+ * @param {string} name Name
+ */
+export function updateDeleteDatabaseTextboxName(name) {
+    return async (dispatch) => {
+        dispatch({
+            type: UPDATE_DELETE_DATABASE_TEXTBOX_NAME_VALUE,
+            payload: name
+        });
+    };
+}

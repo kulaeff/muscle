@@ -17,9 +17,19 @@ class API {
      * Creates a database with specified name
      * @function
      * @param {string} name Database's name
+     * @returns {Promise<AxiosPromise>}
      */
     async createDatabase(name) {
         return this.axios.post('server', qs.stringify({ name }))
+    }
+
+    /**
+     * Deletes a database with specified name
+     * @param {string} name Database's name
+     * @returns {Promise<AxiosPromise>}
+     */
+    async deleteDatabase(name) {
+        return this.axios.delete(`server/${name}`);
     }
 
     async getStatusSummary() {
@@ -47,8 +57,8 @@ class API {
         return this.axios.get('table/columns', { params: { database, table }})
     }
 
-    async getServer(token) {
-        return this.axios.get('server', { params: { token }})
+    async getDatabases(token) {
+        return this.axios.get('databases', { params: { token }})
     }
 
     async getIndexes(database, table) {

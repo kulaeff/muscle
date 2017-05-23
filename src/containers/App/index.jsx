@@ -22,7 +22,7 @@ const navigationBarItems = [
     },
     {
         id: 'server',
-        title: 'Browse',
+        title: 'Databases',
     },
     {
         id: 'settings',

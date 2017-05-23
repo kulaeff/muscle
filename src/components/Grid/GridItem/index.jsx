@@ -12,8 +12,15 @@ class GridItem extends React.Component {
      * @static
      */
     static propTypes = {
-        size: PropTypes.number,
-    }
+        size: PropTypes.oneOfType([
+            PropTypes.oneOf(['auto', 'default']),
+            PropTypes.number
+        ]),
+    };
+
+    static defaultProps = {
+        size: 'default'
+    };
 
     /**
      * Create the component
@@ -32,10 +39,11 @@ class GridItem extends React.Component {
             b = block('grid'),
             {
                 children,
-            } = this.props
+                size
+            } = this.props;
 
         return (
-            <div className={b('item')}>{children}</div>
+            <div className={b('item', {size})}>{children}</div>
         )
     }
 }
