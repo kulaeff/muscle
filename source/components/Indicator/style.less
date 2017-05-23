@@ -1,0 +1,22 @@
+@import (reference) '../../styles/variables';
+
+.indicator {
+    background-color: @indicatorBackgroundColor;
+    border: @indicatorBorderThickness solid @indicatorBorderColor;
+    box-sizing: border-box;
+    min-width: 20rem;
+    padding: @mDefault;
+    position: relative;
+    text-align: center;
+    &__title {
+        color: @indicatorTitleColor;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    &__value {
+        font-size: 3.2rem;
+        font-weight: 400;
+        margin: .5rem 0 0;
+    }
+}

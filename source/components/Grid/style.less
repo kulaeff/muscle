@@ -1,0 +1,22 @@
+@import (reference) '../../styles/variables';
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    &__item {
+        // SIZES
+        &_size_default {
+            //
+        }
+        &_size_default {
+            flex: 1;
+        }
+    }
+    // DIRECTIONS
+    &_orientation_horizontal {
+        flex-direction: row;
+    }
+    &_orientation_vertical {
+        flex-direction: column;
+    }
+}

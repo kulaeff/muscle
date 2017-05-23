@@ -1,0 +1,28 @@
+@import (reference) '../../styles/variables';
+
+.textbox {
+    background-color: @textboxColorBackground;
+    border: @textboxBorderThickness solid @textboxColorBorder;
+    box-sizing: border-box;
+    color: @textboxColorForeground;
+    font-family: 'Open Sans';
+    font-size: 1.3rem;
+    height: @textboxHeight;
+    outline: none;
+    padding: 0 @textboxHeight * 0.3;
+    position: relative;
+    transition: background-color @dDefault linear, border-color @dDefault linear;
+    width: 100%;
+    &:focus {
+        border-color: @textboxColorBorderActive;
+        background-color: @textboxColorBackgroundActive;
+    }
+    &:hover {
+        background-color: @textboxColorBackgroundHover;
+        border-color: @textboxColorBorderHover;
+    }
+    &:disabled {
+        background-color: transparent;
+        border-color: @textboxColorBorderDisabled;
+    }
+}

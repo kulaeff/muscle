@@ -1,0 +1,42 @@
+@import (reference) '../../../styles/variables';
+@import '../mixin';
+
+.status-usage {
+    .status-mixin();
+
+    &__indicators {
+        display: block;
+        &-container {
+            display: flex;
+            margin-top: @mDefault / 4;
+        }
+        &-title {
+            display: block;
+        }
+    }
+    &__indicator {
+        //flex: 1;
+        min-width: 20rem;
+        &-title {
+            color: #a0a2a4;
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &-unit {
+            color: #707274;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-left: @mDefault / 4;
+            text-transform: uppercase;
+        }
+        &-value {
+            font-size: 3rem;
+        }
+    }
+    //
+    &__indicators + &__indicators {
+        margin-top: @mDefault;
+    }
+}

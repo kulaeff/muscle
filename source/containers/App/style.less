@@ -1,0 +1,73 @@
+@import (reference) '../../styles/variables';
+
+@itemSize: 48px;
+
+.app {
+    height: 100%;
+    position: relative;
+    &__container {
+        background: @cSidebar;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    &__login {
+        background: @cWindow;
+        border-top: 3px solid @cPrimary;
+        margin: 0 auto;
+        padding: @mDefault * 1.2 @mDefault * 1.4 @mDefault * 1.4;
+        width: 30rem;
+        &-form {
+            margin-top: @mDefault / 2;
+        }
+        &-header {
+            display: block;
+        }
+    }
+    &__logo {
+        color: saturate(@cPrimary, 10%);
+        height: @itemSize;
+        line-height: @itemSize;
+        position: relative;
+        text-align: center;
+        svg {
+            bottom: 0;
+            display: block;
+            fill: currentColor;
+            height: @itemSize;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: @itemSize;
+        }
+    }
+    &__logout {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+    &__nav {
+        position: relative;
+    }
+    &__sidebar {
+        background: @cSidebar;
+        height: 100%;
+        left: 0;
+        min-width: @itemSize;
+        position: absolute;
+        top: 0;
+        width: @itemSize;
+    }
+    &__content {
+        border-left: 2px solid @cPrimary;
+        height: 100%;
+        overflow: hidden;
+        margin-left: @itemSize;
+    }
+    //
+    &_state_unauthorized {
+        display: table;
+        width: 100%
+    }
+}

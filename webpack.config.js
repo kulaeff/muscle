@@ -12,13 +12,12 @@ module.exports = (env) => {
         entry: {
             bundle: [
                 'babel-polyfill',
-                './src/index.jsx'
+                './source/index.jsx'
             ]
         },
         output: {
-            path: path.join(__dirname, 'build'),
-            filename: '[name].min.js',
-            publicPath: '/build/'
+            path: path.join(__dirname, '/public'),
+            filename: 'build/[name].min.js'
         },
         module: {
             rules: [
@@ -32,7 +31,7 @@ module.exports = (env) => {
                         path.resolve(__dirname, 'node_modules'),
                     ],
                     include: [
-                        path.resolve(__dirname, 'src'),
+                        path.resolve(__dirname, 'source'),
                     ]
                 },
                 {
@@ -41,7 +40,7 @@ module.exports = (env) => {
                         path.resolve(__dirname, 'node_modules')
                     ],
                     include: [
-                        path.resolve(__dirname, 'src')
+                        path.resolve(__dirname, 'source')
                     ],
                     use: ExtractTextPlugin.extract({
                         fallback: 'style-loader',
@@ -77,7 +76,7 @@ module.exports = (env) => {
                         path.resolve(__dirname, 'node_modules'),
                     ],
                     include: [
-                        path.resolve(__dirname, 'src')
+                        path.resolve(__dirname, 'source')
                     ]
                 },
                 {
@@ -95,7 +94,7 @@ module.exports = (env) => {
             }),
             new ExtractTextPlugin({
                 allChunks: true,
-                filename: 'bundle.min.css'
+                filename: 'build/bundle.min.css'
             }),
             new SvgStorePlugin({
                 svgoOptions: {

@@ -1,0 +1,47 @@
+@import (reference) '../../styles/variables';
+
+@itemSize: 48px;
+
+.navigation-bar {
+    background-color: @navigationBarBackgroundColor;
+    position: relative;
+    &__item {
+        box-sizing: border-box;
+        color: @navigationBarForegroundColor;
+        cursor: pointer;
+        display: block;
+        height: @itemSize;
+        position: relative;
+        transition: background-color @dDefault;
+        width: @itemSize;
+        svg {
+            display: block;
+            fill: currentColor;
+            height: @itemSize;
+            margin: auto;
+            width: @itemSize;
+            use {
+                fill: @cPrimary;
+                color: @cSecondary;
+            }
+        }
+        &:hover {
+            background: @navigationBarItemBackgroundColorHover;
+            color: @navigationBarItemForegroundColorHover;
+        }
+        // STATES
+        // Selected
+        &_state_selected {
+            background: @navigationBarItemBackgroundColorSelected;
+            color: @navigationBarItemForegroundColorSelected;
+            svg use {
+                fill: #fff;
+                color: #fff;
+            }
+            &:hover {
+                background: @navigationBarItemBackgroundColorSelected;
+                color: @navigationBarItemForegroundColorSelected;
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+@import (reference) './variables';
+
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, .7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: @zModal;
+}
+.ReactModal__Content {
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .7);
+    left: 50%;
+    overflow: auto;
+    outline: none;
+    margin-left: -20rem;
+    padding: @mDefault;
+    position: absolute;
+    top: 40%;
+    &-Small {
+        padding: (@mDefault * 0.85) @mDefault @mDefault;
+        width: 40rem;
+    }
+}

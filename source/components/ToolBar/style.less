@@ -1,0 +1,65 @@
+@import (reference) '../../styles/variables';
+
+.toolbar {
+    font-size: 0;
+    position: relative;
+    white-space: nowrap;
+    &__button {
+        background-color: @toolButtonBackgroundColor;
+        border: @toolButtonBorderThickness solid @toolButtonBorderColor;
+        border-radius: @toolButtonBorderRadius;
+        box-sizing: border-box;
+        color: @toolButtonForegroundColor;
+        cursor: pointer;
+        display: inline-block;
+        height: @toolButtonSize;
+        font-size: 1.2rem;
+        line-height: 1;
+        outline: none;
+        position: relative;
+        transition: color @dDefault,
+            background-color @dDefault,
+            border-color @dDefault;
+        width: @toolButtonSize;
+        svg {
+            bottom: 0;
+            display: block;
+            fill: currentColor;
+            height: @toolButtonSize - .4rem;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: @toolButtonSize - .4rem;
+        }
+        //
+        &:hover {
+            background-color: @toolButtonBackgroundColorHover;
+            border-color: @toolButtonBorderColorHover;
+            color: @toolButtonForegroundColorHover;
+        }
+        &:active {
+            background-color: @toolButtonBackgroundColorActive;
+            border-color: @toolButtonBorderColorActive;
+            color: @toolButtonForegroundColorActive;
+        }
+        // STATES
+        // Disabled
+        &_state_disabled {
+            background-color: @toolButtonBackgroundColorDisabled;
+            border-color: @toolButtonBorderColorDisabled;
+            color: @toolButtonForegroundColorDisabled;
+            pointer-events: none;
+        }
+    }
+    &__separator {
+        display: inline-block;
+        height: 100%;
+        width: 1.2rem;
+    }
+    //
+    &__button + &__button {
+        margin-left: 0.4rem;
+    }
+}
