@@ -1,6 +1,6 @@
 {
   "name": "muscle",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "The MySQL management tool",
   "main": "index.jsx",
   "scripts": {
