@@ -4,7 +4,7 @@ import qs from 'query-string'
 class API {
     constructor() {
         this.axios = axios.create({
-            baseURL: '/api',
+            baseURL: '/api/v1',
             responseType: 'json'
         })
     }
@@ -20,7 +20,7 @@ class API {
      * @returns {Promise<AxiosPromise>}
      */
     async createDatabase(name) {
-        return this.axios.post('server', qs.stringify({ name }))
+        return this.axios.post('databases', qs.stringify({ name }))
     }
 
     /**
@@ -29,7 +29,7 @@ class API {
      * @returns {Promise<AxiosPromise>}
      */
     async deleteDatabase(name) {
-        return this.axios.delete(`server/${name}`);
+        return this.axios.delete(`databases/${name}`);
     }
 
     async getStatusSummary() {
@@ -65,8 +65,8 @@ class API {
         return this.axios.get('indexes', { params: { database, table }})
     }
 
-    async getDatabase(name, token) {
-        return this.axios.get('database', { params: { name, token }})
+    async getDatabaseTables(name, token) {
+        return this.axios.get(`databases/${name}/tables`, { params: { token }})
     }
 
     async saveColumn(data) {

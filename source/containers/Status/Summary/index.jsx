@@ -71,7 +71,7 @@ class StatusSummary extends React.Component {
                         </div>
                         :
                         <div className={b('container')}>
-                            <Grid>
+                            <Grid type="tiled">
                                 <GridItem>
                                     <Indicator title="Up time" value={uptime.humanize()}/>
                                 </GridItem>

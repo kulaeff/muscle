@@ -12,11 +12,22 @@
             flex: 1;
         }
     }
-    // DIRECTIONS
+    // ORIENTATIONS
     &_orientation_horizontal {
         flex-direction: row;
     }
     &_orientation_vertical {
         flex-direction: column;
+    }
+    // TYPES
+    &_type_default {
+        //
+    }
+    &_type_tiled {
+        align-content: stretch;
+        margin: 0 -@mDefault / 4;
+    }
+    &_type_tiled &__item {
+        padding: 0 @mDefault / 4;
     }
 }

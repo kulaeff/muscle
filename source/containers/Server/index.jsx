@@ -407,7 +407,7 @@ class Server extends React.Component {
                             <FormButtons>
                                 <FormButton>
                                     <Button
-                                        label="Create"
+                                        label="Delete"
                                         type="submit"
                                     />
                                 </FormButton>

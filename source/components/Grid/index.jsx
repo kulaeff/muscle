@@ -13,9 +13,11 @@ class Grid extends React.Component {
      * Properties
      * @static
      * @property {string} orientation Direction
+     * @property {string} type Type
      */
     static propTypes = {
-        orientation: PropTypes.string,
+        orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+        type: PropTypes.oneOf(['default', 'tiled'])
     };
 
     /**
@@ -24,7 +26,8 @@ class Grid extends React.Component {
      * @property {string} orientation Default orientation
      */
     static defaultProps = {
-        orientation: 'horizontal'
+        orientation: 'horizontal',
+        type: 'default'
     };
 
     /**
@@ -36,11 +39,12 @@ class Grid extends React.Component {
             b = block('grid'),
             {
                 children,
-                orientation
+                orientation,
+                type
             } = this.props;
 
         return (
-            <div className={b({orientation, count: children.length})}>{children}</div>
+            <div className={b({orientation, type})}>{children}</div>
         )
     }
 }

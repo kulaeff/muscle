@@ -28,6 +28,7 @@ class DatabaseTables extends React.Component {
     static propTypes = {
         fetching: PropTypes.bool,
         items: PropTypes.array.isRequired,
+        getDatabaseTables: PropTypes.func.isRequired
     };
 
     /**
@@ -41,8 +42,7 @@ class DatabaseTables extends React.Component {
 
         this.state = {
             filter: '',
-            selectedIndex: null,
-            selectedTab: 'tables'
+            selectedIndex: null
         };
 
         this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay)
@@ -55,9 +55,9 @@ class DatabaseTables extends React.Component {
     componentDidMount() {
         const
             { match } = this.props,
-            { getDatabase } = this.props.actions
+            { getDatabaseTables } = this.props;
 
-        getDatabase(match.params.database)
+        getDatabaseTables(match.params.database);
     }
 
     /**
@@ -66,7 +66,7 @@ class DatabaseTables extends React.Component {
      */
     onToolBarButtonCreateDatabaseClick = () => {
         console.log('toolbar button Create cliked')
-    }
+    };
 
     /**
      * Show modal when toolbar button Edit clicked
@@ -74,7 +74,7 @@ class DatabaseTables extends React.Component {
      */
     onToolBarButtonEditDatabaseClick = () => {
         console.log('toolbar button Edit cliked')
-    }
+    };
 
     /**
      * Show confirm modal when toolbar button Delete clicked
@@ -255,9 +255,13 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(actions, dispatch)
-    }
+    const {
+        getDatabaseTables
+    } = actions;
+
+    return  bindActionCreators({
+        getDatabaseTables
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DatabaseTables)
