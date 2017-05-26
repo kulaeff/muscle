@@ -5,7 +5,7 @@ require '../vendor/autoload.php';
 Flight::set('flight.views.path', '../views');
 
 Flight::register('db', 'PDO', array('mysql:host=localhost;', 'root', ''), function($db) {
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 });
 
@@ -37,8 +37,82 @@ Flight::route('GET /api/v1/databases', function() {
     Flight::json($json);
 });
 
+// Create new database
+Flight::route('POST /api/v1/databases', function() {
+    $request = Flight::request();
+    $name = $request->data['name'];
+
+    $db = Flight::db();
+
+    if ($db->query("CREATE DATABASE $name")) {
+        Flight::json([
+            'status' => 'ok'
+        ]);
+    } else {
+        Flight::json([
+            'status' => 'error',
+            'statusCode' => $db->errorCode(),
+            'statusMessage' => $db->errorInfo()[2],
+        ]);
+    }
+});
+
 // Database details
-Flight::route('GET /api/v1/databases/@name', function() {});
+Flight::route('GET /api/v1/databases/@name', function($name) {
+    $json = [];
+    $sql = "SELECT SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME 
+            FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '$name'";
+
+    $db = Flight::db();
+
+    $rows = $db->query($sql);
+
+    // Hack for affected row count. See http://php.net/manual/ru/pdostatement.rowcount.php
+    if ($db->query('SELECT FOUND_ROWS()')->fetchColumn() > 0) {
+        foreach ($rows as $row) {
+            $json = [
+                $row['SCHEMA_NAME'],
+                $row['DEFAULT_CHARACTER_SET_NAME'],
+                $row['DEFAULT_COLLATION_NAME']
+            ];
+        }
+    } else {
+        $json = [
+            'status' => $rows->rowCount,
+            'statusCode' => $db->errorCode(),
+            'statusMessage' => $db->errorInfo()[2]
+        ];
+    }
+
+    Flight::json($json);
+});
+
+// Update database details
+Flight::route('PATCH /api/v1/databases/@oldName', function($oldName) {
+    $db = Flight::db();
+    $request = Flight::request();
+    $newName = $request->data['name'];
+    $json = [];
+    $sql = "";
+
+    if ($db->query("CREATE DATABASE $newName")) {
+        $tables = $db->query("SHOW TABLES FROM $oldName");
+
+        foreach ($tables as $table) {
+            $tableName = $table['Tables_in_' . $oldName];
+
+            $db->query("RENAME TABLE $oldName.$tableName TO $newName.$tableName");
+        }
+
+        if ($db->query("DROP DATABASE $oldName")) {
+            $json = [
+                'status' => 'ok'
+            ];
+        }
+    }
+
+    Flight::json($json);
+});
 
 // Database tables
 Flight::route('GET /api/v1/databases/@name/tables', function($name) {

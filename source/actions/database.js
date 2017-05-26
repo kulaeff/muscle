@@ -1,7 +1,7 @@
 import {
-    GET_DATABASE_REQUEST,
-    GET_DATABASE_SUCCESS,
-    GET_DATABASE_FAIL,
+    GET_DATABASE_TABLES_REQUEST,
+    GET_DATABASE_TABLES_SUCCESS,
+    GET_DATABASE_TABLES_FAIL,
     CLOSE_DATABASE_WINDOW,
     SET_DATABASE_WINDOW_STATE
 } from '../constants/database'
@@ -19,19 +19,19 @@ import {
 export function getDatabaseTables(name, token = '') {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: GET_DATABASE_REQUEST
+            type: GET_DATABASE_TABLES_REQUEST
         })
 
         api.getDatabaseTables(name, token)
             .then(response => {
                 dispatch({
-                    type: GET_DATABASE_SUCCESS,
+                    type: GET_DATABASE_TABLES_SUCCESS,
                     payload: response.data
                 })
             })
             .catch(error => {
                 dispatch({
-                    type: GET_DATABASE_FAIL,
+                    type: GET_DATABASE_TABLES_FAIL,
                     payload: error
                 })
             });

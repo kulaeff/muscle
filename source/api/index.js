@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string'
 
 class API {
     constructor() {
@@ -20,7 +19,7 @@ class API {
      * @returns {Promise<AxiosPromise>}
      */
     async createDatabase(name) {
-        return this.axios.post('databases', qs.stringify({ name }))
+        return this.axios.post('databases', { name });
     }
 
     /**
@@ -30,6 +29,15 @@ class API {
      */
     async deleteDatabase(name) {
         return this.axios.delete(`databases/${name}`);
+    }
+
+    /**
+     * Updates a database with specified name
+     * @param {string} name Database's name
+     * @returns {Promise<AxiosPromise>}
+     */
+    async updateDatabase(oldName, newName) {
+        return this.axios.patch(`databases/${oldName}`, { name: newName });
     }
 
     async getStatusSummary() {
@@ -59,6 +67,10 @@ class API {
 
     async getDatabases(token) {
         return this.axios.get('databases', { params: { token }})
+    }
+
+    async getDatabase(name) {
+        return this.axios.get(`databases/${name}`)
     }
 
     async getIndexes(database, table) {

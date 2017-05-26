@@ -2,22 +2,30 @@ import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
     GET_DATABASES_FAIL,
+    GET_DATABASE_REQUEST,
+    GET_DATABASE_SUCCESS,
+    GET_DATABASE_FAIL,
     CREATE_DATABASE_REQUEST,
     CREATE_DATABASE_SUCCESS,
     CREATE_DATABASE_FAIL,
     DELETE_DATABASE_REQUEST,
     DELETE_DATABASE_SUCCESS,
     DELETE_DATABASE_FAIL,
+    UPDATE_DATABASE_REQUEST,
+    UPDATE_DATABASE_SUCCESS,
+    UPDATE_DATABASE_FAIL,
     SET_CREATE_DATABASE_MODAL_VISIBILITY,
     SET_DELETE_DATABASE_MODAL_VISIBILITY,
+    SET_EDIT_DATABASE_MODAL_VISIBILITY,
     SET_SELECTED_DATABASE,
     SET_SERVER_WINDOW_STATE,
-    UPDATE_CREATE_DATABASE_TEXTBOX_NAME_VALUE,
-    UPDATE_DELETE_DATABASE_TEXTBOX_NAME_VALUE
+    UPDATE_DATABASE_NAME
 } from '../constants/server'
+
 /*------------------------------------------------------------------------------------*/
 /* DATA                                                                               */
 /*------------------------------------------------------------------------------------*/
+
 /**
  * Fetches the list of databases
  * @param {string} token Filter
@@ -46,14 +54,46 @@ export function getDatabases(token = '') {
 }
 
 /**
- * Creates the database with specified name
- * @param {string} name Database name
+ * Fetches details for a database with specified name
+ * @returns {function}
  */
-export function createDatabase(name) {
+export function getDatabase() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: GET_DATABASE_REQUEST
+        });
+
+        const
+            state = getState(),
+            index = state.server.selectedDatabase,
+            name = state.server.databases[index];
+
+        api.getDatabase(name)
+            .then(response => {
+                dispatch({
+                    type: GET_DATABASE_SUCCESS,
+                    payload: response.data[0]
+                });
+            })
+            .catch(error => {
+                dispatch({
+                    type: GET_DATABASE_FAIL,
+                    payload: error
+                });
+            });
+    }
+}
+
+/**
+ * Creates the database with specified name
+ */
+export function createDatabase() {
     return async (dispatch, getState, api) => {
         dispatch({
             type: CREATE_DATABASE_REQUEST
         });
+
+        const name = getState().server.modalTextboxDatabaseNameValue;
 
         api.createDatabase(name)
             .then(response => {
@@ -64,6 +104,12 @@ export function createDatabase(name) {
 
                     dispatch(closeModalCreateDatabase());
                     dispatch(getDatabases());
+                } else {
+                    dispatch({
+                        type: CREATE_DATABASE_FAIL
+                    });
+
+                    dispatch(closeModalCreateDatabase());
                 }
             })
             .catch(error => {
@@ -104,6 +150,40 @@ export function deleteDatabase() {
             .catch(error => {
                 dispatch({
                     type: DELETE_DATABASE_FAIL,
+                    payload: error
+                });
+            });
+    }
+}
+
+/**
+ * Updates selected database
+ */
+export function updateDatabase() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: UPDATE_DATABASE_REQUEST
+        });
+
+        const
+            state = getState(),
+            index = state.server.selectedDatabase,
+            name = state.server.databases[index];
+
+        api.updateDatabase(name, state.server.modalTextboxDatabaseNameValue)
+            .then(response => {
+                if (response.data.status === 'ok') {
+                    dispatch({
+                        type: UPDATE_DATABASE_SUCCESS
+                    });
+
+                    dispatch(closeModalEditDatabase());
+                    dispatch(getDatabases());
+                }
+            })
+            .catch(error => {
+                dispatch({
+                    type: UPDATE_DATABASE_FAIL,
                     payload: error
                 });
             });
@@ -194,10 +274,7 @@ export function closeModalCreateDatabase() {
             payload: false
         });
 
-        dispatch({
-            type: UPDATE_CREATE_DATABASE_TEXTBOX_NAME_VALUE,
-            payload: ''
-        });
+        dispatch(updateDatabaseName(''));
     };
 }
 
@@ -210,6 +287,20 @@ export function closeModalDeleteDatabase() {
             type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
             payload: false
         });
+    };
+}
+
+/**
+ * Closes Delete Database modal
+ */
+export function closeModalEditDatabase() {
+    return async (dispatch) => {
+        dispatch({
+            type: SET_EDIT_DATABASE_MODAL_VISIBILITY,
+            payload: false
+        });
+
+        dispatch(updateDatabaseName(''));
     };
 }
 
@@ -237,29 +328,30 @@ export function showModalDeleteDatabase() {
     };
 }
 
-/* Textboxes */
-
 /**
- * Updates database name textbox value
- * @param {string} name Name
+ * Shows Edit Database modal
  */
-export function updateCreateDatabaseTextboxName(name) {
+export function showModalEditDatabase() {
     return async (dispatch) => {
         dispatch({
-            type: UPDATE_CREATE_DATABASE_TEXTBOX_NAME_VALUE,
-            payload: name
+            type: SET_EDIT_DATABASE_MODAL_VISIBILITY,
+            payload: true
         });
+
+        dispatch(getDatabase());
     };
 }
 
+/* Textboxes */
+
 /**
- * Updates database name textbox value
+ * Updates database name
  * @param {string} name Name
  */
-export function updateDeleteDatabaseTextboxName(name) {
+export function updateDatabaseName(name) {
     return async (dispatch) => {
         dispatch({
-            type: UPDATE_DELETE_DATABASE_TEXTBOX_NAME_VALUE,
+            type: UPDATE_DATABASE_NAME,
             payload: name
         });
     };
