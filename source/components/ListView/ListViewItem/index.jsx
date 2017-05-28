@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
@@ -10,16 +11,12 @@ class ListViewItem extends React.Component {
     /**
      * Properties
      * @static
-     * @property {number} id The id of the item
-     * @property {string} label The label of the item
-     * @property {bool} selected Is the item selected
-     * @property {func} onClick Click event handler
+     * @property {number} id ID
+     * @property {string} url URL
      */
     static propTypes = {
-        id: PropTypes.number.isRequired,
-        selected: PropTypes.bool.isRequired,
-        onClick: PropTypes.func.isRequired
-    }
+        url: PropTypes.string.isRequired
+    };
 
     /**
      * Create the component
@@ -36,19 +33,20 @@ class ListViewItem extends React.Component {
     render() {
         const
             b = block('list-view'),
-            {
-                children,
-                id,
-                selected,
-                onClick
-            } = this.props;
+            { children, url } = this.props;
 
         return (
-            <div
-                className={b('item', {state: selected ? 'selected' : null})}
-                onClick={(event) => onClick(event, id)}>
-                {children}
-            </div>
+            <Route
+                path={`/server/${url}/tables`}
+                children={({match}) => (
+                    <Link
+                        className={b('item', {state: match ? 'selected' : null})}
+                        to={`/server/${url}/tables`}
+                    >
+                        {children}
+                    </Link>
+                )}
+            />
         )
     }
 }

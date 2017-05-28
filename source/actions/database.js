@@ -5,7 +5,7 @@ import {
     CLOSE_DATABASE_WINDOW,
     SET_DATABASE_WINDOW_STATE
 } from '../constants/database'
-import { SET_SELECTED_DATABASE } from '../constants/server'
+import { SET_DATABASE_NAME } from '../constants/server'
 import {
     restoreWindow as restoreServerWindow
 } from '../actions/server'
@@ -49,7 +49,7 @@ export function closeWindow() {
         });
 
         dispatch({
-            type: SET_SELECTED_DATABASE,
+            type: SET_DATABASE_NAME,
             payload: null
         });
 

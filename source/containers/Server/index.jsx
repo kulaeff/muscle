@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
@@ -28,32 +28,34 @@ class Server extends React.Component {
      * @property {bool} fetching Is data fetching
      * @property {bool} minimized Is window minimized
      * @property {array} databases List of databases
-     * @property {number} selectedDatabase Selected database index
+     * @property {number} databaseName Selected database index
      */
     static propTypes = {
         closeModalCreateDatabase: PropTypes.func.isRequired,
         closeModalDeleteDatabase: PropTypes.func.isRequired,
+        closeModalEditDatabase: PropTypes.func.isRequired,
+        databaseName: PropTypes.string.isRequired,
+        databaseName_: PropTypes.string.isRequired,
         fetching: PropTypes.bool.isRequired,
         saving: PropTypes.bool.isRequired,
         databases: PropTypes.array.isRequired,
         minimized: PropTypes.bool.isRequired,
-        modalTextboxDatabaseNameValue: PropTypes.string.isRequired,
         modalCreateDatabaseVisible: PropTypes.bool.isRequired,
         modalDeleteDatabaseVisible: PropTypes.bool.isRequired,
         modalEditDatabaseVisible: PropTypes.bool.isRequired,
         createDatabase: PropTypes.func.isRequired,
         deleteDatabase: PropTypes.func.isRequired,
         updateDatabase: PropTypes.func.isRequired,
-        selectedDatabase: PropTypes.number,
         getDatabases: PropTypes.func.isRequired,
-        selectDatabase: PropTypes.func.isRequired,
+        setDatabaseName: PropTypes.func.isRequired,
+        setFilter: PropTypes.func.isRequired,
         showModalCreateDatabase: PropTypes.func.isRequired,
         showModalDeleteDatabase: PropTypes.func.isRequired,
-        updateDatabaseName: PropTypes.func.isRequired,
+        showModalEditDatabase: PropTypes.func.isRequired,
         initWindow: PropTypes.func.isRequired,
         minimizeWindow: PropTypes.func.isRequired,
         restoreWindow: PropTypes.func.isRequired,
-        textboxFilterValue: PropTypes.string.isRequired
+        filter: PropTypes.string.isRequired
     };
 
     /**
@@ -95,7 +97,7 @@ class Server extends React.Component {
     };
 
     /**
-     * Show modal when toolbar button Create clicked
+     * Shows Create Database modal
      * @method
      */
     onToolBarButtonCreateDatabaseClick = () => {
@@ -105,26 +107,44 @@ class Server extends React.Component {
     };
 
     /**
-     * Show modal when toolbar button Edit clicked
+     * Shows Edit Database modal
      * @method
      */
-    onToolBarButtonEditDatabaseClick = () => {
-        const { showModalEditDatabase } = this.props;
+    onToolBarButtonEditDatabaseClick = (database) => {
+        const { setDatabaseName, showModalEditDatabase } = this.props;
 
+        setDatabaseName(database);
         showModalEditDatabase();
     };
 
     /**
-     * Show confirm modal when toolbar button Delete clicked
-     * @method
+     * Shows Delete Database modal
+     * @callback
      */
-    onToolBarButtonDeleteDatabaseClick = () => {
-        const { showModalDeleteDatabase } = this.props;
+    onToolBarButtonDeleteDatabaseClick = (database) => {
+        const { setDatabaseName, showModalDeleteDatabase } = this.props;
 
+        setDatabaseName(database);
         showModalDeleteDatabase();
     };
 
     /**
+     * Shows Import Database modal
+     * @callback
+     */
+    onToolBarButtonImportDatabaseClick = () => {
+        console.log('import database clicked');
+    };
+
+    /**
+     * Shows Export Database modal
+     * @callback
+     */
+    onToolBarButtonExportDatabaseClick = (database) => {
+        console.log('export database clicked:', database);
+    };
+    /**
+     *
      * Minimizes the window
      * @method
      */
@@ -157,43 +177,19 @@ class Server extends React.Component {
     };
 
     /**
-     * Redirects to the selected database details
-     * @method
-     * @param {number} index Index of selected item
-     */
-    onListViewChange = (event, index) => {
-        const { history, databases, selectDatabase } = this.props;
-
-        selectDatabase(index);
-
-        history.push(`/server/${databases[index]}`);
-
-        event.stopPropagation();
-    };
-
-    /**
-     * Gets the list of server filtered by string (debounced)
-     */
-    debouncedTextboxFilterChange = () => {
-        const { getDatabases } = this.props;
-
-        getDatabases();
-    };
-
-    /**
      * Stores the filter and invokes debounced handler
      * @param {Event} event Event
      */
     onTextboxFilterChange = (event) => {
-        const { updateFilter } = this.props;
+        const { setFilter } = this.props;
 
-        updateFilter(event.target.value);
+        setFilter(event.target.value);
     };
 
     onTextboxDatabaseNameChange = (event) => {
-        const { updateDatabaseName } = this.props;
+        const { setDatabaseName } = this.props;
 
-        updateDatabaseName(event.target.value);
+        setDatabaseName(event.target.value);
     };
 
     /**
@@ -241,7 +237,6 @@ class Server extends React.Component {
             b = block('server'),
             {
                 match,
-                modalTextboxDatabaseNameValue,
                 modalCreateDatabaseVisible,
                 modalDeleteDatabaseVisible,
                 modalEditDatabaseVisible,
@@ -249,8 +244,9 @@ class Server extends React.Component {
                 databases,
                 minimized,
                 saving,
-                selectedDatabase,
-                textboxFilterValue
+                databaseName,
+                databaseName_,
+                filter
             } = this.props;
 
         return (
@@ -280,46 +276,50 @@ class Server extends React.Component {
                                             icon="create"
                                             label="New"
                                             title="Create new database"
+                                            url={`${match.url}`}
                                             onClick={this.onToolBarButtonCreateDatabaseClick}/>
                                         <ToolBarButton
-                                            disabled={selectedDatabase === null}
+                                            disabled={databaseName === null}
                                             icon="edit"
                                             label="Edit"
                                             title="Edit database"
+                                            url={`${match.url}/:database`}
                                             onClick={this.onToolBarButtonEditDatabaseClick}/>
                                         <ToolBarButton
-                                            disabled={selectedDatabase === null}
+                                            disabled={databaseName === null}
                                             icon="delete"
                                             label="Delete"
                                             title="Delete database"
+                                            url={`${match.url}/:database`}
                                             onClick={this.onToolBarButtonDeleteDatabaseClick}/>
                                         <ToolBarSeparator />
                                         <ToolBarButton
                                             icon="import"
                                             label="Import"
                                             title="Import database"
-                                            onClick={this.onToolBarButtonEditDatabaseClick}/>
+                                            url={`${match.url}`}
+                                            onClick={this.onToolBarButtonImportDatabaseClick}/>
                                         <ToolBarButton
-                                            disabled={selectedDatabase === null}
+                                            disabled={databaseName === null}
                                             icon="export"
                                             label="Export"
                                             title="Export database"
-                                            onClick={this.onToolBarButtonEditDatabaseClick}/>
+                                            url={`${match.url}/:database`}
+                                            onClick={this.onToolBarButtonExportDatabaseClick}/>
                                     </Toolbar>
                                 </div>
                                 <div className={b('filters')}>
                                     <Textbox
                                         id="textboxFilter"
                                         placeholder="Filter by name..."
-                                        value={textboxFilterValue}
+                                        value={filter}
                                         onChange={this.onTextboxFilterChange}/>
                                 </div>
                                 <div className={b('table')}>
                                     <ListView
                                         icon="database"
                                         items={databases}
-                                        selectedIndex={selectedDatabase}
-                                        onChange={this.onListViewChange}/>
+                                    />
                                 </div>
                             </div>
                         )
@@ -355,14 +355,14 @@ class Server extends React.Component {
                                     id="textboxDatabaseName"
                                     name="name"
                                     required={true}
-                                    value={modalTextboxDatabaseNameValue}
+                                    value={databaseName}
                                     onChange={this.onTextboxDatabaseNameChange}
                                 />
                             </FormField>
                             <FormButtons>
                                 <FormButton>
                                     <Button
-                                        disabled={modalTextboxDatabaseNameValue.length === 0 || saving}
+                                        disabled={databaseName.length === 0 || saving}
                                         label="Create"
                                         type="submit"
                                     />
@@ -403,14 +403,16 @@ class Server extends React.Component {
                                     id="textboxDatabaseName"
                                     name="name"
                                     required={true}
-                                    value={modalTextboxDatabaseNameValue}
+                                    value={databaseName}
                                     onChange={this.onTextboxDatabaseNameChange}
                                 />
                             </FormField>
                             <FormButtons>
                                 <FormButton>
                                     <Button
-                                        disabled={modalTextboxDatabaseNameValue.length === 0 || saving}
+                                        disabled={
+                                            databaseName.length === 0 || databaseName === databaseName_ || saving
+                                        }
                                         label="Save"
                                         type="submit"
                                     />
@@ -451,7 +453,7 @@ class Server extends React.Component {
                                 <input type="hidden"
                                     name="name"
                                     required={true}
-                                    value={modalTextboxDatabaseNameValue}
+                                    value={databaseName}
                                 />
                             </FormField>
                             <FormButtons>
@@ -481,13 +483,13 @@ function mapStateToProps (state) {
         fetching: state.server.fetching,
         databases: state.server.databases,
         minimized: state.server.minimized,
-        modalTextboxDatabaseNameValue: state.server.modalTextboxDatabaseNameValue,
         modalCreateDatabaseVisible: state.server.modalCreateDatabaseVisible,
         modalDeleteDatabaseVisible: state.server.modalDeleteDatabaseVisible,
         modalEditDatabaseVisible: state.server.modalEditDatabaseVisible,
         saving: state.server.saving,
-        selectedDatabase: state.server.selectedDatabase,
-        textboxFilterValue: state.server.textboxFilterValue
+        databaseName: state.server.databaseName,
+        databaseName_: state.server.databaseName_,
+        filter: state.server.filter
     }
 }
 
@@ -500,12 +502,11 @@ function mapDispatchToProps(dispatch) {
         deleteDatabase,
         updateDatabase,
         getDatabases,
-        selectDatabase,
+        setDatabaseName,
         showModalCreateDatabase,
         showModalDeleteDatabase,
         showModalEditDatabase,
-        updateDatabaseName,
-        updateFilter,
+        setFilter,
         initWindow,
         minimizeWindow,
         restoreWindow
@@ -519,16 +520,15 @@ function mapDispatchToProps(dispatch) {
         deleteDatabase,
         updateDatabase,
         getDatabases,
-        selectDatabase,
+        setDatabaseName,
         showModalCreateDatabase,
         showModalDeleteDatabase,
         showModalEditDatabase,
-        updateDatabaseName,
-        updateFilter,
+        setFilter,
         initWindow,
         minimizeWindow,
         restoreWindow
     }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Server)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Server))

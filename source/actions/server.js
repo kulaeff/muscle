@@ -1,4 +1,4 @@
-import { replace } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
@@ -18,10 +18,10 @@ import {
     SET_CREATE_DATABASE_MODAL_VISIBILITY,
     SET_DELETE_DATABASE_MODAL_VISIBILITY,
     SET_EDIT_DATABASE_MODAL_VISIBILITY,
-    SET_SELECTED_DATABASE,
-    SET_SERVER_WINDOW_STATE,
-    UPDATE_DATABASE_NAME,
-    UPDATE_FILTER
+    SET_DATABASE_NAME,
+    SET_DATABASE_OLD_NAME,
+    SET_FILTER,
+    SET_SERVER_WINDOW_STATE
 } from '../constants/server'
 
 /*------------------------------------------------------------------------------------*/
@@ -65,10 +65,7 @@ export function getDatabase() {
             type: GET_DATABASE_REQUEST
         });
 
-        const
-            state = getState(),
-            index = state.server.selectedDatabase,
-            name = state.server.databases[index];
+        const name = getState().server.databaseName;
 
         api.getDatabase(name)
             .then(response => {
@@ -95,7 +92,7 @@ export function createDatabase() {
             type: CREATE_DATABASE_REQUEST
         });
 
-        const name = getState().server.modalTextboxDatabaseNameValue;
+        const name = getState().server.databaseName;
 
         api.createDatabase(name)
             .then(response => {
@@ -106,6 +103,7 @@ export function createDatabase() {
 
                     dispatch(closeModalCreateDatabase());
                     dispatch(getDatabases());
+                    dispatch(push(`/server/${name}/tables`));
                 } else {
                     dispatch({
                         type: CREATE_DATABASE_FAIL
@@ -134,8 +132,9 @@ export function deleteDatabase() {
 
         const
             state = getState(),
-            index = state.server.selectedDatabase,
-            name = state.server.databases[index];
+            name = state.server.databaseName,
+            currentIndex = state.server.databases.findIndex(database => database === name),
+            nextIndex = currentIndex === state.server.databases.length - 1 ? currentIndex - 1 : currentIndex + 1;
 
         api.deleteDatabase(name)
             .then(response => {
@@ -146,6 +145,7 @@ export function deleteDatabase() {
 
                     dispatch(closeModalDeleteDatabase());
                     dispatch(getDatabases());
+                    dispatch(replace(`/server/${state.server.databases[nextIndex]}`));
                 }
             })
             .catch(error => {
@@ -168,9 +168,8 @@ export function updateDatabase() {
 
         const
             state = getState(),
-            index = state.server.selectedDatabase,
-            oldName = state.server.databases[index],
-            newName = state.server.modalTextboxDatabaseNameValue;
+            newName = state.server.databaseName,
+            oldName = state.server.databaseName_;
 
         api.updateDatabase(oldName, newName)
             .then(response => {
@@ -243,28 +242,6 @@ export function restoreWindow() {
     };
 }
 
-/**
- * Selects the database with specified index
- * @param {number} index Index
- */
-export function selectDatabase(index) {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_SELECTED_DATABASE,
-            payload: index
-        });
-
-        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
-            sessionStorage.setItem('windowServerMinimized', JSON.stringify(true));
-
-            dispatch({
-                type: SET_SERVER_WINDOW_STATE,
-                payload: true
-            });
-        }
-    };
-}
-
 /* Modals */
 
 /**
@@ -277,7 +254,7 @@ export function closeModalCreateDatabase() {
             payload: false
         });
 
-        dispatch(updateDatabaseName(''));
+        dispatch(setDatabaseName(''));
     };
 }
 
@@ -290,6 +267,8 @@ export function closeModalDeleteDatabase() {
             type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
             payload: false
         });
+
+        dispatch(setDatabaseName(''));
     };
 }
 
@@ -303,7 +282,7 @@ export function closeModalEditDatabase() {
             payload: false
         });
 
-        dispatch(updateDatabaseName(''));
+        dispatch(setDatabaseName(''));
     };
 }
 
@@ -335,10 +314,15 @@ export function showModalDeleteDatabase() {
  * Shows Edit Database modal
  */
 export function showModalEditDatabase() {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         dispatch({
             type: SET_EDIT_DATABASE_MODAL_VISIBILITY,
             payload: true
+        });
+
+        dispatch({
+            type: SET_DATABASE_OLD_NAME,
+            payload: getState().server.databaseName
         });
 
         dispatch(getDatabase());
@@ -348,27 +332,29 @@ export function showModalEditDatabase() {
 /* Textboxes */
 
 /**
- * Updates database name
- * @param {string} name Name
+ * Stores current filter
+ * @param {string} token Token
  */
-export function updateDatabaseName(name) {
+export function setFilter(token) {
     return async (dispatch) => {
         dispatch({
-            type: UPDATE_DATABASE_NAME,
-            payload: name
+            type: SET_FILTER,
+            payload: token
         });
     };
 }
 
+/* Internals */
+
 /**
- * Updates filter
- * @param {string} token Token
+ * Stores current database name
+ * @param {string} name Name
  */
-export function updateFilter(token) {
+export function setDatabaseName(name) {
     return async (dispatch) => {
         dispatch({
-            type: UPDATE_FILTER,
-            payload: token
+            type: SET_DATABASE_NAME,
+            payload: name
         });
     };
 }

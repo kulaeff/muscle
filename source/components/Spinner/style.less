@@ -35,7 +35,6 @@
     position: relative;
     vertical-align: middle;
     &__container {
-        animation: rotate @speed * 2 infinite linear;
         height: 100%;
         width: 100%;
     }
@@ -93,6 +92,9 @@
         position: absolute;
         top: calc(50% - @spinnerSize / 2);
         width: @spinnerSize;
+    }
+    &_type_ellipse &__container {
+        animation: rotate @speed * 2 infinite linear;
     }
     &_type_rect {
         height: 1rem;

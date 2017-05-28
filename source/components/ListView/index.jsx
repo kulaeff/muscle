@@ -12,40 +12,19 @@ class ListView extends React.Component {
     /**
      * Properties
      * @static
-     * @property {string} icon The icon's name to use in ListViewItem
-     * @property {array} items The array of items
-     * @property {number} selectedIndex The index of selected item
-     * @property {func} onChange Change event handler
+     * @property {string} icon Icon's name
+     * @property {array} items Array of items
      */
     static propTypes = {
         icon: PropTypes.string,
         items: PropTypes.array.isRequired,
-        selectedIndex: PropTypes.number,
-        onChange: PropTypes.func.isRequired
-    }
+    };
 
     /**
      * Default properties
      * @static
-     * @property {number} selectedIndex The default index of selected item
      */
-    static defaultProps = {
-        selectedIndex: null
-    }
-
-    /**
-     * Handler for ListViewItem click event
-     * @method
-     * @param {Event} event Event
-     * @param {string} id The ID of clicked item
-     */
-    onItemClick = (event, id) => {
-        const {selectedIndex, onChange} = this.props;
-
-        if (onChange && selectedIndex !== id) {
-            onChange(event, id)
-        }
-    }
+    static defaultProps = {};
 
     /**
      * Render component
@@ -54,7 +33,7 @@ class ListView extends React.Component {
     render() {
         const
             b = block('list-view'),
-            { icon, items, selectedIndex } = this.props
+            { icon, items } = this.props;
 
         return (
             <div className={b()}>
@@ -63,8 +42,8 @@ class ListView extends React.Component {
                     <ListViewItem
                         key={index}
                         id={index}
-                        selected={selectedIndex === index}
-                        onClick={this.onItemClick}>
+                        url={item}
+                    >
                         {
                             icon ?
                                 <svg>

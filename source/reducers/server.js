@@ -17,10 +17,10 @@ import {
     SET_CREATE_DATABASE_MODAL_VISIBILITY,
     SET_DELETE_DATABASE_MODAL_VISIBILITY,
     SET_EDIT_DATABASE_MODAL_VISIBILITY,
-    SET_SELECTED_DATABASE,
-    SET_SERVER_WINDOW_STATE,
-    UPDATE_DATABASE_NAME,
-    UPDATE_FILTER
+    SET_DATABASE_NAME,
+    SET_DATABASE_OLD_NAME,
+    SET_FILTER,
+    SET_SERVER_WINDOW_STATE
 } from '../constants/server'
 
 const initialState = {
@@ -32,8 +32,9 @@ const initialState = {
     modalDeleteDatabaseVisible: false,
     modalEditDatabaseVisible: false,
     saving: false,
-    selectedDatabase: null,
-    textboxFilterValue: ''
+    databaseName: '',
+    databaseName_: '',
+    filter: ''
 };
 
 export default function server(state = initialState, action) {
@@ -82,10 +83,15 @@ export default function server(state = initialState, action) {
             return { ...state, saving: false };
         case DELETE_DATABASE_FAIL:
             return { ...state, saving: false };
-        case SET_SELECTED_DATABASE:
+        case SET_DATABASE_NAME:
             return {
                 ...state,
-                selectedDatabase: action.payload
+                databaseName: action.payload
+            };
+        case SET_DATABASE_OLD_NAME:
+            return {
+                ...state,
+                databaseName_: action.payload
             };
         case SET_CREATE_DATABASE_MODAL_VISIBILITY:
             return {
@@ -107,15 +113,10 @@ export default function server(state = initialState, action) {
                 ...state,
                 minimized: action.payload
             };
-        case UPDATE_DATABASE_NAME:
+        case SET_FILTER:
             return {
                 ...state,
-                modalTextboxDatabaseNameValue: action.payload
-            };
-        case UPDATE_FILTER:
-            return {
-                ...state,
-                textboxFilterValue: action.payload
+                filter: action.payload
             };
         default:
             return state

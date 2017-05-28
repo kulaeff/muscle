@@ -179,7 +179,7 @@ class DatabaseTables extends React.Component {
                 { name: 'size', title: 'Size', style: { alignment: 'right' } },
                 { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }
             ],
-            { fetching, items } = this.props;
+            { match, fetching, items } = this.props;
 
         return (
             fetching ? (
@@ -192,18 +192,21 @@ class DatabaseTables extends React.Component {
                                 icon="create"
                                 label="New"
                                 title="Create new table"
+                                url={`${match.url}/:database`}
                                 onClick={this.onToolBarButtonCreateDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="edit"
                                 label="Edit"
                                 title="Edit table"
+                                url={`${match.url}/:database`}
                                 onClick={this.onToolBarButtonEditDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="delete"
                                 label="Delete"
                                 title="Delete table"
+                                url={`${match.url}/:database`}
                                 onClick={this.onToolBarButtonDeleteDatabaseClick} />
                             <ToolBarSeparator />
                             <ToolBarButton
@@ -211,12 +214,14 @@ class DatabaseTables extends React.Component {
                                 icon="import"
                                 label="Import"
                                 title="Import table"
+                                url={`${match.url}/:database`}
                                 onClick={this.onToolBarButtonImportDatabaseClick} />
                             <ToolBarButton
                                 disabled={this.state.selectedIndex === null}
                                 icon="export"
                                 label="Export"
                                 title="Export table"
+                                url={`${match.url}/:database`}
                                 onClick={this.onToolBarButtonExportDatabaseClick} />
                         </Toolbar>
                     </div>
