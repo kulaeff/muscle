@@ -1,7 +1,16 @@
 @import (reference) '../../styles/variables';
 
-@speed: @dDefault * 7;
+@speed: @dDefault * 8;
 @sizeRect: 0.4rem;
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 @keyframes pulsateEllipse {
     0% {
@@ -26,6 +35,7 @@
     position: relative;
     vertical-align: middle;
     &__container {
+        animation: rotate @speed * 2 infinite linear;
         height: 100%;
         width: 100%;
     }

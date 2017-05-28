@@ -13,23 +13,18 @@ class NavigationBar extends React.Component {
      * Properties
      * @static
      * @property {array} items The array of items
-     * @property {number} selectedIndex The index of selected item
-     * @property {func} onChange Change event handler
      */
     static propTypes = {
-        items: PropTypes.array.isRequired,
-        selectedIndex: PropTypes.number,
-        onChange: PropTypes.func.isRequired
-    }
+        items: PropTypes.array,
+    };
 
     /**
      * Default properties
      * @static
-     * @property {number} selectedIndex The default index of selected item
      */
     static defaultProps = {
-        selectedIndex: 0
-    }
+        items: []
+    };
 
     /**
      * Create the components
@@ -38,21 +33,6 @@ class NavigationBar extends React.Component {
      */
     constructor (props) {
         super(props);
-
-        this.onItemClick = this.onItemClick.bind(this)
-    }
-
-    /**
-     * Handler for NavigationBarItem click event
-     * @method
-     * @param {string} id The ID of clicked item
-     */
-    onItemClick(id) {
-        const { onChange } = this.props
-
-        if (onChange) {
-            onChange(id)
-        }
     }
 
     /**
@@ -62,17 +42,22 @@ class NavigationBar extends React.Component {
     render() {
         const
             b = block('navigation-bar'),
-            { items, selectedIndex = NavigationBar.defaults.selectedIndex} = this.props
+            { children, items } = this.props;
 
         return (
             <div className={b()}>
             {
-                items.map((item, index) =>
-                    <NavigationBarItem
-                        key={index}
-                        id={item.id}
-                        selected={selectedIndex === index}
-                        title={item.title} onClick={this.onItemClick} />
+                children ? (
+                    children
+                ) : (
+                    items.map((item, index) =>
+                        <NavigationBarItem
+                            key={index}
+                            id={item.id}
+                            title={item.title}
+                            url={item.url}
+                        />
+                    )
                 )
             }
             </div>

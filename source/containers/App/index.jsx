@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as appActions from '../../actions/app'
@@ -15,21 +15,6 @@ import Title from '../../components/Title'
 import block from 'bem-cn'
 import './style.less'
 
-const navigationBarItems = [
-    {
-        id: 'status',
-        title: 'Status',
-    },
-    {
-        id: 'server',
-        title: 'Databases',
-    },
-    {
-        id: 'settings',
-        title: 'Settings',
-    }
-]
-
 class App extends React.Component {
     /**
      * Databases container properties
@@ -43,97 +28,79 @@ class App extends React.Component {
             user: PropTypes.string,
             password: PropTypes.string
         })
-    }
+    };
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             buttonDisabled: false,
             selectedIndex: 1,
             user: 'root',
             password: ''
-        }
+        };
     }
 
     componentDidMount() {
-        const
-            { location } = this.props,
-            { getCredentials } = this.props.appActions
+        const { getCredentials } = this.props.appActions;
 
-        this.setState({
-            selectedIndex: navigationBarItems.findIndex(item =>
-                location.pathname.indexOf(item.id) >= 0
-            )
-        })
-
-        getCredentials()
+        getCredentials();
     }
 
     onFormSubmit = (e) => {
         const
             { saveCredentials } = this.props.appActions,
-            { history } = this.props
+            { history } = this.props;
 
         this.setState({
             buttonDisabled: true
-        })
+        });
 
         saveCredentials(this.state.user, this.state.password)
             .then(() => {
                 this.setState({
                     buttonDisabled: false,
                     selectedIndex: 1
-                })
+                });
 
                 history.push('/server')
-            })
+            });
 
         e.preventDefault()
-    }
-
-    onNavigationBarChange = (id) => {
-        const { history } = this.props
-
-        history.push(`/${id}`)
-
-        this.setState({
-            selectedIndex: navigationBarItems.findIndex(item => item.id === id)
-        })
-    }
+    };
 
     onNavigationBarItemLogoutClick = () => {
         const
             { history } = this.props,
-            { removeCredentials } = this.props.appActions
+            { removeCredentials } = this.props.appActions;
 
         removeCredentials()
             .then(() => {
                 this.setState({
                     password: '',
                     user: 'root'
-                })
+                });
 
                 history.push('/')
-            })
-    }
+            });
+    };
 
     onTextboxUserChange = (e) => {
         this.setState({
             user: e.target.value
         })
-    }
+    };
 
     onTextboxPasswordChange = (e) => {
         this.setState({
             password: e.target.value
         })
-    }
+    };
 
     render() {
         const
             b = block('app'),
-            { credentials } = this.props
+            { credentials } = this.props;
 
         if (credentials.user !== null && credentials.password !== null) {
             return (
@@ -143,6 +110,7 @@ class App extends React.Component {
                             <Route path="/settings" component={Settings}/>
                             <Route path="/server" component={Server}/>
                             <Route path="/status" component={Status}/>
+                            <Redirect to="/server" />
                         </Switch>
                     </div>
                     <div className={b('sidebar')}>
@@ -152,17 +120,17 @@ class App extends React.Component {
                             </svg>
                         </div>
                         <div className={b('nav')}>
-                            <NavigationBar
-                                items={navigationBarItems}
-                                selectedIndex={this.state.selectedIndex}
-                                onChange={this.onNavigationBarChange} />
+                            <NavigationBar>
+                                <NavigationBarItem id="status" title="Status" url="/status" />
+                                <NavigationBarItem id="server" title="Browse" url="/server" />
+                                <NavigationBarItem id="settings" title="Settings" url="/settings" />
+                            </NavigationBar>
                         </div>
                         <div className={b('logout')}>
                             <NavigationBarItem
                                 id="logout"
-                                selected={false}
                                 title="Logout"
-                                onClick={this.onNavigationBarItemLogoutClick} />
+                                url="/logout" />
                         </div>
                     </div>
                 </div>

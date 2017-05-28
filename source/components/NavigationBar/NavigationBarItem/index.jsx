@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
@@ -10,26 +11,21 @@ class NavigationBarItem extends React.Component {
     /**
      * Properties
      * @static
-     * @property {number} id The ID of the item
-     * @property {bool} selected Is the item selected
-     * @property {string} title The title of the item
-     * @property {func} onClick Click event handler
+     * @property {number} id ID
+     * @property {string} title Title
+     * @property {string} url Url
      */
     static propTypes = {
         id: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
-        title: PropTypes.string,
-        onClick: PropTypes.func.isRequired
-    }
+        title: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired
+    };
 
     /**
      * Default properties
      * @static
-     * @property {string} title The title of the item
      */
-    static defaultProps = {
-        title: 'undefined',
-    }
+    static defaultProps = {};
 
     /**
      * Render component
@@ -38,17 +34,20 @@ class NavigationBarItem extends React.Component {
     render() {
         const
             b = block('navigation-bar'),
-            { id, selected, title = NavigationBarItem.defaultProps.title, onClick } = this.props
+            { id, title, url } = this.props;
 
         return (
-            <div
-                className={b('item', {icon: id, state: selected ? 'selected' : null})}
-                title={title}
-                onClick={() => onClick(id)}>
-                <svg>
-                    <use xlinkHref={`#icon-${id}`} />
-                </svg>
-            </div>
+            <Route path={url} children={({match}) =>
+                <Link
+                    className={b('item', {icon: id, state: match ? 'selected' : null})}
+                    title={title}
+                    to={url}
+                >
+                    <svg>
+                        <use xlinkHref={`#icon-${id}`} />
+                    </svg>
+                </Link>
+            }/>
         )
     }
 }

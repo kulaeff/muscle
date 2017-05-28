@@ -19,7 +19,8 @@ import {
     SET_EDIT_DATABASE_MODAL_VISIBILITY,
     SET_SELECTED_DATABASE,
     SET_SERVER_WINDOW_STATE,
-    UPDATE_DATABASE_NAME
+    UPDATE_DATABASE_NAME,
+    UPDATE_FILTER
 } from '../constants/server'
 
 const initialState = {
@@ -31,7 +32,8 @@ const initialState = {
     modalDeleteDatabaseVisible: false,
     modalEditDatabaseVisible: false,
     saving: false,
-    selectedDatabase: null
+    selectedDatabase: null,
+    textboxFilterValue: ''
 };
 
 export default function server(state = initialState, action) {
@@ -109,6 +111,11 @@ export default function server(state = initialState, action) {
             return {
                 ...state,
                 modalTextboxDatabaseNameValue: action.payload
+            };
+        case UPDATE_FILTER:
+            return {
+                ...state,
+                textboxFilterValue: action.payload
             };
         default:
             return state

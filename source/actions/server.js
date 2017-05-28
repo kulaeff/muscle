@@ -1,3 +1,4 @@
+import { replace } from 'react-router-redux'
 import {
     GET_DATABASES_REQUEST,
     GET_DATABASES_SUCCESS,
@@ -19,7 +20,8 @@ import {
     SET_EDIT_DATABASE_MODAL_VISIBILITY,
     SET_SELECTED_DATABASE,
     SET_SERVER_WINDOW_STATE,
-    UPDATE_DATABASE_NAME
+    UPDATE_DATABASE_NAME,
+    UPDATE_FILTER
 } from '../constants/server'
 
 /*------------------------------------------------------------------------------------*/
@@ -137,7 +139,6 @@ export function deleteDatabase() {
 
         api.deleteDatabase(name)
             .then(response => {
-                console.log(response);
                 if (response.data.status === 'ok') {
                     dispatch({
                         type: DELETE_DATABASE_SUCCESS
@@ -157,7 +158,7 @@ export function deleteDatabase() {
 }
 
 /**
- * Updates selected database
+ * Updates (renames) selected database
  */
 export function updateDatabase() {
     return async (dispatch, getState, api) => {
@@ -168,9 +169,10 @@ export function updateDatabase() {
         const
             state = getState(),
             index = state.server.selectedDatabase,
-            name = state.server.databases[index];
+            oldName = state.server.databases[index],
+            newName = state.server.modalTextboxDatabaseNameValue;
 
-        api.updateDatabase(name, state.server.modalTextboxDatabaseNameValue)
+        api.updateDatabase(oldName, newName)
             .then(response => {
                 if (response.data.status === 'ok') {
                     dispatch({
@@ -179,6 +181,7 @@ export function updateDatabase() {
 
                     dispatch(closeModalEditDatabase());
                     dispatch(getDatabases());
+                    dispatch(replace(`/server/${newName}/tables`));
                 }
             })
             .catch(error => {
@@ -353,6 +356,19 @@ export function updateDatabaseName(name) {
         dispatch({
             type: UPDATE_DATABASE_NAME,
             payload: name
+        });
+    };
+}
+
+/**
+ * Updates filter
+ * @param {string} token Token
+ */
+export function updateFilter(token) {
+    return async (dispatch) => {
+        dispatch({
+            type: UPDATE_FILTER,
+            payload: token
         });
     };
 }

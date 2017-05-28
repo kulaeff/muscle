@@ -14,7 +14,6 @@ import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import ListView from '../../components/ListView'
 import * as actions from '../../actions/server'
-import { debounce } from 'lodash'
 import block from 'bem-cn'
 import './style.less';
 
@@ -53,7 +52,8 @@ class Server extends React.Component {
         updateDatabaseName: PropTypes.func.isRequired,
         initWindow: PropTypes.func.isRequired,
         minimizeWindow: PropTypes.func.isRequired,
-        restoreWindow: PropTypes.func.isRequired
+        restoreWindow: PropTypes.func.isRequired,
+        textboxFilterValue: PropTypes.string.isRequired
     };
 
     /**
@@ -61,18 +61,7 @@ class Server extends React.Component {
      * @constructor
      */
     constructor(props) {
-        const textboxFilterChangeDelay = 700;
-
         super(props);
-
-        this.state = {
-            textboxDatabaseNameDisabled: '',
-            textboxDatabaseNameValue: '',
-            textboxFilterValue: '',
-            showCreateDatabaseModal: false
-        };
-
-        this.debouncedTextboxFilterChange = debounce(this.debouncedTextboxFilterChange, textboxFilterChangeDelay);
     }
 
     /**
@@ -184,31 +173,23 @@ class Server extends React.Component {
 
     /**
      * Gets the list of server filtered by string (debounced)
-     * @function
-     * @param {string} token String used as filter
      */
-    debouncedTextboxFilterChange = (token) => {
+    debouncedTextboxFilterChange = () => {
         const { getDatabases } = this.props;
 
-        getDatabases(token);
+        getDatabases();
     };
 
     /**
      * Stores the filter and invokes debounced handler
-     * @param {Event} e
+     * @param {Event} event Event
      */
-    onTextboxFilterChange = (e) => {
-        this.setState({
-            textboxFilterValue: e.target.value
-        });
+    onTextboxFilterChange = (event) => {
+        const { updateFilter } = this.props;
 
-        this.debouncedTextboxFilterChange(e.target.value)
+        updateFilter(event.target.value);
     };
 
-    /**
-     * Stores the database name in the local state
-     * @param {Event} e
-     */
     onTextboxDatabaseNameChange = (event) => {
         const { updateDatabaseName } = this.props;
 
@@ -268,7 +249,8 @@ class Server extends React.Component {
                 databases,
                 minimized,
                 saving,
-                selectedDatabase
+                selectedDatabase,
+                textboxFilterValue
             } = this.props;
 
         return (
@@ -329,7 +311,7 @@ class Server extends React.Component {
                                     <Textbox
                                         id="textboxFilter"
                                         placeholder="Filter by name..."
-                                        value={this.state.textboxFilterValue}
+                                        value={textboxFilterValue}
                                         onChange={this.onTextboxFilterChange}/>
                                 </div>
                                 <div className={b('table')}>
@@ -504,7 +486,8 @@ function mapStateToProps (state) {
         modalDeleteDatabaseVisible: state.server.modalDeleteDatabaseVisible,
         modalEditDatabaseVisible: state.server.modalEditDatabaseVisible,
         saving: state.server.saving,
-        selectedDatabase: state.server.selectedDatabase
+        selectedDatabase: state.server.selectedDatabase,
+        textboxFilterValue: state.server.textboxFilterValue
     }
 }
 
@@ -522,6 +505,7 @@ function mapDispatchToProps(dispatch) {
         showModalDeleteDatabase,
         showModalEditDatabase,
         updateDatabaseName,
+        updateFilter,
         initWindow,
         minimizeWindow,
         restoreWindow
@@ -540,6 +524,7 @@ function mapDispatchToProps(dispatch) {
         showModalDeleteDatabase,
         showModalEditDatabase,
         updateDatabaseName,
+        updateFilter,
         initWindow,
         minimizeWindow,
         restoreWindow
