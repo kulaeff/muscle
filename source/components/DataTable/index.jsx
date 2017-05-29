@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import DataTableColumn from './DataTableColumn'
 import DataTableRow from './DataTableRow'
@@ -23,19 +24,16 @@ class DataTable extends React.Component {
         columns: PropTypes.array.isRequired,
         icon: PropTypes.string,
         items: PropTypes.array,
-        selectedIndex: PropTypes.number,
+        url: PropTypes.string.isRequired,
         onChange: PropTypes.func.isRequired,
         onValueTransform: PropTypes.func
-    }
+    };
 
     /**
      * Default properties
      * @static
-     * @property {number} selectedIndex The default index of selected item
      */
-    static defaultProps = {
-        selectedIndex: null
-    }
+    static defaultProps = {};
 
     /**
      * Create DataTable component
@@ -43,7 +41,7 @@ class DataTable extends React.Component {
      * @param {object} props Properties
      */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             sorting: {
@@ -72,29 +70,16 @@ class DataTable extends React.Component {
                 }
             })
         }
-    }
-
-    /**
-     * Handler for DataTableItem click event
-     * @method
-     * @param {string} id The ID of clicked item
-     */
-    onItemClick = (id) => {
-        const { selectedIndex = DataTable.defaults.selectedIndex, onChange } = this.props
-
-        if (onChange && selectedIndex !== id) {
-            onChange(id)
-        }
-    }
+    };
 
     /**
      * Renders DataTable component
-     * @returns {XMl} Rendered element
+     * @returns {XML} Rendered element
      */
     render() {
         const
             b = block('data-table'),
-            { columns, icon, items, selectedIndex, onValueTransform } = this.props
+            { columns, icon, items, url, onChange, onValueTransform } = this.props;
 
         if (this.state.sorting.index !== null) {
             items.sort((a, b) => {
@@ -130,15 +115,17 @@ class DataTable extends React.Component {
                 <tbody className={b('body')}>
                     {
                         items.map((item, index) =>
-                            <DataTableRow
-                                cells={item}
-                                columns={columns}
-                                icon={icon}
-                                key={index}
-                                row={index}
-                                selected={selectedIndex === index}
-                                onClick={this.onItemClick}
-                                onValueTransform={onValueTransform} />
+                            <Route key={index} path={`${url}/${item[0]}`} children={({ match }) => (
+                                <DataTableRow
+                                    cells={item}
+                                    columns={columns}
+                                    icon={icon}
+                                    selected={!!match}
+                                    url={url}
+                                    onClick={onChange}
+                                    onValueTransform={onValueTransform}
+                                />
+                            )} />
                         )
                     }
                 </tbody>

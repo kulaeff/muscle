@@ -22,6 +22,7 @@ class Textbox extends React.Component {
      * @property {function} onChange The Textbox's change handler
      */
     static propTypes = {
+        autoFocus: PropTypes.bool,
         id: PropTypes.string.isRequired,
         name: PropTypes.string,
         pattern: PropTypes.string,
@@ -31,7 +32,7 @@ class Textbox extends React.Component {
         type: PropTypes.oneOf(['text', 'password']),
         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         onChange: PropTypes.func
-    }
+    };
 
     /**
      * Default properties
@@ -40,10 +41,11 @@ class Textbox extends React.Component {
      * @property {string} theme Default theme
      */
     static defaultProps = {
+        autoFocus: false,
         required: false,
         type: 'text',
         value: ''
-    }
+    };
 
     /**
      * Render component
@@ -53,6 +55,7 @@ class Textbox extends React.Component {
         const
             b = block('textbox'),
             {
+                autoFocus,
                 id,
                 name,
                 pattern,
@@ -62,10 +65,11 @@ class Textbox extends React.Component {
                 type = Textbox.defaults.type,
                 value = Textbox.defaults.value,
                 onChange
-            } = this.props
+            } = this.props;
 
         return (
             <input
+                autoFocus={autoFocus}
                 className={b()}
                 id={id}
                 pattern={pattern}

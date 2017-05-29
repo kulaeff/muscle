@@ -17,7 +17,7 @@
         opacity: 1;
     }
     100% {
-        opacity: 0;
+        opacity: .1;
     }
 }
 
@@ -26,7 +26,7 @@
         opacity: 1;
     }
     100% {
-        opacity: 0;
+        opacity: .1;
     }
 }
 
@@ -88,13 +88,13 @@
     // TYPES
     &_type_ellipse {
         height: @spinnerSize;
-        left: calc(50% - @spinnerSize / 2);
+        left: calc(50% ~'-' @spinnerSize / 2);
         position: absolute;
-        top: calc(50% - @spinnerSize / 2);
+        top: calc(50% ~'-' @spinnerSize / 2);
         width: @spinnerSize;
     }
     &_type_ellipse &__container {
-        animation: rotate @speed * 2 infinite linear;
+        animation: rotate @speed * 8 infinite linear;
     }
     &_type_rect {
         height: 1rem;

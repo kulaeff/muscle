@@ -22,11 +22,10 @@ class DataTableRow extends React.Component {
         cells: PropTypes.array.isRequired,
         columns: PropTypes.array.isRequired,
         icon: PropTypes.string,
-        row: PropTypes.number.isRequired,
         selected: PropTypes.bool.isRequired,
         onClick: PropTypes.func.isRequired,
         onValueTransform: PropTypes.func
-    }
+    };
 
     /**
      * Create the component
@@ -47,23 +46,21 @@ class DataTableRow extends React.Component {
                 cells,
                 columns,
                 icon,
-                row,
-                selected = DataTableRow.defaults.selected,
+                selected,
                 onClick,
                 onValueTransform
-            } = this.props
+            } = this.props;
 
         return (
             <tr
                 className={b('row', { state: selected ? 'selected' : null })}
-                onClick={() => onClick(row)}>
+                onClick={() => onClick(cells)}>
                 {
                     cells.map((cell, index) => {
                         return <DataTableCell
                             key={index}
                             column={columns[index]}
                             icon={icon}
-                            //row={row}
                             onValueTransform={onValueTransform}
                         >{cell}</DataTableCell>
                     })

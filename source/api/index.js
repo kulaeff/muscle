@@ -77,8 +77,8 @@ class API {
         return this.axios.get('indexes', { params: { database, table }})
     }
 
-    async getDatabaseTables(name, token) {
-        return this.axios.get(`databases/${name}/tables`, { params: { token }})
+    async getTables(database, token) {
+        return this.axios.get(`databases/${database}/tables`, { params: { token }})
     }
 
     async saveColumn(data) {

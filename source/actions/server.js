@@ -103,7 +103,7 @@ export function createDatabase() {
 
                     dispatch(closeModalCreateDatabase());
                     dispatch(getDatabases());
-                    dispatch(push(`/server/${name}/tables`));
+                    dispatch(push(`/server/${name}`));
                 } else {
                     dispatch({
                         type: CREATE_DATABASE_FAIL

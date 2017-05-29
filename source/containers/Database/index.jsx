@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/database'
 import DatabaseTables from './DatabaseTables'
-//import Table from '../Table'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -18,11 +17,10 @@ import './style.less';
 class Database extends React.Component {
     /**
      * Properties
-     * @static
      * @property {bool} minimized Is window minimized
      */
     static propTypes = {
-        minimized: PropTypes.bool
+        minimized: PropTypes.bool.isRequired
     };
 
     /**
@@ -49,11 +47,9 @@ class Database extends React.Component {
      * Closes the window
      */
     onWindowButtonCloseClick = () => {
-        const { history, closeWindow } = this.props;
+        const { closeWindow } = this.props;
 
         closeWindow();
-
-        history.push('/server');
     };
 
     /**
@@ -97,8 +93,7 @@ class Database extends React.Component {
                         </Switch>
                     </div>
                 </div>
-                <div className={b('view')}>
-                </div>
+                <div className={b('view')}></div>
             </div>
         )
     }

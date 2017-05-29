@@ -1,7 +1,8 @@
+import { push } from 'react-router-redux'
 import {
-    GET_DATABASE_TABLES_REQUEST,
-    GET_DATABASE_TABLES_SUCCESS,
-    GET_DATABASE_TABLES_FAIL,
+    GET_TABLES_REQUEST,
+    GET_TABLES_SUCCESS,
+    GET_TABLES_FAIL,
     CLOSE_DATABASE_WINDOW,
     SET_DATABASE_WINDOW_STATE
 } from '../constants/database'
@@ -12,35 +13,38 @@ import {
 
 /**
  * Retrieves the list of tables
- * @func
  * @param {string} database Database name
  * @param {string} token String used to filter tables
  */
-export function getDatabaseTables(name, token = '') {
+export function getTables(database, token = '') {
     return async (dispatch, getState, api) => {
         dispatch({
-            type: GET_DATABASE_TABLES_REQUEST
+            type: GET_TABLES_REQUEST
         })
 
-        api.getDatabaseTables(name, token)
+        api.getTables(database, token)
             .then(response => {
                 dispatch({
-                    type: GET_DATABASE_TABLES_SUCCESS,
+                    type: GET_TABLES_SUCCESS,
                     payload: response.data
                 })
             })
             .catch(error => {
                 dispatch({
-                    type: GET_DATABASE_TABLES_FAIL,
+                    type: GET_TABLES_FAIL,
                     payload: error
                 })
             });
     }
 }
+/*------------------------------------------------------------------------------------*/
+/* UI                                                                                 */
+/*------------------------------------------------------------------------------------*/
+
+/* Windows */
 
 /**
- * Closes window, resets selected database and restores Server window
- * @func
+ * Closes window
  */
 export function closeWindow() {
     return async (dispatch) => {
@@ -50,8 +54,10 @@ export function closeWindow() {
 
         dispatch({
             type: SET_DATABASE_NAME,
-            payload: null
+            payload: ''
         });
+
+        dispatch(push('/server'));
 
         dispatch(restoreServerWindow());
     };
@@ -59,8 +65,7 @@ export function closeWindow() {
 
 /**
  * Minimizes window
- * @func
- */
+  */
 export function minimizeWindow() {
     return {
         type: SET_DATABASE_WINDOW_STATE,
@@ -70,8 +75,7 @@ export function minimizeWindow() {
 
 /**
  * Restores window
- * @func
- */
+  */
 export function restoreWindow() {
     return {
         type: SET_DATABASE_WINDOW_STATE,

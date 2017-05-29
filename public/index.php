@@ -34,6 +34,8 @@ Flight::route('GET /api/v1/databases', function() {
         $json[] = $row[0];
     }
 
+    sort($json);
+
     Flight::json($json);
 });
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
-import { Route, withRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
@@ -266,7 +266,7 @@ class Server extends React.Component {
                         </div>
                     </div>
                     {
-                        fetching ? (
+                        fetching && !minimized ? (
                             <Spinner active={fetching} />
                         ) : (
                             <div className={b('content')}>
@@ -276,7 +276,7 @@ class Server extends React.Component {
                                             icon="create"
                                             label="New"
                                             title="Create new database"
-                                            url={`${match.url}`}
+                                            url={match.url}
                                             onClick={this.onToolBarButtonCreateDatabaseClick}/>
                                         <ToolBarButton
                                             disabled={databaseName === null}
@@ -297,7 +297,7 @@ class Server extends React.Component {
                                             icon="import"
                                             label="Import"
                                             title="Import database"
-                                            url={`${match.url}`}
+                                            url={match.url}
                                             onClick={this.onToolBarButtonImportDatabaseClick}/>
                                         <ToolBarButton
                                             disabled={databaseName === null}
@@ -336,6 +336,7 @@ class Server extends React.Component {
                     contentLabel="Create new database modal"
                     isOpen={modalCreateDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
+                    onAfterOpen={this.onCreateDatabaseModalAfterOpen}
                     onRequestClose={this.onCreateDatabaseModalClose}
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
@@ -352,6 +353,7 @@ class Server extends React.Component {
                         <FormRow>
                             <FormField id="textboxDatabaseName" label="Name">
                                 <Textbox
+                                    autoFocus={true}
                                     id="textboxDatabaseName"
                                     name="name"
                                     required={true}
@@ -400,6 +402,7 @@ class Server extends React.Component {
                         <FormRow>
                             <FormField id="textboxDatabaseName" label="Name">
                                 <Textbox
+                                    autoFocus={true}
                                     id="textboxDatabaseName"
                                     name="name"
                                     required={true}
@@ -531,4 +534,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Server))
+export default connect(mapStateToProps, mapDispatchToProps)(Server)
