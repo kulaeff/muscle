@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/database'
-import DatabaseTables from './DatabaseTables'
+import Tables from '../Tables'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -87,8 +87,8 @@ class Database extends React.Component {
                     </div>
                     <div className={b('content')}>
                         <Switch>
-                            <Route path={`${match.path}/tables`} component={DatabaseTables}/>
-                            <Route path={`${match.path}/query`} component={DatabaseTables}/>
+                            <Route path={`${match.path}/tables`} component={Tables}/>
+                            <Route path={`${match.path}/query`} component={Tables}/>
                             <Redirect to={`${match.url}/tables`} />
                         </Switch>
                     </div>

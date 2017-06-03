@@ -113,6 +113,9 @@ module.exports = (env) => {
             })
         ],
         resolve: {
+            alias: {
+                '~': path.resolve(__dirname, 'source')
+            },
             extensions: ['.js', '.jsx']
         }
     };

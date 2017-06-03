@@ -1,16 +1,6 @@
 {
-  "name": "muscle",
-  "version": "0.3.1",
-  "description": "The MySQL management tool",
-  "main": "index.jsx",
-  "scripts": {
-    "dev": "webpack --env.development --progress --colors --watch",
-    "build": "webpack -p --env.production --progress --colors --display-error-details",
-    "version": "npm run build && git add -A",
-    "postversion": "git push && git push --tags"
-  },
   "author": "Timur Kulaev <kulaeff@live.ru>",
-  "license": "ISC",
+  "description": "The MySQL management tool",
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.24.1",
@@ -49,5 +39,16 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0"
   },
-  "repository": "git@github.com:kulaeff/muscle.git"
+  "license": "ISC",
+  "name": "muscle",
+  "main": "index.jsx",
+  "private": true,
+  "scripts": {
+    "dev": "webpack --env.development --progress --colors --watch",
+    "build": "webpack -p --env.production --progress --colors --display-error-details",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": "git@github.com:kulaeff/muscle.git",
+  "version": "0.3.1"
 }

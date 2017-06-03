@@ -71,6 +71,7 @@
     }
     &__content {
         display: block;
+        margin-top: @mDefault;
         //
         &_visibility_hidden {
             display: none;
@@ -83,7 +84,7 @@
         display: flex;
     }
     &__toolbar {
-        margin: @mDefault 0;
+        //
     }
     &__title {
         display: block;
@@ -116,7 +117,7 @@
             background: @cWindowBackgroundHover;
         }
     }
-    &_state_minimized &__filters {
+    &_state_minimized &__content {
         display: none;
     }
     &_state_minimized &__header {
@@ -127,17 +128,5 @@
         top: @mDefault * 0.75;
         transform: translate(-100%, -25%) rotate(-90deg);
         transform-origin: 100% 50%;
-    }
-    &_state_minimized &__table {
-        display: none;
-    }
-    &_state_minimized &__tabs {
-        display: none;
-    }
-    &_state_minimized &__title-description {
-        display: none;
-    }
-    &_state_minimized &__toolbar {
-        display: none;
     }
 }
