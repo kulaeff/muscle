@@ -50,5 +50,5 @@
     "postversion": "git push && git push --tags"
   },
   "repository": "git@github.com:kulaeff/muscle.git",
-  "version": "0.3.2"
+  "version": "0.3.3"
 }
