@@ -8,7 +8,7 @@ import Settings from '../../containers/Settings'
 import Server from '../../containers/Server'
 import Status from '../../containers/Status'
 import Button from '../../components/Button'
-import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
+import Form, { FormButton, FormButtons, FormField, FormColumn } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -145,7 +145,7 @@ class App extends React.Component {
                             </div>
                             <div className={b('login-form')}>
                                 <Form onSubmit={this.onFormSubmit}>
-                                    <FormRow>
+                                    <FormColumn>
                                         <FormField label="User">
                                             <Textbox
                                                 id="user"
@@ -154,8 +154,8 @@ class App extends React.Component {
                                                 value={this.state.user}
                                                 onChange={this.onTextboxUserChange} />
                                         </FormField>
-                                    </FormRow>
-                                    <FormRow>
+                                    </FormColumn>
+                                    <FormColumn>
                                         <FormField label="Password">
                                             <Textbox
                                                 id="password"
@@ -164,7 +164,7 @@ class App extends React.Component {
                                                 value={this.state.password}
                                                 onChange={this.onTextboxPasswordChange} />
                                         </FormField>
-                                    </FormRow>
+                                    </FormColumn>
                                     <FormButtons>
                                         <FormButton>
                                             <Button

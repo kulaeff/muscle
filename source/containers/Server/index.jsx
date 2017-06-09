@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
-import Form, { FormRow, FormField, FormButtons, FormButton }  from '../../components/Form'
+import Form, { FormColumn, FormField, FormButtons, FormButton }  from '../../components/Form'
 import Grid, { GridItem } from '../../components/Grid'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -336,7 +336,6 @@ class Server extends React.Component {
                     contentLabel="Create new database modal"
                     isOpen={modalCreateDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
-                    onAfterOpen={this.onCreateDatabaseModalAfterOpen}
                     onRequestClose={this.onCreateDatabaseModalClose}
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
@@ -350,7 +349,7 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
-                        <FormRow>
+                        <FormColumn>
                             <FormField id="textboxDatabaseName" label="Name">
                                 <Textbox
                                     autoFocus={true}
@@ -361,22 +360,22 @@ class Server extends React.Component {
                                     onChange={this.onTextboxDatabaseNameChange}
                                 />
                             </FormField>
-                            <FormButtons>
-                                <FormButton>
-                                    <Button
-                                        disabled={databaseName.length === 0 || saving}
-                                        label="Create"
-                                        type="submit"
-                                    />
-                                </FormButton>
-                                <FormButton>
-                                    <Button
-                                        label="Cancel"
-                                        type="reset"
-                                    />
-                                </FormButton>
-                            </FormButtons>
-                        </FormRow>
+                        </FormColumn>
+                        <FormButtons>
+                            <FormButton>
+                                <Button
+                                    disabled={databaseName.length === 0 || saving}
+                                    label="Create"
+                                    type="submit"
+                                />
+                            </FormButton>
+                            <FormButton>
+                                <Button
+                                    label="Cancel"
+                                    type="reset"
+                                />
+                            </FormButton>
+                        </FormButtons>
                     </Form>
                 </ReactModal>
                 {/* Edit Database */}
@@ -399,7 +398,7 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onEditDatabaseModalClose} onSubmit={this.onEditDatabaseFormSubmit}>
-                        <FormRow>
+                        <FormColumn>
                             <FormField id="textboxDatabaseName" label="Name">
                                 <Textbox
                                     autoFocus={true}
@@ -410,24 +409,24 @@ class Server extends React.Component {
                                     onChange={this.onTextboxDatabaseNameChange}
                                 />
                             </FormField>
-                            <FormButtons>
-                                <FormButton>
-                                    <Button
-                                        disabled={
-                                            databaseName.length === 0 || databaseName === databaseName_ || saving
-                                        }
-                                        label="Save"
-                                        type="submit"
-                                    />
-                                </FormButton>
-                                <FormButton>
-                                    <Button
-                                        label="Cancel"
-                                        type="reset"
-                                    />
-                                </FormButton>
-                            </FormButtons>
-                        </FormRow>
+                        </FormColumn>
+                        <FormButtons>
+                            <FormButton>
+                                <Button
+                                    disabled={
+                                        databaseName.length === 0 || databaseName === databaseName_ || saving
+                                    }
+                                    label="Save"
+                                    type="submit"
+                                />
+                            </FormButton>
+                            <FormButton>
+                                <Button
+                                    label="Cancel"
+                                    type="reset"
+                                />
+                            </FormButton>
+                        </FormButtons>
                     </Form>
                 </ReactModal>
                 {/* Delete Database */}
@@ -450,7 +449,7 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
-                        <FormRow>
+                        <FormColumn>
                             <FormField id="textboxDatabaseName">
                                 Are you sure you want to delete this database?
                                 <input type="hidden"
@@ -459,21 +458,21 @@ class Server extends React.Component {
                                     value={databaseName}
                                 />
                             </FormField>
-                            <FormButtons>
-                                <FormButton>
-                                    <Button
-                                        label="Delete"
-                                        type="submit"
-                                    />
-                                </FormButton>
-                                <FormButton>
-                                    <Button
-                                        label="Cancel"
-                                        type="reset"
-                                    />
-                                </FormButton>
-                            </FormButtons>
-                        </FormRow>
+                        </FormColumn>
+                        <FormButtons>
+                            <FormButton>
+                                <Button
+                                    label="Delete"
+                                    type="submit"
+                                />
+                            </FormButton>
+                            <FormButton>
+                                <Button
+                                    label="Cancel"
+                                    type="reset"
+                                />
+                            </FormButton>
+                        </FormButtons>
                     </Form>
                 </ReactModal>
             </div>

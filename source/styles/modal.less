@@ -16,12 +16,19 @@
     left: 50%;
     overflow: auto;
     outline: none;
-    margin-left: -20rem;
     padding: @mDefault;
     position: absolute;
     top: 40%;
     &-Small {
+        @size: 40rem;
+        left: calc(50% ~'-' @size / 2);
         padding: (@mDefault * 0.85) @mDefault @mDefault;
-        width: 40rem;
+        width: @size;
+    }
+    &-Large {
+        @size: 120rem;
+        left: calc(50% ~'-' @size / 2);
+        padding: (@mDefault * 0.85) @mDefault @mDefault;
+        width: @size;
     }
 }

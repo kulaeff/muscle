@@ -2,9 +2,19 @@
 
 @cRequired: #903;
 
+.make-column-sizes(@n, @i: 1) when (@i =< @n) {
+    &_size_@{i} {
+        width: 100% * @i / @n;
+    }
+    .make-column-sizes(@n, (@i + 1));
+}
+
 .form {
     margin: 0;
     padding: 0;
+    &__body {
+        display: flex;
+    }
     &__button {
         display: table-cell;
         width: 50%;
@@ -17,7 +27,12 @@
         margin-top: @mDefault * 0.75;
         width: 100%;
     }
+    &__column {
+        .make-column-sizes(16);
+    }
     &__field {
+        display: block;
+        flex: 1;
         &-container {
             display: block;
         }
@@ -37,10 +52,34 @@
         }*/
     }
     &__row {
-        display: block;
+        display: flex;
+        flex-flow: row nowrap;
     }
     //
+    &__column + &__column {
+        margin-left: @mDefault;
+    }
     &__row + &__row {
         margin-top: @mDefault / 2;
+    }
+    //
+    &__column > &__field + &__field {
+        margin-top: @mDefault / 2;
+    }
+    &__row > &__field + &__field {
+        flex: 1;
+        margin-left: @mDefault / 2;
+    }
+    // ORIENTATIONS
+    &_orientation_horizontal &__body {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    &_orientation_horizontal &__group {
+        flex: 1;
+    }
+    &_orientation_horizontal &__group + &__group {
+        margin-left: @mDefault / 2;
+        margin-top: 0;
     }
 }

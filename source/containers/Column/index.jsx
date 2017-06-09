@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Button from '../../components/Button'
 import Checkbox from '../../components/Checkbox'
-import Form, { FormButton, FormButtons, FormField, FormRow } from '../../components/Form'
+import Form, { FormButton, FormButtons, FormField, FormColumn } from '../../components/Form'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -280,7 +280,7 @@ class Column extends React.Component {
                     </div>
                     <div className={b('form')}>
                         <Form onReset={this.onFormReset} onSubmit={this.onFormSubmit}>
-                            <FormRow>
+                            <FormColumn>
                                 <FormField id="name" label="Name" required={true}>
                                     <Textbox
                                         id="name"
@@ -289,8 +289,8 @@ class Column extends React.Component {
                                         value={this.state.fields.name}
                                         onChange={this.onTextboxNameChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField id="type" label="Type" required={true}>
                                     <Textbox
                                         id="type"
@@ -299,8 +299,8 @@ class Column extends React.Component {
                                         value={this.state.fields.type}
                                         onChange={this.onTextboxTypeChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField id="length" label="length" required={true}>
                                     <Textbox
                                         id="length"
@@ -309,8 +309,8 @@ class Column extends React.Component {
                                         value={this.state.fields.length}
                                         onChange={this.onTextboxLengthChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField id="collation" label="Collation">
                                     <Textbox
                                         id="collation"
@@ -318,8 +318,8 @@ class Column extends React.Component {
                                         value={this.state.fields.collation}
                                         onChange={this.onTextboxCollationChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField id="attributes" label="Attributes">
                                     <Textbox
                                         id="attributes"
@@ -327,8 +327,8 @@ class Column extends React.Component {
                                         value={this.state.fields.attributes}
                                         onChange={this.onTextboxAttributesChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField id="default" label="Default" required={true}>
                                     <Textbox
                                         id="default"
@@ -337,23 +337,23 @@ class Column extends React.Component {
                                         value={this.state.fields.default}
                                         onChange={this.onTextboxDefaultChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField>
                                     <Checkbox
                                         checked={this.state.fields.null}
                                         label="Allow null"
                                         onChange={this.onTextboxNullChange} />
                                 </FormField>
-                            </FormRow>
-                            <FormRow>
+                            </FormColumn>
+                            <FormColumn>
                                 <FormField>
                                     <Checkbox
                                         checked={this.state.fields.extra}
                                         label="Auto increment"
                                         onChange={this.onTextboxExtraChange} />
                                 </FormField>
-                            </FormRow>
+                            </FormColumn>
                             <FormButtons>
                                 <FormButton>
                                     <Button disabled={fetching} label="Save" type="submit" />

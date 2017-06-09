@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FormBody from './FormBody'
 import FormButton from './FormButton'
 import FormButtons from './FormButtons'
+import FormColumn from './FormColumn'
 import FormField from './FormField'
 import FormRow from './FormRow'
 import block from 'bem-cn'
@@ -17,15 +19,17 @@ class Form extends React.Component {
      * @static
      * @property {string} action Action
      * @property {string} method Method
+     * @property {string} orientation Orientation
      * @property {function} onSubmit Submit handler
      * @property {function} onReset Reset handler
      */
     static propTypes = {
         action: PropTypes.string,
         method: PropTypes.oneOf(['GET', 'POST']),
+        orientation: PropTypes.oneOf(['horizontal', 'vertical']),
         onSubmit: PropTypes.func,
         onReset: PropTypes.func,
-    }
+    };
 
     /**
      * Default properties
@@ -35,10 +39,9 @@ class Form extends React.Component {
      */
     static defaultProps = {
         action: '',
-        maxLength: 0,
         method: 'GET',
-        minLength: 0
-    }
+        orientation: 'vertical'
+    };
 
     /**
      * Render component
@@ -51,13 +54,14 @@ class Form extends React.Component {
                 children,
                 action,
                 method,
+                orientation,
                 onReset,
                 onSubmit
-            } = this.props
+            } = this.props;
 
         return (
             <form
-                className={b()}
+                className={b({orientation})}
                 action={action}
                 method={method}
                 onReset={onReset}
@@ -68,5 +72,5 @@ class Form extends React.Component {
     }
 }
 
-export { FormButton, FormButtons, FormField, FormRow }
+export { FormBody, FormButton, FormButtons, FormColumn, FormField, FormRow }
 export default Form

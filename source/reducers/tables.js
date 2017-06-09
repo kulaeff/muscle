@@ -1,13 +1,20 @@
 import {
     GET_TABLES_REQUEST,
     GET_TABLES_SUCCESS,
-    GET_TABLES_FAIL
+    GET_TABLES_FAIL,
+    SET_CREATE_TABLE_MODAL_VISIBILITY,
+    SET_TABLE_COMMENT,
+    SET_TABLE_NAME
 } from '../constants/tables'
 
 const initialState = {
     fetching: false,
     filter: '',
-    items: []
+    items: [],
+    modalCreateTableVisible: false,
+    saving: false,
+    tableComment: '',
+    tableName: ''
 };
 
 export default function tables(state = initialState, action) {
@@ -18,6 +25,21 @@ export default function tables(state = initialState, action) {
             return { ...state, fetching: false, items: action.payload };
         case GET_TABLES_FAIL:
             return { ...state, fetching: false };
+        case SET_CREATE_TABLE_MODAL_VISIBILITY:
+            return {
+                ...state,
+                modalCreateTableVisible: action.payload
+            };
+        case SET_TABLE_COMMENT:
+            return {
+                ...state,
+                tableComment: action.payload
+            };
+        case SET_TABLE_NAME:
+            return {
+                ...state,
+                tableName: action.payload
+            };
         default:
             return state
     }

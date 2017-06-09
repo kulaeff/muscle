@@ -11,13 +11,13 @@ class FormRow extends React.Component {
      * Properties
      * @static
      */
-    static propTypes = {}
+    static propTypes = {};
 
     /**
      * Default properties
      * @static
      */
-    static defaultProps = {}
+    static defaultProps = {};
 
     /**
      * Render component
@@ -26,7 +26,7 @@ class FormRow extends React.Component {
     render() {
         const
             b = block('form'),
-            { children } = this.props
+            { children } = this.props;
 
         return (
             <div className={b('row')}>{children}</div>
