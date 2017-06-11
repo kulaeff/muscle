@@ -64,25 +64,38 @@
 @dDefault: 0.06s;
 
 /***************************************************************/
-/* COMPONENTS PROPERTIES                                       */
-/* The properties of the components                            */
+/* COMPONENTS STYLES                                           */
 /***************************************************************/
 
 // Button
-@buttonBackgroundColor: @cPrimary;
-@buttonBackgroundColorActive: @cActive;
-@buttonBackgroundColorDisabled: @cDisabled;
-@buttonBackgroundColorHover: darken(@buttonBackgroundColor, 5%);
-@buttonBorderColor: @cPrimary;
-@buttonBorderColorActive: @cActive;
-@buttonBorderColorDisabled: @cDisabled;
-@buttonBorderColorHover: darken(@buttonBorderColor, 5%);
-@buttonBorderRadius: 0;
-@buttonBorderThickness: 0;
-@buttonForegroundColor: #fff;
-@buttonForegroundColorActive: @buttonForegroundColor;
-@buttonForegroundColorDisabled: darken(@buttonBackgroundColorDisabled, 20%);
-@buttonForegroundColorHover: @buttonForegroundColor;
+@buttonDefaultBackgroundColor: @cPrimary;
+@buttonDefaultBackgroundColorActive: @cActive;
+@buttonDefaultBackgroundColorDisabled: @cDisabled;
+@buttonDefaultBackgroundColorHover: darken(@buttonDefaultBackgroundColor, 5%);
+@buttonDefaultBorderColor: @cPrimary;
+@buttonDefaultBorderColorActive: @cActive;
+@buttonDefaultBorderColorDisabled: @cDisabled;
+@buttonDefaultBorderColorHover: darken(@buttonDefaultBorderColor, 5%);
+@buttonDefaultBorderRadius: 0;
+@buttonDefaultBorderThickness: 0;
+@buttonDefaultForegroundColor: #fff;
+@buttonDefaultForegroundColorActive: @buttonDefaultForegroundColor;
+@buttonDefaultForegroundColorDisabled: darken(@buttonDefaultBackgroundColorDisabled, 20%);
+@buttonDefaultForegroundColorHover: @buttonDefaultForegroundColor;
+@buttonResetBackgroundColor: transparent;
+@buttonResetBackgroundColorActive: @cActive;
+@buttonResetBackgroundColorDisabled: @buttonResetBackgroundColor;
+@buttonResetBackgroundColorHover: @cHover;
+@buttonResetBorderColor: transparent;
+@buttonResetBorderColorActive: @buttonResetBorderColor;
+@buttonResetBorderColorDisabled: @buttonResetBorderColor;
+@buttonResetBorderColorHover: @buttonResetBorderColor;
+@buttonResetBorderRadius: 0;
+@buttonResetBorderThickness: 0;
+@buttonResetForegroundColor: @cForeground;
+@buttonResetForegroundColorActive: #fff;
+@buttonResetForegroundColorDisabled: darken(@buttonResetBackgroundColorDisabled, 20%);
+@buttonResetForegroundColorHover: @buttonResetForegroundColor;
 @buttonHeight: @hDefault * 1.1;
 
 // Checkbox

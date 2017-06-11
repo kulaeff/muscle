@@ -122,7 +122,7 @@ Flight::route('GET /api/v1/databases/@name/tables', function($name) {
     $token = $request->query['token'];
     $json = [];
     $sql = "SELECT TABLE_NAME, ENGINE, TABLE_ROWS, DATA_LENGTH, INDEX_LENGTH, TABLE_COLLATION, TABLE_COMMENT 
-            FROM information_schema.tables WHERE table_schema = '$name'";
+            FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$name'";
 
     $db = Flight::db();
 

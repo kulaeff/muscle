@@ -136,7 +136,7 @@ class Tables extends React.Component {
         if (column === 'size' || column === 'overhead') {
             return bytes(value)
         } else {
-            return value.toString();
+            return value ? value.toString() : '';
         }
     };
 

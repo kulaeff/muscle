@@ -1,11 +1,11 @@
 @import (reference) '../../styles/variables';
 
 .button {
-    background-color: @buttonBackgroundColor;
-    border: @buttonBorderThickness solid @buttonBorderColor;
-    border-radius: @buttonBorderRadius;
+    background-color: @buttonDefaultBackgroundColor;
+    border: @buttonDefaultBorderThickness solid @buttonDefaultBorderColor;
+    border-radius: @buttonDefaultBorderRadius;
     box-sizing: border-box;
-    color: @buttonForegroundColor;
+    color: @buttonDefaultForegroundColor;
     cursor: pointer;
     font-family: 'Open Sans';
     font-size: 1.2rem;
@@ -19,25 +19,25 @@
     transition: color @dDefault linear, background-color @dDefault linear, border-color @dDefault linear;
     white-space: nowrap;
     &:hover {
-        background-color: @buttonBackgroundColorHover;
-        border-color: @buttonBorderColorHover;
-        color: @buttonForegroundColorHover;
+        background-color: @buttonDefaultBackgroundColorHover;
+        border-color: @buttonDefaultBorderColorHover;
+        color: @buttonDefaultForegroundColorHover;
     }
     &:active {
-        background-color: @buttonBackgroundColorActive;
-        border-color: @buttonBorderColorActive;
-        color: @buttonForegroundColorActive;
+        background-color: @buttonDefaultBackgroundColorActive;
+        border-color: @buttonDefaultBorderColorActive;
+        color: @buttonDefaultForegroundColorActive;
     }
     &:disabled {
-        background-color: @buttonBackgroundColorDisabled;
-        border-color: @buttonBorderColorDisabled;
-        color: @buttonForegroundColorDisabled;
+        background-color: @buttonDefaultBackgroundColorDisabled;
+        border-color: @buttonDefaultBorderColorDisabled;
+        color: @buttonDefaultForegroundColorDisabled;
         cursor: default;
         pointer-events: none;
         &:hover {
-            background-color: @buttonBackgroundColorDisabled;
-            border-color: @buttonBorderColorDisabled;
-            color: @buttonForegroundColorDisabled;
+            background-color: @buttonDefaultBackgroundColorDisabled;
+            border-color: @buttonDefaultBorderColorDisabled;
+            color: @buttonDefaultForegroundColorDisabled;
         }
     }
     // SIZES
@@ -47,13 +47,18 @@
     // TYPES
     // Reset
     &_type_reset {
-        background-color: @cSecondary;
+        background-color: @buttonResetBackgroundColor;
+        border: @buttonResetBorderThickness solid @buttonResetBorderColor;
+        color: @buttonResetForegroundColor;
         &:hover {
-            background-color: darken(@cSecondary, 5%);
+            background-color: @buttonResetBackgroundColorHover;
+            border-color: @buttonResetBorderColorHover;
+            color: @buttonResetForegroundColorHover;
         }
         &:active {
-            background-color: @buttonBackgroundColorActive;
-            border-color: @buttonBorderColorActive;
+            background-color: @buttonResetBackgroundColorActive;
+            border-color: @buttonResetBorderColorActive;
+            color: @buttonResetForegroundColorActive;
         }
     }
 }

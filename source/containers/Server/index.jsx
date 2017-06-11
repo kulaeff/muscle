@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
-import Form, { FormColumn, FormField, FormButtons, FormButton }  from '../../components/Form'
+import Form, { FormBody, FormField, FormButtons, FormButton, FormRow }  from '../../components/Form'
 import Grid, { GridItem } from '../../components/Grid'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -61,35 +61,47 @@ class Server extends React.Component {
     /**
      * Create the container
      * @constructor
+     * @param {object} props Props
      */
     constructor(props) {
         super(props);
     }
 
     /**
-     * Fetches data after the component was mounted
-     * @method
+     * Fetch the data after the component was mounted
+     * @callback
      */
     componentDidMount() {
-        const
-            { getDatabases, initWindow } = this.props;
+        const { getDatabases, initWindow } = this.props;
 
         getDatabases();
         initWindow();
     }
 
+    /**
+     * Close the Create Database modal
+     * @callback
+     */
     onCreateDatabaseModalClose = () => {
         const { closeModalCreateDatabase } = this.props;
 
         closeModalCreateDatabase();
     };
 
+    /**
+     * Close the Delete Database modal
+     * @callback
+     */
     onDeleteDatabaseModalClose = () => {
         const { closeModalDeleteDatabase } = this.props;
 
         closeModalDeleteDatabase();
     };
 
+    /**
+     * Close the Edit Database modal
+     * @callback
+     */
     onEditDatabaseModalClose = () => {
         const { closeModalEditDatabase } = this.props;
 
@@ -97,8 +109,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Shows Create Database modal
-     * @method
+     * Open the Create Database modal
+     * @callback
      */
     onToolBarButtonCreateDatabaseClick = () => {
         const { showModalCreateDatabase } = this.props;
@@ -107,8 +119,9 @@ class Server extends React.Component {
     };
 
     /**
-     * Shows Edit Database modal
-     * @method
+     * Open the Edit Database modal
+     * @callback
+     * @param {string} database Database to be edited
      */
     onToolBarButtonEditDatabaseClick = (database) => {
         const { setDatabaseName, showModalEditDatabase } = this.props;
@@ -118,8 +131,9 @@ class Server extends React.Component {
     };
 
     /**
-     * Shows Delete Database modal
+     * Open the Delete Database modal
      * @callback
+     * @param {string} database Database to be deleted
      */
     onToolBarButtonDeleteDatabaseClick = (database) => {
         const { setDatabaseName, showModalDeleteDatabase } = this.props;
@@ -129,7 +143,7 @@ class Server extends React.Component {
     };
 
     /**
-     * Shows Import Database modal
+     * Open the Import Database modal
      * @callback
      */
     onToolBarButtonImportDatabaseClick = () => {
@@ -137,7 +151,7 @@ class Server extends React.Component {
     };
 
     /**
-     * Shows Export Database modal
+     * Open the Export Database modal
      * @callback
      */
     onToolBarButtonExportDatabaseClick = (database) => {
@@ -145,8 +159,9 @@ class Server extends React.Component {
     };
     /**
      *
-     * Minimizes the window
-     * @method
+     * Minimize the window
+     * @callback
+     * @param {Event} event Event
      */
     onWindowButtonMinimizeClick = (e) => {
         const { minimizeWindow } = this.props;
@@ -157,8 +172,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Closes the window and goes to previous route
-     * @method
+     * Close the window and navigate to previous route
+     * @callback
      */
     onWindowButtonCloseClick = () => {
         const { history } = this.props;
@@ -167,8 +182,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Restores the window
-     * @method
+     * Restore the window
+     * @callback
      */
     onWindowClick = () => {
         const { restoreWindow } = this.props;
@@ -177,7 +192,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Stores the filter and invokes debounced handler
+     * Set the filter
+     * @callback
      * @param {Event} event Event
      */
     onTextboxFilterChange = (event) => {
@@ -186,6 +202,11 @@ class Server extends React.Component {
         setFilter(event.target.value);
     };
 
+    /**
+     * Set the database name
+     * @callback
+     * @param {Event} event Event
+     */
     onTextboxDatabaseNameChange = (event) => {
         const { setDatabaseName } = this.props;
 
@@ -193,7 +214,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Creates a database
+     * Create a database
+     * @callback
      * @param {Event} event Event
      */
     onCreateDatabaseFormSubmit = (event) => {
@@ -205,7 +227,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Deletes selected database
+     * Delete the database
+     * @callback
      * @param {Event} event Event
      */
     onDeleteDatabaseFormSubmit = (event) => {
@@ -217,7 +240,8 @@ class Server extends React.Component {
     };
 
     /**
-     * Updates selected database
+     * Updates the database
+     * @callback
      * @param {Event} event Event
      */
     onEditDatabaseFormSubmit = (event) => {
@@ -230,7 +254,7 @@ class Server extends React.Component {
 
     /**
      * Render the container
-     * @returns {XML} Component
+     * @returns {XML}
      */
     render() {
         const
@@ -349,30 +373,32 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
-                        <FormColumn>
-                            <FormField id="textboxDatabaseName" label="Name">
-                                <Textbox
-                                    autoFocus={true}
-                                    id="textboxDatabaseName"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                    onChange={this.onTextboxDatabaseNameChange}
-                                />
-                            </FormField>
-                        </FormColumn>
+                        <FormBody>
+                            <FormRow>
+                                <FormField id="textboxDatabaseName" label="Name">
+                                    <Textbox
+                                        autoFocus={true}
+                                        id="textboxDatabaseName"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                        onChange={this.onTextboxDatabaseNameChange}
+                                    />
+                                </FormField>
+                            </FormRow>
+                        </FormBody>
                         <FormButtons>
+                            <FormButton>
+                                <Button
+                                    label="Cancel"
+                                    type="reset"
+                                />
+                            </FormButton>
                             <FormButton>
                                 <Button
                                     disabled={databaseName.length === 0 || saving}
                                     label="Create"
                                     type="submit"
-                                />
-                            </FormButton>
-                            <FormButton>
-                                <Button
-                                    label="Cancel"
-                                    type="reset"
                                 />
                             </FormButton>
                         </FormButtons>
@@ -398,18 +424,20 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onEditDatabaseModalClose} onSubmit={this.onEditDatabaseFormSubmit}>
-                        <FormColumn>
-                            <FormField id="textboxDatabaseName" label="Name">
-                                <Textbox
-                                    autoFocus={true}
-                                    id="textboxDatabaseName"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                    onChange={this.onTextboxDatabaseNameChange}
-                                />
-                            </FormField>
-                        </FormColumn>
+                        <FormBody>
+                            <FormRow>
+                                <FormField id="textboxDatabaseName" label="Name">
+                                    <Textbox
+                                        autoFocus={true}
+                                        id="textboxDatabaseName"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                        onChange={this.onTextboxDatabaseNameChange}
+                                    />
+                                </FormField>
+                            </FormRow>
+                        </FormBody>
                         <FormButtons>
                             <FormButton>
                                 <Button
@@ -449,16 +477,18 @@ class Server extends React.Component {
                         </GridItem>
                     </Grid>
                     <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
-                        <FormColumn>
-                            <FormField id="textboxDatabaseName">
-                                Are you sure you want to delete this database?
-                                <input type="hidden"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                />
-                            </FormField>
-                        </FormColumn>
+                        <FormBody>
+                            <FormRow>
+                                <FormField id="textboxDatabaseName">
+                                    Are you sure you want to delete this database?
+                                    <input type="hidden"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                    />
+                                </FormField>
+                            </FormRow>
+                        </FormBody>
                         <FormButtons>
                             <FormButton>
                                 <Button

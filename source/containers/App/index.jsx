@@ -110,6 +110,7 @@ class App extends React.Component {
                             <Route path="/settings" component={Settings}/>
                             <Route path="/server" component={Server}/>
                             <Route path="/status" component={Status}/>
+                            <Route path="/styleguide" component={Settings}/>
                             <Redirect to="/server" />
                         </Switch>
                     </div>

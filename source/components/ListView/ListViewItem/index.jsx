@@ -37,11 +37,11 @@ class ListViewItem extends React.Component {
 
         return (
             <Route
-                path={`/server/${url}/tables`}
+                path={`/server/${url}`}
                 children={({match}) => (
                     <Link
                         className={b('item', {state: match ? 'selected' : null})}
-                        to={`/server/${url}/tables`}
+                        to={`/server/${url}`}
                     >
                         {children}
                     </Link>

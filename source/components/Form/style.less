@@ -16,16 +16,12 @@
         display: flex;
     }
     &__button {
-        display: table-cell;
-        width: 50%;
-        &:last-child {
-            text-align: right;
-        }
+        display: inline-block;
+        margin-left: @mDefault * .25;
     }
     &__buttons {
-        display: table;
-        margin-top: @mDefault * 0.75;
-        width: 100%;
+        margin-top: @mDefault * .75;
+        text-align: right;
     }
     &__column {
         .make-column-sizes(16);
@@ -54,6 +50,7 @@
     &__row {
         display: flex;
         flex-flow: row nowrap;
+        width: 100%;
     }
     //
     &__column + &__column {
