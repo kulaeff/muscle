@@ -4,11 +4,12 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as appActions from '../../actions/app'
-import Settings from '../../containers/Settings'
-import Server from '../../containers/Server'
-import Status from '../../containers/Status'
+import Components from '../Components'
+import Settings from '../Settings'
+import Server from '../Server'
+import Status from '../Status'
 import Button from '../../components/Button'
-import Form, { FormButton, FormButtons, FormField, FormColumn } from '../../components/Form'
+import Form, { FormButton, FormButtons, FormField, FormGroup } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -110,7 +111,7 @@ class App extends React.Component {
                             <Route path="/settings" component={Settings}/>
                             <Route path="/server" component={Server}/>
                             <Route path="/status" component={Status}/>
-                            <Route path="/styleguide" component={Settings}/>
+                            <Route path="/components" component={Components}/>
                             <Redirect to="/server" />
                         </Switch>
                     </div>
@@ -146,7 +147,7 @@ class App extends React.Component {
                             </div>
                             <div className={b('login-form')}>
                                 <Form onSubmit={this.onFormSubmit}>
-                                    <FormColumn>
+                                    <FormGroup>
                                         <FormField label="User">
                                             <Textbox
                                                 id="user"
@@ -155,8 +156,8 @@ class App extends React.Component {
                                                 value={this.state.user}
                                                 onChange={this.onTextboxUserChange} />
                                         </FormField>
-                                    </FormColumn>
-                                    <FormColumn>
+                                    </FormGroup>
+                                    <FormGroup>
                                         <FormField label="Password">
                                             <Textbox
                                                 id="password"
@@ -165,7 +166,7 @@ class App extends React.Component {
                                                 value={this.state.password}
                                                 onChange={this.onTextboxPasswordChange} />
                                         </FormField>
-                                    </FormColumn>
+                                    </FormGroup>
                                     <FormButtons>
                                         <FormButton>
                                             <Button

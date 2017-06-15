@@ -1,0 +1,52 @@
+@import (reference) '../../styles/variables';
+
+.action-button {
+    background-color: @actionButtonDefaultBackgroundColor;
+    border: @actionButtonDefaultBorderThickness solid @actionButtonDefaultBorderColor;
+    border-radius: @buttonDefaultBorderRadius;
+    box-sizing: border-box;
+    color: @actionButtonDefaultForegroundColor;
+    cursor: pointer;
+    height: @actionButtonHeight;
+    outline: none;
+    padding: 0;
+    position: relative;
+    text-transform: uppercase;
+    transition: color @dDefault linear, background-color @dDefault linear, border-color @dDefault linear;
+    width: @actionButtonHeight;
+    white-space: nowrap;
+    svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+    }
+    &:hover {
+        background-color: @actionButtonDefaultBackgroundColorHover;
+        border-color: @actionButtonDefaultBorderColorHover;
+        color: @actionButtonDefaultForegroundColorHover;
+    }
+    &:active {
+        background-color: @actionButtonDefaultBackgroundColorActive;
+        border-color: @actionButtonDefaultBorderColorActive;
+        color: @actionButtonDefaultForegroundColorActive;
+    }
+    &:disabled {
+        background-color: @actionButtonDefaultBackgroundColorDisabled;
+        border-color: @actionButtonDefaultBorderColorDisabled;
+        color: @actionButtonDefaultForegroundColorDisabled;
+        cursor: default;
+        pointer-events: none;
+        &:hover {
+            background-color: @actionButtonDefaultBackgroundColorDisabled;
+            border-color: @actionButtonDefaultBorderColorDisabled;
+            color: @actionButtonDefaultForegroundColorDisabled;
+        }
+    }
+    // FLOW
+    &_flow_column + &_flow_column {
+        margin-top: @mDefault * .25;
+    }
+    &_flow_row + &_flow_row {
+        margin-left: @mDefault * .25;
+    }
+}

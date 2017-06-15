@@ -4,6 +4,7 @@ import {
     GET_TABLES_FAIL,
     SET_CREATE_TABLE_MODAL_VISIBILITY,
     SET_TABLE_COMMENT,
+    SET_TABLE_FIELDS,
     SET_TABLE_NAME
 } from '../constants/tables'
 
@@ -13,8 +14,11 @@ const initialState = {
     items: [],
     modalCreateTableVisible: false,
     saving: false,
+    tableCollation: '',
     tableComment: '',
-    tableName: ''
+    tableFields: [],
+    tableName: '',
+    tableType: ''
 };
 
 export default function tables(state = initialState, action) {
@@ -28,12 +32,18 @@ export default function tables(state = initialState, action) {
         case SET_CREATE_TABLE_MODAL_VISIBILITY:
             return {
                 ...state,
-                modalCreateTableVisible: action.payload
+                modalCreateTableVisible: action.payload,
+                tableFields: []
             };
         case SET_TABLE_COMMENT:
             return {
                 ...state,
                 tableComment: action.payload
+            };
+        case SET_TABLE_FIELDS:
+            return {
+                ...state,
+                tableFields: action.payload
             };
         case SET_TABLE_NAME:
             return {

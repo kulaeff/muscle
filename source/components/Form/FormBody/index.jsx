@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import block from 'bem-cn'
 import '../style.less'
 
@@ -10,14 +11,20 @@ class FormBody extends React.Component {
     /**
      * Properties
      * @static
+     * @param {string} flow Flow
      */
-    static propTypes = {};
+    static propTypes = {
+        flow: PropTypes.oneOf(['column', 'row']),
+    };
 
     /**
      * Default properties
      * @static
+     * @param {string} flow Default flow
      */
-    static defaultProps = {};
+    static defaultProps = {
+        flow: 'column'
+    };
 
     /**
      * Render component
@@ -26,10 +33,10 @@ class FormBody extends React.Component {
     render() {
         const
             b = block('form'),
-            { children } = this.props;
+            { children, flow } = this.props;
 
         return (
-            <div className={b('body')}>{children}</div>
+            <div className={b('body', {flow})}>{children}</div>
         )
     }
 }

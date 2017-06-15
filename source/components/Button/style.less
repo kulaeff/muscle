@@ -11,7 +11,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     height: @buttonHeight;
-    min-width: 7rem;
+    min-width: @buttonHeight;
     outline: none;
     padding: 0 1.4rem;
     position: relative;
@@ -40,8 +40,18 @@
             color: @buttonDefaultForegroundColorDisabled;
         }
     }
+    // FLOW
+    &_flow_column + &_flow_column {
+        margin-top: @mDefault * .25;
+    }
+    &_flow_row + &_flow_row {
+        margin-left: @mDefault * .25;
+    }
     // SIZES
     &_size_auto {
+        width: auto;
+    }
+    &_size_stretch {
         width: 100%;
     }
     // TYPES

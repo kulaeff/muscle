@@ -1,0 +1,34 @@
+@import (reference) '../../styles/variables';
+
+.button-group {
+    display: flex;
+    // FLOW
+    &_flow_column {
+        flex-flow: column nowrap;
+    }
+    &_flow_row {
+        flex-flow: row nowrap;
+    }
+    // FLOW + ALIGN
+    &_flow_column&_align_center {
+        align-items: center;
+    }
+    &_flow_column&_align_left {
+        align-items: flex-start;
+    }
+    &_flow_column&_align_right {
+        align-items: flex-end;
+    }
+    &_flow_row&_align_center {
+        justify-content: center;
+    }
+    &_flow_row&_align_left {
+        justify-content: flex-start;
+    }
+    &_flow_row&_align_right {
+        justify-content: flex-end;
+    }
+    &_flow_row&_align_opposite {
+        justify-content: space-between;
+    }
+}

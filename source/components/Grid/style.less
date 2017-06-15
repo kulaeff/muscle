@@ -12,12 +12,24 @@
             flex: 1;
         }
     }
+    &__separator {
+        background-color: @cGray10;
+        margin: 0 @mDefault;
+        width: 1px;
+    }
     // ORIENTATIONS
     &_orientation_horizontal {
         flex-direction: row;
     }
     &_orientation_vertical {
         flex-direction: column;
+    }
+    // SPACING
+    &_spacing_full&_orientation_horizontal > &__item + &__item {
+        margin-left: @mDefault;
+    }
+    &_spacing_full&_orientation_vertical > &__item + &__item {
+        margin-top: @mDefault;
     }
     // TYPES
     &_type_default {

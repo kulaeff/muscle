@@ -4,24 +4,28 @@ import block from 'bem-cn'
 import '../style.less'
 
 /**
- * FormColumn component
+ * FormGroup component
  * @class
  */
-class FormColumn extends React.Component {
+class FormGroup extends React.Component {
     /**
      * Properties
      * @static
+     * @param {string} flow Flow
      */
     static propTypes = {
-        size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+        flow: PropTypes.oneOf(['column', 'row']),
+        width: PropTypes.number
     };
 
     /**
      * Default properties
      * @static
+     * @param {string} flow Default flow
      */
     static defaultProps = {
-        size: 1
+        flow: 'column',
+        width: 1
     };
 
     /**
@@ -31,12 +35,14 @@ class FormColumn extends React.Component {
     render() {
         const
             b = block('form'),
-            { children, size } = this.props;
+            { children, flow, width } = this.props;
 
         return (
-            <div className={b('column', {size})}>{children}</div>
+            <div className={b('group', {flow, width: flow === 'column' ? width : null})}>
+                {children}
+            </div>
         )
     }
 }
 
-export default FormColumn
+export default FormGroup

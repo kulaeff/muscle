@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
-import Form, { FormBody, FormField, FormButtons, FormButton, FormRow }  from '../../components/Form'
+import Form, { FormBody, FormField, FormButtons, FormButton }  from '../../components/Form'
 import Grid, { GridItem } from '../../components/Grid'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -374,18 +374,16 @@ class Server extends React.Component {
                     </Grid>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
                         <FormBody>
-                            <FormRow>
-                                <FormField id="textboxDatabaseName" label="Name">
-                                    <Textbox
-                                        autoFocus={true}
-                                        id="textboxDatabaseName"
-                                        name="name"
-                                        required={true}
-                                        value={databaseName}
-                                        onChange={this.onTextboxDatabaseNameChange}
-                                    />
-                                </FormField>
-                            </FormRow>
+                            <FormField id="textboxDatabaseName" label="Name">
+                                <Textbox
+                                    autoFocus={true}
+                                    id="textboxDatabaseName"
+                                    name="name"
+                                    required={true}
+                                    value={databaseName}
+                                    onChange={this.onTextboxDatabaseNameChange}
+                                />
+                            </FormField>
                         </FormBody>
                         <FormButtons>
                             <FormButton>
@@ -425,18 +423,16 @@ class Server extends React.Component {
                     </Grid>
                     <Form onReset={this.onEditDatabaseModalClose} onSubmit={this.onEditDatabaseFormSubmit}>
                         <FormBody>
-                            <FormRow>
-                                <FormField id="textboxDatabaseName" label="Name">
-                                    <Textbox
-                                        autoFocus={true}
-                                        id="textboxDatabaseName"
-                                        name="name"
-                                        required={true}
-                                        value={databaseName}
-                                        onChange={this.onTextboxDatabaseNameChange}
-                                    />
-                                </FormField>
-                            </FormRow>
+                            <FormField id="textboxDatabaseName" label="Name">
+                                <Textbox
+                                    autoFocus={true}
+                                    id="textboxDatabaseName"
+                                    name="name"
+                                    required={true}
+                                    value={databaseName}
+                                    onChange={this.onTextboxDatabaseNameChange}
+                                />
+                            </FormField>
                         </FormBody>
                         <FormButtons>
                             <FormButton>
@@ -478,16 +474,14 @@ class Server extends React.Component {
                     </Grid>
                     <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
                         <FormBody>
-                            <FormRow>
-                                <FormField id="textboxDatabaseName">
-                                    Are you sure you want to delete this database?
-                                    <input type="hidden"
-                                        name="name"
-                                        required={true}
-                                        value={databaseName}
-                                    />
-                                </FormField>
-                            </FormRow>
+                            <FormField id="textboxDatabaseName">
+                                Are you sure you want to delete this database?
+                                <input type="hidden"
+                                    name="name"
+                                    required={true}
+                                    value={databaseName}
+                                />
+                            </FormField>
                         </FormBody>
                         <FormButtons>
                             <FormButton>

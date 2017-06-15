@@ -14,8 +14,8 @@ class Title extends React.Component {
     static propTypes = {
         primaryTitle: PropTypes.string,
         secondaryTitle: PropTypes.string,
-        size: PropTypes.oneOf(['small', 'medium', 'large']),
-    }
+        size: PropTypes.oneOf(['small', 'medium', 'large', 'tiny']),
+    };
 
     /**
      * Default properties
@@ -24,7 +24,7 @@ class Title extends React.Component {
      */
     static defaultProps = {
         size: 'medium'
-    }
+    };
 
     /**
      * Render the component

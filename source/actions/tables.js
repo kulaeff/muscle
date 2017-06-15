@@ -4,6 +4,7 @@ import {
     GET_TABLES_FAIL,
     SET_CREATE_TABLE_MODAL_VISIBILITY,
     SET_TABLE_COMMENT,
+    SET_TABLE_FIELDS,
     SET_TABLE_NAME
 } from '../constants/tables'
 
@@ -54,6 +55,7 @@ export function closeModalCreateTable() {
             payload: false
         });
 
+        dispatch(setTableComment(''));
         dispatch(setTableName(''));
     };
 }
@@ -81,6 +83,32 @@ export function setTableComment(comment) {
         dispatch({
             type: SET_TABLE_COMMENT,
             payload: comment
+        });
+    };
+}
+
+/**
+ * Stores fields
+ */
+export function setTableFields() {
+    return async (dispatch, getState) => {
+        const [...tableFields] = getState().tables.tableFields;
+
+        tableFields.push({
+            attributes: '',
+            autoIncrement: false,
+            collation: '',
+            comment: '',
+            default: '',
+            index: '',
+            length: null,
+            name: 'untitled_field',
+            type: 'int'
+        });
+
+        dispatch({
+            type: SET_TABLE_FIELDS,
+            payload: tableFields
         });
     };
 }

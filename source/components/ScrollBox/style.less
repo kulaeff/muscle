@@ -1,0 +1,52 @@
+@import (reference) '../../styles/variables';
+
+.scroll-box {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    &__container {
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: transform @dDefault * 2 ease-out;
+        width: 100%;
+    }
+}
+
+.scroll-bar {
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    height: calc(100% ~'-' 10px);
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    transition: background-color @dDefault linear, opacity @dDefault * 2 linear;
+    width: 5px;
+    &__handle {
+        background-color: fade(@cAccent, 80%);
+        border-radius: 5px;
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: transform @dDefault * 2 ease-out;
+        width: 100%;
+    }
+    //
+    &:hover {
+        background-color: rgba(0, 0, 0, .15);
+    }
+    &:hover &__handle {
+        background-color: @cAccent;
+    }
+    // STATE
+    &_state_visible {
+        opacity: 1;
+    }
+}

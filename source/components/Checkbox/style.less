@@ -20,6 +20,25 @@
             position: relative;
             transition: background-color @dDefault, border-color @dDefault;
             width: @sDefault;
+            &:after, &:before {
+                background-color: @checkboxMarkerColor;
+                border-radius: @hCross;
+                content: '';
+                display: block;
+                height: @hCross;
+                left: @sDefault / 2 - @wCross / 2;
+                opacity: 0;
+                position: absolute;
+                top: @sDefault / 2 - @hCross / 2;
+                transition: opacity @dDefault linear;
+                width: @wCross;
+            }
+            &:after {
+                transform: rotate(45deg);
+            }
+            &:before {
+                transform: rotate(-45deg);
+            }
         }
     }
     &__label {
@@ -27,36 +46,39 @@
         display: inline-block;
         font-size: 1.3rem;
         padding-left: 0.8rem;
+        user-select: none;
         vertical-align: middle;
     }
     // PSEUDO
     &:hover &__control-rectangle {
         background-color: @checkboxBackgroundColorHover;
         border: @checkboxBorderThickness solid @checkboxBorderColorHover;
+        &:after, &:before {
+            background-color: @checkboxMarkerColorHover;
+        }
     }
     &:active &__control-rectangle {
         background-color: @checkboxBackgroundColorActive;
         border: @checkboxBorderThickness solid @checkboxBorderColorActive;
+        &:after, &:before {
+            background-color: @checkboxMarkerColorActive;
+        }
     }
     // STATES
     &_state_checked &__control-rectangle {
         background-color: @checkboxBackgroundColorChecked;
-        &:after,&:before {
-            background-color: @checkboxForegroundColorChecked;
-            border-radius: @hCross;
-            content: '';
-            display: block;
-            height: @hCross;
-            left: @sDefault / 2 - @wCross / 2;
-            position: absolute;
-            top: @sDefault / 2 - @hCross / 2;
-            width: @wCross;
+        &:after, &:before {
+            opacity: 1;
         }
-        &:after {
-            transform: rotate(45deg);
-        }
-        &:before {
-            transform: rotate(-45deg);
+    }
+    // MODE
+    &_mode_disabled {
+        color: @cGray50;
+    }
+    &_mode_disabled &__control-rectangle {
+        background-color: @checkboxBackgroundColorDisabled;
+        &:after, &:before {
+            background-color: @checkboxMarkerColorDisabled;
         }
     }
 }

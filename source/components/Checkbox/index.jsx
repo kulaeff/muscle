@@ -9,39 +9,16 @@ import './style.less'
  */
 class Checkbox extends React.Component {
     /**
-     * Properties
-     * @static
-     * @property {bool} checked Is checked
-     * @property {string} label Label
-     * @property {function} onChange Change handler
-     */
-    static propTypes = {
-        checked: PropTypes.bool,
-        label: PropTypes.string,
-        onChange: PropTypes.func
-    }
-
-    /**
-     * Default properties
-     * @static
-     * @property {bool} checked Default is checked
-     */
-    static defaultProps = {
-        checked: false,
-        label: ''
-    }
-
-    /**
-     * Toggles checked state and invokes onChange handler
+     * Invokes onChange callback
      * @method
      */
-    onClick = () => {
-        const { onChange } = this.props
+    handleClick = () => {
+        const { onChange } = this.props;
 
         if (onChange) {
             onChange()
         }
-    }
+    };
 
     /**
      * Render the component
@@ -50,23 +27,55 @@ class Checkbox extends React.Component {
     render() {
         const
             b = block('checkbox'),
-            {
-                checked = Checkbox.defaults.checked,
-                label = Checkbox.defaults.label
-            } = this.props
+            { _grouped, checked, disabled, label } = this.props;
 
         return (
             <div
-                className={b({state: checked ? 'checked' : null})}
-                onClick={this.onClick}
+                className={b({
+                    grouping: _grouped ? 'grouped' : null,
+                    mode: disabled ? 'disabled' : null,
+                    state: checked ? 'checked' : null
+                })}
+                onClick={this.handleClick}
             >
                 <div className={b('control')}>
-                    <div className={b('control-rectangle')}></div>
+                    <div className={b('control-rectangle')} />
                 </div>
-                <div className={b('label')}>{label}</div>
+                {
+                    label.length > 0 && <span className={b('label')}>{label}</span>
+                }
             </div>
         )
     }
 }
+
+/**
+ * Properties
+ * @static
+ * @property {bool} _grouped Is in a CheckboxGroup
+ * @property {bool} checked Is checked
+ * @property {bool} disabled Is disabled
+ * @property {string} label Label
+ * @property {function} onChange Change handler
+ */
+Checkbox.propTypes = {
+    _grouped: PropTypes.bool,
+    checked: PropTypes.bool,
+    disabled: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func
+};
+
+/**
+ * Default properties
+ * @static
+ * @property {bool} checked Default is checked
+ */
+Checkbox.defaultProps = {
+    _grouped: false,
+    checked: false,
+    disabled: false,
+    label: ''
+};
 
 export default Checkbox

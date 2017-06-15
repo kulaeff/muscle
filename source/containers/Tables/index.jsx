@@ -4,15 +4,20 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/tables'
+import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
-import DataTable from '~/components/DataTable/index'
-import Form, { FormBody, FormColumn, FormField, FormButtons, FormButton, FormRow }  from '../../components/Form'
+import ButtonGroup from '../../components/ButtonGroup'
+import DataTable from '~/components/DataTable'
+import Form, { FormBody, FormButtons, FormButton, FormField, FormGroup }  from '../../components/Form'
 import Grid, { GridItem } from '../../components/Grid'
-import Placeholder from '~/components/Placeholder/index'
-import Spinner from '~/components/Spinner/index'
-import Textbox from '~/components/Textbox/index'
+import ListBox, { ListBoxItem } from '../../components/ListBox'
+import Placeholder from '~/components/Placeholder'
+import PropertyEditor from '../../components/PropertyEditor'
+import Spinner from '../../components/Spinner'
+import SplitContainer from '../../components/SplitContainer'
+import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
-import Toolbar, { ToolBarButton, ToolBarSeparator } from '~/components/ToolBar/index'
+import Toolbar, { ToolBarButton, ToolBarSeparator } from '~/components/ToolBar'
 import block from 'bem-cn'
 import bytes from '~/helpers/bytes'
 import './style.less';
@@ -35,12 +40,16 @@ class Tables extends React.Component {
         items: PropTypes.array.isRequired,
         modalCreateTableVisible: PropTypes.bool.isRequired,
         saving: PropTypes.bool.isRequired,
+        tableCollation: PropTypes.string.isRequired,
         tableComment: PropTypes.string.isRequired,
+        tableFields: PropTypes.array.isRequired,
         tableName: PropTypes.string.isRequired,
+        tableType: PropTypes.string.isRequired,
         getTables: PropTypes.func.isRequired,
         closeModalCreateTable: PropTypes.func.isRequired,
         showModalCreateTable: PropTypes.func.isRequired,
         setTableComment: PropTypes.func.isRequired,
+        setTableFields: PropTypes.func.isRequired,
         setTableName: PropTypes.func.isRequired
     };
 
@@ -71,6 +80,16 @@ class Tables extends React.Component {
             getTables(nextProps.match.params.database);
         }
     }
+
+    onActionButtonAddFieldClick = () => {
+        const { setTableFields } = this.props;
+
+        setTableFields();
+    };
+
+    onActionButtonRemoveFieldClick = () => {
+        console.log('remove field clicked');
+    };
 
     /**
      * Show modal when toolbar button Create clicked
@@ -199,8 +218,11 @@ class Tables extends React.Component {
                 items,
                 modalCreateTableVisible,
                 saving,
+                tableCollation,
                 tableComment,
-                tableName
+                tableFields,
+                tableName,
+                tableType
             } = this.props;
 
         return (
@@ -208,6 +230,7 @@ class Tables extends React.Component {
                 <Spinner active={fetching} />
             ) : (
                 <div className={b()}>
+                    {/* CONTENT */}
                     <div className={b('content')}>
                         <div className={b('toolbar')}>
                             <Toolbar>
@@ -291,31 +314,11 @@ class Tables extends React.Component {
                             onSubmit={this.onCreateTableFormSubmit}
                         >
                             <FormBody>
-                                <FormColumn size={4}>
-                                    <FormField id="name" label="Name">
-                                        <Textbox
-                                            autoFocus={true}
-                                            id="name"
-                                            name="name"
-                                            required={true}
-                                            value={tableName}
-                                            onChange={this.onTextboxTableNameChange}
-                                        />
-                                    </FormField>
-                                    <FormField id="comment" label="Comment">
-                                        <Textbox
-                                            id="comment"
-                                            name="comment"
-                                            required={true}
-                                            value={tableComment}
-                                            onChange={this.onTextboxTableCommentChange}
-                                        />
-                                    </FormField>
-                                </FormColumn>
-                                <FormColumn size={12}>
-                                    <FormRow>
+                                <FormGroup flow="row">
+                                    <FormGroup width={4}>
                                         <FormField id="name" label="Name">
                                             <Textbox
+                                                autoFocus={true}
                                                 id="name"
                                                 name="name"
                                                 required={true}
@@ -323,30 +326,92 @@ class Tables extends React.Component {
                                                 onChange={this.onTextboxTableNameChange}
                                             />
                                         </FormField>
+                                        <FormField id="comment" label="Comment">
+                                            <Textbox
+                                                id="comment"
+                                                name="comment"
+                                                required={true}
+                                                value={tableComment}
+                                                onChange={this.onTextboxTableCommentChange}
+                                            />
+                                        </FormField>
+                                        <FormField id="collation" label="Collation">
+                                            <Textbox
+                                                id="collation"
+                                                name="collation"
+                                                required={true}
+                                                value={tableCollation}
+                                                onChange={this.onTextboxTableCollationChange}
+                                            />
+                                        </FormField>
                                         <FormField id="type" label="Type">
                                             <Textbox
                                                 id="type"
                                                 name="type"
                                                 required={true}
-                                                value={tableName}
-                                                onChange={this.onTextboxTableNameChange}
+                                                value={tableType}
+                                                onChange={this.onTextboxTableTypeChange}
                                             />
                                         </FormField>
-                                    </FormRow>
-                                </FormColumn>
+                                    </FormGroup>
+                                    <FormGroup width={12}>
+                                        <FormGroup flow="row">
+                                            <FormField label="Fields" width={2}>
+                                                <SplitContainer
+                                                    panel1={
+                                                        <ListBox
+                                                            id="name"
+                                                            name="name"
+                                                            value={tableName}
+                                                            onChange={this.onListBoxFieldsChange}
+                                                        >
+                                                            {
+                                                                tableFields.map((tableField, index) => (
+                                                                    <ListBoxItem
+                                                                        index={index}
+                                                                        key={index}
+                                                                        tooltip={tableField.name}
+                                                                    >{tableField.name}</ListBoxItem>
+                                                                ))
+                                                            }
+                                                        </ListBox>
+                                                    }
+                                                    panel2={
+                                                        <ButtonGroup>
+                                                            <ActionButton
+                                                                icon="add-24"
+                                                                onClick={this.onActionButtonAddFieldClick}
+                                                            />
+                                                            <ActionButton
+                                                                disabled={true}
+                                                                icon="remove-24"
+                                                                onClick={this.onActionButtonRemoveFieldClick}
+                                                            />
+                                                        </ButtonGroup>
+                                                    }
+                                                />
+                                            </FormField>
+                                            <FormField label="Properties" width={3}>
+                                                <PropertyEditor
+                                                    properties={[]}
+                                                />
+                                            </FormField>
+                                        </FormGroup>
+                                    </FormGroup>
+                                </FormGroup>
                             </FormBody>
                             <FormButtons>
+                                <FormButton>
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
+                                </FormButton>
                                 <FormButton>
                                     <Button
                                         disabled={tableName.length === 0 || saving}
                                         label="Create"
                                         type="submit"
-                                    />
-                                </FormButton>
-                                <FormButton>
-                                    <Button
-                                        label="Cancel"
-                                        type="reset"
                                     />
                                 </FormButton>
                             </FormButtons>
@@ -365,8 +430,11 @@ function mapStateToProps (state) {
         items: state.tables.items,
         modalCreateTableVisible: state.tables.modalCreateTableVisible,
         saving: state.tables.saving,
+        tableCollation: state.tables.tableCollation,
         tableComment: state.tables.tableComment,
-        tableName: state.tables.tableName
+        tableFields: state.tables.tableFields,
+        tableName: state.tables.tableName,
+        tableType: state.tables.tableType
     }
 }
 
@@ -376,6 +444,7 @@ function mapDispatchToProps(dispatch) {
         closeModalCreateTable,
         showModalCreateTable,
         setTableComment,
+        setTableFields,
         setTableName
     } = actions;
 
@@ -384,6 +453,7 @@ function mapDispatchToProps(dispatch) {
         closeModalCreateTable,
         showModalCreateTable,
         setTableComment,
+        setTableFields,
         setTableName
     }, dispatch);
 }

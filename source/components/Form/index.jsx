@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import FormBody from './FormBody'
 import FormButton from './FormButton'
 import FormButtons from './FormButtons'
-import FormColumn from './FormColumn'
 import FormField from './FormField'
-import FormRow from './FormRow'
+import FormGroup from './FormGroup'
 import block from 'bem-cn'
 import './style.less'
 
@@ -72,5 +71,5 @@ class Form extends React.Component {
     }
 }
 
-export { FormBody, FormButton, FormButtons, FormColumn, FormField, FormRow }
+export { FormBody, FormButton, FormButtons, FormField, FormGroup }
 export default Form

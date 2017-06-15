@@ -1,0 +1,85 @@
+@import (reference) '../../styles/variables';
+
+@sDefault: 1.6rem;
+@hCross: 0.2rem;
+@wCross: 1rem;
+
+.radio {
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+    &__control {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+        &-circle {
+            background-color: @radioBackgroundColor;
+            border: @radioBorderThickness solid @radioBorderColor;
+            border-radius: 50%;
+            box-sizing: border-box;
+            height: @sDefault;
+            position: relative;
+            transition: background-color @dDefault, border-color @dDefault;
+            width: @sDefault;
+            &:after {
+                background-color: @radioMarkerColor;
+                border-radius: 50%;
+                content: '';
+                display: block;
+                height: @sDefault / 2;
+                left: @sDefault / 4;
+                opacity: 0;
+                position: absolute;
+                top: @sDefault / 4;
+                transition: opacity @dDefault linear;
+                width: @sDefault / 2;
+            }
+        }
+    }
+    &__label {
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1.3rem;
+        padding-left: 0.8rem;
+        user-select: none;
+        vertical-align: middle;
+    }
+    // PSEUDO
+    &:hover &__control-circle {
+        background-color: @radioBackgroundColorHover;
+        border: @radioBorderThickness solid @radioBorderColorHover;
+        &:after {
+            background-color: @radioMarkerColorHover;
+        }
+    }
+    &:active &__control-circle {
+        background-color: @radioBackgroundColorActive;
+        border: @radioBorderThickness solid @radioBorderColorActive;
+        &:after {
+            background-color: @radioMarkerColorActive;
+        }
+    }
+    // GROUPING
+    &_grouping_grouped + &_grouping_grouped {
+        margin-top: @mDefault * .25;
+    }
+    // STATE
+    &_state_checked &__control-circle {
+        background-color: @radioBackgroundColorChecked;
+        &:after {
+            opacity: 1;
+        }
+    }
+    // MODE
+    &_mode_disabled {
+        color: @cGray50;
+        pointer-events: none;
+    }
+    &_mode_disabled &__control-circle {
+        background-color: @radioBackgroundColorDisabled;
+        border: @radioBorderThickness solid @radioBorderColorDisabled;
+        &:after {
+            background-color: @radioMarkerColorDisabled;
+        }
+    }
+}

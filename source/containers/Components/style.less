@@ -1,0 +1,51 @@
+@import (reference) '../../styles/variables';
+
+.components {
+    background: @cWindow;
+    box-sizing: border-box;
+    counter-reset: section;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    padding: @mDefault * 0.75 @mDefault;
+    &__container {
+        flex: 1;
+        margin-top: @mDefault;
+    }
+    &__panel {
+        width: 30rem;
+    }
+    &__section {
+        @size: 2.2rem;
+
+        display: block;
+        counter-increment: section;
+        padding: 0 0 @mDefault;
+        &-title {
+            background-color: @cGray10;
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: @size;
+            margin-bottom: @mDefault;
+            position: relative;
+            text-transform: uppercase;
+            &:before {
+                background-color: @cGray50;
+                color: #fff;
+                content: counter(section);
+                display: inline-block;
+                height: @size;
+                line-height: @size;
+                margin-right: @mDefault * .25;
+                text-align: center;
+                width: @size;
+            }
+        }
+    }
+    &__title {
+        display: block;
+    }
+    //
+
+}
