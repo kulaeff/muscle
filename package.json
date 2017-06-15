@@ -48,7 +48,7 @@
     "dev": "webpack --env.development --progress --colors --watch",
     "build": "webpack -p --env.production --progress --colors --display-error-details",
     "version": "npm run build && git add -A",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push origin master && git push --tags"
   },
   "repository": "git@github.com:kulaeff/muscle.git",
   "version": "0.3.5"
