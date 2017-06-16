@@ -3,7 +3,6 @@
 .scroll-box {
     box-sizing: border-box;
     display: block;
-    overflow: hidden;
     position: relative;
     height: 100%;
     &__container {
@@ -18,18 +17,17 @@
 }
 
 .scroll-bar {
+    @width: 0.4rem;
+
     background-color: rgba(0, 0, 0, .05);
     display: block;
     font-size: 0;
-    height: calc(100% ~'-' 10px);
     opacity: 0;
     overflow: hidden;
     pointer-events: none;
     position: absolute;
-    right: 5px;
-    top: 5px;
     transition: background-color @dDefault linear, opacity @dDefault * 2 linear;
-    width: 5px;
+    width: @width;
     &__handle {
         background-color: fade(@cAccent, 80%);
         display: block;
@@ -46,6 +44,17 @@
     }
     &:hover &__handle {
         background-color: @cAccent;
+    }
+    // POSITION
+    &_position_inner {
+        height: calc(100% ~'-' @width * 2);
+        right: @width;
+        top: @width;
+    }
+    &_position_outer {
+        height: 100%;
+        right: -@width / 2 - @mDefault / 2;
+        top: 0;
     }
     // STATE
     &_state_visible {

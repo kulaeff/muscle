@@ -15,6 +15,7 @@ class ScrollBar extends React.Component {
         containerHeight: PropTypes.number.isRequired,
         containerPosition: PropTypes.number.isRequired,
         wrapperHeight: PropTypes.number.isRequired,
+        position: PropTypes.string.isRequired,
         visible: PropTypes.bool.isRequired
     };
 
@@ -86,10 +87,13 @@ class ScrollBar extends React.Component {
     render() {
         const
             b = block('scroll-bar'),
-            { visible } = this.props;
+            { position, visible } = this.props;
 
         return (
-            <div className={b({state: visible ? 'visible' : null})}>
+            <div className={b({
+                position,
+                state: visible ? 'visible' : null
+            })}>
                 <div
                     className={b('handle')}
                     style={{

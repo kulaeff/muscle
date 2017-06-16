@@ -14,6 +14,7 @@ class ScrollBox extends React.Component {
      * @static
      */
     static propTypes = {
+        scrollBarPosition: PropTypes.oneOf(['inner', 'outer']),
         scrollBarTimeout: PropTypes.number,
         speed: PropTypes.number
     };
@@ -23,6 +24,7 @@ class ScrollBox extends React.Component {
      * @static
      */
     static defaultProps = {
+        scrollBarPosition: 'inner',
         scrollBarTimeout: 1200,
         speed: 0.7
     };
@@ -154,7 +156,7 @@ class ScrollBox extends React.Component {
     render() {
         const
             b = block('scroll-box'),
-            { children } = this.props;
+            { children, scrollBarPosition } = this.props;
 
         return (
             <div
@@ -176,6 +178,7 @@ class ScrollBox extends React.Component {
                         wrapperHeight={this.state.wrapperHeight}
                         containerHeight={this.state.containerHeight}
                         containerPosition={-this.state.containerTop}
+                        position={scrollBarPosition}
                         visible={this.state.scrolling}
                     />
                 }

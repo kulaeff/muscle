@@ -25,8 +25,8 @@ class Components extends React.Component {
 
         this.state = {
             checkboxChecked: true,
-            listBoxDefaultItems: [...new Array(20).keys()].map(item => `Item ${item}`),
-            listBoxCustomItems: [...new Array(20).keys()].map(item => {
+            listBoxDefaultItems: [...new Array(10).keys()].map(item => `Item ${item}`),
+            listBoxCustomItems: [...new Array(10).keys()].map(item => {
                 return {
                     label: `Item ${item}`,
                     price: item * 10
@@ -89,7 +89,7 @@ class Components extends React.Component {
 
         return (
             <div className={b()}>
-                <ScrollBox>
+                <ScrollBox scrollBarPosition="outer">
                     <div className={b('title')}>
                         <Title primaryTitle="Components" />
                     </div>
