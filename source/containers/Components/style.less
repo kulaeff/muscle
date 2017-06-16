@@ -20,14 +20,15 @@
 
         display: block;
         counter-increment: section;
-        padding: 0 0 @mDefault;
+        &-content {
+            padding: @mDefault 0;
+        }
         &-title {
             background-color: @cGray10;
             display: block;
             font-size: 1.1rem;
             font-weight: 600;
             line-height: @size;
-            margin-bottom: @mDefault;
             position: relative;
             text-transform: uppercase;
             &:before {

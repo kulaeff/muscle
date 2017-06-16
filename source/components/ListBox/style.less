@@ -8,6 +8,7 @@
     font-size: 1.3rem;
     height: 100%;
     min-height: @hDefault;
+    outline: none;
     overflow: hidden;
     position: relative;
     transition: background-color @dDefault linear, border-color @dDefault linear;
@@ -16,15 +17,17 @@
         cursor: default;
         display: block;
         padding: @textboxHeight / 5 @textboxHeight * 0.3;
-        transition: background-color @dDefault linear, border-color @dDefault linear;
+        transition: background-color @dDefault linear, border-color @dDefault linear, color @dDefault linear;
         &:hover {
             background-color: rgba(0,0,0,.03);
         }
         // STATES
         &_state_selected {
-            background-color: rgba(0,0,0,.1);
+            background-color: @cGray10;
+            color: #fff;
             &:hover {
-                background-color: rgba(0,0,0,.1);
+                background-color: @cGray10;
+                color: #fff;
             }
         }
     }
@@ -39,5 +42,8 @@
     &:disabled {
         background-color: transparent;
         border-color: @textboxColorBorderDisabled;
+    }
+    &:focus &__option_state_selected {
+        background-color: @cAccent;
     }
 }

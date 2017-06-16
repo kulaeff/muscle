@@ -22,16 +22,21 @@ class ScrollBox extends React.Component {
      * @static
      */
     static defaultProps = {
-        speed: 0.6
+        speed: 0.7
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            wrapperHeight: 0,
+            canScroll: false,
             containerHeight: 0,
-            containerTop: 0
+            containerWidth: 0,
+            containerTop: 0,
+            wrapperHeight: 0,
+            wrapperWidth: 0,
+            scrolling: false,
+            timeoutID: null
         };
     }
 
@@ -43,45 +48,97 @@ class ScrollBox extends React.Component {
         this.updateState();
     }
 
+    /**
+     * Gets current sizes
+     * @returns {object}
+     */
     invalidateSizes = () => {
         return {
             wrapperHeight: this.wrapper.clientHeight,
-            containerHeight: this.container.clientHeight
+            wrapperWidth: this.wrapper.clientWidth,
+            containerHeight: this.container.clientHeight,
+            containerWidth: this.container.clientWidth
         }
     };
 
+    /**
+     * Updates the local state if sizes were changed
+     */
     updateState = () => {
         const sizes = this.invalidateSizes();
 
-        if (sizes.wrapperHeight !== this.state.wrapperHeight || sizes.containerHeight !== this.state.containerHeight) {
-            this.invalidateState(sizes);
+        if (
+            sizes.wrapperHeight !== this.state.wrapperHeight ||
+            sizes.wrapperWidth !== this.state.wrapperWidth ||
+            sizes.containerHeight !== this.state.containerHeight ||
+            sizes.containerWidth !== this.state.containerWidth
+        ) {
+            this.invalidateState({
+                ...sizes,
+                canScroll: sizes.containerHeight > sizes.wrapperHeight
+            });
         }
     };
 
+    /**
+     * Sets the local state
+     * @param {object} state State
+     */
     invalidateState = (state) => {
         this.setState({...state});
     };
 
+    /**
+     * Handler for the wheel event
+     * @param {Event} event Event
+     */
     handleWheel = (event) => {
-        const
-            sizes = this.invalidateSizes(),
-            deltaY = event.deltaY * this.props.speed;
+        if (this.state.timeoutID) {
+            clearTimeout(this.state.timeoutID);
+        }
 
-        if (sizes.containerHeight > sizes.wrapperHeight) {
-            sizes.containerTop = this.computeTopPosition(sizes, deltaY);
+        if (this.state.canScroll) {
+            const
+                deltaY = this.normalizeDelta(event.deltaY),
+                containerTop = this.computeTopPosition(deltaY),
+                timeoutID = setTimeout(() => {
+                    this.invalidateState({
+                        scrolling: false
+                    })
+                }, 1000);
 
-            this.invalidateState(sizes);
+            this.invalidateState({
+                containerTop,
+                scrolling: true,
+                timeoutID
+            });
+
+            if (this.state.containerTop !== containerTop) {
+                event.stopPropagation();
+            }
         }
     };
 
-    computeTopPosition = (sizes, deltaY) => {
-        let position = this.state.containerTop - deltaY;
+    /**
+     * Normalizes a delta
+     * @param {number} delta Delta
+     * @returns {number} Normalized delta
+     */
+    normalizeDelta = (delta) => {
+        return delta * this.props.speed;
+    };
 
-        if (position < sizes.wrapperHeight - sizes.containerHeight) {
-            position = sizes.wrapperHeight - sizes.containerHeight;
-        }
+    /**
+     * Computes a top position for the container
+     * @param {number} delta Delta
+     * @returns {number} Top position
+     */
+    computeTopPosition = (delta) => {
+        let position = this.state.containerTop - delta;
 
-        if (position > 0) {
+        if (position < this.state.wrapperHeight - this.state.containerHeight) {
+            position = this.state.wrapperHeight - this.state.containerHeight;
+        } else if (position > 0) {
             position = 0;
         }
 
@@ -116,7 +173,7 @@ class ScrollBox extends React.Component {
                     <ScrollBar
                         height={this.state.wrapperHeight * 100 / this.state.containerHeight}
                         position={-this.state.containerTop}
-                        visible={this.state.wrapperHeight < this.state.containerHeight}
+                        visible={this.state.scrolling}
                     />
                 }
             </div>

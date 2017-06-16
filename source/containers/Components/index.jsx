@@ -5,6 +5,7 @@ import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
 import Grid, { GridItem, GridSeparator } from '../../components/Grid'
+import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
 import RadioGroup from '../../components/RadioGroup'
 import SplitContainer, { SplitContainerPanel } from '../../components/SplitContainer'
@@ -24,6 +25,15 @@ class Components extends React.Component {
 
         this.state = {
             checkboxChecked: true,
+            listBoxDefaultItems: [...new Array(20).keys()].map(item => `Item ${item}`),
+            listBoxCustomItems: [...new Array(20).keys()].map(item => {
+                return {
+                    label: `Item ${item}`,
+                    price: item * 10
+                }
+            }),
+            listBoxDefaultSelectedIndex: null,
+            listBoxCustomSelectedIndex: null,
             radioValue: 0
         };
     }
@@ -49,6 +59,22 @@ class Components extends React.Component {
 
         this.setState({
             checkboxChecked: !this.state.checkboxChecked
+        });
+    };
+
+    handleListBoxDefaultChange = (index) => {
+        console.info('List box item changed: ', this.state.listBoxDefaultItems[index]);
+
+        this.setState({
+            listBoxDefaultSelectedIndex: index
+        });
+    };
+
+    handleListBoxCustomChange = (index) => {
+        console.info('List box item changed: ', this.state.listBoxCustomItems[index]);
+
+        this.setState({
+            listBoxCustomSelectedIndex: index
         });
     };
 
@@ -391,6 +417,54 @@ class Components extends React.Component {
                                                         onChange={this.handleRadioChange}
                                                     />
                                                 </RadioGroup>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* ListBox */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>ListBox</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{height: '16rem'}}>
+                                                    <ListBox
+                                                        items={this.state.listBoxDefaultItems}
+                                                        selected={this.state.listBoxDefaultSelectedIndex}
+                                                        onChange={this.handleListBoxDefaultChange}
+                                                    />
+                                                </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Custom" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{height: '16rem'}}>
+                                                    <ListBox
+                                                        selected={this.state.listBoxCustomSelectedIndex}
+                                                        onChange={this.handleListBoxCustomChange}
+                                                    >
+                                                        {
+                                                            this.state.listBoxCustomItems.map((item, index) =>
+                                                                <ListBoxItem key={index}>
+                                                                    {item.label} – ${item.price}
+                                                                </ListBoxItem>
+                                                            )
+                                                        }
+                                                    </ListBox>
+                                                </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
                                     </GridItem>

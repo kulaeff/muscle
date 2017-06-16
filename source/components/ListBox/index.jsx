@@ -25,8 +25,8 @@ class ListBox extends React.Component {
      */
     static propTypes = {
         items: PropTypes.array,
-        selectedIndex: PropTypes.number,
-        onChange: PropTypes.func
+        selected: PropTypes.number,
+        onChange: PropTypes.func.isRequired
     };
 
     /**
@@ -37,8 +37,7 @@ class ListBox extends React.Component {
      */
     static defaultProps = {
         items: [],
-        required: false,
-        selectedIndex: null,
+        selected: null,
         value: ''
     };
 
@@ -59,14 +58,10 @@ class ListBox extends React.Component {
     render() {
         const
             b = block('list-box'),
-            {
-                children,
-                items,
-                selectedIndex
-            } = this.props;
+            { children, items, selected } = this.props;
 
         return (
-            <div className={b()}>
+            <div className={b()} tabIndex={0}>
                 <ScrollBox>
                     {
                         items.length ? (
@@ -74,13 +69,17 @@ class ListBox extends React.Component {
                                 <ListBoxItem
                                     index={index}
                                     key={index}
-                                    selected={index === selectedIndex}
+                                    selected={index === selected}
                                     onClick={this.handleOptionClick}
                                 >{item}</ListBoxItem>
                             )
-                        ) : (
-                            children.map(child => child)
-                        )
+                        ) : React.Children.count(children) ? (
+                            React.Children.map(children, (listBoxItem, index) => React.cloneElement(listBoxItem, {
+                                index,
+                                selected: index === selected,
+                                onClick: this.handleOptionClick
+                            }))
+                        ) : null
                     }
                 </ScrollBox>
             </div>

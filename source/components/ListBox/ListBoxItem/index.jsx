@@ -11,18 +11,18 @@ class ListBoxItem extends React.Component {
      * Properties
      * @static
      * @property {number} id The id of the item
-     * @property {string} label The label of the item
      * @property {bool} selected Is the item selected
      * @property {func} onClick Click event handler
      */
     static propTypes = {
-        index: PropTypes.number.isRequired,
+        index: PropTypes.number,
         selected: PropTypes.bool,
         tooltip: PropTypes.string,
         onClick: PropTypes.func
     };
 
     static defaultProps = {
+        index: null,
         selected: false,
         tooltip: ''
     };
@@ -45,12 +45,7 @@ class ListBoxItem extends React.Component {
     render() {
         const
             b = block('list-box'),
-            {
-                children,
-                index,
-                selected,
-                tooltip
-            } = this.props;
+            { children, index, selected, tooltip } = this.props;
 
         return (
             <div
