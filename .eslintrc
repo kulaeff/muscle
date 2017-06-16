@@ -16,7 +16,7 @@
         "eol-last": "off",
         "eqeqeq": "error",
         "indent": ["error", 4, {"SwitchCase": 1}],
-        "max-len": ["error", 120],
+        "max-len": ["error", 140],
         "new-cap": "off",
         "newline-after-var": ["error", "always"],
         "newline-before-return": "error",

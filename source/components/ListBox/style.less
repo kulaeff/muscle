@@ -16,7 +16,9 @@
     &__option {
         cursor: default;
         display: block;
-        padding: @textboxHeight / 5 @textboxHeight * 0.3;
+        height: @textboxHeight;
+        line-height: @textboxHeight;
+        padding: 0 @textboxHeight * 0.3;
         transition: background-color @dDefault linear, border-color @dDefault linear, color @dDefault linear;
         &:hover {
             background-color: rgba(0,0,0,.03);

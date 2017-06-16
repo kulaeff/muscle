@@ -12,8 +12,9 @@ class ScrollBar extends React.Component {
      * @static
      */
     static propTypes = {
-        height: PropTypes.number.isRequired,
-        position: PropTypes.number.isRequired,
+        containerHeight: PropTypes.number.isRequired,
+        containerPosition: PropTypes.number.isRequired,
+        wrapperHeight: PropTypes.number.isRequired,
         visible: PropTypes.bool.isRequired
     };
 
@@ -23,9 +24,60 @@ class ScrollBar extends React.Component {
      */
     static defaultProps = {};
 
+    /**
+     * Create the component
+     * @constructor
+     * @param {object} props Properties
+     */
     constructor(props) {
         super(props);
+
+        this.state = this.composeState(props);
     }
+
+    /**
+     * Updates the local state
+     * @param nextProps
+     */
+    componentWillReceiveProps(nextProps) {
+        this.setState(this.composeState(nextProps));
+    }
+
+    /**
+     * Composes a new state with handle height and top position
+     * @param props
+     * @returns {{handleHeight: number, handlePosition: number}}
+     */
+    composeState = (props) => {
+        const
+            handleHeight = this.calculateHandleHeight(props.containerHeight, props.wrapperHeight),
+            handlePosition = this.calculateHandlePosition(props.containerHeight, props.containerPosition, props.wrapperHeight);
+
+        return {
+            handleHeight,
+            handlePosition
+        };
+    };
+
+    /**
+     * Calculates a height of the handle
+     * @param {number} containerHeight Container height
+     * @param {number} wrapperHeight Wrapper height
+     * @returns {number} Handle height
+     */
+    calculateHandleHeight = (containerHeight, wrapperHeight) => {
+        return wrapperHeight * 100 / containerHeight;
+    };
+
+    /**
+     * Calculates a top position of the handle
+     * @param {number} containerHeight Container height
+     * @param {number} containerPosition Container top position
+     * @returns {number} Handle position
+     */
+    calculateHandlePosition = (containerHeight, containerPosition) => {
+        return containerPosition * 100 / containerHeight;
+    };
 
     /**
      * Render the component
@@ -34,19 +86,15 @@ class ScrollBar extends React.Component {
     render() {
         const
             b = block('scroll-bar'),
-            { height, position, visible } = this.props;
+            { visible } = this.props;
 
         return (
-            <div
-                className={b({state: visible ? 'visible' : null})}
-                ref={element => this.wrapper = element}
-            >
+            <div className={b({state: visible ? 'visible' : null})}>
                 <div
                     className={b('handle')}
-                    ref={element => this.handle = element}
                     style={{
-                        height: `${height}%`,
-                        transform: `translate(0, ${position}px)`
+                        height: `${this.state.handleHeight}%`,
+                        top: `${this.state.handlePosition}%`
                     }}
                 />
             </div>

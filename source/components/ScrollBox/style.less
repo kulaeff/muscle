@@ -1,11 +1,13 @@
 @import (reference) '../../styles/variables';
 
 .scroll-box {
+    box-sizing: border-box;
     display: block;
     overflow: hidden;
     position: relative;
     height: 100%;
     &__container {
+        box-sizing: border-box;
         display: block;
         left: 0;
         position: absolute;
@@ -17,11 +19,12 @@
 
 .scroll-bar {
     background-color: rgba(0, 0, 0, .05);
-    cursor: pointer;
     display: block;
+    font-size: 0;
     height: calc(100% ~'-' 10px);
     opacity: 0;
     overflow: hidden;
+    pointer-events: none;
     position: absolute;
     right: 5px;
     top: 5px;
@@ -30,10 +33,11 @@
     &__handle {
         background-color: fade(@cAccent, 80%);
         display: block;
+        font-size: 0;
         left: 0;
         position: absolute;
         top: 0;
-        transition: transform @dDefault * 2 ease-out;
+        transition: top @dDefault * 2 ease-out;
         width: 100%;
     }
     //
@@ -45,6 +49,8 @@
     }
     // STATE
     &_state_visible {
+        cursor: pointer;
         opacity: 1;
+        pointer-events: initial;
     }
 }

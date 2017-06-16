@@ -14,6 +14,7 @@ class ScrollBox extends React.Component {
      * @static
      */
     static propTypes = {
+        scrollBarTimeout: PropTypes.number,
         speed: PropTypes.number
     };
 
@@ -22,6 +23,7 @@ class ScrollBox extends React.Component {
      * @static
      */
     static defaultProps = {
+        scrollBarTimeout: 1200,
         speed: 0.7
     };
 
@@ -54,10 +56,10 @@ class ScrollBox extends React.Component {
      */
     invalidateSizes = () => {
         return {
-            wrapperHeight: this.wrapper.clientHeight,
-            wrapperWidth: this.wrapper.clientWidth,
-            containerHeight: this.container.clientHeight,
-            containerWidth: this.container.clientWidth
+            wrapperHeight: this.wrapper.offsetHeight,
+            wrapperWidth: this.wrapper.offsetWidth,
+            containerHeight: this.container.offsetHeight,
+            containerWidth: this.container.offsetWidth
         }
     };
 
@@ -105,7 +107,7 @@ class ScrollBox extends React.Component {
                     this.invalidateState({
                         scrolling: false
                     })
-                }, 1000);
+                }, this.props.scrollBarTimeout);
 
             this.invalidateState({
                 containerTop,
@@ -171,8 +173,9 @@ class ScrollBox extends React.Component {
                 </div>
                 {
                     <ScrollBar
-                        height={this.state.wrapperHeight * 100 / this.state.containerHeight}
-                        position={-this.state.containerTop}
+                        wrapperHeight={this.state.wrapperHeight}
+                        containerHeight={this.state.containerHeight}
+                        containerPosition={-this.state.containerTop}
                         visible={this.state.scrolling}
                     />
                 }
