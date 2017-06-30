@@ -3,10 +3,10 @@
 /***************************************************************/
 
 // Accent color
-@cAccent: #48d;
+@cAccent: #37d;
 
 // Foreground color
-@cForeground: #000;
+@cForeground: #070809;
 
 // Background color
 @cBackground: #e0e1e2;
@@ -14,38 +14,19 @@
 // Sidebar background color
 @cSidebar: #f0f1f2;
 
-// Window background color
-@cWindow: #fff;
-
-// Active color
-@cActive: #505152;
-
-// Border color
-@cBorder: #e0e1e2;
-
-// Control color
-@cControl: #f3f4f5;
-
-// Disabled color
-@cDisabled: #e7e8e9;
-
-// Hover color
-@cHover: #f3f4f5;
-
-// Selected color
-@cSelected: @cAccent;
-
-// Gray colors
-@cGray75: rgba(0, 1, 2, .75);
-@cGray50: rgba(0, 1, 2, .5);
-@cGray25: rgba(0, 1, 2, .25);
-@cGray10: rgba(0, 1, 2, .10);
+// Semi-transparent colors
+@cTransparentDark75: rgba(0, 1, 2, .75);
+@cTransparentDark50: rgba(0, 1, 2, .5);
+@cTransparentDark25: rgba(0, 1, 2, .25);
+@cTransparentDark10: rgba(0, 1, 2, .10);
+@cTransparentDark05: rgba(0, 1, 2, .05);
 
 /***************************************************************/
 /* Z-INDEXES                                                   */
 /***************************************************************/
 
 @zModal: 100;
+@zDropdown: @zModal + 10;
 
 /***************************************************************/
 /* DEFAULT PROPERTIES                                          */
@@ -64,31 +45,53 @@
 /* COMPONENTS STYLES                                           */
 /***************************************************************/
 
+// Control colors
+@controlBackgroundColor: #f0f1f2;
+@controlBackgroundColorActive: #505152;
+@controlBackgroundColorDisabled: #f0f1f2;
+@controlBackgroundColorFocused: #eaebec;
+@controlBackgroundColorHover: #eaebec;
+@controlBackgroundColorSelected: @cAccent;
+@controlForegroundColor: @cForeground;
+@controlForegroundColorActive: @controlForegroundColor;
+@controlForegroundColorHover: @controlForegroundColor;
+@controlForegroundColorDisabled: @cTransparentDark50;
+@controlForegroundColorSelected: #fff;
+@controlBorderColor: #e0e1e2;
+@controlBorderColorActive: @controlBorderColor;
+@controlBorderColorDisabled: @controlBorderColor;
+@controlBorderColorFocused: @controlBorderColor;
+@controlBorderColorHover: @controlBorderColor;
+@controlBorderColorSelected: @controlBorderColor;
+@controlBorderThickness: 0;
+@controlHeight: @hDefault;
+@controlPlaceholderColor: @cTransparentDark50;
+
 // ActionButton
 @actionButtonDefaultBackgroundColor: @cAccent;
-@actionButtonDefaultBackgroundColorActive: @cActive;
-@actionButtonDefaultBackgroundColorDisabled: @cDisabled;
+@actionButtonDefaultBackgroundColorActive: @controlBackgroundColorActive;
+@actionButtonDefaultBackgroundColorDisabled: @controlBackgroundColorDisabled;
 @actionButtonDefaultBackgroundColorHover: darken(@buttonDefaultBackgroundColor, 5%);
 @actionButtonDefaultBorderColor: @cAccent;
-@actionButtonDefaultBorderColorActive: @cActive;
-@actionButtonDefaultBorderColorDisabled: @cDisabled;
+@actionButtonDefaultBorderColorActive: @controlBackgroundColorActive;
+@actionButtonDefaultBorderColorDisabled: @controlBackgroundColorDisabled;
 @actionButtonDefaultBorderColorHover: darken(@buttonDefaultBorderColor, 5%);
 @actionButtonDefaultBorderRadius: 0;
 @actionButtonDefaultBorderThickness: 0;
 @actionButtonDefaultForegroundColor: #fff;
 @actionButtonDefaultForegroundColorActive: @buttonDefaultForegroundColor;
-@actionButtonDefaultForegroundColorDisabled: darken(@buttonDefaultBackgroundColorDisabled, 20%);
+@actionButtonDefaultForegroundColorDisabled: @controlForegroundColorDisabled;
 @actionButtonDefaultForegroundColorHover: @buttonDefaultForegroundColor;
 @actionButtonHeight: @hDefault * .8;
 
 // Button
 @buttonDefaultBackgroundColor: @cAccent;
-@buttonDefaultBackgroundColorActive: @cActive;
-@buttonDefaultBackgroundColorDisabled: @cDisabled;
+@buttonDefaultBackgroundColorActive: @controlBackgroundColorActive;
+@buttonDefaultBackgroundColorDisabled: @controlBackgroundColorDisabled;
 @buttonDefaultBackgroundColorHover: darken(@buttonDefaultBackgroundColor, 5%);
 @buttonDefaultBorderColor: @cAccent;
-@buttonDefaultBorderColorActive: @cActive;
-@buttonDefaultBorderColorDisabled: @cDisabled;
+@buttonDefaultBorderColorActive: @controlBackgroundColorActive;
+@buttonDefaultBorderColorDisabled: @controlBackgroundColorDisabled;
 @buttonDefaultBorderColorHover: darken(@buttonDefaultBorderColor, 5%);
 @buttonDefaultBorderRadius: 0;
 @buttonDefaultBorderThickness: 0;
@@ -97,9 +100,9 @@
 @buttonDefaultForegroundColorDisabled: darken(@buttonDefaultBackgroundColorDisabled, 20%);
 @buttonDefaultForegroundColorHover: @buttonDefaultForegroundColor;
 @buttonResetBackgroundColor: transparent;
-@buttonResetBackgroundColorActive: @cActive;
+@buttonResetBackgroundColorActive: @controlBackgroundColorActive;
 @buttonResetBackgroundColorDisabled: @buttonResetBackgroundColor;
-@buttonResetBackgroundColorHover: @cHover;
+@buttonResetBackgroundColorHover: @controlBackgroundColorHover;
 @buttonResetBorderColor: transparent;
 @buttonResetBorderColorActive: @buttonResetBorderColor;
 @buttonResetBorderColorDisabled: @buttonResetBorderColor;
@@ -113,7 +116,7 @@
 @buttonHeight: @hDefault;
 
 // Checkbox
-@checkboxBackgroundColor: darken(@cControl, 5%);
+@checkboxBackgroundColor: darken(@controlBackgroundColor, 5%);
 @checkboxBackgroundColorActive: darken(@checkboxBackgroundColor, 5%);
 @checkboxBackgroundColorChecked: @checkboxBackgroundColor;
 @checkboxBackgroundColorDisabled: @checkboxBackgroundColor;
@@ -133,20 +136,20 @@
 @checkboxMarkerColor: @cAccent;
 @checkboxMarkerColorActive: @radioMarkerColor;
 @checkboxMarkerColorHover: @radioMarkerColor;
-@checkboxMarkerColorDisabled: @cGray25;
+@checkboxMarkerColorDisabled: @cTransparentDark25;
 
 // DataTable
 @dataTableBorderThickness: 1px;
 @dataTableColorBackground: transparent;
-@dataTableColorBorder: @cBorder;
+@dataTableColorBorder: @controlBorderColor;
 @dataTableColorForeground: @cForeground;
 @dataTableColumnColorBackground: transparent;
-@dataTableColumnColorForeground: @cGray50;
+@dataTableColumnColorForeground: @cTransparentDark50;
 @dataTableColumnColorBackgroundHover: @dataTableColumnColorBackground;
-@dataTableColumnColorForegroundHover: @cGray50;
+@dataTableColumnColorForegroundHover: @cTransparentDark50;
 @dataTableColumnArrowColor: @cForeground;
-@dataTableFooterColorBorder: @cBorder;
-@dataTableHeaderColorBorder: @cBorder;
+@dataTableFooterColorBorder: @controlBorderColor;
+@dataTableHeaderColorBorder: @controlBorderColor;
 @dataTableItemColorBackgroundHover: rgba(0, 0, 0, 0.05);
 @dataTableItemColorBackgroundSelected: @cAccent;
 @dataTableItemColorForegroundSelected: #fff;
@@ -154,14 +157,30 @@
 
 // Indicator
 @indicatorBorderThickness: 0;
-@indicatorBackgroundColor: @cControl;
-@indicatorBorderColor: @cBorder;
-@indicatorTitleColor: @cGray50;
+@indicatorBackgroundColor: @controlBackgroundColor;
+@indicatorBorderColor: @controlBorderColor;
+@indicatorTitleColor: @cTransparentDark50;
+
+// ListBox
+@listBoxBorderThickness: 0;
+@listBoxBackgroundColor: @controlBackgroundColor;
+@listBoxBackgroundColorActive: darken(@listBoxBackgroundColor, 3%);
+@listBoxBackgroundColorDisabled: @listBoxBackgroundColor;
+@listBoxBackgroundColorHover: @listBoxBackgroundColorActive;
+@listBoxBorderColor: transparent;
+@listBoxBorderColorActive: @listBoxBorderColor;
+@listBoxBorderColorDisabled: @controlBackgroundColor;
+@listBoxBorderColorHover: @listBoxBorderColor;
+@listBoxForegroundColor: @cForeground;
+@listBoxForegroundColorActive: @listBoxForegroundColor;
+@listBoxForegroundColorDisabled: @cTransparentDark50;
+@listBoxColorForegroundHover: @listBoxForegroundColor;
+@listBoxHeight: @hDefault;
 
 // ListView & ListViewItem
 @listViewItemBackgroundColor: transparent;
 @listViewItemBackgroundColorActive: @cAccent;
-@listViewItemBackgroundColorHover: @cHover;
+@listViewItemBackgroundColorHover: @controlBackgroundColorHover;
 @listViewItemForegroundColor: @cForeground;
 @listViewItemForegroundColorActive: #fff;
 @listViewItemForegroundColorHover: @listViewItemForegroundColor;
@@ -175,7 +194,7 @@
 @navigationBarItemForegroundColorSelected: #fff;
 
 // Radio
-@radioBackgroundColor: darken(@cControl, 5%);
+@radioBackgroundColor: darken(@controlBackgroundColor, 5%);
 @radioBackgroundColorActive: darken(@radioBackgroundColor, 5%);
 @radioBackgroundColorChecked: @radioBackgroundColor;
 @radioBackgroundColorDisabled: @radioBackgroundColor;
@@ -190,53 +209,53 @@
 @radioForegroundColor: @cForeground;
 @radioForegroundColorActive: @radioForegroundColor;
 @radioForegroundColorChecked: @radioForegroundColor;
-@radioForegroundColorDisabled: @radioForegroundColor;
+@radioForegroundColorDisabled: @cTransparentDark50;
 @radioForegroundColorHover: @radioForegroundColor;
 @radioMarkerColor: @cAccent;
 @radioMarkerColorActive: @radioMarkerColor;
 @radioMarkerColorHover: @radioMarkerColor;
-@radioMarkerColorDisabled: @cGray25;
-
-// Spinner
-@spinnerColor: @cAccent;
-@spinnerSize: 2.6rem;
+@radioMarkerColorDisabled: @cTransparentDark25;
 
 // Textbox
 @textboxBorderThickness: 0;
-@textboxColorBackground: @cControl;
+@textboxColorBackground: @controlBackgroundColor;
 @textboxColorBackgroundActive: darken(@textboxColorBackground, 3%);
-@textboxColorBackgroundDisabled: lighten(@textboxColorBackground, 10%);
+@textboxColorBackgroundDisabled: @textboxColorBackground;
 @textboxColorBackgroundHover: @textboxColorBackgroundActive;
-@textboxColorBorder: @cBorder;
-@textboxColorBorderActive: @cAccent;
-@textboxColorBorderDisabled: rgba(255, 255, 255, 0.1);
-@textboxColorBorderHover: darken(@cBorder, 10%);
+@textboxColorBorder: transparent;
+@textboxColorBorderActive: @textboxColorBorder;
+@textboxColorBorderDisabled: @controlBackgroundColor;
+@textboxColorBorderHover: @textboxColorBorder;
 @textboxColorForeground: @cForeground;
-@textboxColorForegroundDisabled: @textboxColorForeground;
+@textboxColorForegroundActive: @textboxColorForeground;
+@textboxColorForegroundDisabled: @cTransparentDark50;
 @textboxColorForegroundHover: @textboxColorForeground;
 @textboxHeight: @hDefault;
 
 // Toggle
-@toggleBorderThickness: 2px;
-@toggleBorderColor: darken(@cControl, 5%);
-@toggleBorderColorChecked: @cAccent;
-@toggleBorderColorHover: @toggleBorderColor;
-@toggleBackgroundColor: darken(@cControl, 5%);
+@toggleBackgroundColor: darken(@controlBackgroundColor, 5%);
 @toggleBackgroundColorChecked: @cAccent;
-@toggleBackgroundColorHover: @toggleBackgroundColor;
+@toggleBackgroundColorDisabled: @toggleBackgroundColor;
+@toggleBackgroundColorHover: darken(@toggleBackgroundColor, 5%);
+@toggleBorderThickness: 2px;
+@toggleBorderColor: @toggleBackgroundColor;
+@toggleBorderColorChecked: @cAccent;
+@toggleBorderColorDisabled: @toggleBackgroundColor;
+@toggleBorderColorHover: @toggleBackgroundColorHover;
 @toggleHandleBackgroundColor: #fff;
 @toggleHandleBackgroundColorChecked: @toggleHandleBackgroundColor;
+@toggleHandleBackgroundColorDisabled: @toggleHandleBackgroundColor;
 @toggleHandleBackgroundColorHover: @toggleHandleBackgroundColor;
 
 // ToolButton
 @toolButtonBorderRadius: 50%;
 @toolButtonBorderThickness: 0;
 @toolButtonBackgroundColor: @cAccent;
-@toolButtonBackgroundColorActive: @cActive;
-@toolButtonBackgroundColorDisabled: @cDisabled;
+@toolButtonBackgroundColorActive: @controlBackgroundColorActive;
+@toolButtonBackgroundColorDisabled: @controlBackgroundColorDisabled;
 @toolButtonBackgroundColorHover: darken(@toolButtonBackgroundColor, 5%);
 @toolButtonBorderColor: transparent;
-@toolButtonBorderColorActive: @cActive;
+@toolButtonBorderColorActive: @controlBackgroundColorActive;
 @toolButtonBorderColorDisabled: rgba(0, 0, 0, .15);
 @toolButtonBorderColorHover: #000;
 @toolButtonForegroundColor: #fff;
@@ -246,12 +265,12 @@
 @toolButtonSize: 3.2rem;
 
 // Window
-@cWindowBackground: @cWindow;
-@cWindowBackgroundHover: darken(@cWindow, 2%);
-@cWindowBorder: @cBorder;
+@cWindowBackground: #fff;
+@cWindowBackgroundHover: darken(@cWindowBackground, 2%);
+@cWindowBorder: @controlBorderColor;
 @cWindowForeground: @cForeground;
 @cWindowButtonBackground: transparent;
-@cWindowButtonBackgroundActive: @cActive;
-@cWindowButtonBackgroundHover: darken(@cWindow, 5%);
+@cWindowButtonBackgroundActive: @controlBackgroundColorActive;
+@cWindowButtonBackgroundHover: darken(@cWindowBackground, 5%);
 @cWindowButtonForeground: @cForeground;
 @cWindowButtonForegroundActive: #fff;

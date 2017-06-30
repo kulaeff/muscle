@@ -86,6 +86,9 @@ module.exports = (env) => {
             ]
         },
         plugins: [
+            new webpack.DefinePlugin({
+                'process.env.VERSION': JSON.stringify(pkg.version)
+            }),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
                 minChunks: function (module) {
@@ -121,11 +124,6 @@ module.exports = (env) => {
     };
 
     if (env.production) {
-        config.plugins.push(
-            new webpack.DefinePlugin({
-                'process.env.VERSION': JSON.stringify(pkg.version)
-            })
-        );
         config.plugins.push(
             new webpack.NoEmitOnErrorsPlugin()
         );

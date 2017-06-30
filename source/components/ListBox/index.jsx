@@ -24,6 +24,7 @@ class ListBox extends React.Component {
      * @property {function} onChange The Textbox's change handler
      */
     static propTypes = {
+        disabled: PropTypes.bool,
         items: PropTypes.array,
         selected: PropTypes.number,
         onChange: PropTypes.func.isRequired
@@ -36,6 +37,7 @@ class ListBox extends React.Component {
      * @property {string} theme Default theme
      */
     static defaultProps = {
+        disabled: false,
         items: [],
         selected: null,
         value: ''
@@ -58,10 +60,10 @@ class ListBox extends React.Component {
     render() {
         const
             b = block('list-box'),
-            { children, items, selected } = this.props;
+            { children, disabled, items, selected } = this.props;
 
         return (
-            <div className={b()} tabIndex={0}>
+            <div className={b({state: disabled ? 'disabled' : null})} tabIndex={0}>
                 <ScrollBox>
                     {
                         items.length ? (

@@ -1,0 +1,28 @@
+@import (reference) '../../styles/variables';
+
+.about {
+    background-color: @cWindowBackground;
+    height: 100%;
+    position: relative;
+    &__content {
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &__description {
+        display: block;
+        color: @cTransparentDark50;
+    }
+    &__title {
+        display: block;
+        font-size: 1.6rem;
+    }
+    &__url {
+        //
+    }
+    &__version {
+        display: block;
+        margin: @mDefault 0;
+    }
+}

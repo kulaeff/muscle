@@ -84,6 +84,10 @@ class API {
     async saveColumn(data) {
         return this.axios.put('column', data)
     }
+
+    async getCollations() {
+        return this.axios.get('collations')
+    }
 }
 
 export default API;

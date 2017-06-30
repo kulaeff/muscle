@@ -22,9 +22,6 @@ const
         )
     );
 
-// eslint-disable-next-line prefer-const
-let __svg__ = { name: 'assets/icons.svg', path: './**/*.svg' };
-
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
@@ -32,10 +29,9 @@ ReactDOM.render(
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
-)
+);
 
-if (process.env.NODE_ENV === 'production') {
-    console.info(`Version: ${process.env.VERSION}`)
-}
+// eslint-disable-next-line prefer-const
+let __svg__ = { name: 'assets/icons.svg', path: './**/*.svg' };
 
 require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);

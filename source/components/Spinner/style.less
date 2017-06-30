@@ -1,8 +1,5 @@
 @import (reference) '../../styles/variables';
 
-@speed: @dDefault * 8;
-@sizeRect: 0.4rem;
-
 @keyframes rotate {
     0% {
         transform: rotate(0);
@@ -12,124 +9,65 @@
     }
 }
 
-@keyframes pulsateEllipse {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: .1;
-    }
-}
-
-@keyframes pulsateRect {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: .1;
-    }
-}
+@thickness: 2px;
 
 .spinner {
     display: inline-block;
-    position: relative;
+    position: absolute;
+    opacity: 0;
     vertical-align: middle;
     &__container {
+        animation: rotate .4s infinite linear;
         height: 100%;
         width: 100%;
     }
     &__ellipse {
         border: 3px solid transparent;
+        border-bottom-color: @cAccent;
+        border-top-color: @cAccent;
         border-radius: 50%;
         box-sizing: border-box;
         height: 100%;
         left: 0;
-        opacity: 0;
         position: absolute;
         top: 0;
         width: 100%;
-        &_position_bottom {
-            border-bottom-color: @spinnerColor;
-        }
-        &_position_left {
-            border-left-color: @spinnerColor;
-        }
-        &_position_right {
-            border-right-color: @spinnerColor;
-        }
-        &_position_top {
-            border-top-color: @spinnerColor;
-        }
     }
-    &__rect {
-        background-color: @cForeground;
-        display: inline-block;
-        height: @sizeRect;
-        opacity: 0;
-        position: absolute;
-        width: @sizeRect;
-        &_position_lt {
-            left: 0;
-            top: 0;
-        }
-        &_position_rt {
-            left: @sizeRect * 1.5 - 0.1rem;
-            top: 0;
-        }
-        &_position_rb {
-            left: @sizeRect * 1.5 - 0.1rem;
-            top: @sizeRect * 1.5 - 0.1rem;
-        }
-        &_position_lb {
-            left: 0;
-            top: @sizeRect * 1.5 - 0.1rem;
-        }
+    // SIZE
+    &_size_big {
+        @size: 3.4rem;
+        height: @size;
+        left: calc(50% ~'-' @size / 2);
+        top: calc(50% ~'-' @size / 2);
+        width: @size;
     }
-    // TYPES
-    &_type_ellipse {
-        height: @spinnerSize;
-        left: calc(50% ~'-' @spinnerSize / 2);
-        position: absolute;
-        top: calc(50% ~'-' @spinnerSize / 2);
-        width: @spinnerSize;
+    &_size_big &__ellipse {
+        border-width: @thickness + 1px;
     }
-    &_type_ellipse &__container {
-        animation: rotate @speed * 8 infinite linear;
+    &_size_medium {
+        @size: 2.6rem;
+        height: @size;
+        left: calc(50% ~'-' @size / 2);
+        top: calc(50% ~'-' @size / 2);
+        width: @size;
     }
-    &_type_rect {
-        height: 1rem;
-        width: 1rem;
+    &_size_medium &__ellipse {
+        border-width: @thickness;
+    }
+    &_size_small {
+        @size: 1.4rem;
+        height: @size;
+        left: calc(50% ~'-' @size / 2);
+        top: calc(50% ~'-' @size / 2);
+        width: @size;
+    }
+    &_size_small &__ellipse {
+        border-bottom-color: @controlForegroundColorDisabled;
+        border-top-color: @controlForegroundColorDisabled;
+        border-width: @thickness - 1px;
     }
     // STATES
-    &_state_active &__ellipse {
-        animation: pulsateEllipse @speed infinite;
-    }
-    &_state_active &__ellipse_position_right {
-        animation-delay: @speed * .25;
-    }
-    &_state_active &__ellipse_position_bottom {
-        animation-delay: @speed * .5;
-    }
-    &_state_active &__ellipse_position_left {
-        animation-delay: @speed * .75;
-    }
-    &_state_active &__rect {
-        animation: pulsateRect @speed infinite;
-    }
-    &_state_active &__rect_position_rt {
-        animation-delay: @speed * .25;
-    }
-    &_state_active &__rect_position_rb {
-        animation-delay: @speed * .5;
-    }
-    &_state_active &__rect_position_lb {
-        animation-delay: @speed * .75;
-    }
-    // THEMES
-    &_theme_dark {
-        color: #000;
-    }
-    &_theme_light {
-        color: #e0e0e0;
+    &_state_active {
+        opacity: 1;
     }
 }

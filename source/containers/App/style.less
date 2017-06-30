@@ -11,7 +11,7 @@
         vertical-align: middle;
     }
     &__login {
-        background: @cWindow;
+        background: @cWindowBackground;
         border-top: 3px solid @cAccent;
         margin: 0 auto;
         padding: @mDefault * 1.2 @mDefault * 1.4 @mDefault * 1.4;
@@ -21,25 +21,6 @@
         }
         &-header {
             display: block;
-        }
-    }
-    &__logo {
-        color: saturate(@cAccent, 10%);
-        height: @itemSize;
-        line-height: @itemSize;
-        position: relative;
-        text-align: center;
-        svg {
-            bottom: 0;
-            display: block;
-            fill: @cGray75;
-            height: @itemSize;
-            left: 0;
-            margin: auto;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: @itemSize;
         }
     }
     &__logout {

@@ -16,7 +16,7 @@ class ActionButton extends React.Component {
      */
     static propTypes = {
         disabled: PropTypes.bool,
-        flow: PropTypes.oneOf(['column', 'row']),
+        _flow: PropTypes.oneOf(['column', 'row']),
         icon: PropTypes.string.isRequired,
         onClick: PropTypes.func.isRequired
     };
@@ -36,11 +36,11 @@ class ActionButton extends React.Component {
     render() {
         const
             b = block('action-button'),
-            { disabled, flow, icon, onClick } = this.props;
+            { disabled, _flow, icon, onClick } = this.props;
 
         return (
             <button
-                className={b({flow})}
+                className={b({flow: _flow})}
                 disabled={disabled}
                 type="button"
                 onClick={onClick}

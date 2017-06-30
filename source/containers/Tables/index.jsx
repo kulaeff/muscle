@@ -9,12 +9,12 @@ import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import DataTable from '~/components/DataTable'
 import Form, { FormBody, FormButtons, FormButton, FormField, FormGroup }  from '../../components/Form'
-import Grid, { GridItem } from '../../components/Grid'
+import Grid, { GridItem, GridSeparator } from '../../components/Grid'
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Placeholder from '~/components/Placeholder'
 import PropertyEditor from '../../components/PropertyEditor'
+import Select from '../../components/Select'
 import Spinner from '../../components/Spinner'
-import SplitContainer from '../../components/SplitContainer'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '~/components/ToolBar'
@@ -35,9 +35,12 @@ class Tables extends React.Component {
      * @property {array} items Items
      */
     static propTypes = {
+        collations: PropTypes.array.isRequired,
+        collationsLoading: PropTypes.bool.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         items: PropTypes.array.isRequired,
+        listBoxFieldsSelectedIndex: PropTypes.number.isRequired,
         modalCreateTableVisible: PropTypes.bool.isRequired,
         saving: PropTypes.bool.isRequired,
         tableCollation: PropTypes.string.isRequired,
@@ -45,11 +48,14 @@ class Tables extends React.Component {
         tableFields: PropTypes.array.isRequired,
         tableName: PropTypes.string.isRequired,
         tableType: PropTypes.string.isRequired,
+        addTableField: PropTypes.func.isRequired,
+        closeCreateTableModal: PropTypes.func.isRequired,
         getTables: PropTypes.func.isRequired,
-        closeModalCreateTable: PropTypes.func.isRequired,
-        showModalCreateTable: PropTypes.func.isRequired,
+        openCreateTableModal: PropTypes.func.isRequired,
+        removeTableField: PropTypes.func.isRequired,
+        setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
+        setTableCollation: PropTypes.func.isRequired,
         setTableComment: PropTypes.func.isRequired,
-        setTableFields: PropTypes.func.isRequired,
         setTableName: PropTypes.func.isRequired
     };
 
@@ -82,13 +88,15 @@ class Tables extends React.Component {
     }
 
     onActionButtonAddFieldClick = () => {
-        const { setTableFields } = this.props;
+        const { addTableField } = this.props;
 
-        setTableFields();
+        addTableField();
     };
 
     onActionButtonRemoveFieldClick = () => {
-        console.log('remove field clicked');
+        const { removeTableField } = this.props;
+
+        removeTableField();
     };
 
     /**
@@ -96,9 +104,9 @@ class Tables extends React.Component {
      * @method
      */
     onToolBarButtonCreateDatabaseClick = () => {
-        const { showModalCreateTable } = this.props;
+        const { openCreateTableModal } = this.props;
 
-        showModalCreateTable();
+        openCreateTableModal();
     };
 
     /**
@@ -179,9 +187,9 @@ class Tables extends React.Component {
     };
 
     onCreateTableModalClose = () => {
-        const { closeModalCreateTable } = this.props;
+        const { closeCreateTableModal } = this.props;
 
-        closeModalCreateTable();
+        closeCreateTableModal();
     };
 
     /**
@@ -194,6 +202,18 @@ class Tables extends React.Component {
         createTable();
 
         event.preventDefault();
+    };
+
+    handleListBoxFieldsChange = (index) => {
+        const { setListBoxFieldsSelectedIndex } = this.props;
+
+        setListBoxFieldsSelectedIndex(index);
+    };
+
+    selectTableCollationChange = (value) => {
+        const { setTableCollation } = this.props;
+
+        setTableCollation(value);
     };
 
     /**
@@ -213,9 +233,12 @@ class Tables extends React.Component {
             ],
             {
                 match,
+                collations,
+                collationsLoading,
                 fetching,
                 filter,
                 items,
+                listBoxFieldsSelectedIndex,
                 modalCreateTableVisible,
                 saving,
                 tableCollation,
@@ -294,6 +317,7 @@ class Tables extends React.Component {
                     <ReactModal
                         ariaHideApp={true}
                         className="ReactModal__Content-Large"
+                        closeTimeoutMS={240}
                         contentLabel="Create new table modal"
                         isOpen={modalCreateTableVisible}
                         overlayClassName="ReactModal__Overlay"
@@ -326,6 +350,17 @@ class Tables extends React.Component {
                                                 onChange={this.onTextboxTableNameChange}
                                             />
                                         </FormField>
+                                        <FormField id="collation" label="Collation">
+                                            <Select
+                                                id="collation"
+                                                loading={collationsLoading}
+                                                name="collation"
+                                                options={collations}
+                                                placeholder="Select a collation"
+                                                value={tableCollation}
+                                                onChange={this.selectTableCollationChange}
+                                            />
+                                        </FormField>
                                         <FormField id="comment" label="Comment">
                                             <Textbox
                                                 id="comment"
@@ -333,15 +368,6 @@ class Tables extends React.Component {
                                                 required={true}
                                                 value={tableComment}
                                                 onChange={this.onTextboxTableCommentChange}
-                                            />
-                                        </FormField>
-                                        <FormField id="collation" label="Collation">
-                                            <Textbox
-                                                id="collation"
-                                                name="collation"
-                                                required={true}
-                                                value={tableCollation}
-                                                onChange={this.onTextboxTableCollationChange}
                                             />
                                         </FormField>
                                         <FormField id="type" label="Type">
@@ -357,13 +383,13 @@ class Tables extends React.Component {
                                     <FormGroup width={12}>
                                         <FormGroup flow="row">
                                             <FormField label="Fields" width={2}>
-                                                <SplitContainer
-                                                    panel1={
+                                                <Grid orientation="vertical">
+                                                    <GridItem size="stretch">
                                                         <ListBox
                                                             id="name"
                                                             name="name"
-                                                            value={tableName}
-                                                            onChange={this.onListBoxFieldsChange}
+                                                            selected={listBoxFieldsSelectedIndex}
+                                                            onChange={this.handleListBoxFieldsChange}
                                                         >
                                                             {
                                                                 tableFields.map((tableField, index) => (
@@ -375,21 +401,22 @@ class Tables extends React.Component {
                                                                 ))
                                                             }
                                                         </ListBox>
-                                                    }
-                                                    panel2={
-                                                        <ButtonGroup>
+                                                    </GridItem>
+                                                    <GridSeparator />
+                                                    <GridItem size="auto">
+                                                        <ButtonGroup align="left">
                                                             <ActionButton
                                                                 icon="add-24"
                                                                 onClick={this.onActionButtonAddFieldClick}
                                                             />
                                                             <ActionButton
-                                                                disabled={true}
+                                                                disabled={listBoxFieldsSelectedIndex < 0}
                                                                 icon="remove-24"
                                                                 onClick={this.onActionButtonRemoveFieldClick}
                                                             />
                                                         </ButtonGroup>
-                                                    }
-                                                />
+                                                    </GridItem>
+                                                </Grid>
                                             </FormField>
                                             <FormField label="Properties" width={3}>
                                                 <PropertyEditor
@@ -409,7 +436,7 @@ class Tables extends React.Component {
                                 </FormButton>
                                 <FormButton>
                                     <Button
-                                        disabled={tableName.length === 0 || saving}
+                                        disabled={tableName.length === 0 || tableFields.length === 0 || saving}
                                         label="Create"
                                         type="submit"
                                     />
@@ -425,9 +452,12 @@ class Tables extends React.Component {
 
 function mapStateToProps (state) {
     return {
+        collations: state.tables.collations,
+        collationsLoading: state.tables.collationsLoading,
         fetching: state.tables.fetching,
         filter: state.tables.filter,
         items: state.tables.items,
+        listBoxFieldsSelectedIndex: state.tables.listBoxFieldsSelectedIndex,
         modalCreateTableVisible: state.tables.modalCreateTableVisible,
         saving: state.tables.saving,
         tableCollation: state.tables.tableCollation,
@@ -440,20 +470,26 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
     const {
+        addTableField,
+        closeCreateTableModal,
         getTables,
-        closeModalCreateTable,
-        showModalCreateTable,
+        openCreateTableModal,
+        removeTableField,
+        setListBoxFieldsSelectedIndex,
+        setTableCollation,
         setTableComment,
-        setTableFields,
         setTableName
     } = actions;
 
     return  bindActionCreators({
+        addTableField,
+        closeCreateTableModal,
         getTables,
-        closeModalCreateTable,
-        showModalCreateTable,
+        openCreateTableModal,
+        removeTableField,
+        setListBoxFieldsSelectedIndex,
+        setTableCollation,
         setTableComment,
-        setTableFields,
         setTableName
     }, dispatch);
 }

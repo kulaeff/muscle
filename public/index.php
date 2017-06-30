@@ -22,6 +22,30 @@ Flight::route('GET /api/v1/credentials', function() {
     ]);
 });
 
+// List of collations
+Flight::route('GET /api/v1/collations', function() {
+    $json = [];
+    $sql = "SELECT COLLATION_NAME FROM information_schema.COLLATIONS";
+
+    $db = Flight::db();
+
+    if ($db->query($sql)) {
+        foreach ($db->query($sql) as $row) {
+            $json[] = $row['COLLATION_NAME'];
+        }
+
+        sort($json);
+
+        Flight::json($json);
+    } else {
+        Flight::json([
+            'status' => 'error',
+            'statusCode' => $db->errorCode(),
+            'statusMessage' => $db->errorInfo()[2],
+        ]);
+    }
+});
+
 // List of databases
 Flight::route('GET /api/v1/databases', function() {
     $request = Flight::request();

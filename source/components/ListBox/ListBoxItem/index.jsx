@@ -49,7 +49,7 @@ class ListBoxItem extends React.Component {
 
         return (
             <div
-                className={b('option', {state: selected ? 'selected' : null})}
+                className={b('item', {state: selected ? 'selected' : null})}
                 title={tooltip}
                 onClick={() => this.handleClick(index)}>
                 {children}

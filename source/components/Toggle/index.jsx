@@ -17,9 +17,10 @@ class Toggle extends React.Component {
      */
     static propTypes = {
         checked: PropTypes.bool,
+        disabled: PropTypes.bool,
         label: PropTypes.string,
         onChange: PropTypes.func
-    }
+    };
 
     /**
      * Default properties
@@ -28,20 +29,21 @@ class Toggle extends React.Component {
      */
     static defaultProps = {
         checked: false,
+        disabled: false,
         label: ''
-    }
+    };
 
     /**
      * Toggles checked state and invokes onChange handler
      * @method
      */
     onClick = () => {
-        const { onChange } = this.props
+        const { disabled, onChange } = this.props;
 
-        if (onChange) {
+        if (!disabled && onChange) {
             onChange()
         }
-    }
+    };
 
     /**
      * Render the component
@@ -50,20 +52,20 @@ class Toggle extends React.Component {
     render() {
         const
             b = block('toggle'),
-            {
-                checked = Toggle.defaults.checked,
-                label = Toggle.defaults.label
-            } = this.props
+            { checked, disabled, label } = this.props;
 
         return (
             <div
-                className={b({state: checked ? 'checked' : null})}
+                className={b({
+                    mode: disabled ? 'disabled' : null,
+                    state: checked ? 'checked' : null
+                })}
                 onClick={this.onClick}
             >
                 <div className={b('label')}>{label}</div>
                 <div className={b('control')}>
-                    <div className={b('control-rectangle')}>
-                        <div className={b('control-knob')}></div>
+                    <div className={b('rectangle')}>
+                        <div className={b('knob')} />
                     </div>
                 </div>
             </div>

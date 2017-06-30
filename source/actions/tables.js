@@ -1,10 +1,17 @@
 import {
+    ADD_TABLE_FIELD,
+    CLOSE_CREATE_TABLE_MODAL,
     GET_TABLES_REQUEST,
     GET_TABLES_SUCCESS,
     GET_TABLES_FAIL,
-    SET_CREATE_TABLE_MODAL_VISIBILITY,
+    GET_COLLATIONS_REQUEST,
+    GET_COLLATIONS_SUCCESS,
+    GET_COLLATIONS_FAIL,
+    OPEN_CREATE_TABLE_MODAL,
+    REMOVE_TABLE_FIELD,
+    SET_LISTBOX_FIELDS_SELECTED_INDEX,
+    SET_TABLE_COLLATION,
     SET_TABLE_COMMENT,
-    SET_TABLE_FIELDS,
     SET_TABLE_NAME
 } from '../constants/tables'
 
@@ -39,6 +46,31 @@ export function getTables(database, token = '') {
     }
 }
 
+/**
+ * Retrieves the list of collations
+ */
+export function getCollations() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: GET_COLLATIONS_REQUEST
+        });
+
+        api.getCollations()
+            .then(response => {
+                dispatch({
+                    type: GET_COLLATIONS_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: GET_COLLATIONS_FAIL,
+                    payload: error
+                })
+            });
+    }
+}
+
 /*------------------------------------------------------------------------------------*/
 /* UI                                                                                 */
 /*------------------------------------------------------------------------------------*/
@@ -46,33 +78,101 @@ export function getTables(database, token = '') {
 /* Modals */
 
 /**
- * Closes Create Database modal
+ * Close Create Table modal
  */
-export function closeModalCreateTable() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_CREATE_TABLE_MODAL_VISIBILITY,
-            payload: false
-        });
-
-        dispatch(setTableComment(''));
-        dispatch(setTableName(''));
+export function closeCreateTableModal() {
+    return {
+        type: CLOSE_CREATE_TABLE_MODAL
     };
 }
 
 /**
- * Shows Create Database modal
+ * Open Create Table modal
  */
-export function showModalCreateTable() {
+export function openCreateTableModal() {
     return async (dispatch) => {
         dispatch({
-            type: SET_CREATE_TABLE_MODAL_VISIBILITY,
-            payload: true
+            type: OPEN_CREATE_TABLE_MODAL
+        });
+
+        dispatch(getCollations());
+    }
+}
+
+/* Controls */
+
+/**
+ * CreateTableModal:ListBoxFields
+ * Add a new field to the list box
+ */
+export function addTableField() {
+    return async (dispatch, getState) => {
+        const
+            state = getState().tables,
+            [...fields] = state.tableFields;
+
+        fields.push({
+            attributes: '',
+            autoIncrement: false,
+            collation: '',
+            comment: '',
+            default: '',
+            index: '',
+            length: null,
+            name: `field_${state.tableFieldCounter}`,
+            type: 'int'
+        });
+
+        dispatch({
+            type: ADD_TABLE_FIELD,
+            payload: fields
         });
     };
 }
 
-/* Textboxes */
+/**
+ * CreateTableModal:ListBoxFields
+ * Remove the field from the list box
+ */
+export function removeTableField() {
+    return async (dispatch, getState) => {
+        const
+            state = getState().tables,
+            [...fields] = state.tableFields;
+
+        fields.splice(state.listBoxFieldsSelectedIndex, 1);
+
+        dispatch({
+            type: REMOVE_TABLE_FIELD,
+            payload: fields
+        });
+    };
+}
+
+/**
+ * CreateTableModal:ListBoxFields
+ * Set the index of a selected field
+ * @param {number} index Index of a selected field
+ */
+export function setListBoxFieldsSelectedIndex(index) {
+    return async (dispatch) => {
+        dispatch({
+            type: SET_LISTBOX_FIELDS_SELECTED_INDEX,
+            payload: index
+        });
+    };
+}
+
+/**
+ * Stores current table comment
+ * @param {string} comment Comment
+ */
+export function setTableCollation(collation) {
+    return {
+        type: SET_TABLE_COLLATION,
+        payload: collation
+    }
+}
 
 /**
  * Stores current table comment
@@ -83,32 +183,6 @@ export function setTableComment(comment) {
         dispatch({
             type: SET_TABLE_COMMENT,
             payload: comment
-        });
-    };
-}
-
-/**
- * Stores fields
- */
-export function setTableFields() {
-    return async (dispatch, getState) => {
-        const [...tableFields] = getState().tables.tableFields;
-
-        tableFields.push({
-            attributes: '',
-            autoIncrement: false,
-            collation: '',
-            comment: '',
-            default: '',
-            index: '',
-            length: null,
-            name: 'untitled_field',
-            type: 'int'
-        });
-
-        dispatch({
-            type: SET_TABLE_FIELDS,
-            payload: tableFields
         });
     };
 }

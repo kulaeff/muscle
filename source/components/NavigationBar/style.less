@@ -29,7 +29,11 @@
             background: @navigationBarItemBackgroundColorHover;
             color: @navigationBarItemForegroundColorHover;
         }
-        // STATES
+        // ICON
+        &_icon_about svg use {
+            fill: @cForeground;
+        }
+        // STATE
         // Selected
         &_state_selected {
             background: @navigationBarItemBackgroundColorSelected;

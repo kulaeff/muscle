@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as appActions from '../../actions/app'
+import About from '../About'
 import Components from '../Components'
 import Settings from '../Settings'
 import Server from '../Server'
@@ -108,21 +109,18 @@ class App extends React.Component {
                 <div className={b()}>
                     <div className={b('content')}>
                         <Switch>
+                            <Route path="/about" component={About}/>
+                            <Route path="/components" component={Components}/>
                             <Route path="/settings" component={Settings}/>
                             <Route path="/server" component={Server}/>
                             <Route path="/status" component={Status}/>
-                            <Route path="/components" component={Components}/>
                             <Redirect to="/server" />
                         </Switch>
                     </div>
                     <div className={b('sidebar')}>
-                        <div className={b('logo')} title="Muscle">
-                            <svg>
-                                <use xlinkHref="#icon-logo" />
-                            </svg>
-                        </div>
                         <div className={b('nav')}>
                             <NavigationBar>
+                                <NavigationBarItem id="about" title="About" url="/about" />
                                 <NavigationBarItem id="status" title="Status" url="/status" />
                                 <NavigationBarItem id="server" title="Browse" url="/server" />
                                 <NavigationBarItem id="settings" title="Settings" url="/settings" />

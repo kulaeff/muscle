@@ -31,41 +31,32 @@ class Server extends React.Component {
      * @property {number} databaseName Selected database index
      */
     static propTypes = {
-        closeModalCreateDatabase: PropTypes.func.isRequired,
-        closeModalDeleteDatabase: PropTypes.func.isRequired,
-        closeModalEditDatabase: PropTypes.func.isRequired,
         databaseName: PropTypes.string.isRequired,
         databaseName_: PropTypes.string.isRequired,
-        fetching: PropTypes.bool.isRequired,
-        saving: PropTypes.bool.isRequired,
         databases: PropTypes.array.isRequired,
+        fetching: PropTypes.bool.isRequired,
+        filter: PropTypes.string.isRequired,
+        saving: PropTypes.bool.isRequired,
         minimized: PropTypes.bool.isRequired,
         modalCreateDatabaseVisible: PropTypes.bool.isRequired,
         modalDeleteDatabaseVisible: PropTypes.bool.isRequired,
         modalEditDatabaseVisible: PropTypes.bool.isRequired,
+        closeCreateDatabaseModal: PropTypes.func.isRequired,
+        closeDeleteDatabaseModal: PropTypes.func.isRequired,
+        closeEditDatabaseModal: PropTypes.func.isRequired,
         createDatabase: PropTypes.func.isRequired,
         deleteDatabase: PropTypes.func.isRequired,
-        updateDatabase: PropTypes.func.isRequired,
         getDatabases: PropTypes.func.isRequired,
-        setDatabaseName: PropTypes.func.isRequired,
-        setFilter: PropTypes.func.isRequired,
-        showModalCreateDatabase: PropTypes.func.isRequired,
-        showModalDeleteDatabase: PropTypes.func.isRequired,
-        showModalEditDatabase: PropTypes.func.isRequired,
         initWindow: PropTypes.func.isRequired,
         minimizeWindow: PropTypes.func.isRequired,
+        openCreateDatabaseModal: PropTypes.func.isRequired,
+        openDeleteDatabaseModal: PropTypes.func.isRequired,
+        openEditDatabaseModal: PropTypes.func.isRequired,
         restoreWindow: PropTypes.func.isRequired,
-        filter: PropTypes.string.isRequired
+        setDatabaseName: PropTypes.func.isRequired,
+        setFilter: PropTypes.func.isRequired,
+        updateDatabase: PropTypes.func.isRequired,
     };
-
-    /**
-     * Create the container
-     * @constructor
-     * @param {object} props Props
-     */
-    constructor(props) {
-        super(props);
-    }
 
     /**
      * Fetch the data after the component was mounted
@@ -83,9 +74,9 @@ class Server extends React.Component {
      * @callback
      */
     onCreateDatabaseModalClose = () => {
-        const { closeModalCreateDatabase } = this.props;
+        const { closeCreateDatabaseModal } = this.props;
 
-        closeModalCreateDatabase();
+        closeCreateDatabaseModal();
     };
 
     /**
@@ -93,9 +84,9 @@ class Server extends React.Component {
      * @callback
      */
     onDeleteDatabaseModalClose = () => {
-        const { closeModalDeleteDatabase } = this.props;
+        const { closeDeleteDatabaseModal } = this.props;
 
-        closeModalDeleteDatabase();
+        closeDeleteDatabaseModal();
     };
 
     /**
@@ -103,9 +94,9 @@ class Server extends React.Component {
      * @callback
      */
     onEditDatabaseModalClose = () => {
-        const { closeModalEditDatabase } = this.props;
+        const { closeEditDatabaseModal } = this.props;
 
-        closeModalEditDatabase();
+        closeEditDatabaseModal();
     };
 
     /**
@@ -113,9 +104,9 @@ class Server extends React.Component {
      * @callback
      */
     onToolBarButtonCreateDatabaseClick = () => {
-        const { showModalCreateDatabase } = this.props;
+        const { openCreateDatabaseModal } = this.props;
 
-        showModalCreateDatabase();
+        openCreateDatabaseModal();
     };
 
     /**
@@ -124,10 +115,10 @@ class Server extends React.Component {
      * @param {string} database Database to be edited
      */
     onToolBarButtonEditDatabaseClick = (database) => {
-        const { setDatabaseName, showModalEditDatabase } = this.props;
+        const { setDatabaseName, openEditDatabaseModal } = this.props;
 
         setDatabaseName(database);
-        showModalEditDatabase();
+        openEditDatabaseModal();
     };
 
     /**
@@ -136,10 +127,10 @@ class Server extends React.Component {
      * @param {string} database Database to be deleted
      */
     onToolBarButtonDeleteDatabaseClick = (database) => {
-        const { setDatabaseName, showModalDeleteDatabase } = this.props;
+        const { setDatabaseName, openDeleteDatabaseModal } = this.props;
 
         setDatabaseName(database);
-        showModalDeleteDatabase();
+        openDeleteDatabaseModal();
     };
 
     /**
@@ -357,6 +348,7 @@ class Server extends React.Component {
                 <ReactModal
                     ariaHideApp={true}
                     className="ReactModal__Content-Small"
+                    closeTimeoutMS={240}
                     contentLabel="Create new database modal"
                     isOpen={modalCreateDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
@@ -406,6 +398,7 @@ class Server extends React.Component {
                 <ReactModal
                     ariaHideApp={true}
                     className="ReactModal__Content-Small"
+                    closeTimeoutMS={240}
                     contentLabel="Edit database modal"
                     isOpen={modalEditDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
@@ -457,6 +450,7 @@ class Server extends React.Component {
                 <ReactModal
                     ariaHideApp={true}
                     className="ReactModal__Content-Small"
+                    closeTimeoutMS={240}
                     contentLabel="Delete database modal"
                     isOpen={modalDeleteDatabaseVisible}
                     overlayClassName="ReactModal__Overlay"
@@ -506,32 +500,32 @@ class Server extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        fetching: state.server.fetching,
+        databaseName: state.server.databaseName,
+        databaseName_: state.server.databaseName_,
         databases: state.server.databases,
+        fetching: state.server.fetching,
+        filter: state.server.filter,
         minimized: state.server.minimized,
         modalCreateDatabaseVisible: state.server.modalCreateDatabaseVisible,
         modalDeleteDatabaseVisible: state.server.modalDeleteDatabaseVisible,
         modalEditDatabaseVisible: state.server.modalEditDatabaseVisible,
-        saving: state.server.saving,
-        databaseName: state.server.databaseName,
-        databaseName_: state.server.databaseName_,
-        filter: state.server.filter
+        saving: state.server.saving
     }
 }
 
 function mapDispatchToProps(dispatch) {
     const {
-        closeModalCreateDatabase,
-        closeModalDeleteDatabase,
-        closeModalEditDatabase,
+        closeCreateDatabaseModal,
+        closeDeleteDatabaseModal,
+        closeEditDatabaseModal,
         createDatabase,
         deleteDatabase,
         updateDatabase,
         getDatabases,
         setDatabaseName,
-        showModalCreateDatabase,
-        showModalDeleteDatabase,
-        showModalEditDatabase,
+        openCreateDatabaseModal,
+        openDeleteDatabaseModal,
+        openEditDatabaseModal,
         setFilter,
         initWindow,
         minimizeWindow,
@@ -539,17 +533,17 @@ function mapDispatchToProps(dispatch) {
     } = actions;
 
     return bindActionCreators({
-        closeModalCreateDatabase,
-        closeModalDeleteDatabase,
-        closeModalEditDatabase,
+        closeCreateDatabaseModal,
+        closeDeleteDatabaseModal,
+        closeEditDatabaseModal,
         createDatabase,
         deleteDatabase,
         updateDatabase,
         getDatabases,
         setDatabaseName,
-        showModalCreateDatabase,
-        showModalDeleteDatabase,
-        showModalEditDatabase,
+        openCreateDatabaseModal,
+        openDeleteDatabaseModal,
+        openEditDatabaseModal,
         setFilter,
         initWindow,
         minimizeWindow,

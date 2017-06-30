@@ -2,20 +2,19 @@
 
 .grid {
     display: flex;
-    justify-content: space-between;
+    height: 100%;
+    width: 100%;
     &__item {
-        // SIZES
-        &_size_default {
-            //
+        // SIZE
+        &_size_auto {
+            flex: 0;
         }
-        &_size_default {
+        &_size_stretch {
             flex: 1;
         }
     }
     &__separator {
-        background-color: @cGray10;
-        margin: 0 @mDefault;
-        width: 1px;
+        display: block;
     }
     // ORIENTATIONS
     &_orientation_horizontal {
@@ -24,22 +23,12 @@
     &_orientation_vertical {
         flex-direction: column;
     }
-    // SPACING
-    &_spacing_full&_orientation_horizontal > &__item + &__item {
-        margin-left: @mDefault;
+    &_orientation_horizontal &__separator {
+        margin: 0 @mDefault / 2;
+        width: 0;
     }
-    &_spacing_full&_orientation_vertical > &__item + &__item {
-        margin-top: @mDefault;
-    }
-    // TYPES
-    &_type_default {
-        //
-    }
-    &_type_tiled {
-        align-content: stretch;
-        margin: 0 -@mDefault / 4;
-    }
-    &_type_tiled &__item {
-        padding: 0 @mDefault / 4;
+    &_orientation_vertical &__separator {
+        margin: @mDefault / 4 0;
+        height: 0;
     }
 }

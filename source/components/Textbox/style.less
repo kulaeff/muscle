@@ -13,16 +13,19 @@
     position: relative;
     transition: background-color @dDefault linear, border-color @dDefault linear;
     width: 100%;
-    &:focus {
-        border-color: @textboxColorBorderActive;
-        background-color: @textboxColorBackgroundActive;
-    }
     &:hover {
         background-color: @textboxColorBackgroundHover;
         border-color: @textboxColorBorderHover;
+        color: @textboxColorForegroundHover;
+    }
+    &:focus {
+        border-color: @textboxColorBorderActive;
+        background-color: @textboxColorBackgroundActive;
+        color: @textboxColorForegroundActive;
     }
     &:disabled {
-        background-color: transparent;
+        background-color: @textboxColorBackgroundDisabled;
         border-color: @textboxColorBorderDisabled;
+        color: @textboxColorForegroundDisabled;
     }
 }

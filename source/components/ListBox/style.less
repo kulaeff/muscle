@@ -1,10 +1,10 @@
 @import (reference) '../../styles/variables';
 
 .list-box {
-    background-color: @textboxColorBackground;
-    border: @textboxBorderThickness solid @textboxColorBorder;
+    background-color: @listBoxBackgroundColor;
+    border: @listBoxBorderThickness solid @listBoxBorderColor;
     box-sizing: border-box;
-    color: @textboxColorForeground;
+    color: @listBoxForegroundColor;
     font-size: 1.3rem;
     height: 100%;
     min-height: @hDefault;
@@ -12,24 +12,26 @@
     overflow: hidden;
     position: relative;
     transition: background-color @dDefault linear, border-color @dDefault linear;
+    user-select: none;
     width: 100%;
-    &__option {
+    &__item {
         cursor: default;
         display: block;
-        height: @textboxHeight;
-        line-height: @textboxHeight;
-        padding: 0 @textboxHeight * 0.3;
+        height: @listBoxHeight;
+        line-height: @listBoxHeight;
+        padding: 0 @listBoxHeight * 0.3;
         transition: background-color @dDefault linear, border-color @dDefault linear, color @dDefault linear;
+        user-select: none;
         &:hover {
             background-color: rgba(0,0,0,.03);
         }
         // STATES
         &_state_selected {
-            background-color: @cGray10;
-            color: #fff;
+            background-color: @cTransparentDark10;
+            color: @cForeground;
             &:hover {
-                background-color: @cGray10;
-                color: #fff;
+                background-color: @cTransparentDark10;
+                color: @cForeground;
             }
         }
     }
@@ -40,12 +42,18 @@
         top: 0;
         width: 100%;
     }
-    //
-    &:disabled {
-        background-color: transparent;
-        border-color: @textboxColorBorderDisabled;
-    }
-    &:focus &__option_state_selected {
+    // PSEUDO
+    &:focus &__item_state_selected {
         background-color: @cAccent;
+        color: #fff;
+    }
+    // STATE
+    &_state_disabled {
+        background-color: @listBoxBackgroundColorDisabled;
+        color: @textboxColorForegroundDisabled;
+        pointer-events: none;
+    }
+    &_state_disabled &__item_state_selected {
+        color: @listBoxForegroundColorDisabled;
     }
 }

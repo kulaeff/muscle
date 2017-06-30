@@ -1,27 +1,30 @@
 import { push, replace } from 'react-router-redux'
 import {
-    GET_DATABASES_REQUEST,
-    GET_DATABASES_SUCCESS,
-    GET_DATABASES_FAIL,
-    GET_DATABASE_REQUEST,
-    GET_DATABASE_SUCCESS,
-    GET_DATABASE_FAIL,
+    CLOSE_CREATE_DATABASE_MODAL,
+    CLOSE_DELETE_DATABASE_MODAL,
+    CLOSE_EDIT_DATABASE_MODAL,
     CREATE_DATABASE_REQUEST,
     CREATE_DATABASE_SUCCESS,
     CREATE_DATABASE_FAIL,
     DELETE_DATABASE_REQUEST,
     DELETE_DATABASE_SUCCESS,
     DELETE_DATABASE_FAIL,
-    UPDATE_DATABASE_REQUEST,
-    UPDATE_DATABASE_SUCCESS,
-    UPDATE_DATABASE_FAIL,
-    SET_CREATE_DATABASE_MODAL_VISIBILITY,
-    SET_DELETE_DATABASE_MODAL_VISIBILITY,
-    SET_EDIT_DATABASE_MODAL_VISIBILITY,
+    GET_DATABASES_REQUEST,
+    GET_DATABASES_SUCCESS,
+    GET_DATABASES_FAIL,
+    GET_DATABASE_REQUEST,
+    GET_DATABASE_SUCCESS,
+    GET_DATABASE_FAIL,
+    OPEN_CREATE_DATABASE_MODAL,
+    OPEN_DELETE_DATABASE_MODAL,
+    OPEN_EDIT_DATABASE_MODAL,
     SET_DATABASE_NAME,
     SET_DATABASE_OLD_NAME,
     SET_FILTER,
-    SET_SERVER_WINDOW_STATE
+    SET_SERVER_WINDOW_STATE,
+    UPDATE_DATABASE_REQUEST,
+    UPDATE_DATABASE_SUCCESS,
+    UPDATE_DATABASE_FAIL,
 } from '../constants/server'
 
 /*------------------------------------------------------------------------------------*/
@@ -101,7 +104,7 @@ export function createDatabase() {
                         type: CREATE_DATABASE_SUCCESS
                     });
 
-                    dispatch(closeModalCreateDatabase());
+                    dispatch(closeCreateDatabaseModal());
                     dispatch(getDatabases());
                     dispatch(push(`/server/${name}`));
                 } else {
@@ -109,7 +112,7 @@ export function createDatabase() {
                         type: CREATE_DATABASE_FAIL
                     });
 
-                    dispatch(closeModalCreateDatabase());
+                    dispatch(closeCreateDatabaseModal());
                 }
             })
             .catch(error => {
@@ -143,7 +146,7 @@ export function deleteDatabase() {
                         type: DELETE_DATABASE_SUCCESS
                     });
 
-                    dispatch(closeModalDeleteDatabase());
+                    dispatch(closeDeleteDatabaseModal());
                     dispatch(getDatabases());
                     dispatch(replace(`/server/${state.server.databases[nextIndex]}`));
                 }
@@ -178,7 +181,7 @@ export function updateDatabase() {
                         type: UPDATE_DATABASE_SUCCESS
                     });
 
-                    dispatch(closeModalEditDatabase());
+                    dispatch(closeEditDatabaseModal());
                     dispatch(getDatabases());
                     dispatch(replace(`/server/${newName}/tables`));
                 }
@@ -247,77 +250,55 @@ export function restoreWindow() {
 /**
  * Closes Create Database modal
  */
-export function closeModalCreateDatabase() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_CREATE_DATABASE_MODAL_VISIBILITY,
-            payload: false
-        });
-
-        dispatch(setDatabaseName(''));
+export function closeCreateDatabaseModal() {
+    return {
+        type: CLOSE_CREATE_DATABASE_MODAL
     };
 }
 
 /**
  * Closes Delete Database modal
  */
-export function closeModalDeleteDatabase() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
-            payload: false
-        });
-
-        dispatch(setDatabaseName(''));
+export function closeDeleteDatabaseModal() {
+    return {
+        type: CLOSE_DELETE_DATABASE_MODAL
     };
 }
 
 /**
  * Closes Delete Database modal
  */
-export function closeModalEditDatabase() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_EDIT_DATABASE_MODAL_VISIBILITY,
-            payload: false
-        });
-
-        dispatch(setDatabaseName(''));
+export function closeEditDatabaseModal() {
+    return {
+        type: CLOSE_EDIT_DATABASE_MODAL
     };
 }
 
 /**
  * Shows Create Database modal
  */
-export function showModalCreateDatabase() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_CREATE_DATABASE_MODAL_VISIBILITY,
-            payload: true
-        });
+export function openCreateDatabaseModal() {
+    return {
+        type: OPEN_CREATE_DATABASE_MODAL
     };
 }
 
 /**
  * Shows Delete Database modal
  */
-export function showModalDeleteDatabase() {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_DELETE_DATABASE_MODAL_VISIBILITY,
-            payload: true
-        });
+export function openDeleteDatabaseModal() {
+    return {
+        type: OPEN_DELETE_DATABASE_MODAL
     };
 }
 
 /**
  * Shows Edit Database modal
  */
-export function showModalEditDatabase() {
+export function openEditDatabaseModal() {
     return async (dispatch, getState) => {
         dispatch({
-            type: SET_EDIT_DATABASE_MODAL_VISIBILITY,
-            payload: true
+            type: OPEN_EDIT_DATABASE_MODAL
         });
 
         dispatch({
@@ -336,12 +317,10 @@ export function showModalEditDatabase() {
  * @param {string} token Token
  */
 export function setFilter(token) {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_FILTER,
-            payload: token
-        });
-    };
+    return {
+        type: SET_FILTER,
+        payload: token
+    }
 }
 
 /* Internals */
@@ -351,10 +330,8 @@ export function setFilter(token) {
  * @param {string} name Name
  */
 export function setDatabaseName(name) {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_DATABASE_NAME,
-            payload: name
-        });
-    };
+    return {
+        type: SET_DATABASE_NAME,
+        payload: name
+    }
 }

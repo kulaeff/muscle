@@ -1,5 +1,4 @@
 import React from 'react'
-//import PropTypes from 'prop-types'
 import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
@@ -8,10 +7,13 @@ import Grid, { GridItem, GridSeparator } from '../../components/Grid'
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
 import RadioGroup from '../../components/RadioGroup'
+import Select from '../../components/Select'
+import Spinner from '../../components/Spinner'
 import SplitContainer, { SplitContainerPanel } from '../../components/SplitContainer'
 import ScrollBox from '../../components/ScrollBox'
+import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
-//import Toggle from '../../components/Toggle'
+import Toggle from '../../components/Toggle'
 import block from 'bem-cn'
 import './style.less';
 
@@ -34,7 +36,18 @@ class Components extends React.Component {
             }),
             listBoxDefaultSelectedIndex: null,
             listBoxCustomSelectedIndex: null,
-            radioValue: 0
+            radioValue: 0,
+            selectArrayOfObjectsOptions: [...new Array(14).keys()].map(item => {
+                return {
+                    id: item,
+                    label: `Option ${item}`
+                }
+            }),
+            selectArrayOfStringsOptions: [...new Array(14).keys()].map(item => `Option_${item}`),
+            selectArrayOfObjectsValue: null,
+            selectArrayOfStringsValue: null,
+            textBoxValue: '',
+            toggleChecked: true,
         };
     }
 
@@ -78,8 +91,39 @@ class Components extends React.Component {
         });
     };
 
+    textBoxChange = (e) => {
+        console.info('TextBox changed');
+
+        this.setState({
+            textBoxValue: e.target.value
+        });
+    };
+
+    toggleChange = () => {
+        console.info('Toggle changed');
+
+        this.setState({
+            toggleChecked: !this.state.toggleChecked
+        });
+    };
+
+    selectArrayOfObjectsChange = (value, index) => {
+        console.info(`Select changed | Value: ${value}, Index: ${index}`);
+
+        this.setState({
+            selectArrayOfObjectsValue: value
+        });
+    };
+
+    selectArrayOfStringsChange = (value, index) => {
+        console.info(`Select changed | Value: ${value}, Index: ${index}`);
+
+        this.setState({
+            selectArrayOfStringsValue: value
+        });
+    };
+
     /**
-     *
      * Renders Settings container
      * @method
      */
@@ -465,6 +509,296 @@ class Components extends React.Component {
                                                         }
                                                     </ListBox>
                                                 </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Disabled" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{height: '16rem'}}>
+                                                    <ListBox
+                                                        disabled={true}
+                                                        selected={this.state.listBoxCustomSelectedIndex}
+                                                        onChange={this.handleListBoxCustomChange}
+                                                    >
+                                                        {
+                                                            this.state.listBoxCustomItems.map((item, index) =>
+                                                                <ListBoxItem key={index}>
+                                                                    {item.label} – ${item.price}
+                                                                </ListBoxItem>
+                                                            )
+                                                        }
+                                                    </ListBox>
+                                                </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* Select */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Select</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Array of strings" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Select
+                                                    id="selectArrayOfStrings"
+                                                    name="selectArrayOfStrings"
+                                                    options={this.state.selectArrayOfStringsOptions}
+                                                    placeholder="Select an option"
+                                                    value={this.state.selectArrayOfStringsValue}
+                                                    onChange={this.selectArrayOfStringsChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Array of objects" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Select
+                                                    id="selectArrayOfObjects"
+                                                    name="selectArrayOfObjects"
+                                                    options={this.state.selectArrayOfObjectsOptions}
+                                                    placeholder="Select an option"
+                                                    value={this.state.selectArrayOfObjectsValue}
+                                                    onChange={this.selectArrayOfObjectsChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Disabled" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Select
+                                                    disabled
+                                                    id="selectArrayOfObjects"
+                                                    name="selectArrayOfObjects"
+                                                    options={this.state.selectArrayOfObjectsOptions}
+                                                    placeholder="Select an option"
+                                                    value={this.state.selectArrayOfObjectsValue}
+                                                    onChange={this.selectArrayOfObjectsChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Loading" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Select
+                                                    id="selectArrayOfObjects"
+                                                    loading
+                                                    name="selectArrayOfObjects"
+                                                    options={this.state.selectArrayOfObjectsOptions}
+                                                    placeholder="Select an option"
+                                                    value={this.state.selectArrayOfObjectsValue}
+                                                    onChange={this.selectArrayOfObjectsChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* Spinner */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Spinner</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Big" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{
+                                                    height: '7rem',
+                                                    position: 'relative'
+                                                }}>
+                                                    <Spinner active={true} size="big" />
+                                                </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Medium" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{
+                                                    height: '7rem',
+                                                    position: 'relative'
+                                                }}>
+                                                    <Spinner active={true} />
+                                                </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Small" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <div style={{
+                                                    height: '7rem',
+                                                    position: 'relative'
+                                                }}>
+                                                    <Spinner active={true} size="small"/>
+                                                </div>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* Textbox */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Textbox</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Textbox
+                                                    id="textBox"
+                                                    placeholder="Enter anything"
+                                                    value={this.state.textBoxValue}
+                                                    onChange={this.textBoxChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Disabled" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Textbox
+                                                    disabled={true}
+                                                    id="textBox"
+                                                    placeholder="Enter anything"
+                                                    value={this.state.textBoxValue}
+                                                    onChange={this.textBoxChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* Title */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Title</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Big" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Title primaryTitle="Header" size="large" />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Medium" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Title primaryTitle="Header" />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Small" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Title primaryTitle="Header" size="small"/>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Tiny" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Title primaryTitle="Header" size="tiny"/>
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                </Grid>
+                            </div>
+                        </section>
+                        {/* Toggle */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Toggle</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Toggle
+                                                    checked={this.state.toggleChecked}
+                                                    label="Toggle"
+                                                    onChange={this.toggleChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Disabled" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Toggle
+                                                    checked={this.state.toggleChecked}
+                                                    disabled={true}
+                                                    label="Toggle"
+                                                    onChange={this.toggleChange}
+                                                />
                                             </SplitContainerPanel>
                                         </SplitContainer>
                                     </GridItem>

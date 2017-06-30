@@ -13,13 +13,13 @@ class GridItem extends React.Component {
      */
     static propTypes = {
         size: PropTypes.oneOfType([
-            PropTypes.oneOf(['auto', 'default']),
-            PropTypes.number
+            PropTypes.oneOf(['auto', 'stretch']),
+            PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
         ]),
     };
 
     static defaultProps = {
-        size: 'default'
+        size: 'stretch'
     };
 
     /**

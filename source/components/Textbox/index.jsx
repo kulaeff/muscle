@@ -23,6 +23,7 @@ class Textbox extends React.Component {
      */
     static propTypes = {
         autoFocus: PropTypes.bool,
+        disabled: PropTypes.bool,
         id: PropTypes.string.isRequired,
         name: PropTypes.string,
         pattern: PropTypes.string,
@@ -42,6 +43,7 @@ class Textbox extends React.Component {
      */
     static defaultProps = {
         autoFocus: false,
+        disabled: false,
         required: false,
         type: 'text',
         value: ''
@@ -56,6 +58,7 @@ class Textbox extends React.Component {
             b = block('textbox'),
             {
                 autoFocus,
+                disabled,
                 id,
                 name,
                 pattern,
@@ -71,15 +74,17 @@ class Textbox extends React.Component {
             <input
                 autoFocus={autoFocus}
                 className={b()}
+                disabled={disabled}
                 id={id}
                 pattern={pattern}
                 name={name}
-                placeholder={placeholder}
+                placeholder={!disabled ? placeholder : null}
                 required={required}
                 title={title}
                 type={type}
                 value={value}
-                onChange={onChange} />
+                onChange={onChange}
+            />
         )
     }
 }

@@ -168,7 +168,7 @@ class ScrollBox extends React.Component {
                     className={b('container')}
                     ref={element => this.container = element}
                     style={
-                        {transform: `translate(0, ${this.state.containerTop}px)`}
+                        {top: `${this.state.containerTop}px`}
                     }
                 >
                     {children}
