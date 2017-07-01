@@ -4,6 +4,7 @@ import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
 import Grid, { GridItem, GridSeparator } from '../../components/Grid'
+import Highlight from 'react-highlight';
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
 import RadioGroup from '../../components/RadioGroup'
@@ -128,8 +129,7 @@ class Components extends React.Component {
      * @method
      */
     render() {
-        const
-            b = block('components');
+        const b = block('components');
 
         return (
             <div className={b()}>
@@ -546,11 +546,12 @@ class Components extends React.Component {
                             <div className={b('section-content')}>
                                 <Grid>
                                     <GridItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
+                                        <Grid orientation="vertical">
+                                            <GridItem size="auto">
                                                 <Title primaryTitle="Array of strings" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
                                                 <Select
                                                     id="selectArrayOfStrings"
                                                     name="selectArrayOfStrings"
@@ -559,16 +560,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfStringsValue}
                                                     onChange={this.selectArrayOfStringsChange}
                                                 />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Title primaryTitle="Example" size="tiny" />
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Highlight className="jsx">
+                                                    {require('raw-loader!./snippets/select.array-of-strings.html')}
+                                                </Highlight>
+                                            </GridItem>
+                                        </Grid>
                                     </GridItem>
                                     <GridSeparator />
                                     <GridItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
+                                        <Grid orientation="vertical">
+                                            <GridItem size="auto">
                                                 <Title primaryTitle="Array of objects" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
                                                 <Select
                                                     id="selectArrayOfObjects"
                                                     name="selectArrayOfObjects"
@@ -577,16 +589,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Title primaryTitle="Example" size="tiny" />
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Highlight className="jsx">
+                                                    {require('raw-loader!./snippets/select.array-of-objects.html')}
+                                                </Highlight>
+                                            </GridItem>
+                                        </Grid>
                                     </GridItem>
                                     <GridSeparator />
                                     <GridItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
+                                        <Grid orientation="vertical">
+                                            <GridItem size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
                                                 <Select
                                                     disabled
                                                     id="selectArrayOfObjects"
@@ -596,16 +619,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Title primaryTitle="Example" size="tiny" />
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Highlight className="jsx">
+                                                    {require('raw-loader!./snippets/select.array-of-objects.disabled.html')}
+                                                </Highlight>
+                                            </GridItem>
+                                        </Grid>
                                     </GridItem>
                                     <GridSeparator />
                                     <GridItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
+                                        <Grid orientation="vertical">
+                                            <GridItem size="auto">
                                                 <Title primaryTitle="Loading" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
                                                 <Select
                                                     id="selectArrayOfObjects"
                                                     loading
@@ -615,8 +649,18 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Title primaryTitle="Example" size="tiny" />
+                                            </GridItem>
+                                            <GridSeparator/>
+                                            <GridItem size="auto">
+                                                <Highlight className="jsx">
+                                                    {require('raw-loader!./snippets/select.array-of-objects.loading.html')}
+                                                </Highlight>
+                                            </GridItem>
+                                        </Grid>
                                     </GridItem>
                                 </Grid>
                             </div>
