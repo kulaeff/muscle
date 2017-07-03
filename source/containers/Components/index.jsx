@@ -45,8 +45,8 @@ class Components extends React.Component {
                 }
             }),
             selectArrayOfStringsOptions: [...new Array(14).keys()].map(item => `Option_${item}`),
-            selectArrayOfObjectsValue: null,
-            selectArrayOfStringsValue: null,
+            selectArrayOfObjectsValue: '',
+            selectArrayOfStringsValue: '',
             textBoxValue: '',
             toggleChecked: true,
         };
