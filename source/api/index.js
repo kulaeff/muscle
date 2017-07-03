@@ -88,6 +88,10 @@ class API {
     async getCollations() {
         return this.axios.get('collations')
     }
+
+    async getEngines() {
+        return this.axios.get('engines')
+    }
 }
 
 export default API;

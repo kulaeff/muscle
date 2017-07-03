@@ -46,6 +46,28 @@ Flight::route('GET /api/v1/collations', function() {
     }
 });
 
+// List of engines
+Flight::route('GET /api/v1/engines', function() {
+    $json = [];
+    $sql = "SELECT ENGINE FROM information_schema.ENGINES WHERE SUPPORT != 'NO'";
+
+    $db = Flight::db();
+
+    if ($db->query($sql)) {
+        foreach ($db->query($sql) as $row) {
+            $json[] = $row['ENGINE'];
+        }
+
+        Flight::json($json);
+    } else {
+        Flight::json([
+            'status' => 'error',
+            'statusCode' => $db->errorCode(),
+            'statusMessage' => $db->errorInfo()[2],
+        ]);
+    }
+});
+
 // List of databases
 Flight::route('GET /api/v1/databases', function() {
     $request = Flight::request();

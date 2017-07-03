@@ -37,6 +37,8 @@ class Tables extends React.Component {
     static propTypes = {
         collations: PropTypes.array.isRequired,
         collationsLoading: PropTypes.bool.isRequired,
+        engines: PropTypes.array.isRequired,
+        enginesLoading: PropTypes.bool.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         items: PropTypes.array.isRequired,
@@ -45,9 +47,9 @@ class Tables extends React.Component {
         saving: PropTypes.bool.isRequired,
         tableCollation: PropTypes.string.isRequired,
         tableComment: PropTypes.string.isRequired,
+        tableEngine: PropTypes.string.isRequired,
         tableFields: PropTypes.array.isRequired,
         tableName: PropTypes.string.isRequired,
-        tableType: PropTypes.string.isRequired,
         addTableField: PropTypes.func.isRequired,
         closeCreateTableModal: PropTypes.func.isRequired,
         getTables: PropTypes.func.isRequired,
@@ -56,6 +58,7 @@ class Tables extends React.Component {
         setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
         setTableCollation: PropTypes.func.isRequired,
         setTableComment: PropTypes.func.isRequired,
+        setTableEngine: PropTypes.func.isRequired,
         setTableName: PropTypes.func.isRequired
     };
 
@@ -216,6 +219,12 @@ class Tables extends React.Component {
         setTableCollation(value);
     };
 
+    selectTableEngineChange = (value) => {
+        const { setTableEngine } = this.props;
+
+        setTableEngine(value);
+    };
+
     /**
      * Renders Summary container
      * @method
@@ -235,6 +244,8 @@ class Tables extends React.Component {
                 match,
                 collations,
                 collationsLoading,
+                engines,
+                enginesLoading,
                 fetching,
                 filter,
                 items,
@@ -243,9 +254,9 @@ class Tables extends React.Component {
                 saving,
                 tableCollation,
                 tableComment,
+                tableEngine,
                 tableFields,
-                tableName,
-                tableType
+                tableName
             } = this.props;
 
         return (
@@ -370,13 +381,15 @@ class Tables extends React.Component {
                                                 onChange={this.onTextboxTableCommentChange}
                                             />
                                         </FormField>
-                                        <FormField id="type" label="Type">
-                                            <Textbox
-                                                id="type"
-                                                name="type"
-                                                required={true}
-                                                value={tableType}
-                                                onChange={this.onTextboxTableTypeChange}
+                                        <FormField id="engine" label="engine">
+                                            <Select
+                                                id="engine"
+                                                loading={enginesLoading}
+                                                name="engine"
+                                                options={engines}
+                                                placeholder="Select an engine"
+                                                value={tableEngine}
+                                                onChange={this.selectTableEngineChange}
                                             />
                                         </FormField>
                                     </FormGroup>
@@ -454,6 +467,8 @@ function mapStateToProps (state) {
     return {
         collations: state.tables.collations,
         collationsLoading: state.tables.collationsLoading,
+        engines: state.tables.engines,
+        enginesLoading: state.tables.enginesLoading,
         fetching: state.tables.fetching,
         filter: state.tables.filter,
         items: state.tables.items,
@@ -462,9 +477,9 @@ function mapStateToProps (state) {
         saving: state.tables.saving,
         tableCollation: state.tables.tableCollation,
         tableComment: state.tables.tableComment,
+        tableEngine: state.tables.tableEngine,
         tableFields: state.tables.tableFields,
-        tableName: state.tables.tableName,
-        tableType: state.tables.tableType
+        tableName: state.tables.tableName
     }
 }
 
@@ -478,6 +493,7 @@ function mapDispatchToProps(dispatch) {
         setListBoxFieldsSelectedIndex,
         setTableCollation,
         setTableComment,
+        setTableEngine,
         setTableName
     } = actions;
 
@@ -490,6 +506,7 @@ function mapDispatchToProps(dispatch) {
         setListBoxFieldsSelectedIndex,
         setTableCollation,
         setTableComment,
+        setTableEngine,
         setTableName
     }, dispatch);
 }

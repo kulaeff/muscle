@@ -7,17 +7,23 @@ import {
     GET_COLLATIONS_REQUEST,
     GET_COLLATIONS_SUCCESS,
     GET_COLLATIONS_FAIL,
+    GET_ENGINES_REQUEST,
+    GET_ENGINES_SUCCESS,
+    GET_ENGINES_FAIL,
     OPEN_CREATE_TABLE_MODAL,
     REMOVE_TABLE_FIELD,
     SET_LISTBOX_FIELDS_SELECTED_INDEX,
     SET_TABLE_COLLATION,
     SET_TABLE_COMMENT,
+    SET_TABLE_ENGINE,
     SET_TABLE_NAME
 } from '../constants/tables'
 
 const initialState = {
     collations: [],
     collationsLoading: false,
+    engines: [],
+    enginesLoading: false,
     fetching: false,
     filter: '',
     items: [],
@@ -26,10 +32,10 @@ const initialState = {
     saving: false,
     tableCollation: '',
     tableComment: '',
+    tableEngine: '',
     tableFieldCounter: 1,
     tableFields: [],
-    tableName: '',
-    tableType: ''
+    tableName: ''
 };
 
 export default function tables(state = initialState, action) {
@@ -73,6 +79,22 @@ export default function tables(state = initialState, action) {
                 ...state,
                 collationsLoading: false
             };
+        case GET_ENGINES_REQUEST:
+            return {
+                ...state,
+                enginesLoading: true
+            };
+        case GET_ENGINES_SUCCESS:
+            return {
+                ...state,
+                engines: action.payload,
+                enginesLoading: false
+            };
+        case GET_ENGINES_FAIL:
+            return {
+                ...state,
+                enginesLoading: false
+            };
         case OPEN_CREATE_TABLE_MODAL:
             return {
                 ...state,
@@ -97,6 +119,11 @@ export default function tables(state = initialState, action) {
             return {
                 ...state,
                 tableComment: action.payload
+            };
+        case SET_TABLE_ENGINE:
+            return {
+                ...state,
+                tableEngine: action.payload
             };
         case SET_TABLE_NAME:
             return {

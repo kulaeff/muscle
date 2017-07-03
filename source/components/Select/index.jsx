@@ -31,7 +31,7 @@ class Select extends React.Component {
         options: PropTypes.array.isRequired,
         placeholder: PropTypes.string,
         tooltip: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
         valueKey: PropTypes.string,
         onChange: PropTypes.func
     };

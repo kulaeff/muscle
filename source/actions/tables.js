@@ -7,10 +7,14 @@ import {
     GET_COLLATIONS_REQUEST,
     GET_COLLATIONS_SUCCESS,
     GET_COLLATIONS_FAIL,
+    GET_ENGINES_REQUEST,
+    GET_ENGINES_SUCCESS,
+    GET_ENGINES_FAIL,
     OPEN_CREATE_TABLE_MODAL,
     REMOVE_TABLE_FIELD,
     SET_LISTBOX_FIELDS_SELECTED_INDEX,
     SET_TABLE_COLLATION,
+    SET_TABLE_ENGINE,
     SET_TABLE_COMMENT,
     SET_TABLE_NAME
 } from '../constants/tables'
@@ -71,6 +75,31 @@ export function getCollations() {
     }
 }
 
+/**
+ * Retrieves the list of engines
+ */
+export function getEngines() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: GET_ENGINES_REQUEST
+        });
+
+        api.getEngines()
+            .then(response => {
+                dispatch({
+                    type: GET_ENGINES_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: GET_ENGINES_FAIL,
+                    payload: error
+                })
+            });
+    }
+}
+
 /*------------------------------------------------------------------------------------*/
 /* UI                                                                                 */
 /*------------------------------------------------------------------------------------*/
@@ -96,6 +125,7 @@ export function openCreateTableModal() {
         });
 
         dispatch(getCollations());
+        dispatch(getEngines());
     }
 }
 
@@ -165,7 +195,7 @@ export function setListBoxFieldsSelectedIndex(index) {
 
 /**
  * Stores current table comment
- * @param {string} comment Comment
+ * @param {string} collation Collation
  */
 export function setTableCollation(collation) {
     return {
@@ -183,6 +213,19 @@ export function setTableComment(comment) {
         dispatch({
             type: SET_TABLE_COMMENT,
             payload: comment
+        });
+    };
+}
+
+/**
+ * Stores current table engine
+ * @param {string} engine Engine
+ */
+export function setTableEngine(engine) {
+    return async (dispatch) => {
+        dispatch({
+            type: SET_TABLE_ENGINE,
+            payload: engine
         });
     };
 }
