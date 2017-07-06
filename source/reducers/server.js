@@ -28,16 +28,17 @@ import {
 
 const initialState = {
     fetching: false,
+    filter: '',
     databases: [],
+    databaseName: '',
+    databaseName_: '',
+    listBoxDatabasesSelectedIndex: -1,
     minimized: false,
     modalTextboxDatabaseNameValue: '',
     modalCreateDatabaseVisible: false,
     modalDeleteDatabaseVisible: false,
     modalEditDatabaseVisible: false,
-    saving: false,
-    databaseName: '',
-    databaseName_: '',
-    filter: ''
+    saving: false
 };
 
 export default function server(state = initialState, action) {

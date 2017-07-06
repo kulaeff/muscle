@@ -57,7 +57,16 @@ class Select extends React.Component {
 
         this.state = {
             active: false,
+            dropdownHeight: '100%',
             option: null
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.active !== this.state.active && this.state.active) {
+            this.setState({
+                dropdownHeight: this.dropdown.clientHeight
+            })
         }
     }
 
@@ -112,7 +121,7 @@ class Select extends React.Component {
 
         if (!disabled && e.button === 0) {
             this.setState({
-                active: true
+                active: true,
             });
 
             e.stopPropagation();
@@ -205,12 +214,12 @@ class Select extends React.Component {
                     <span className={b('arrow')} />
                 </div>
                 {
-                    this.state.active && (
-                        <div className={b('dropdown')}>
-                            <ScrollBox>
+                    this.state.active ? (
+                        <div className={b('dropdown')} ref={element => this.dropdown = element}>
+                            <ScrollBox height={this.state.dropdownHeight}>
                                 <ul className={b('options')}>
                                     {
-                                        options.length > 0 && options.map((option, index) =>
+                                        options.map((option, index) =>
                                             typeof option === 'string' ? (
                                                 <li
                                                     className={b('option', {state: option === value ? 'selected' : null})}
@@ -231,7 +240,7 @@ class Select extends React.Component {
                                 </ul>
                             </ScrollBox>
                         </div>
-                    )
+                    ) : null
                 }
             </div>
         )

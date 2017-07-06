@@ -46,20 +46,20 @@ class NavigationBar extends React.Component {
 
         return (
             <div className={b()}>
-            {
-                children ? (
-                    children
-                ) : (
-                    items.map((item, index) =>
-                        <NavigationBarItem
-                            key={index}
-                            id={item.id}
-                            title={item.title}
-                            url={item.url}
-                        />
+                {
+                    children ? (
+                        children
+                    ) : (
+                        items.map((item, index) =>
+                            <NavigationBarItem
+                                key={index}
+                                id={item.id}
+                                title={item.title}
+                                url={item.url}
+                            />
+                        )
                     )
-                )
-            }
+                }
             </div>
         )
     }

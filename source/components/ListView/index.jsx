@@ -37,24 +37,24 @@ class ListView extends React.Component {
 
         return (
             <div className={b()}>
-            {
-                items.map((item, index) =>
-                    <ListViewItem
-                        key={index}
-                        id={index}
-                        url={item}
-                    >
-                        {
-                            icon ?
-                                <svg>
-                                    <use xlinkHref={`#icon-${icon}`} />
-                                </svg>
-                            : null
-                        }
-                        {item}
-                    </ListViewItem>
-                )
-            }
+                {
+                    items.map((item, index) =>
+                        <ListViewItem
+                            key={index}
+                            id={index}
+                            url={item}
+                        >
+                            {
+                                icon ?
+                                    <svg>
+                                        <use xlinkHref={`#icon-${icon}`}/>
+                                    </svg>
+                                    : null
+                            }
+                            {item}
+                        </ListViewItem>
+                    )
+                }
             </div>
         )
     }

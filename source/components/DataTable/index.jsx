@@ -94,48 +94,48 @@ class DataTable extends React.Component {
         }
 
         return (
-            items.length ?
-            <table className={b()}>
-                <thead className={b('header')}>
-                    <tr>
+            items.length ? (
+                <table className={b()}>
+                    <thead className={b('header')}>
+                        <tr>
+                            {
+                                columns.map((column, index) =>
+                                    <DataTableColumn
+                                        id={index}
+                                        key={index}
+                                        sorted={this.state.sorting.index === index}
+                                        sortingOrder={this.state.sorting.order}
+                                        style={column.style}
+                                        title={column.title}
+                                        onClick={this.onColumnClick} />
+                                )
+                            }
+                        </tr>
+                    </thead>
+                    <tbody className={b('body')}>
                         {
-                            columns.map((column, index) =>
-                                <DataTableColumn
-                                    id={index}
-                                    key={index}
-                                    sorted={this.state.sorting.index === index}
-                                    sortingOrder={this.state.sorting.order}
-                                    style={column.style}
-                                    title={column.title}
-                                    onClick={this.onColumnClick} />
+                            items.map((item, index) =>
+                                <Route key={index} path={`${url}/${item[0]}`} children={({ match }) => (
+                                    <DataTableRow
+                                        cells={item}
+                                        columns={columns}
+                                        icon={icon}
+                                        selected={!!match}
+                                        url={url}
+                                        onClick={onChange}
+                                        onValueTransform={onValueTransform}
+                                    />
+                                )} />
                             )
                         }
-                    </tr>
-                </thead>
-                <tbody className={b('body')}>
-                    {
-                        items.map((item, index) =>
-                            <Route key={index} path={`${url}/${item[0]}`} children={({ match }) => (
-                                <DataTableRow
-                                    cells={item}
-                                    columns={columns}
-                                    icon={icon}
-                                    selected={!!match}
-                                    url={url}
-                                    onClick={onChange}
-                                    onValueTransform={onValueTransform}
-                                />
-                            )} />
-                        )
-                    }
-                </tbody>
-                {/*<tfoot className={b('footer')}>
-                    <tr>
-                        <td colSpan={columns.length}></td>
-                    </tr>
-                </tfoot>*/}
-            </table>
-            : null
+                    </tbody>
+                    {/*<tfoot className={b('footer')}>
+                        <tr>
+                            <td colSpan={columns.length}></td>
+                        </tr>
+                    </tfoot>*/}
+                </table>
+            ) : null
         )
     }
 }

@@ -42,14 +42,14 @@ class Title extends React.Component {
         return (
             <span className={b({size})}>
                 {
-                    secondaryTitle ?
+                    secondaryTitle ? (
                         <span className={b('label', {context: 'secondary'})}>{secondaryTitle}</span>
-                    : null
+                    ) : null
                 }
                 {
-                    primaryTitle ?
+                    primaryTitle ? (
                         <span className={b('label',  {context: 'primary'})}>{primaryTitle}</span>
-                    : null
+                    ) : null
                 }
             </span>
         )

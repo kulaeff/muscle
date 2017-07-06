@@ -12,7 +12,7 @@ import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
-import ListView from '../../components/ListView'
+import ListBox, { ListBoxItem } from '../../components/ListBox'
 import * as actions from '../../actions/server'
 import block from 'bem-cn'
 import './style.less';
@@ -34,6 +34,7 @@ class Server extends React.Component {
         databaseName: PropTypes.string.isRequired,
         databaseName_: PropTypes.string.isRequired,
         databases: PropTypes.array.isRequired,
+        listBoxDatabasesSelectedIndex: PropTypes.number.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         saving: PropTypes.bool.isRequired,
@@ -243,6 +244,10 @@ class Server extends React.Component {
         event.preventDefault();
     };
 
+    listBoxDatabasesChange = (value, index) => {
+        console.log(value, index);
+    };
+
     /**
      * Render the container
      * @returns {XML}
@@ -252,6 +257,7 @@ class Server extends React.Component {
             b = block('server'),
             {
                 match,
+                listBoxDatabasesSelectedIndex,
                 modalCreateDatabaseVisible,
                 modalDeleteDatabaseVisible,
                 modalEditDatabaseVisible,
@@ -331,10 +337,20 @@ class Server extends React.Component {
                                         onChange={this.onTextboxFilterChange}/>
                                 </div>
                                 <div className={b('table')}>
-                                    <ListView
-                                        icon="database"
-                                        items={databases}
-                                    />
+                                    <ListBox
+                                        selected={listBoxDatabasesSelectedIndex}
+                                        onChange={this.listBoxDatabasesChange}
+                                    >
+                                        {
+                                            databases.map((database, index) =>
+                                                <Route key={index} path={`${match.url}/:database`} children={({match}) =>
+                                                    <ListBoxItem selected={!!match}>
+                                                        {database}
+                                                    </ListBoxItem>
+                                                } />
+                                            )
+                                        }
+                                    </ListBox>
                                 </div>
                             </div>
                         )
@@ -505,6 +521,7 @@ function mapStateToProps (state) {
         databases: state.server.databases,
         fetching: state.server.fetching,
         filter: state.server.filter,
+        listBoxDatabasesSelectedIndex: state.server.listBoxDatabasesSelectedIndex,
         minimized: state.server.minimized,
         modalCreateDatabaseVisible: state.server.modalCreateDatabaseVisible,
         modalDeleteDatabaseVisible: state.server.modalDeleteDatabaseVisible,

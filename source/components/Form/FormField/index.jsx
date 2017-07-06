@@ -42,9 +42,9 @@ class FormField extends React.Component {
         return (
             <div className={b('field', {required, width})}>
                 {
-                    label ?
+                    label ? (
                         <label className={b('field-label')} htmlFor={id}>{label}</label>
-                    : null
+                    ) : null
                 }
                 <div className={b('field-container')}>{children}</div>
             </div>
