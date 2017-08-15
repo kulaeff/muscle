@@ -15,8 +15,6 @@ class DataTableCell extends React.Component {
      */
     static propTypes = {
         column: PropTypes.object.isRequired,
-        icon: PropTypes.string,
-        //row: PropTypes.number.isRequired,
         onValueTransform: PropTypes.func
     };
 
@@ -33,20 +31,11 @@ class DataTableCell extends React.Component {
             {
                 children,
                 column,
-                icon,
-                //row,
                 onValueTransform
             } = this.props;
 
         return (
             <td className={b('cell')}>
-                {
-                    icon ?
-                        <svg>
-                            <use xlinkHref={`#icon-${icon}`} />
-                        </svg>
-                        : null
-                }
                 {
                     onValueTransform ? onValueTransform(column.name, children) : children
                 }

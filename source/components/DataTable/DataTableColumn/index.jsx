@@ -21,9 +21,9 @@ class DataTableColumn extends React.Component {
         id: PropTypes.number.isRequired,
         sorted: PropTypes.bool,
         sortingOrder: PropTypes.oneOf([1, -1]),
-        title: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
         onClick: PropTypes.func.isRequired
-    }
+    };
 
     /**
      * Default properties
@@ -34,7 +34,7 @@ class DataTableColumn extends React.Component {
     static defaultProps = {
         sorted: false,
         sortingOrder: 1
-    }
+    };
 
     /**
      * Render component
@@ -47,9 +47,9 @@ class DataTableColumn extends React.Component {
                 id,
                 sorted = DataTableColumn.defaults.sorted,
                 sortingOrder = DataTableColumn.defaults.sortingOrder,
-                title,
+                label,
                 onClick
-            } = this.props
+            } = this.props;
 
         let order = ''
 
@@ -63,9 +63,9 @@ class DataTableColumn extends React.Component {
                     order,
                     state: sorted ? 'sorted' : null
                 })}
-                title={title}
+                title={label}
                 onClick={() => onClick(id)}>
-                <span className={b('column-title')}>{title}</span>
+                <span className={b('column-title')}>{label}</span>
                 <span className={b('column-arrow')}>
                     <svg>
                         <use xlinkHref="#icon-data-table-column-arrow" />

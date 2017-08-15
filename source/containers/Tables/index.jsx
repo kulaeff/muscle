@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import DataTable from '~/components/DataTable'
 import Form, { FormBody, FormButtons, FormButton, FormField, FormGroup }  from '../../components/Form'
-import Grid, { GridItem, GridSeparator } from '../../components/Grid'
+import Grid, { FlexItem, FlexSeparator } from '../../components/Flex'
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Placeholder from '~/components/Placeholder'
 import PropertyEditor from '../../components/PropertyEditor'
@@ -233,12 +233,12 @@ class Tables extends React.Component {
         const
             b = block('tables'),
             columns = [
-                { name: 'table', title: 'Table' },
-                { name: 'rows', title: 'Rows', style: { alignment: 'right' } },
-                { name: 'type', title: 'Type' },
-                { name: 'collation', title: 'Collation' },
-                { name: 'size', title: 'Size', style: { alignment: 'right' } },
-                { name: 'overhead', title: 'Overhead', style: { alignment: 'right' } }
+                { name: 'table', label: 'Table' },
+                { name: 'rows', label: 'Rows', style: { alignment: 'right' } },
+                { name: 'type', label: 'Type' },
+                { name: 'collation', label: 'Collation' },
+                { name: 'size', label: 'Size', style: { alignment: 'right' } },
+                { name: 'overhead', label: 'Overhead', style: { alignment: 'right' } }
             ],
             {
                 match,
@@ -313,7 +313,7 @@ class Tables extends React.Component {
                                 items.length ? (
                                     <DataTable
                                         columns={columns}
-                                        items={items}
+                                        rows={items}
                                         url={match.url}
                                         onChange={this.onDataTableChange}
                                         onValueTransform={this.onDataTableValueTransform}/>
@@ -337,12 +337,12 @@ class Tables extends React.Component {
                         shouldCloseOnOverlayClick={true}
                     >
                         <Grid>
-                            <GridItem>
+                            <FlexItem>
                                 <Title primaryTitle="New table" size="large" />
-                            </GridItem>
-                            <GridItem size="auto">
+                            </FlexItem>
+                            <FlexItem size="auto">
                                 <Spinner active={saving} type="rect" />
-                            </GridItem>
+                            </FlexItem>
                         </Grid>
                         <Form
                             onReset={this.onCreateTableModalClose}
@@ -397,7 +397,7 @@ class Tables extends React.Component {
                                         <FormGroup flow="row">
                                             <FormField label="Fields" width={2}>
                                                 <Grid orientation="vertical">
-                                                    <GridItem size="stretch">
+                                                    <FlexItem size="stretch">
                                                         <ListBox
                                                             id="name"
                                                             name="name"
@@ -414,9 +414,9 @@ class Tables extends React.Component {
                                                                 ))
                                                             }
                                                         </ListBox>
-                                                    </GridItem>
-                                                    <GridSeparator />
-                                                    <GridItem size="auto">
+                                                    </FlexItem>
+                                                    <FlexSeparator />
+                                                    <FlexItem size="auto">
                                                         <ButtonGroup align="left">
                                                             <ActionButton
                                                                 icon="add-24"
@@ -428,7 +428,7 @@ class Tables extends React.Component {
                                                                 onClick={this.onActionButtonRemoveFieldClick}
                                                             />
                                                         </ButtonGroup>
-                                                    </GridItem>
+                                                    </FlexItem>
                                                 </Grid>
                                             </FormField>
                                             <FormField label="Properties" width={3}>

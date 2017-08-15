@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as statusSummaryActions from '../../../actions/status/summary'
-import Grid, { GridItem } from '../../../components/Grid'
+import Grid, { FlexItem } from '../../../components/Flex'
 import Indicator from '../../../components/Indicator'
 import Spinner from '../../../components/Spinner'
 import block from 'bem-cn'
@@ -72,18 +72,18 @@ class StatusSummary extends React.Component {
                         :
                         <div className={b('container')}>
                             <Grid type="tiled">
-                                <GridItem>
+                                <FlexItem>
                                     <Indicator title="Up time" value={uptime.humanize()}/>
-                                </GridItem>
-                                <GridItem>
+                                </FlexItem>
+                                <FlexItem>
                                     <Indicator title="Connections" value={summary.connections.toLocaleString()}/>
-                                </GridItem>
-                                <GridItem>
+                                </FlexItem>
+                                <FlexItem>
                                     <Indicator title="Traffic" value={bytes(summary.usage)} />
-                                </GridItem>
-                                <GridItem>
+                                </FlexItem>
+                                <FlexItem>
                                     <Indicator title="Queries" value={summary.queries.toLocaleString()} />
-                                </GridItem>
+                                </FlexItem>
                             </Grid>
                         </div>
                 }

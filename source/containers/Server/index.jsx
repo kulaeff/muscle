@@ -6,13 +6,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
+import DataTable from '../../components/DataTable'
 import Form, { FormBody, FormField, FormButtons, FormButton }  from '../../components/Form'
-import Grid, { GridItem } from '../../components/Grid'
+import Grid, { FlexItem } from '../../components/Flex'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
-import ListBox, { ListBoxItem } from '../../components/ListBox'
 import * as actions from '../../actions/server'
 import block from 'bem-cn'
 import './style.less';
@@ -34,7 +34,6 @@ class Server extends React.Component {
         databaseName: PropTypes.string.isRequired,
         databaseName_: PropTypes.string.isRequired,
         databases: PropTypes.array.isRequired,
-        listBoxDatabasesSelectedIndex: PropTypes.number.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         saving: PropTypes.bool.isRequired,
@@ -244,8 +243,14 @@ class Server extends React.Component {
         event.preventDefault();
     };
 
-    listBoxDatabasesChange = (value, index) => {
-        console.log(value, index);
+    dataTableChange = (value) => {
+        const { match, history, minimizeWindow } = this.props;
+
+        history.push(`${match.url}/${value}`);
+
+        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
+            minimizeWindow()
+        }
     };
 
     /**
@@ -255,9 +260,11 @@ class Server extends React.Component {
     render() {
         const
             b = block('server'),
+            columns = [
+                { name: 'database', label: 'Database' }
+            ],
             {
                 match,
-                listBoxDatabasesSelectedIndex,
                 modalCreateDatabaseVisible,
                 modalDeleteDatabaseVisible,
                 modalEditDatabaseVisible,
@@ -337,20 +344,12 @@ class Server extends React.Component {
                                         onChange={this.onTextboxFilterChange}/>
                                 </div>
                                 <div className={b('table')}>
-                                    <ListBox
-                                        selected={listBoxDatabasesSelectedIndex}
-                                        onChange={this.listBoxDatabasesChange}
-                                    >
-                                        {
-                                            databases.map((database, index) =>
-                                                <Route key={index} path={`${match.url}/:database`} children={({match}) =>
-                                                    <ListBoxItem selected={!!match}>
-                                                        {database}
-                                                    </ListBoxItem>
-                                                } />
-                                            )
-                                        }
-                                    </ListBox>
+                                    <DataTable
+                                        columns={columns}
+                                        rows={databases}
+                                        url={match.url}
+                                        onChange={this.dataTableChange}
+                                    />
                                 </div>
                             </div>
                         )
@@ -373,12 +372,12 @@ class Server extends React.Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <Grid>
-                        <GridItem>
+                        <FlexItem>
                             <Title primaryTitle="New database" size="large" />
-                        </GridItem>
-                        <GridItem size="auto">
+                        </FlexItem>
+                        <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
-                        </GridItem>
+                        </FlexItem>
                     </Grid>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
                         <FormBody>
@@ -423,12 +422,12 @@ class Server extends React.Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <Grid>
-                        <GridItem>
+                        <FlexItem>
                             <Title primaryTitle="Edit database" size="large" />
-                        </GridItem>
-                        <GridItem size="auto">
+                        </FlexItem>
+                        <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
-                        </GridItem>
+                        </FlexItem>
                     </Grid>
                     <Form onReset={this.onEditDatabaseModalClose} onSubmit={this.onEditDatabaseFormSubmit}>
                         <FormBody>
@@ -475,12 +474,12 @@ class Server extends React.Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <Grid>
-                        <GridItem>
+                        <FlexItem>
                             <Title primaryTitle="Delete database" size="large" />
-                        </GridItem>
-                        <GridItem size="auto">
+                        </FlexItem>
+                        <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
-                        </GridItem>
+                        </FlexItem>
                     </Grid>
                     <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
                         <FormBody>

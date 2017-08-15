@@ -77,7 +77,9 @@ Flight::route('GET /api/v1/databases', function() {
     $db = Flight::db();
 
     foreach ($db->query("SHOW DATABASES LIKE '%$token%'") as $row) {
-        $json[] = $row[0];
+        $json[] = [
+            $row[0]
+        ];
     }
 
     sort($json);

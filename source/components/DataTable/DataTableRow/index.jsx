@@ -21,8 +21,6 @@ class DataTableRow extends React.Component {
     static propTypes = {
         cells: PropTypes.array.isRequired,
         columns: PropTypes.array.isRequired,
-        icon: PropTypes.string,
-        selected: PropTypes.bool.isRequired,
         onClick: PropTypes.func.isRequired,
         onValueTransform: PropTypes.func
     };
@@ -45,7 +43,6 @@ class DataTableRow extends React.Component {
             {
                 cells,
                 columns,
-                icon,
                 selected,
                 onClick,
                 onValueTransform
@@ -54,13 +51,12 @@ class DataTableRow extends React.Component {
         return (
             <tr
                 className={b('row', { state: selected ? 'selected' : null })}
-                onClick={() => onClick(cells)}>
+                onClick={(e) => onClick(e, cells)}>
                 {
                     cells.map((cell, index) => {
                         return <DataTableCell
                             key={index}
                             column={columns[index]}
-                            icon={icon}
                             onValueTransform={onValueTransform}
                         >{cell}</DataTableCell>
                     })

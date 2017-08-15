@@ -3,7 +3,9 @@ import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
-import Grid, { GridItem, GridSeparator } from '../../components/Grid'
+//import DataTable, { DataTableCell, DataTableColumn, DataTableRow} from '../../components/DataTable'
+import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
+import G from '../../components/G'
 import Highlight from 'react-highlight';
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
@@ -28,6 +30,13 @@ class Components extends React.Component {
 
         this.state = {
             checkboxChecked: true,
+            dataTableDefaultColumns: ['Name', 'Country', 'Age'],
+            dataTableDefaultRows: [
+                ['John', 'USA', '27'],
+                ['Mark', 'Germany', '24'],
+                ['Ivan', 'Russia', '26'],
+                ['Tamara', 'Iran', '24']
+            ],
             listBoxDefaultItems: [...new Array(10).keys()].map(item => `Item ${item}`),
             listBoxCustomItems: [...new Array(10).keys()].map(item => {
                 return {
@@ -58,6 +67,10 @@ class Components extends React.Component {
 
     handleButtonClick = () => {
         console.info('Button clicked');
+    };
+
+    handleDataTableDefaultChange = (value) => {
+        console.info('DataTable changed: ', value);
     };
 
     handleRadioChange = (value) => {
@@ -142,8 +155,8 @@ class Components extends React.Component {
                         <section className={b('section')}>
                             <span className={b('section-title')}>ActionButton</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -155,9 +168,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -170,16 +183,16 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Button */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Button</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -191,9 +204,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -206,9 +219,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Auto-sized" size="tiny" />
@@ -221,16 +234,16 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* ButtonGroup */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>ButtonGroup</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Row Left" size="tiny" />
@@ -248,9 +261,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Row Center" size="tiny" />
@@ -268,9 +281,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Row Right" size="tiny" />
@@ -288,9 +301,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Row Opposite" size="tiny" />
@@ -308,9 +321,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Column Left" size="tiny" />
@@ -328,9 +341,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Column Center" size="tiny" />
@@ -348,9 +361,9 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Column Right" size="tiny" />
@@ -368,16 +381,16 @@ class Components extends React.Component {
                                                 </ButtonGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Checkbox */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Checkbox</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -390,9 +403,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -406,16 +419,89 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
+                                    </FlexItem>
+                                </Flex>
+                            </div>
+                        </section>
+                        {/* DataTable */}
+                        {/*<section className={b('section')}>
+                            <span className={b('section-title')}>DataTable</span>
+                            <div className={b('section-content')}>
+                                <Grid>
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <DataTable
+                                                    columns={this.state.dataTableDefaultColumns}
+                                                    rows={this.state.dataTableDefaultRows}
+                                                    onChange={this.handleDataTableDefaultChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Disabled" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <DataTable
+                                                    columns={this.state.dataTableDefaultColumns}
+                                                    rows={this.state.dataTableDefaultRows}
+                                                    onChange={this.handleDataTableDefaultChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </GridItem>
+                                    <GridSeparator />
+                                    <GridItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Auto-sized" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <DataTable
+                                                    columns={this.state.dataTableDefaultColumns}
+                                                    rows={this.state.dataTableDefaultRows}
+                                                    onChange={this.handleDataTableDefaultChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
                                     </GridItem>
                                 </Grid>
+                            </div>
+                        </section>*/}
+                        {/* Grid */}
+                        <section className={b('section')}>
+                            <span className={b('section-title')}>Grid</span>
+                            <div className={b('section-content')}>
+                                <Flex>
+                                    <FlexItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <G
+                                                    columns={['20%', '40%', 'auto']}
+                                                    rows={['20%', '40%', 'auto']}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Radio */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Radio</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -437,9 +523,9 @@ class Components extends React.Component {
                                                 </RadioGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -463,16 +549,16 @@ class Components extends React.Component {
                                                 </RadioGroup>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* ListBox */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>ListBox</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -487,9 +573,9 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Custom" size="tiny" />
@@ -511,9 +597,9 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -536,22 +622,22 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Select */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Select</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
-                                        <Grid orientation="vertical">
-                                            <GridItem size="auto">
+                                <Flex>
+                                    <FlexItem>
+                                        <Flex orientation="vertical">
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Array of strings" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Select
                                                     id="selectArrayOfStrings"
                                                     name="selectArrayOfStrings"
@@ -560,27 +646,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfStringsValue}
                                                     onChange={this.selectArrayOfStringsChange}
                                                 />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Highlight className="jsx">
                                                     {require('raw-loader!./snippets/select.array-of-strings.html')}
                                                 </Highlight>
-                                            </GridItem>
-                                        </Grid>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
-                                        <Grid orientation="vertical">
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                        </Flex>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
+                                        <Flex orientation="vertical">
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Array of objects" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Select
                                                     id="selectArrayOfObjects"
                                                     name="selectArrayOfObjects"
@@ -589,27 +675,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Highlight className="jsx">
                                                     {require('raw-loader!./snippets/select.array-of-objects.html')}
                                                 </Highlight>
-                                            </GridItem>
-                                        </Grid>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
-                                        <Grid orientation="vertical">
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                        </Flex>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
+                                        <Flex orientation="vertical">
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Select
                                                     disabled
                                                     id="selectArrayOfObjects"
@@ -619,27 +705,27 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Highlight className="jsx">
                                                     {require('raw-loader!./snippets/select.array-of-objects.disabled.html')}
                                                 </Highlight>
-                                            </GridItem>
-                                        </Grid>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
-                                        <Grid orientation="vertical">
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                        </Flex>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
+                                        <Flex orientation="vertical">
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Loading" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Select
                                                     id="selectArrayOfObjects"
                                                     loading
@@ -649,28 +735,28 @@ class Components extends React.Component {
                                                     value={this.state.selectArrayOfObjectsValue}
                                                     onChange={this.selectArrayOfObjectsChange}
                                                 />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </GridItem>
-                                            <GridSeparator/>
-                                            <GridItem size="auto">
+                                            </FlexItem>
+                                            <FlexSeparator/>
+                                            <FlexItem size="auto">
                                                 <Highlight className="jsx">
                                                     {require('raw-loader!./snippets/select.array-of-objects.loading.html')}
                                                 </Highlight>
-                                            </GridItem>
-                                        </Grid>
-                                    </GridItem>
-                                </Grid>
+                                            </FlexItem>
+                                        </Flex>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Spinner */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Spinner</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Big" size="tiny" />
@@ -684,9 +770,9 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Medium" size="tiny" />
@@ -700,9 +786,9 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Small" size="tiny" />
@@ -716,19 +802,34 @@ class Components extends React.Component {
                                                 </div>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Textbox */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Textbox</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
+                                            </SplitContainerPanel>
+                                            <SplitContainerPanel>
+                                                <Textbox
+                                                    id="textBox"
+                                                    value={this.state.textBoxValue}
+                                                    onChange={this.textBoxChange}
+                                                />
+                                            </SplitContainerPanel>
+                                        </SplitContainer>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
+                                        <SplitContainer>
+                                            <SplitContainerPanel size="auto">
+                                                <Title primaryTitle="With placeholder" size="tiny" />
                                             </SplitContainerPanel>
                                             <SplitContainerPanel>
                                                 <Textbox
@@ -739,9 +840,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -756,16 +857,16 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Title */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Title</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Big" size="tiny" />
@@ -774,9 +875,9 @@ class Components extends React.Component {
                                                 <Title primaryTitle="Header" size="large" />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Medium" size="tiny" />
@@ -785,9 +886,9 @@ class Components extends React.Component {
                                                 <Title primaryTitle="Header" />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Small" size="tiny" />
@@ -796,9 +897,9 @@ class Components extends React.Component {
                                                 <Title primaryTitle="Header" size="small"/>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Tiny" size="tiny" />
@@ -807,16 +908,16 @@ class Components extends React.Component {
                                                 <Title primaryTitle="Header" size="tiny"/>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Toggle */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Toggle</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -829,9 +930,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -845,8 +946,8 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                     </div>

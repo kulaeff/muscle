@@ -94,6 +94,7 @@ class Select extends React.Component {
         if (!this.self.contains(e.target)) {
             this.setState({
                 active: false,
+                dropdownHeight: '100%'
             });
         }
     };
@@ -102,6 +103,7 @@ class Select extends React.Component {
         if (!this.self.contains(e.target)) {
             this.setState({
                 active: false,
+                dropdownHeight: '100%'
             });
         }
     };

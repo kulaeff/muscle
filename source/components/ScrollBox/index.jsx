@@ -54,6 +54,10 @@ class ScrollBox extends React.Component {
         this.updateState();
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.state.timeoutID);
+    }
+
     /**
      * Gets current sizes
      * @returns {object}
