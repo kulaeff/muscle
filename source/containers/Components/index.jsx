@@ -423,7 +423,7 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* DataTable */}
-                        {/*<section className={b('section')}>
+                        <section className={b('section')}>
                             <span className={b('section-title')}>DataTable</span>
                             <div className={b('section-content')}>
                                 <Grid>
@@ -473,7 +473,7 @@ class Components extends React.Component {
                                     </GridItem>
                                 </Grid>
                             </div>
-                        </section>*/}
+                        </section>
                         {/* Radio */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Radio</span>
