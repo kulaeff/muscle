@@ -43,6 +43,20 @@ class ListBox extends React.Component {
         value: ''
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            height: '100%'
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            height: this.self.offsetHeight
+        })
+    }
+
     handleOptionClick = (index) => {
         const { onChange } = this.props;
 
@@ -63,8 +77,12 @@ class ListBox extends React.Component {
             { children, disabled, items, selected } = this.props;
 
         return (
-            <div className={b({state: disabled ? 'disabled' : null})} tabIndex={0}>
-                <ScrollBox>
+            <div
+                className={b({state: disabled ? 'disabled' : null})}
+                ref={element => this.self = element}
+                tabIndex={0}
+            >
+                <ScrollBox height={this.state.height}>
                     {
                         items.length ? (
                             items.map((item, index) =>

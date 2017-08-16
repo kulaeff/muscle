@@ -5,7 +5,6 @@ import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
 //import DataTable, { DataTableCell, DataTableColumn, DataTableRow} from '../../components/DataTable'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
-import G from '../../components/G'
 import Highlight from 'react-highlight';
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
@@ -475,27 +474,6 @@ class Components extends React.Component {
                                 </Grid>
                             </div>
                         </section>*/}
-                        {/* Grid */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Grid</span>
-                            <div className={b('section-content')}>
-                                <Flex>
-                                    <FlexItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
-                                                <Title primaryTitle="Default" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
-                                                <G
-                                                    columns={['20%', '40%', 'auto']}
-                                                    rows={['20%', '40%', 'auto']}
-                                                />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
-                                    </FlexItem>
-                                </Flex>
-                            </div>
-                        </section>
                         {/* Radio */}
                         <section className={b('section')}>
                             <span className={b('section-title')}>Radio</span>

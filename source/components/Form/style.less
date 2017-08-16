@@ -10,6 +10,8 @@
 }
 
 .form {
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     &__body {
@@ -35,23 +37,20 @@
         display: flex;
         flex: 1;
         flex-flow: column nowrap;
+        height: 100%;
         &-container {
             display: block;
             flex: 1;
+            min-height: @controlHeight;
         }
         &-label {
             color: @cTransparentDark75;
             display: block;
+            flex: 0;
             font-size: 1.1rem;
             font-weight: 600;
             padding-bottom: 0.2rem;
             text-transform: uppercase;
-        }
-        // WIDTH
-        .make-flexes(16);
-        // WIDTH:AUTO
-        &_width_auto {
-            flex: 0;
         }
     }
     &__group {

@@ -19,16 +19,13 @@ class FormField extends React.Component {
         id: PropTypes.string,
         label: PropTypes.string,
         required: PropTypes.bool,
-        width: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])
     };
 
     /**
      * Default properties
      * @static
      */
-    static defaultProps = {
-        width: 1
-    };
+    static defaultProps = {};
 
     /**
      * Render component
@@ -37,10 +34,10 @@ class FormField extends React.Component {
     render() {
         const
             b = block('form'),
-            { children, id, label, required, width } = this.props;
+            { children, id, label, required } = this.props;
 
         return (
-            <div className={b('field', {required, width})}>
+            <div className={b('field', {required})}>
                 {
                     label ? (
                         <label className={b('field-label')} htmlFor={id}>{label}</label>

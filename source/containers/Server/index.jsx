@@ -6,9 +6,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
+import ButtonGroup from '../../components/ButtonGroup'
 import DataTable from '../../components/DataTable'
-import Form, { FormBody, FormField, FormButtons, FormButton }  from '../../components/Form'
-import Grid, { FlexItem } from '../../components/Flex'
+import Form, { FormField }  from '../../components/Form'
+import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -371,42 +372,43 @@ class Server extends React.Component {
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <Grid>
+                    <Flex>
                         <FlexItem>
                             <Title primaryTitle="New database" size="large" />
                         </FlexItem>
                         <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
                         </FlexItem>
-                    </Grid>
+                    </Flex>
                     <Form onReset={this.onCreateDatabaseModalClose} onSubmit={this.onCreateDatabaseFormSubmit}>
-                        <FormBody>
-                            <FormField id="textboxDatabaseName" label="Name">
-                                <Textbox
-                                    autoFocus={true}
-                                    id="textboxDatabaseName"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                    onChange={this.onTextboxDatabaseNameChange}
-                                />
-                            </FormField>
-                        </FormBody>
-                        <FormButtons>
-                            <FormButton>
-                                <Button
-                                    label="Cancel"
-                                    type="reset"
-                                />
-                            </FormButton>
-                            <FormButton>
-                                <Button
-                                    disabled={databaseName.length === 0 || saving}
-                                    label="Create"
-                                    type="submit"
-                                />
-                            </FormButton>
-                        </FormButtons>
+                        <Flex flow="column">
+                            <FlexItem>
+                                <FormField id="textboxDatabaseName" label="Name">
+                                    <Textbox
+                                        autoFocus={true}
+                                        id="textboxDatabaseName"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                        onChange={this.onTextboxDatabaseNameChange}
+                                    />
+                                </FormField>
+                            </FlexItem>
+                            <FlexSeparator/>
+                            <FlexItem size="auto">
+                                <ButtonGroup align="right">
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
+                                    <Button
+                                        disabled={databaseName.length === 0 || saving}
+                                        label="Create"
+                                        type="submit"
+                                    />
+                                </ButtonGroup>
+                            </FlexItem>
+                        </Flex>
                     </Form>
                 </ReactModal>
                 {/* Edit Database */}
@@ -421,44 +423,45 @@ class Server extends React.Component {
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <Grid>
+                    <Flex>
                         <FlexItem>
                             <Title primaryTitle="Edit database" size="large" />
                         </FlexItem>
                         <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
                         </FlexItem>
-                    </Grid>
+                    </Flex>
                     <Form onReset={this.onEditDatabaseModalClose} onSubmit={this.onEditDatabaseFormSubmit}>
-                        <FormBody>
-                            <FormField id="textboxDatabaseName" label="Name">
-                                <Textbox
-                                    autoFocus={true}
-                                    id="textboxDatabaseName"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                    onChange={this.onTextboxDatabaseNameChange}
-                                />
-                            </FormField>
-                        </FormBody>
-                        <FormButtons>
-                            <FormButton>
-                                <Button
-                                    disabled={
-                                        databaseName.length === 0 || databaseName === databaseName_ || saving
-                                    }
-                                    label="Save"
-                                    type="submit"
-                                />
-                            </FormButton>
-                            <FormButton>
-                                <Button
-                                    label="Cancel"
-                                    type="reset"
-                                />
-                            </FormButton>
-                        </FormButtons>
+                        <Flex flow="column">
+                            <FlexItem>
+                                <FormField id="textboxDatabaseName" label="Name">
+                                    <Textbox
+                                        autoFocus={true}
+                                        id="textboxDatabaseName"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                        onChange={this.onTextboxDatabaseNameChange}
+                                    />
+                                </FormField>
+                            </FlexItem>
+                            <FlexSeparator/>
+                            <FlexItem size="auto">
+                                <ButtonGroup>
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
+                                    <Button
+                                        disabled={
+                                            databaseName.length === 0 || databaseName === databaseName_ || saving
+                                        }
+                                        label="Save"
+                                        type="submit"
+                                    />
+                                </ButtonGroup>
+                            </FlexItem>
+                        </Flex>
                     </Form>
                 </ReactModal>
                 {/* Delete Database */}
@@ -473,39 +476,41 @@ class Server extends React.Component {
                     parentSelector={() => document.body}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <Grid>
+                    <Flex>
                         <FlexItem>
                             <Title primaryTitle="Delete database" size="large" />
                         </FlexItem>
                         <FlexItem size="auto">
                             <Spinner active={saving} type="rect" />
                         </FlexItem>
-                    </Grid>
+                    </Flex>
                     <Form onReset={this.onDeleteDatabaseModalClose} onSubmit={this.onDeleteDatabaseFormSubmit}>
-                        <FormBody>
-                            <FormField id="textboxDatabaseName">
-                                Are you sure you want to delete this database?
-                                <input type="hidden"
-                                    name="name"
-                                    required={true}
-                                    value={databaseName}
-                                />
-                            </FormField>
-                        </FormBody>
-                        <FormButtons>
-                            <FormButton>
-                                <Button
-                                    label="Delete"
-                                    type="submit"
-                                />
-                            </FormButton>
-                            <FormButton>
-                                <Button
-                                    label="Cancel"
-                                    type="reset"
-                                />
-                            </FormButton>
-                        </FormButtons>
+                        <Flex flow="column">
+                            <FlexItem>
+                                <FormField id="textboxDatabaseName">
+                                    Are you sure you want to delete this database?
+                                    <input
+                                        type="hidden"
+                                        name="name"
+                                        required={true}
+                                        value={databaseName}
+                                    />
+                                </FormField>
+                            </FlexItem>
+                            <FlexSeparator />
+                            <FlexItem>
+                                <ButtonGroup>
+                                    <Button
+                                        label="Cancel"
+                                        type="reset"
+                                    />
+                                    <Button
+                                        label="Delete"
+                                        type="submit"
+                                    />
+                                </ButtonGroup>
+                            </FlexItem>
+                        </Flex>
                     </Form>
                 </ReactModal>
             </div>

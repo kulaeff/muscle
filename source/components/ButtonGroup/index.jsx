@@ -25,7 +25,7 @@ class ButtonGroup extends React.Component {
      * @property {string} flow Default flow
      */
     static defaultProps = {
-        align: 'center',
+        align: 'right',
         flow: 'row'
     };
 

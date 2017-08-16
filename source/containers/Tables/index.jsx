@@ -8,8 +8,8 @@ import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import DataTable from '~/components/DataTable'
-import Form, { FormBody, FormButtons, FormButton, FormField, FormGroup }  from '../../components/Form'
-import Grid, { FlexItem, FlexSeparator } from '../../components/Flex'
+import Form, { FormField }  from '../../components/Form'
+import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Placeholder from '~/components/Placeholder'
 import PropertyEditor from '../../components/PropertyEditor'
@@ -336,68 +336,84 @@ class Tables extends React.Component {
                         parentSelector={() => document.body}
                         shouldCloseOnOverlayClick={true}
                     >
-                        <Grid>
+                        <Flex>
                             <FlexItem>
                                 <Title primaryTitle="New table" size="large" />
                             </FlexItem>
                             <FlexItem size="auto">
                                 <Spinner active={saving} type="rect" />
                             </FlexItem>
-                        </Grid>
+                        </Flex>
                         <Form
                             onReset={this.onCreateTableModalClose}
                             onSubmit={this.onCreateTableFormSubmit}
                         >
-                            <FormBody>
-                                <FormGroup flow="row">
-                                    <FormGroup width={4}>
-                                        <FormField id="name" label="Name">
-                                            <Textbox
-                                                autoFocus={true}
-                                                id="name"
-                                                name="name"
-                                                required={true}
-                                                value={tableName}
-                                                onChange={this.onTextboxTableNameChange}
-                                            />
-                                        </FormField>
-                                        <FormField id="collation" label="Collation">
-                                            <Select
-                                                id="collation"
-                                                loading={collationsLoading}
-                                                name="collation"
-                                                options={collations}
-                                                placeholder="Select a collation"
-                                                value={tableCollation}
-                                                onChange={this.selectTableCollationChange}
-                                            />
-                                        </FormField>
-                                        <FormField id="comment" label="Comment">
-                                            <Textbox
-                                                id="comment"
-                                                name="comment"
-                                                required={true}
-                                                value={tableComment}
-                                                onChange={this.onTextboxTableCommentChange}
-                                            />
-                                        </FormField>
-                                        <FormField id="engine" label="engine">
-                                            <Select
-                                                id="engine"
-                                                loading={enginesLoading}
-                                                name="engine"
-                                                options={engines}
-                                                placeholder="Select an engine"
-                                                value={tableEngine}
-                                                onChange={this.selectTableEngineChange}
-                                            />
-                                        </FormField>
-                                    </FormGroup>
-                                    <FormGroup width={12}>
-                                        <FormGroup flow="row">
-                                            <FormField label="Fields" width={2}>
-                                                <Grid orientation="vertical">
-                                                    <FlexItem size="stretch">
+                            <Flex flow="column">
+                                <FlexItem>
+                                    <Flex>
+                                        <FlexItem>
+                                            {/* Column 1 */}
+                                            <Flex flow="column">
+                                                <FlexItem>
+                                                    <FormField id="name" label="Name">
+                                                        <Textbox
+                                                            autoFocus={true}
+                                                            id="name"
+                                                            name="name"
+                                                            required={true}
+                                                            value={tableName}
+                                                            onChange={this.onTextboxTableNameChange}
+                                                        />
+                                                    </FormField>
+                                                </FlexItem>
+                                                <FlexSeparator size="half"/>
+                                                <FlexItem>
+                                                    <FormField id="collation" label="Collation">
+                                                        <Select
+                                                            id="collation"
+                                                            loading={collationsLoading}
+                                                            name="collation"
+                                                            options={collations}
+                                                            placeholder="Select a collation"
+                                                            value={tableCollation}
+                                                            onChange={this.selectTableCollationChange}
+                                                        />
+                                                    </FormField>
+                                                </FlexItem>
+                                                <FlexSeparator size="half"/>
+                                                <FlexItem>
+                                                    <FormField id="comment" label="Comment">
+                                                        <Textbox
+                                                            id="comment"
+                                                            name="comment"
+                                                            required={true}
+                                                            value={tableComment}
+                                                            onChange={this.onTextboxTableCommentChange}
+                                                        />
+                                                    </FormField>
+                                                </FlexItem>
+                                                <FlexSeparator size="half"/>
+                                                <FlexItem>
+                                                    <FormField id="engine" label="engine">
+                                                        <Select
+                                                            id="engine"
+                                                            loading={enginesLoading}
+                                                            name="engine"
+                                                            options={engines}
+                                                            placeholder="Select an engine"
+                                                            value={tableEngine}
+                                                            onChange={this.selectTableEngineChange}
+                                                        />
+                                                    </FormField>
+                                                </FlexItem>
+                                            </Flex>
+                                        </FlexItem>
+                                        <FlexSeparator size="half" />
+                                        <FlexItem>
+                                            {/* Column 2 */}
+                                            <Flex flow="column">
+                                                <FlexItem>
+                                                    <FormField label="Fields">
                                                         <ListBox
                                                             id="name"
                                                             name="name"
@@ -414,47 +430,50 @@ class Tables extends React.Component {
                                                                 ))
                                                             }
                                                         </ListBox>
-                                                    </FlexItem>
-                                                    <FlexSeparator />
-                                                    <FlexItem size="auto">
-                                                        <ButtonGroup align="left">
-                                                            <ActionButton
-                                                                icon="add-24"
-                                                                onClick={this.onActionButtonAddFieldClick}
-                                                            />
-                                                            <ActionButton
-                                                                disabled={listBoxFieldsSelectedIndex < 0}
-                                                                icon="remove-24"
-                                                                onClick={this.onActionButtonRemoveFieldClick}
-                                                            />
-                                                        </ButtonGroup>
-                                                    </FlexItem>
-                                                </Grid>
-                                            </FormField>
-                                            <FormField label="Properties" width={3}>
+                                                    </FormField>
+                                                </FlexItem>
+                                                <FlexSeparator size="quarter" />
+                                                <FlexItem size="auto">
+                                                    <ButtonGroup align="left">
+                                                        <ActionButton
+                                                            icon="add-24"
+                                                            onClick={this.onActionButtonAddFieldClick}
+                                                        />
+                                                        <ActionButton
+                                                            disabled={listBoxFieldsSelectedIndex < 0}
+                                                            icon="remove-24"
+                                                            onClick={this.onActionButtonRemoveFieldClick}
+                                                        />
+                                                    </ButtonGroup>
+                                                </FlexItem>
+                                            </Flex>
+                                        </FlexItem>
+                                        <FlexSeparator size="half" />
+                                        <FlexItem>
+                                            {/* Column 3 */}
+                                            <FormField label="Properties">
                                                 <PropertyEditor
                                                     properties={[]}
                                                 />
                                             </FormField>
-                                        </FormGroup>
-                                    </FormGroup>
-                                </FormGroup>
-                            </FormBody>
-                            <FormButtons>
-                                <FormButton>
-                                    <Button
-                                        label="Cancel"
-                                        type="reset"
-                                    />
-                                </FormButton>
-                                <FormButton>
-                                    <Button
-                                        disabled={tableName.length === 0 || tableFields.length === 0 || saving}
-                                        label="Create"
-                                        type="submit"
-                                    />
-                                </FormButton>
-                            </FormButtons>
+                                        </FlexItem>
+                                    </Flex>
+                                </FlexItem>
+                                <FlexSeparator />
+                                <FlexItem size="auto">
+                                    <ButtonGroup align="right">
+                                        <Button
+                                            label="Cancel"
+                                            type="reset"
+                                        />
+                                        <Button
+                                            disabled={tableName.length === 0 || tableFields.length === 0 || saving}
+                                            label="Create"
+                                            type="submit"
+                                        />
+                                    </ButtonGroup>
+                                </FlexItem>
+                            </Flex>
                         </Form>
                     </ReactModal>
                 </div>
