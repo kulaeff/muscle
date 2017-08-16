@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/database'
+import Table from '../Table'
 import Tables from '../Tables'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
@@ -20,7 +21,10 @@ class Database extends React.Component {
      * @property {bool} minimized Is window minimized
      */
     static propTypes = {
-        minimized: PropTypes.bool.isRequired
+        minimized: PropTypes.bool.isRequired,
+        closeWindow: PropTypes.func.isRequired,
+        minimizeWindow: PropTypes.func.isRequired,
+        restoreWindow: PropTypes.func.isRequired
     };
 
     /**
@@ -93,7 +97,9 @@ class Database extends React.Component {
                         </Switch>
                     </div>
                 </div>
-                <div className={b('view')}></div>
+                <div className={b('view')}>
+                    <Route path={`${match.url}/tables/:table`} component={Table} />
+                </div>
             </div>
         )
     }

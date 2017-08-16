@@ -1,6 +1,7 @@
 import {
     CLOSE_DATABASE_WINDOW,
-    SET_DATABASE_WINDOW_STATE
+    MINIMIZE_DATABASE_WINDOW,
+    RESTORE_DATABASE_WINDOW
 } from '../constants/database'
 
 const initialState = {
@@ -13,10 +14,15 @@ export default function database(state = initialState, action) {
             return {
                 ...state
             };
-        case SET_DATABASE_WINDOW_STATE:
+        case MINIMIZE_DATABASE_WINDOW:
             return {
                 ...state,
-                minimized: action.payload
+                minimized: true
+            };
+        case RESTORE_DATABASE_WINDOW:
+            return {
+                ...state,
+                minimized: false
             };
         default:
             return state

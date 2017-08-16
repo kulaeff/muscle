@@ -5,6 +5,7 @@ import column from './column'
 import database from './database'
 import server from './server'
 import settings from './settings'
+import schema from './schema'
 import statusConnections from './status/connections'
 import statusSummary from './status/summary'
 import statusUsage from './status/usage'
@@ -18,6 +19,7 @@ export default combineReducers({
     database,
     server,
     settings,
+    schema,
     statusConnections,
     statusSummary,
     statusUsage,

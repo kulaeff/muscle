@@ -1,22 +1,16 @@
 import {
-    GET_COLUMNS_REQUEST,
-    GET_COLUMNS_SUCCESS,
-    GET_COLUMNS_FAIL,
-    GET_INDEXES_REQUEST,
-    GET_INDEXES_SUCCESS,
-    GET_INDEXES_FAIL,
-    SET_COLUMNS_WINDOW_STATE
+    CLOSE_TABLE_WINDOW,
+    MINIMIZE_TABLE_WINDOW,
+    RESTORE_TABLE_WINDOW,
 } from '../constants/table'
 
 const initialState = {
-    fetching: false,
     minimized: false,
-    items: []
-}
+};
 
 export default function table(state = initialState, action) {
     switch(action.type) {
-        case GET_COLUMNS_REQUEST:
+        /*case GET_COLUMNS_REQUEST:
             return { ...state, fetching: true }
         case GET_COLUMNS_SUCCESS:
             return { ...state, fetching: false, items: action.payload }
@@ -27,9 +21,13 @@ export default function table(state = initialState, action) {
         case GET_INDEXES_SUCCESS:
             return { ...state, fetching: false, items: action.payload }
         case GET_INDEXES_FAIL:
-            return { ...state, fetching: false }
-        case SET_COLUMNS_WINDOW_STATE:
-            return { ...state, minimized: action.payload }
+            return { ...state, fetching: false }*/
+        case CLOSE_TABLE_WINDOW:
+            return { ...state };
+        case MINIMIZE_TABLE_WINDOW:
+            return { ...state, minimized: true };
+        case RESTORE_TABLE_WINDOW:
+            return { ...state, minimized: false };
         default:
             return state
     }
