@@ -3,7 +3,7 @@ import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
-//import DataTable, { DataTableCell, DataTableColumn, DataTableRow} from '../../components/DataTable'
+import DataTable, { DataTableRow} from '../../components/DataTable'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Highlight from 'react-highlight';
 import ListBox, { ListBoxItem } from '../../components/ListBox'
@@ -141,7 +141,8 @@ class Components extends React.Component {
      * @method
      */
     render() {
-        const b = block('components');
+        const
+            b = block('components');
 
         return (
             <div className={b()}>
@@ -426,8 +427,8 @@ class Components extends React.Component {
                         <section className={b('section')}>
                             <span className={b('section-title')}>DataTable</span>
                             <div className={b('section-content')}>
-                                <Grid>
-                                    <GridItem>
+                                <Flex>
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Default" size="tiny" />
@@ -440,9 +441,9 @@ class Components extends React.Component {
                                                 />
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
+                                    </FlexItem>
+                                    <FlexSeparator />
+                                    <FlexItem>
                                         <SplitContainer>
                                             <SplitContainerPanel size="auto">
                                                 <Title primaryTitle="Disabled" size="tiny" />
@@ -450,28 +451,18 @@ class Components extends React.Component {
                                             <SplitContainerPanel>
                                                 <DataTable
                                                     columns={this.state.dataTableDefaultColumns}
-                                                    rows={this.state.dataTableDefaultRows}
                                                     onChange={this.handleDataTableDefaultChange}
-                                                />
+                                                >
+                                                    {
+                                                        this.state.dataTableDefaultRows.map((row, index) =>
+                                                            <DataTableRow cells={row} key={index} />
+                                                        )
+                                                    }
+                                                </DataTable>
                                             </SplitContainerPanel>
                                         </SplitContainer>
-                                    </GridItem>
-                                    <GridSeparator />
-                                    <GridItem>
-                                        <SplitContainer>
-                                            <SplitContainerPanel size="auto">
-                                                <Title primaryTitle="Auto-sized" size="tiny" />
-                                            </SplitContainerPanel>
-                                            <SplitContainerPanel>
-                                                <DataTable
-                                                    columns={this.state.dataTableDefaultColumns}
-                                                    rows={this.state.dataTableDefaultRows}
-                                                    onChange={this.handleDataTableDefaultChange}
-                                                />
-                                            </SplitContainerPanel>
-                                        </SplitContainer>
-                                    </GridItem>
-                                </Grid>
+                                    </FlexItem>
+                                </Flex>
                             </div>
                         </section>
                         {/* Radio */}

@@ -26,7 +26,7 @@ const initialState = {
     enginesLoading: false,
     fetching: false,
     filter: '',
-    items: [],
+    tables: [],
     listBoxFieldsSelectedIndex: -1,
     modalCreateTableVisible: false,
     saving: false,
@@ -58,9 +58,9 @@ export default function tables(state = initialState, action) {
                 tableType: initialState.tableType
             };
         case GET_TABLES_REQUEST:
-            return { ...state, fetching: true, items: [] };
+            return { ...state, fetching: true, tables: [] };
         case GET_TABLES_SUCCESS:
-            return { ...state, fetching: false, items: action.payload };
+            return { ...state, fetching: false, tables: action.payload };
         case GET_TABLES_FAIL:
             return { ...state, fetching: false };
         case GET_COLLATIONS_REQUEST:

@@ -14,7 +14,7 @@ class DataTableCell extends React.Component {
      * @property {func} onClick Click event handler
      */
     static propTypes = {
-        column: PropTypes.object.isRequired,
+        column: PropTypes.oneOfType([ PropTypes.string, PropTypes.object]).isRequired,
         onValueTransform: PropTypes.func
     };
 

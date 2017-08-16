@@ -270,7 +270,7 @@ class Table extends React.Component {
                                         onChange={this.onDataTableChange} />
                                 </div>
                             </div>
-                        : this.state.selectedTab === 'indexes' && !fetching?
+                        : this.state.selectedTab === 'indexes' && !fetching ?
                             <div className={b('content')}>
                                 <div className={b('toolbar')}>
                                     <Toolbar>

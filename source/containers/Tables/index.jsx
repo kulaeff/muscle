@@ -3,11 +3,12 @@ import ReactModal from 'react-modal'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { matchPath } from 'react-router-dom'
 import * as actions from '../../actions/tables'
 import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
-import DataTable from '~/components/DataTable'
+import DataTable, { DataTableRow } from '../../components/DataTable'
 import Form, { FormField }  from '../../components/Form'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import ListBox, { ListBoxItem } from '../../components/ListBox'
@@ -17,7 +18,7 @@ import Select from '../../components/Select'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
-import Toolbar, { ToolBarButton, ToolBarSeparator } from '~/components/ToolBar'
+import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import block from 'bem-cn'
 import bytes from '~/helpers/bytes'
 import './style.less';
@@ -32,7 +33,7 @@ class Tables extends React.Component {
      * @static
      * @property {bool} fetching Is data fetching
      * @property {bool} minimized Is window minimized
-     * @property {array} items Items
+     * @property {array} tables Tables
      */
     static propTypes = {
         collations: PropTypes.array.isRequired,
@@ -41,7 +42,7 @@ class Tables extends React.Component {
         enginesLoading: PropTypes.bool.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
-        items: PropTypes.array.isRequired,
+        tables: PropTypes.array.isRequired,
         listBoxFieldsSelectedIndex: PropTypes.number.isRequired,
         modalCreateTableVisible: PropTypes.bool.isRequired,
         saving: PropTypes.bool.isRequired,
@@ -61,14 +62,6 @@ class Tables extends React.Component {
         setTableEngine: PropTypes.func.isRequired,
         setTableName: PropTypes.func.isRequired
     };
-
-    /**
-     * Creates Database container
-     * @constructor
-     */
-    constructor(props) {
-        super(props);
-    }
 
     /**
      * Fetches database when database was selected for the first time
@@ -241,6 +234,7 @@ class Tables extends React.Component {
                 { name: 'overhead', label: 'Overhead', style: { alignment: 'right' } }
             ],
             {
+                location,
                 match,
                 collations,
                 collationsLoading,
@@ -248,7 +242,7 @@ class Tables extends React.Component {
                 enginesLoading,
                 fetching,
                 filter,
-                items,
+                tables,
                 listBoxFieldsSelectedIndex,
                 modalCreateTableVisible,
                 saving,
@@ -257,7 +251,12 @@ class Tables extends React.Component {
                 tableEngine,
                 tableFields,
                 tableName
-            } = this.props;
+            } = this.props,
+            _match = matchPath(location.pathname, {
+                path: '/server/:database/tables/:table',
+                strict: false,
+                exact: false
+            });
 
         return (
             fetching ? (
@@ -310,13 +309,22 @@ class Tables extends React.Component {
                         </div>
                         <div className={b('table')}>
                             {
-                                items.length ? (
+                                tables.length ? (
                                     <DataTable
                                         columns={columns}
-                                        rows={items}
-                                        url={match.url}
                                         onChange={this.onDataTableChange}
-                                        onValueTransform={this.onDataTableValueTransform}/>
+                                        onValueTransform={this.onDataTableValueTransform}
+                                    >
+                                        {
+                                            tables.map((table, index) =>
+                                                <DataTableRow
+                                                    cells={table}
+                                                    key={index}
+                                                    selected={_match && _match.params.table === table[0]}
+                                                />
+                                            )
+                                        }
+                                    </DataTable>
                                 ) : (
                                     <Placeholder text="There are no tables in this database" />
                                 )
@@ -490,7 +498,7 @@ function mapStateToProps (state) {
         enginesLoading: state.tables.enginesLoading,
         fetching: state.tables.fetching,
         filter: state.tables.filter,
-        items: state.tables.items,
+        tables: state.tables.tables,
         listBoxFieldsSelectedIndex: state.tables.listBoxFieldsSelectedIndex,
         modalCreateTableVisible: state.tables.modalCreateTableVisible,
         saving: state.tables.saving,

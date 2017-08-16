@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
-import { Route } from 'react-router-dom'
+import { Route, matchPath } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
-import DataTable from '../../components/DataTable'
+import DataTable, { DataTableRow } from '../../components/DataTable'
 import Form, { FormField }  from '../../components/Form'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Spinner from '../../components/Spinner'
@@ -247,7 +247,7 @@ class Server extends React.Component {
     dataTableChange = (value) => {
         const { match, history, minimizeWindow } = this.props;
 
-        history.push(`${match.url}/${value}`);
+        history.push(`${match.url}/${value[0]}`);
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
@@ -265,6 +265,7 @@ class Server extends React.Component {
                 { name: 'database', label: 'Database' }
             ],
             {
+                location,
                 match,
                 modalCreateDatabaseVisible,
                 modalDeleteDatabaseVisible,
@@ -276,7 +277,12 @@ class Server extends React.Component {
                 databaseName,
                 databaseName_,
                 filter
-            } = this.props;
+            } = this.props,
+            _match = matchPath(location.pathname, {
+                path: '/server/:database',
+                strict: false,
+                exact: false
+            });
 
         return (
             <div className={b({state: minimized ? 'minimized' : null})}>
@@ -347,10 +353,18 @@ class Server extends React.Component {
                                 <div className={b('table')}>
                                     <DataTable
                                         columns={columns}
-                                        rows={databases}
-                                        url={match.url}
                                         onChange={this.dataTableChange}
-                                    />
+                                    >
+                                        {
+                                            databases.map((database, index) =>
+                                                <DataTableRow
+                                                    cells={database}
+                                                    key={index}
+                                                    selected={_match && _match.params.database === database[0]}
+                                                />
+                                            )
+                                        }
+                                    </DataTable>
                                 </div>
                             </div>
                         )
