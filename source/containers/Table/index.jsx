@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Columns from '../Columns'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import * as actions from '../../actions/table'
@@ -19,7 +21,10 @@ class Table extends React.Component {
      * @property {bool} minimized Is window minimized
      */
     static propTypes = {
-        minimized: PropTypes.bool.isRequired
+        minimized: PropTypes.bool.isRequired,
+        closeWindow: PropTypes.func.isRequired,
+        minimizeWindow: PropTypes.func.isRequired,
+        restoreWindow: PropTypes.func.isRequired
     };
 
     /**
@@ -27,7 +32,7 @@ class Table extends React.Component {
      * @method
      */
     onWindowButtonMinimizeClick = (e) => {
-        const { minimizeWindow } = this.props.tableActions;
+        const { minimizeWindow } = this.props;
 
         minimizeWindow();
 
@@ -39,9 +44,9 @@ class Table extends React.Component {
      * @method
      */
     onWindowButtonCloseClick = () => {
-        const { history, match } = this.props;
+        const { closeWindow } = this.props;
 
-        history.push(`/server/${match.params.database}`);
+        closeWindow();
     };
 
     /**
@@ -49,7 +54,7 @@ class Table extends React.Component {
      * @method
      */
     onWindowClick = () => {
-        const { restoreWindow } = this.props.tableActions;
+        const { restoreWindow } = this.props;
 
         restoreWindow()
     };
@@ -75,7 +80,7 @@ class Table extends React.Component {
                                 }
                             >
                                 <TabsItem label="Browse" url={`${match.url}/browse`} />
-                                <TabsItem label="Schema" url={`${match.url}/schema`} />
+                                <TabsItem label="Columns" url={`${match.url}/columns`} />
                             </Tabs>
                         </div>
                         <div className={b('buttons')}>
@@ -88,14 +93,13 @@ class Table extends React.Component {
                         </div>
                     </div>
                     <div className={b('content')}>
-                        {/*<Switch>
-                            <Route path={`${match.path}/browse`} component={Browse}/>
-                            <Route path={`${match.path}/schema`} component={Schema}/>
-                            <Redirect to={`${match.url}/browse`} />
-                        </Switch>*/}
+                        <Switch>
+                            {/*<Route path={`${match.path}/browse`} component={Browse}/>*/}
+                            <Route path={`${match.path}/columns`} component={Columns}/>
+                            {/*<Redirect to={`${match.url}/browse`} />*/}
+                        </Switch>
                     </div>
                 </div>
-                {/*<div className={b('view')}></div>*/}
             </div>
         )
     }

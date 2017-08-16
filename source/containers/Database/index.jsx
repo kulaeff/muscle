@@ -98,7 +98,7 @@ class Database extends React.Component {
                     </div>
                 </div>
                 <div className={b('view')}>
-                    <Route path={`${match.url}/tables/:table`} component={Table} />
+                    <Route path={`${match.path}/tables/:table`} component={Table} />
                 </div>
             </div>
         )

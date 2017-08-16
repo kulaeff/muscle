@@ -248,6 +248,33 @@ Flight::route('GET /api/v1/status/summary', function() {
     Flight::json($json);
 });
 
+// Table columns
+Flight::route('GET /api/v1/databases/@database/tables/@table/columns', function($database, $table) {
+    $sql = "SHOW FULL COLUMNS FROM $database.$table";
+    $json = [];
+
+    $db = Flight::db();
+
+    foreach ($db->query($sql) as $row) {
+        $type = explode(' ', $row['Type']);
+
+        $json[] = [
+            'column' => $row['Field'],
+            'type' => $type[0],
+            'attributes' => $type[1],
+            'collation' => $row['Collation'],
+            'null' => $row['Null'],
+            'key' => $row['Key'],
+            'default' => $row['Default'],
+            'extra' => $row['Extra'],
+            'privileges' => $row['Privileges'],
+            'comment' => $row['Comment']
+        ];
+    }
+
+    Flight::json($json);
+});
+
 // React route
 Flight::route('/*', function(){
     Flight::render('index.php');

@@ -111,10 +111,10 @@ class DataTable extends React.Component {
                                 <DataTableColumn
                                     id={index}
                                     key={index}
+                                    label={typeof column === 'string' ? column : column.label}
                                     sorted={this.state.sorting.index === index}
                                     sortingOrder={this.state.sorting.order}
                                     style={typeof column === 'object' && column.style}
-                                    label={typeof column === 'string' ? column : column.label}
                                     onClick={this.onColumnClick} />
                             )
                         }

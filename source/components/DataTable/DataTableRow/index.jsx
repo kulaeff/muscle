@@ -19,7 +19,7 @@ class DataTableRow extends React.Component {
      * @property {func} onClick Click event handler
      */
     static propTypes = {
-        cells: PropTypes.array.isRequired,
+        cells: PropTypes.oneOfType([ PropTypes.array, PropTypes.object]).isRequired,
         columns: PropTypes.array,
         selected: PropTypes.bool,
         onClick: PropTypes.func,
@@ -47,17 +47,31 @@ class DataTableRow extends React.Component {
 
         return (
             <tr
-                className={b('row', { state: selected ? 'selected' : null })}
+                className={b('row', {state: selected ? 'selected' : null})}
                 onClick={(e) => onClick(e, cells)}>
                 {
-                    cells.map((cell, index) =>
-                        <DataTableCell
-                            key={index}
-                            column={columns[index]}
-                            onValueTransform={onValueTransform}
-                        >
-                            {cell}
-                        </DataTableCell>
+                    Array.isArray(cells) ? (
+                        cells.map((cell, index) =>
+                            <DataTableCell
+                                key={index}
+                                column={columns[index]}
+                                onValueTransform={onValueTransform}
+                            >
+                                {cell}
+                            </DataTableCell>
+                        )
+                    ) : (
+                        columns.map((column, index) =>
+                            cells.hasOwnProperty(column.name) && (
+                                <DataTableCell
+                                    key={index}
+                                    column={column}
+                                    onValueTransform={onValueTransform}
+                                >
+                                    {cells[column.name]}
+                                </DataTableCell>
+                            )
+                        )
                     )
                 }
             </tr>
