@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Columns from '../Columns'
+import Rows from '../Rows'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import * as actions from '../../actions/table'
@@ -79,7 +80,7 @@ class Table extends React.Component {
                                     <Title secondaryTitle={match.params.table} />
                                 }
                             >
-                                <TabsItem label="Browse" url={`${match.url}/browse`} />
+                                <TabsItem label="Rows" url={`${match.url}/rows`} />
                                 <TabsItem label="Columns" url={`${match.url}/columns`} />
                             </Tabs>
                         </div>
@@ -94,9 +95,9 @@ class Table extends React.Component {
                     </div>
                     <div className={b('content')}>
                         <Switch>
-                            {/*<Route path={`${match.path}/browse`} component={Browse}/>*/}
+                            <Route path={`${match.path}/rows`} component={Rows}/>*/}
                             <Route path={`${match.path}/columns`} component={Columns}/>
-                            {/*<Redirect to={`${match.url}/browse`} />*/}
+                            <Redirect to={`${match.url}/rows`} />
                         </Switch>
                     </div>
                 </div>

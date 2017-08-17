@@ -77,6 +77,10 @@ class API {
         return this.axios.get('indexes', { params: { database, table }})
     }
 
+    async getRows(database, table) {
+        return this.axios.get(`databases/${database}/tables/${table}/rows`)
+    }
+
     async getTables(database, token) {
         return this.axios.get(`databases/${database}/tables`, { params: { token }})
     }

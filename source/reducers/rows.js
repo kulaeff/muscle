@@ -5,20 +5,32 @@ import {
 } from '../constants/rows'
 
 const initialState = {
-    rows: [],
+    columns: [],
     fetching: false,
     filter: '',
+    rows: [],
     saving: false
 };
 
 export default function rows(state = initialState, action) {
     switch(action.type) {
         case GET_ROWS_REQUEST:
-            return { ...state, fetching: true };
+            return {
+                ...state,
+                fetching: true
+            };
         case GET_ROWS_SUCCESS:
-            return { ...state, fetching: false, rows: action.payload };
+            return {
+                ...state,
+                fetching: false,
+                columns: action.payload.columns,
+                rows: action.payload.rows
+            };
         case GET_ROWS_FAIL:
-            return { ...state, fetching: false };
+            return {
+                ...state,
+                fetching: false
+            };
         default:
             return state
     }

@@ -276,6 +276,35 @@ Flight::route('GET /api/v1/databases/@database/tables/@table/columns', function(
     Flight::json($json);
 });
 
+// Table rows
+Flight::route('GET /api/v1/databases/@database/tables/@table/rows', function($database, $table) {
+    $db = Flight::db();
+
+    $sql = "SELECT * FROM $database.$table";
+    $json = [
+        'columns' => [],
+        'rows' => []
+    ];
+
+    if ($query = $db->query($sql, PDO::FETCH_ASSOC)) {
+        $rows = $query->fetchAll();
+        $columns = array_keys($rows[0]);
+
+        $json['columns'] = array_map(function($value) {
+            return [
+                'name' => $value,
+                'label' => $value
+            ];
+        }, $columns);
+
+        foreach ($rows as $row) {
+            $json['rows'][] = $row;
+        }
+    }
+
+    Flight::json($json, 200, true, 'utf-8', JSON_NUMERIC_CHECK);
+});
+
 // React route
 Flight::route('/*', function(){
     Flight::render('index.php');

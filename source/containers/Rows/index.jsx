@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { matchPath } from 'react-router-dom'
-import * as actions from '../../actions/columns'
+import * as actions from '../../actions/rows'
 import DataTable, { DataTableRow } from '../../components/DataTable'
 import Placeholder from '~/components/Placeholder'
 import Spinner from '../../components/Spinner'
@@ -25,6 +24,7 @@ class Rows extends React.Component {
      * @property {array} rows Rows
      */
     static propTypes = {
+        columns: PropTypes.array.isRequired,
         fetching: PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         rows: PropTypes.array.isRequired,
@@ -120,28 +120,14 @@ class Rows extends React.Component {
     render() {
         const
             b = block('rows'),
-            dataTableColumns = [
-                { name: 'column', label: 'Column' },
-                { name: 'type', label: 'Type' },
-                { name: 'collation', label: 'Collation' },
-                { name: 'attributes', label: 'Attributes' },
-                { name: 'null', label: 'Null' },
-                { name: 'default', label: 'Default' },
-                { name: 'extra', label: 'Extra' },
-            ],
             {
-                location,
                 match,
                 columns,
+                rows,
                 fetching,
                 filter,
                 //saving,
-            } = this.props,
-            _match = matchPath(location.pathname, {
-                path: '/server/:database/tables/:table',
-                strict: false,
-                exact: false
-            });
+            } = this.props;
 
         return (
             fetching ? (
@@ -181,18 +167,17 @@ class Rows extends React.Component {
                         </div>
                         <div className={b('table')}>
                             {
-                                columns.length ? (
+                                rows.length ? (
                                     <DataTable
-                                        columns={dataTableColumns}
+                                        columns={columns}
                                         onChange={this.dataTableChange}
                                         onValueTransform={this.dataTableValueTransform}
                                     >
                                         {
-                                            columns.map((column, index) =>
+                                            rows.map((row, index) =>
                                                 <DataTableRow
-                                                    cells={column}
+                                                    cells={row}
                                                     key={index}
-                                                    selected={_match && _match.params.table === column[0]}
                                                 />
                                             )
                                         }
@@ -212,6 +197,7 @@ class Rows extends React.Component {
 
 function mapStateToProps (state) {
     return {
+        columns: state.rows.columns,
         fetching: state.rows.fetching,
         filter: state.rows.filter,
         rows: state.rows.rows,
