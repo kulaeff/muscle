@@ -183,7 +183,7 @@ class Rows extends React.Component {
                                         }
                                     </DataTable>
                                 ) : (
-                                    <Placeholder text="There are no tables in this database" />
+                                    <Placeholder text="There are no columns in this table" />
                                 )
                             }
                         </div>

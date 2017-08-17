@@ -13,6 +13,21 @@ import block from 'bem-cn'
 import './style.less';
 
 /**
+ * Data table columns
+ * @constant
+ * @type {Array}
+ */
+const COLUMNS = [
+    { name: 'column', label: 'Column' },
+    { name: 'type', label: 'Type' },
+    { name: 'collation', label: 'Collation' },
+    { name: 'attributes', label: 'Attributes' },
+    { name: 'null', label: 'Null' },
+    { name: 'default', label: 'Default' },
+    { name: 'extra', label: 'Extra' },
+];
+
+/**
  * Columns container
  * @class
  */
@@ -120,15 +135,6 @@ class Columns extends React.Component {
     render() {
         const
             b = block('columns'),
-            dataTableColumns = [
-                { name: 'column', label: 'Column' },
-                { name: 'type', label: 'Type' },
-                { name: 'collation', label: 'Collation' },
-                { name: 'attributes', label: 'Attributes' },
-                { name: 'null', label: 'Null' },
-                { name: 'default', label: 'Default' },
-                { name: 'extra', label: 'Extra' },
-            ],
             {
                 location,
                 match,
@@ -183,7 +189,7 @@ class Columns extends React.Component {
                             {
                                 columns.length ? (
                                     <DataTable
-                                        columns={dataTableColumns}
+                                        columns={COLUMNS}
                                         onChange={this.onDataTableChange}
                                         onValueTransform={this.onDataTableValueTransform}
                                     >

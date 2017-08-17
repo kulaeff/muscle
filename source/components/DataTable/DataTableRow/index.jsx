@@ -29,6 +29,16 @@ class DataTableRow extends React.Component {
         selected: false
     };
 
+    onClick = (e, cells) => {
+        const { onClick } = this.props;
+
+        e.stopPropagation();
+
+        if (onClick) {
+            onClick(cells);
+        }
+    };
+
     /**
      * Render component
      * @returns {XML} Rendered element
@@ -40,14 +50,13 @@ class DataTableRow extends React.Component {
                 cells,
                 columns,
                 selected,
-                onClick,
                 onValueTransform
             } = this.props;
 
         return (
             <tr
                 className={b('row', {state: selected ? 'selected' : null})}
-                onClick={() => onClick(cells)}>
+                onClick={(e) => this.onClick(e, cells)}>
                 {
                     columns.map((column, index) =>
                         cells.hasOwnProperty(column.name) && (

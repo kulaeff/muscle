@@ -19,6 +19,16 @@ import block from 'bem-cn'
 import './style.less';
 
 /**
+ * Data table columns
+ * @constant
+ * @type {Array}
+ */
+const COLUMNS = [
+    { name: 'database', label: 'Database' },
+    { name: 'tableCount', label: 'Tables' },
+];
+
+/**
  * Server container
  * @class
  */
@@ -244,10 +254,10 @@ class Server extends React.Component {
         event.preventDefault();
     };
 
-    dataTableChange = (value) => {
+    dataTableChange = (row) => {
         const { match, history, minimizeWindow } = this.props;
 
-        history.push(`${match.url}/${value.database}`);
+        history.push(`${match.url}/${row.database}`);
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
@@ -265,10 +275,6 @@ class Server extends React.Component {
     render() {
         const
             b = block('server'),
-            columns = [
-                { name: 'database', label: 'Database' },
-                { name: 'tableCount', label: 'Tables' },
-            ],
             {
                 location,
                 match,
@@ -316,35 +322,33 @@ class Server extends React.Component {
                                             icon="create"
                                             label="New"
                                             title="Create new database"
-                                            url={match.url}
-                                            onClick={this.onToolBarButtonCreateDatabaseClick}/>
+                                            onClick={this.onToolBarButtonCreateDatabaseClick}
+                                        />
                                         <ToolBarButton
-                                            disabled={databaseName === null}
+                                            disabled={!_match}
                                             icon="edit"
                                             label="Edit"
                                             title="Edit database"
-                                            url={`${match.url}/:database`}
-                                            onClick={this.onToolBarButtonEditDatabaseClick}/>
+                                            onClick={this.onToolBarButtonEditDatabaseClick}
+                                        />
                                         <ToolBarButton
-                                            disabled={databaseName === null}
+                                            disabled={!_match}
                                             icon="delete"
                                             label="Delete"
                                             title="Delete database"
-                                            url={`${match.url}/:database`}
-                                            onClick={this.onToolBarButtonDeleteDatabaseClick}/>
+                                            onClick={this.onToolBarButtonDeleteDatabaseClick}
+                                        />
                                         <ToolBarSeparator />
                                         <ToolBarButton
                                             icon="import"
                                             label="Import"
                                             title="Import database"
-                                            url={match.url}
                                             onClick={this.onToolBarButtonImportDatabaseClick}/>
                                         <ToolBarButton
-                                            disabled={databaseName === null}
+                                            disabled={!_match}
                                             icon="export"
                                             label="Export"
                                             title="Export database"
-                                            url={`${match.url}/:database`}
                                             onClick={this.onToolBarButtonExportDatabaseClick}/>
                                     </Toolbar>
                                 </div>
@@ -357,7 +361,7 @@ class Server extends React.Component {
                                 </div>
                                 <div className={b('table')}>
                                     <DataTable
-                                        columns={columns}
+                                        columns={COLUMNS}
                                         onChange={this.dataTableChange}
                                         onValueTransform={this.dataTableValueTransform}
                                     >

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import block from 'bem-cn'
 
@@ -17,9 +16,9 @@ class ToolBarButton extends React.Component {
      * @property {func} onClick Click event handler
      */
     static propTypes = {
+        disabled: PropTypes.bool,
         icon: PropTypes.string.isRequired,
         title: PropTypes.string,
-        url: PropTypes.string.isRequired,
         onClick: PropTypes.func
     };
 
@@ -28,6 +27,7 @@ class ToolBarButton extends React.Component {
      * @static
      */
     static defaultProps = {
+        disabled: false,
         title: 'undefined'
     };
 
@@ -38,20 +38,18 @@ class ToolBarButton extends React.Component {
     render() {
         const
             b = block('toolbar'),
-            { icon, title, url, onClick } = this.props;
+            { disabled, icon, title, onClick } = this.props;
 
         return (
-            <Route path={url} children={({match}) => (
-                <button
-                    className={b('button', {state: !match ? 'disabled' : null})}
-                    disabled={!match}
-                    title={title}
-                    onClick={() => onClick(match.params.database)}>
-                    <svg>
-                        <use xlinkHref={`#icon-${icon}`} />
-                    </svg>
-                </button>
-            )}/>
+            <button
+                className={b('button', {state: disabled ? 'disabled' : null})}
+                disabled={disabled}
+                title={title}
+                onClick={onClick}>
+                <svg>
+                    <use xlinkHref={`#icon-${icon}`} />
+                </svg>
+            </button>
         )
     }
 }

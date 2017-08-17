@@ -24,45 +24,24 @@ import bytes from '~/helpers/bytes'
 import './style.less';
 
 /**
+ * Data table columns
+ * @constant
+ * @type {Array}
+ */
+const COLUMNS = [
+    { name: 'table', label: 'Table' },
+    { name: 'rowCount', label: 'Rows', style: { alignment: 'right' } },
+    { name: 'engine', label: 'Engine' },
+    { name: 'collation', label: 'Collation' },
+    { name: 'size', label: 'Size', style: { alignment: 'right' } },
+    { name: 'overhead', label: 'Overhead', style: { alignment: 'right' } }
+];
+
+/**
  * Database container
  * @class
  */
 class Tables extends React.Component {
-    /**
-     * Database container properties
-     * @static
-     * @property {bool} fetching Is data fetching
-     * @property {bool} minimized Is window minimized
-     * @property {array} tables Tables
-     */
-    static propTypes = {
-        collations: PropTypes.array.isRequired,
-        collationsLoading: PropTypes.bool.isRequired,
-        engines: PropTypes.array.isRequired,
-        enginesLoading: PropTypes.bool.isRequired,
-        fetching: PropTypes.bool.isRequired,
-        filter: PropTypes.string.isRequired,
-        tables: PropTypes.array.isRequired,
-        listBoxFieldsSelectedIndex: PropTypes.number.isRequired,
-        modalCreateTableVisible: PropTypes.bool.isRequired,
-        saving: PropTypes.bool.isRequired,
-        tableCollation: PropTypes.string.isRequired,
-        tableComment: PropTypes.string.isRequired,
-        tableEngine: PropTypes.string.isRequired,
-        tableFields: PropTypes.array.isRequired,
-        tableName: PropTypes.string.isRequired,
-        addTableField: PropTypes.func.isRequired,
-        closeCreateTableModal: PropTypes.func.isRequired,
-        getTables: PropTypes.func.isRequired,
-        openCreateTableModal: PropTypes.func.isRequired,
-        removeTableField: PropTypes.func.isRequired,
-        setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
-        setTableCollation: PropTypes.func.isRequired,
-        setTableComment: PropTypes.func.isRequired,
-        setTableEngine: PropTypes.func.isRequired,
-        setTableName: PropTypes.func.isRequired
-    };
-
     /**
      * Fetches database when database was selected for the first time
      * @method
@@ -226,17 +205,8 @@ class Tables extends React.Component {
     render() {
         const
             b = block('tables'),
-            columns = [
-                { name: 'table', label: 'Table' },
-                { name: 'rowCount', label: 'Rows', style: { alignment: 'right' } },
-                { name: 'engine', label: 'Engine' },
-                { name: 'collation', label: 'Collation' },
-                { name: 'size', label: 'Size', style: { alignment: 'right' } },
-                { name: 'overhead', label: 'Overhead', style: { alignment: 'right' } }
-            ],
             {
                 location,
-                match,
                 collations,
                 collationsLoading,
                 engines,
@@ -272,33 +242,36 @@ class Tables extends React.Component {
                                     icon="create"
                                     label="New"
                                     title="Create new table"
-                                    url={match.url}
-                                    onClick={this.onToolBarButtonCreateDatabaseClick} />
+                                    onClick={this.onToolBarButtonCreateDatabaseClick}
+                                />
                                 <ToolBarButton
+                                    disabled={!_match}
                                     icon="edit"
                                     label="Edit"
                                     title="Edit table"
-                                    url={`${match.url}/:table`}
-                                    onClick={this.onToolBarButtonEditDatabaseClick} />
+                                    onClick={this.onToolBarButtonEditDatabaseClick}
+                                />
                                 <ToolBarButton
+                                    disabled={!_match}
                                     icon="delete"
                                     label="Delete"
                                     title="Delete table"
-                                    url={`${match.url}/:table`}
-                                    onClick={this.onToolBarButtonDeleteDatabaseClick} />
+                                    onClick={this.onToolBarButtonDeleteDatabaseClick}
+                                />
                                 <ToolBarSeparator />
                                 <ToolBarButton
                                     icon="import"
                                     label="Import"
                                     title="Import table"
-                                    url={match.url}
-                                    onClick={this.onToolBarButtonImportTableClick} />
+                                    onClick={this.onToolBarButtonImportTableClick}
+                                />
                                 <ToolBarButton
+                                    disabled={!_match}
                                     icon="export"
                                     label="Export"
                                     title="Export table"
-                                    url={`${match.url}/:table`}
-                                    onClick={this.onToolBarButtonExportTableClick} />
+                                    onClick={this.onToolBarButtonExportTableClick}
+                                />
                             </Toolbar>
                         </div>
                         <div className={b('filters')}>
@@ -312,7 +285,7 @@ class Tables extends React.Component {
                             {
                                 tables.length ? (
                                     <DataTable
-                                        columns={columns}
+                                        columns={COLUMNS}
                                         onChange={this.onDataTableChange}
                                         onValueTransform={this.onDataTableValueTransform}
                                     >
@@ -490,6 +463,38 @@ class Tables extends React.Component {
         )
     }
 }
+
+/**
+ * Properties
+ * @static
+ */
+Tables.propTypes = {
+    collations: PropTypes.array.isRequired,
+    collationsLoading: PropTypes.bool.isRequired,
+    engines: PropTypes.array.isRequired,
+    enginesLoading: PropTypes.bool.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    filter: PropTypes.string.isRequired,
+    tables: PropTypes.array.isRequired,
+    listBoxFieldsSelectedIndex: PropTypes.number.isRequired,
+    modalCreateTableVisible: PropTypes.bool.isRequired,
+    saving: PropTypes.bool.isRequired,
+    tableCollation: PropTypes.string.isRequired,
+    tableComment: PropTypes.string.isRequired,
+    tableEngine: PropTypes.string.isRequired,
+    tableFields: PropTypes.array.isRequired,
+    tableName: PropTypes.string.isRequired,
+    addTableField: PropTypes.func.isRequired,
+    closeCreateTableModal: PropTypes.func.isRequired,
+    getTables: PropTypes.func.isRequired,
+    openCreateTableModal: PropTypes.func.isRequired,
+    removeTableField: PropTypes.func.isRequired,
+    setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
+    setTableCollation: PropTypes.func.isRequired,
+    setTableComment: PropTypes.func.isRequired,
+    setTableEngine: PropTypes.func.isRequired,
+    setTableName: PropTypes.func.isRequired
+};
 
 function mapStateToProps (state) {
     return {
