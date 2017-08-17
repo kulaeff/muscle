@@ -21,9 +21,8 @@ class DataTable extends React.Component {
      * @prop {func} [onValueTransform] Transform value callback
      */
     static propTypes = {
-        columns: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.arrayOf(PropTypes.string)]).isRequired,
-        rows: PropTypes.array,
-        value: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+        columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+        rows: PropTypes.arrayOf(PropTypes.object),
         onChange: PropTypes.func,
         onValueTransform: PropTypes.func
     };
@@ -44,7 +43,7 @@ class DataTable extends React.Component {
 
         this.state = {
             sorting: {
-                index: null,
+                column: null,
                 order: 1
             }
         }
@@ -52,31 +51,30 @@ class DataTable extends React.Component {
 
     /**
      * Sets the index of a sorting column
+     * @param {(string|object)} column Column
      */
-    onColumnClick = (index) => {
-        if (this.state.sorting.index === index) {
+    onColumnClick = (column) => {
+        if (this.state.sorting.column === column) {
             this.setState({
                 sorting: {
-                    index,
+                    column,
                     order: 0 - this.state.sorting.order
                 }
             })
         } else {
             this.setState({
                 sorting: {
-                    index,
+                    column,
                     order: 1
                 }
             })
         }
     };
 
-    onChange = (e, cells) => {
+    onChange = (cells) => {
         const { onChange } = this.props;
 
         if (onChange) {
-            e.stopPropagation();
-
             onChange(cells);
         }
     };
@@ -90,18 +88,6 @@ class DataTable extends React.Component {
             b = block('data-table'),
             { children, columns, rows, onValueTransform } = this.props;
 
-        if (this.state.sorting.index !== null) {
-            rows.sort((a, b) => {
-                if (a[this.state.sorting.index] > b[this.state.sorting.index]) {
-                    return this.state.sorting.order
-                } else if (a[this.state.sorting.index] < b[this.state.sorting.index]) {
-                    return -this.state.sorting.order
-                } else {
-                    return 0
-                }
-            })
-        }
-
         return (
             <table className={b()}>
                 <thead className={b('header')}>
@@ -109,12 +95,9 @@ class DataTable extends React.Component {
                         {
                             columns.map((column, index) =>
                                 <DataTableColumn
-                                    id={index}
+                                    column={column}
                                     key={index}
-                                    label={typeof column === 'string' ? column : column.label}
-                                    sorted={this.state.sorting.index === index}
-                                    sortingOrder={this.state.sorting.order}
-                                    style={typeof column === 'object' && column.style}
+                                    sorting={this.state.sorting}
                                     onClick={this.onColumnClick} />
                             )
                         }
@@ -123,7 +106,16 @@ class DataTable extends React.Component {
                 <tbody className={b('body')}>
                     {
                         rows ? (
-                            rows.map((row, index) =>
+                            rows.sort((a, b) =>
+                                this.state.sorting.column &&
+                                (
+                                    this.state.sorting.order > 0 ? (
+                                        a[this.state.sorting.column.name] > b[this.state.sorting.column.name]
+                                    ) : (
+                                        a[this.state.sorting.column.name] < b[this.state.sorting.column.name]
+                                    )
+                                )
+                            ).map((row, index) =>
                                 <DataTableRow
                                     cells={row}
                                     columns={columns}
@@ -133,7 +125,16 @@ class DataTable extends React.Component {
                                 />
                             )
                         ) : (
-                            React.Children.map(children, row => React.cloneElement(row, {
+                            React.Children.toArray(children).sort((a, b) =>
+                                this.state.sorting.column &&
+                                (
+                                    this.state.sorting.order > 0 ? (
+                                        a.props.cells[this.state.sorting.column.name] > b.props.cells[this.state.sorting.column.name]
+                                    ) : (
+                                        a.props.cells[this.state.sorting.column.name] < b.props.cells[this.state.sorting.column.name]
+                                    )
+                                )
+                            ).map(row => React.cloneElement(row, {
                                 columns,
                                 onClick: this.onChange,
                                 onValueTransform

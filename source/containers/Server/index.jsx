@@ -247,11 +247,15 @@ class Server extends React.Component {
     dataTableChange = (value) => {
         const { match, history, minimizeWindow } = this.props;
 
-        history.push(`${match.url}/${value[0]}`);
+        history.push(`${match.url}/${value.database}`);
 
         if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
             minimizeWindow()
         }
+    };
+
+    dataTableValueTransform = (row, column, value) => {
+        return value;
     };
 
     /**
@@ -262,7 +266,8 @@ class Server extends React.Component {
         const
             b = block('server'),
             columns = [
-                { name: 'database', label: 'Database' }
+                { name: 'database', label: 'Database' },
+                { name: 'tableCount', label: 'Tables' },
             ],
             {
                 location,
@@ -354,13 +359,14 @@ class Server extends React.Component {
                                     <DataTable
                                         columns={columns}
                                         onChange={this.dataTableChange}
+                                        onValueTransform={this.dataTableValueTransform}
                                     >
                                         {
                                             databases.map((database, index) =>
                                                 <DataTableRow
                                                     cells={database}
                                                     key={index}
-                                                    selected={_match && _match.params.database === database[0]}
+                                                    selected={_match && _match.params.database === database.database}
                                                 />
                                             )
                                         }

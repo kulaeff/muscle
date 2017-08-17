@@ -10,31 +10,21 @@ class DataTableColumn extends React.Component {
     /**
      * Properties
      * @static
-     * @property {number} id The id of the column
-     * @property {string} name The name of the column
-     * @property {bool} sorted Is sorting enabled
-     * @property {number} sortingOrder Sorting order
-     * @property {string} title The title of the column
+     * @property {object} column Column
+     * @property {object} sorting Sorting info
      * @property {func} onClick Click event handler
      */
     static propTypes = {
-        id: PropTypes.number.isRequired,
-        sorted: PropTypes.bool,
-        sortingOrder: PropTypes.oneOf([1, -1]),
-        label: PropTypes.string.isRequired,
+        column: PropTypes.object.isRequired,
+        sorting: PropTypes.object.isRequired,
         onClick: PropTypes.func.isRequired
     };
 
     /**
      * Default properties
      * @static
-     * @property {bool} Is sorted
-     * @property {number} Sorting order
      */
-    static defaultProps = {
-        sorted: false,
-        sortingOrder: 1
-    };
+    static defaultProps = {};
 
     /**
      * Render component
@@ -43,29 +33,16 @@ class DataTableColumn extends React.Component {
     render() {
         const
             b = block('data-table'),
-            {
-                id,
-                sorted = DataTableColumn.defaults.sorted,
-                sortingOrder = DataTableColumn.defaults.sortingOrder,
-                label,
-                onClick
-            } = this.props;
-
-        let order = ''
-
-        if (sorted) {
-            order = sortingOrder > 0 ? 'asc' : 'desc'
-        }
+            { column, sorting, onClick } = this.props;
 
         return (
             <th
                 className={b('column', {
-                    order,
-                    state: sorted ? 'sorted' : null
+                    order: sorting.column === column && sorting.order > 0 ? 'asc' : 'desc',
+                    state: sorting.column === column ? 'sorted' : null
                 })}
-                title={label}
-                onClick={() => onClick(id)}>
-                <span className={b('column-title')}>{label}</span>
+                onClick={() => onClick(column)}>
+                <span className={b('column-title')}>{column.label}</span>
                 <span className={b('column-arrow')}>
                     <svg>
                         <use xlinkHref="#icon-data-table-column-arrow" />

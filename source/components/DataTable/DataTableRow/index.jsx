@@ -11,15 +11,14 @@ class DataTableRow extends React.Component {
     /**
      * Properties
      * @static
-     * @property {array} cells Cells (data) of the item
-     * @property {number} column The index of the column
-     * @property {string} icon The icon's name to use in DataTableItem
-     * @property {number} row The index of the row
+     * @property {object} cells Cells (data) of the item
+     * @property {array} column Columns
      * @property {bool} selected Is the item selected
      * @property {func} onClick Click event handler
+     * @property {func} onValueTransform A callback used to transform values
      */
     static propTypes = {
-        cells: PropTypes.oneOfType([ PropTypes.array, PropTypes.object]).isRequired,
+        cells: PropTypes.object.isRequired,
         columns: PropTypes.array,
         selected: PropTypes.bool,
         onClick: PropTypes.func,
@@ -48,29 +47,15 @@ class DataTableRow extends React.Component {
         return (
             <tr
                 className={b('row', {state: selected ? 'selected' : null})}
-                onClick={(e) => onClick(e, cells)}>
+                onClick={() => onClick(cells)}>
                 {
-                    Array.isArray(cells) ? (
-                        cells.map((cell, index) =>
+                    columns.map((column, index) =>
+                        cells.hasOwnProperty(column.name) && (
                             <DataTableCell
+                                cell={cells[column.name]}
                                 key={index}
-                                column={columns[index]}
-                                onValueTransform={onValueTransform}
-                            >
-                                {cell}
-                            </DataTableCell>
-                        )
-                    ) : (
-                        columns.map((column, index) =>
-                            cells.hasOwnProperty(column.name) && (
-                                <DataTableCell
-                                    key={index}
-                                    column={column}
-                                    onValueTransform={onValueTransform}
-                                >
-                                    {cells[column.name]}
-                                </DataTableCell>
-                            )
+                                onValueTransform={(cell) => onValueTransform(cells, column, cell)}
+                            />
                         )
                     )
                 }

@@ -10,17 +10,13 @@ class DataTableCell extends React.Component {
     /**
      * Properties
      * @static
-     * @property {string} icon The icon's name to use in DataTableItem
-     * @property {func} onClick Click event handler
+     * @property {*} cell A value of a cell
+     * @property {func} onValueTransform A callback used to transform a value
      */
     static propTypes = {
-        column: PropTypes.oneOfType([ PropTypes.string, PropTypes.object]).isRequired,
+        cell: PropTypes.any,
         onValueTransform: PropTypes.func
     };
-
-    constructor(props) {
-        super(props)
-    }
 
     /**
      * Render component
@@ -28,17 +24,11 @@ class DataTableCell extends React.Component {
     render() {
         const
             b = block('data-table'),
-            {
-                children,
-                column,
-                onValueTransform
-            } = this.props;
+            { cell, onValueTransform } = this.props;
 
         return (
             <td className={b('cell')}>
-                {
-                    onValueTransform ? onValueTransform(column.name, children) : children
-                }
+                {onValueTransform ? onValueTransform(cell) : cell}
             </td>
         )
     }

@@ -8,9 +8,8 @@ import DataTable, { DataTableRow } from '../../components/DataTable'
 import Placeholder from '~/components/Placeholder'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
-import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
+import Toolbar, { ToolBarButton } from '../../components/ToolBar'
 import block from 'bem-cn'
-import bytes from '~/helpers/bytes'
 import './style.less';
 
 /**
@@ -52,18 +51,6 @@ class Columns extends React.Component {
             getTables(nextProps.match.params.database);
         }
     }
-
-    onActionButtonAddFieldClick = () => {
-        const { addTableField } = this.props;
-
-        addTableField();
-    };
-
-    onActionButtonRemoveFieldClick = () => {
-        const { removeTableField } = this.props;
-
-        removeTableField();
-    };
 
     /**
      * Show modal when toolbar button Create clicked
@@ -113,23 +100,25 @@ class Columns extends React.Component {
      * @param {array} row Selected row
      */
     onDataTableChange = (row) => {
-        const { match, history } = this.props;
-
-        history.push(`${match.url}/${row[0]}`);
+        console.log(row);
     };
 
     /**
      * Transforms values
      * @callback
-     * @param {string} column Column name
-     * @param {number} value Value to be transformed
-     * @returns {string} Transformed value
+     * @param {object} row Current row
+     * @param {object} column Current column
+     * @param {*} value A value of the column
+     * @returns {*} Transformed value
      */
-    onDataTableValueTransform = (column, value) => {
-        if (column === 'size' || column === 'overhead') {
-            return bytes(value)
-        } else {
-            return value ? value.toString() : '';
+    onDataTableValueTransform = (row, column, value) => {
+        switch (column.name) {
+            case 'column':
+                return <span title={row.comment}>{value}</span>;
+            case 'default':
+                return value ? 'NULL' : 'NO';
+            default:
+                return value;
         }
     };
 
@@ -138,54 +127,6 @@ class Columns extends React.Component {
      */
     onTextboxFilterChange = (e) => {
         e.persist();
-    };
-
-    onTextboxTableNameChange = (event) => {
-        const { setTableName } = this.props;
-
-        setTableName(event.target.value);
-    };
-
-    onTextboxTableCommentChange = (event) => {
-        const { setTableComment } = this.props;
-
-        setTableComment(event.target.value);
-    };
-
-    onCreateTableModalClose = () => {
-        const { closeCreateTableModal } = this.props;
-
-        closeCreateTableModal();
-    };
-
-    /**
-     * Creates a database
-     * @param {Event} event Event
-     */
-    onCreateTableFormSubmit = (event) => {
-        const { createTable } = this.props;
-
-        createTable();
-
-        event.preventDefault();
-    };
-
-    handleListBoxFieldsChange = (index) => {
-        const { setListBoxFieldsSelectedIndex } = this.props;
-
-        setListBoxFieldsSelectedIndex(index);
-    };
-
-    selectTableCollationChange = (value) => {
-        const { setTableCollation } = this.props;
-
-        setTableCollation(value);
-    };
-
-    selectTableEngineChange = (value) => {
-        const { setTableEngine } = this.props;
-
-        setTableEngine(value);
     };
 
     /**
@@ -230,34 +171,21 @@ class Columns extends React.Component {
                                 <ToolBarButton
                                     icon="create"
                                     label="New"
-                                    title="Create new table"
+                                    title="Create a new column"
                                     url={match.url}
                                     onClick={this.onToolBarButtonCreateDatabaseClick} />
                                 <ToolBarButton
                                     icon="edit"
                                     label="Edit"
-                                    title="Edit table"
+                                    title="Edit selected column"
                                     url={`${match.url}/:table`}
                                     onClick={this.onToolBarButtonEditDatabaseClick} />
                                 <ToolBarButton
                                     icon="delete"
                                     label="Delete"
-                                    title="Delete table"
+                                    title="Delete selected column"
                                     url={`${match.url}/:table`}
                                     onClick={this.onToolBarButtonDeleteDatabaseClick} />
-                                <ToolBarSeparator />
-                                <ToolBarButton
-                                    icon="import"
-                                    label="Import"
-                                    title="Import table"
-                                    url={match.url}
-                                    onClick={this.onToolBarButtonImportTableClick} />
-                                <ToolBarButton
-                                    icon="export"
-                                    label="Export"
-                                    title="Export table"
-                                    url={`${match.url}/:table`}
-                                    onClick={this.onToolBarButtonExportTableClick} />
                             </Toolbar>
                         </div>
                         <div className={b('filters')}>

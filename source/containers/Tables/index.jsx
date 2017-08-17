@@ -140,26 +140,27 @@ class Tables extends React.Component {
     /**
      * Navigates to the selected table
      * @callback
-     * @param {array} row Selected row
+     * @param {object} row Selected row
      */
     onDataTableChange = (row) => {
         const { match, history } = this.props;
 
-        history.push(`${match.url}/${row[0]}`);
+        history.push(`${match.url}/${row.table}`);
     };
 
     /**
      * Transforms values
      * @callback
-     * @param {string} column Column name
-     * @param {number} value Value to be transformed
-     * @returns {string} Transformed value
+     * @param {array} row Row
+     * @param {object} column Column name
+     * @param {*} value Value to be transformed
+     * @returns {*} Transformed value
      */
-    onDataTableValueTransform = (column, value) => {
-        if (column === 'size' || column === 'overhead') {
-            return bytes(value)
+    onDataTableValueTransform = (row, column, value) => {
+        if (column.name === 'size' || column.name === 'overhead') {
+            return bytes(value);
         } else {
-            return value ? value.toString() : '';
+            return value;
         }
     };
 
@@ -227,8 +228,8 @@ class Tables extends React.Component {
             b = block('tables'),
             columns = [
                 { name: 'table', label: 'Table' },
-                { name: 'rows', label: 'Rows', style: { alignment: 'right' } },
-                { name: 'type', label: 'Type' },
+                { name: 'rowCount', label: 'Rows', style: { alignment: 'right' } },
+                { name: 'engine', label: 'Engine' },
                 { name: 'collation', label: 'Collation' },
                 { name: 'size', label: 'Size', style: { alignment: 'right' } },
                 { name: 'overhead', label: 'Overhead', style: { alignment: 'right' } }
@@ -320,7 +321,7 @@ class Tables extends React.Component {
                                                 <DataTableRow
                                                     cells={table}
                                                     key={index}
-                                                    selected={_match && _match.params.table === table[0]}
+                                                    selected={_match && _match.params.table === table.table}
                                                 />
                                             )
                                         }

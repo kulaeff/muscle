@@ -78,7 +78,8 @@ Flight::route('GET /api/v1/databases', function() {
 
     foreach ($db->query("SHOW DATABASES LIKE '%$token%'") as $row) {
         $json[] = [
-            $row[0]
+            'database' => $row[0],
+            'tableCount' => 0
         ];
     }
 
@@ -176,13 +177,13 @@ Flight::route('GET /api/v1/databases/@name/tables', function($name) {
 
     foreach ($db->query($sql) as $row) {
         $json[] = [
-            $row['TABLE_NAME'],
+            'table' => $row['TABLE_NAME'],
             //$row['TABLE_COMMENT'],
-            $row['TABLE_ROWS'],
-            $row['ENGINE'],
-            $row['TABLE_COLLATION'],
-            $row['DATA_LENGTH'] + $row['INDEX_LENGTH'],
-            0
+            'rowCount' => +$row['TABLE_ROWS'],
+            'engine' => $row['ENGINE'],
+            'collation' => $row['TABLE_COLLATION'],
+            'size' => $row['DATA_LENGTH'] + $row['INDEX_LENGTH'],
+            'overhead' => 0
         ];
     }
 
