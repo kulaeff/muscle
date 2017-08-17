@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux';
 import app from './app'
-import column from './column'
 import columns from './columns'
 import database from './database'
+import rows from './rows'
 import server from './server'
 import settings from './settings'
 import statusConnections from './status/connections'
@@ -15,11 +15,11 @@ import tables from './tables'
 export default combineReducers({
     router: routerReducer,
     app,
-    column,
+    columns,
     database,
+    rows,
     server,
     settings,
-    columns,
     statusConnections,
     statusSummary,
     statusUsage,

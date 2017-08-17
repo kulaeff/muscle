@@ -45,10 +45,10 @@ class Columns extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { getTables } = this.props;
+        const { getColumns } = this.props;
 
-        if (this.props.match.params.database !== nextProps.match.params.database) {
-            getTables(nextProps.match.params.database);
+        if (this.props.match.params.table !== nextProps.match.params.table) {
+            getColumns(nextProps.match.params.database, nextProps.match.params.table);
         }
     }
 
@@ -76,22 +76,6 @@ class Columns extends React.Component {
      */
     onToolBarButtonDeleteDatabaseClick = () => {
         console.log('toolbar button Delete clicked')
-    };
-
-    /**
-     * Show export window
-     * @method
-     */
-    onToolBarButtonExportTableClick = () => {
-        console.log('toolbar button Export clicked')
-    };
-
-    /**
-     * Show import window
-     * @method
-     */
-    onToolBarButtonImportTableClick = () => {
-        console.log('toolbar button Export clicked')
     };
 
     /**
@@ -135,7 +119,7 @@ class Columns extends React.Component {
      */
     render() {
         const
-            b = block('tables'),
+            b = block('columns'),
             dataTableColumns = [
                 { name: 'column', label: 'Column' },
                 { name: 'type', label: 'Type' },
