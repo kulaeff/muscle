@@ -288,17 +288,20 @@ Flight::route('GET /api/v1/databases/@database/tables/@table/rows', function($da
 
     if ($query = $db->query($sql, PDO::FETCH_ASSOC)) {
         $rows = $query->fetchAll();
-        $columns = array_keys($rows[0]);
 
-        $json['columns'] = array_map(function($value) {
-            return [
-                'name' => $value,
-                'label' => $value
-            ];
-        }, $columns);
+        if (count($rows)) {
+            $columns = array_keys($rows[0]);
 
-        foreach ($rows as $row) {
-            $json['rows'][] = $row;
+            $json['columns'] = array_map(function ($value) {
+                return [
+                    'name' => $value,
+                    'label' => $value
+                ];
+            }, $columns);
+
+            foreach ($rows as $row) {
+                $json['rows'][] = $row;
+            }
         }
     }
 

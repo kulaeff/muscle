@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router-dom'
 import * as actions from '../../actions/tables'
+import * as actions_ from '../../actions/server'
 import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
@@ -122,9 +123,13 @@ class Tables extends React.Component {
      * @param {object} row Selected row
      */
     onDataTableChange = (row) => {
-        const { match, history } = this.props;
+        const { match, history, minimizeWindow } = this.props;
 
         history.push(`${match.url}/${row.table}`);
+
+        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
+            minimizeWindow()
+        }
     };
 
     /**
@@ -487,6 +492,7 @@ Tables.propTypes = {
     addTableField: PropTypes.func.isRequired,
     closeCreateTableModal: PropTypes.func.isRequired,
     getTables: PropTypes.func.isRequired,
+    minimizeWindow: PropTypes.func.isRequired,
     openCreateTableModal: PropTypes.func.isRequired,
     removeTableField: PropTypes.func.isRequired,
     setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
@@ -517,23 +523,26 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    const {
-        addTableField,
-        closeCreateTableModal,
-        getTables,
-        openCreateTableModal,
-        removeTableField,
-        setListBoxFieldsSelectedIndex,
-        setTableCollation,
-        setTableComment,
-        setTableEngine,
-        setTableName
-    } = actions;
+    const
+        {
+            addTableField,
+            closeCreateTableModal,
+            getTables,
+            openCreateTableModal,
+            removeTableField,
+            setListBoxFieldsSelectedIndex,
+            setTableCollation,
+            setTableComment,
+            setTableEngine,
+            setTableName
+        } = actions,
+        { minimizeWindow } = actions_;
 
-    return  bindActionCreators({
+    return bindActionCreators({
         addTableField,
         closeCreateTableModal,
         getTables,
+        minimizeWindow,
         openCreateTableModal,
         removeTableField,
         setListBoxFieldsSelectedIndex,

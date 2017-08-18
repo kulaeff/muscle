@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as appActions from '../../actions/app'
+import * as actions from '../../actions/app'
 import About from '../About'
 import Components from '../Components'
 import Settings from '../Settings'
 import Server from '../Server'
 import Status from '../Status'
 import Button from '../../components/Button'
-import Form, { FormButton, FormButtons, FormField, FormGroup } from '../../components/Form'
+import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
+import Form, { FormField } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
@@ -25,48 +26,35 @@ class App extends React.Component {
      * @property {object} credentials Credentials
      */
     static propTypes = {
-        fetching: PropTypes.bool,
-        credentials: PropTypes.shape({
-            user: PropTypes.string,
-            password: PropTypes.string
-        })
+        fetching: PropTypes.bool.isRequired,
+        logged: PropTypes.bool.isRequired,
+        password: PropTypes.string,
+        saving: PropTypes.bool.isRequired,
+        user: PropTypes.string.isRequired,
+        getCredentials: PropTypes.func.isRequired,
+        saveCredentials: PropTypes.func.isRequired,
+        setPassword: PropTypes.func.isRequired,
+        setUser: PropTypes.func.isRequired
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            buttonDisabled: false,
-            selectedIndex: 1,
-            user: 'root',
-            password: ''
-        };
-    }
-
+    /**
+     * Gets credentials from session storage and navigates to server page if they are valid
+     * @override
+     */
     componentDidMount() {
-        const { getCredentials } = this.props.appActions;
+        const { getCredentials } = this.props;
 
         getCredentials();
     }
 
+    /**
+     * Saves credentials on form submit
+     * @param {Event} e
+     */
     onFormSubmit = (e) => {
-        const
-            { saveCredentials } = this.props.appActions,
-            { history } = this.props;
+        const { saveCredentials } = this.props;
 
-        this.setState({
-            buttonDisabled: true
-        });
-
-        saveCredentials(this.state.user, this.state.password)
-            .then(() => {
-                this.setState({
-                    buttonDisabled: false,
-                    selectedIndex: 1
-                });
-
-                history.push('/server')
-            });
+        saveCredentials();
 
         e.preventDefault()
     };
@@ -87,24 +75,36 @@ class App extends React.Component {
             });
     };
 
+    /**
+     * Stores the user
+     * @param {SyntheticEvent} e
+     */
     onTextboxUserChange = (e) => {
-        this.setState({
-            user: e.target.value
-        })
+        const { setUser } = this.props;
+
+        setUser(e.target.value);
     };
 
+    /**
+     * Stores the password
+     * @param {SyntheticEvent} e
+     */
     onTextboxPasswordChange = (e) => {
-        this.setState({
-            password: e.target.value
-        })
+        const { setPassword } = this.props;
+
+        setPassword(e.target.value);
     };
 
+    /**
+     * Render
+     * @returns {XML}
+     */
     render() {
         const
             b = block('app'),
-            { credentials } = this.props;
+            { logged, password, saving, user } = this.props;
 
-        if (credentials.user !== null && credentials.password !== null) {
+        if (logged) {
             return (
                 <div className={b()}>
                     <div className={b('content')}>
@@ -130,7 +130,8 @@ class App extends React.Component {
                             <NavigationBarItem
                                 id="logout"
                                 title="Logout"
-                                url="/logout" />
+                                url="/logout"
+                            />
                         </div>
                     </div>
                 </div>
@@ -145,35 +146,40 @@ class App extends React.Component {
                             </div>
                             <div className={b('login-form')}>
                                 <Form onSubmit={this.onFormSubmit}>
-                                    <FormGroup>
-                                        <FormField label="User">
-                                            <Textbox
-                                                id="user"
-                                                name="user"
-                                                required={true}
-                                                value={this.state.user}
-                                                onChange={this.onTextboxUserChange} />
-                                        </FormField>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <FormField label="Password">
-                                            <Textbox
-                                                id="password"
-                                                name="password"
-                                                type="password"
-                                                value={this.state.password}
-                                                onChange={this.onTextboxPasswordChange} />
-                                        </FormField>
-                                    </FormGroup>
-                                    <FormButtons>
-                                        <FormButton>
+                                    <Flex flow="column">
+                                        <FlexItem>
+                                            <FormField label="User">
+                                                <Textbox
+                                                    id="textBoxUser"
+                                                    name="user"
+                                                    required={true}
+                                                    value={user}
+                                                    onChange={this.onTextboxUserChange}
+                                                />
+                                            </FormField>
+                                        </FlexItem>
+                                        <FlexSeparator size="half" />
+                                        <FlexItem>
+                                            <FormField label="Password">
+                                                <Textbox
+                                                    id="textBoxPassword"
+                                                    name="password"
+                                                    type="password"
+                                                    value={password}
+                                                    onChange={this.onTextboxPasswordChange}
+                                                />
+                                            </FormField>
+                                        </FlexItem>
+                                        <FlexSeparator />
+                                        <FlexItem align="right">
                                             <Button
-                                                autoSize={true}
-                                                disabled={this.state.buttonDisabled}
+                                                size="stretch"
+                                                disabled={user.length === 0 || saving}
                                                 label="Login"
-                                                type="submit" />
-                                        </FormButton>
-                                    </FormButtons>
+                                                type="submit"
+                                            />
+                                        </FlexItem>
+                                    </Flex>
                                 </Form>
                             </div>
                         </div>
@@ -187,14 +193,28 @@ class App extends React.Component {
 function mapStateToProps (state) {
     return {
         credentials: state.app.credentials,
-        fetching: state.app.fetching
+        fetching: state.app.fetching,
+        logged: state.app.logged,
+        password: state.app.password,
+        saving: state.app.saving,
+        user: state.app.user
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        appActions: bindActionCreators(appActions, dispatch)
-    }
+    const {
+        getCredentials,
+        saveCredentials,
+        setPassword,
+        setUser
+    } = actions;
+
+    return bindActionCreators({
+        getCredentials,
+        saveCredentials,
+        setPassword,
+        setUser
+    }, dispatch);
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

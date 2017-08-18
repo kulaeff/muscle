@@ -59,7 +59,6 @@ class Server extends React.Component {
         deleteDatabase: PropTypes.func.isRequired,
         getDatabases: PropTypes.func.isRequired,
         initWindow: PropTypes.func.isRequired,
-        minimizeWindow: PropTypes.func.isRequired,
         openCreateDatabaseModal: PropTypes.func.isRequired,
         openDeleteDatabaseModal: PropTypes.func.isRequired,
         openEditDatabaseModal: PropTypes.func.isRequired,
@@ -255,13 +254,9 @@ class Server extends React.Component {
     };
 
     dataTableChange = (row) => {
-        const { match, history, minimizeWindow } = this.props;
+        const { match, history } = this.props;
 
         history.push(`${match.url}/${row.database}`);
-
-        if (JSON.parse(localStorage.getItem('useSmartFolding'))) {
-            minimizeWindow()
-        }
     };
 
     dataTableValueTransform = (row, column, value) => {
@@ -573,7 +568,6 @@ function mapDispatchToProps(dispatch) {
         openEditDatabaseModal,
         setFilter,
         initWindow,
-        minimizeWindow,
         restoreWindow
     } = actions;
 
@@ -591,7 +585,6 @@ function mapDispatchToProps(dispatch) {
         openEditDatabaseModal,
         setFilter,
         initWindow,
-        minimizeWindow,
         restoreWindow
     }, dispatch)
 }

@@ -6,23 +6,24 @@ import {
     REMOVE_CREDENTIALS_SUCCESS,
     SAVE_CREDENTIALS_REQUEST,
     SAVE_CREDENTIALS_SUCCESS,
-    SAVE_CREDENTIALS_FAIL
+    SAVE_CREDENTIALS_FAIL,
+    SET_PASSWORD,
+    SET_USER
 } from '../constants/app'
+import { push } from 'react-router-redux'
 
 /**
  * Remove credentials from sessionStorage (logout)
  * @function
- * @param {string} user User name
- * @param {string} password Password
  */
 export function removeCredentials() {
     return async (dispatch) => {
         dispatch({
             type: REMOVE_CREDENTIALS_REQUEST
-        })
+        });
 
-        sessionStorage.removeItem('user')
-        sessionStorage.removeItem('password')
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('password');
 
         dispatch({
             type: REMOVE_CREDENTIALS_SUCCESS,
@@ -35,33 +36,44 @@ export function removeCredentials() {
 }
 
 /**
- * Checks credentials and save them to sessionStorage (login)
+ * Validates credentials and save them to session storage if the validation was successful
  * @function
- * @param {string} user User name
- * @param {string} password Password
- */
-export function saveCredentials(user, password) {
+  */
+export function saveCredentials() {
     return async (dispatch, getState, api) => {
         dispatch({
             type: SAVE_CREDENTIALS_REQUEST
-        })
+        });
 
-        try {
-            const response = await api.checkCredentials(user, password)
+        const
+            state = getState(),
+            user = state.app.user,
+            password = state.app.password;
 
-            sessionStorage.setItem('user', response.data.user)
-            sessionStorage.setItem('password', response.data.password)
+        await api.checkCredentials(user, password)
+            .then(response => {
+                if (response.data.status === 'ok') {
+                    sessionStorage.setItem('user', state.app.user);
+                    sessionStorage.setItem('password', state.app.password);
 
-            dispatch({
-                type: SAVE_CREDENTIALS_SUCCESS,
-                payload: response.data
+                    dispatch({
+                        type: SAVE_CREDENTIALS_SUCCESS,
+                    });
+
+                    dispatch(push('/server'));
+                } else {
+                    dispatch({
+                        type: SAVE_CREDENTIALS_FAIL,
+                        payload: response.data.status
+                    })
+                }
             })
-        } catch(ex) {
-            dispatch({
-                type: SAVE_CREDENTIALS_FAIL,
-                payload: ex
-            })
-        }
+            .catch(ex => {
+                dispatch({
+                    type: SAVE_CREDENTIALS_FAIL,
+                    payload: ex
+                })
+            });
     }
 }
 
@@ -73,11 +85,11 @@ export function getCredentials() {
     return async (dispatch) => {
         dispatch({
             type: GET_CREDENTIALS_REQUEST
-        })
+        });
 
         const
             user = sessionStorage.getItem('user'),
-            password = sessionStorage.getItem('password')
+            password = sessionStorage.getItem('password');
 
         if (user !== null && password !== null) {
             dispatch({
@@ -90,11 +102,32 @@ export function getCredentials() {
         } else {
             dispatch({
                 type: GET_CREDENTIALS_FAIL,
-                payload: {
-                    user,
-                    password
-                }
             })
         }
     }
+}
+
+/**
+ * Stores user name
+ * @param {string} user A user
+ * @returns {object}
+ */
+export function setUser(user) {
+    return {
+        type: SET_USER,
+        payload: user
+    };
+}
+
+/**
+ * Stores user name
+ * @see saveCredentials
+ * @param {string} password A password
+ * @returns {object}
+ */
+export function setPassword(password) {
+    return {
+        type: SET_PASSWORD,
+        payload: password
+    };
 }
