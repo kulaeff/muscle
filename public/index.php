@@ -1,25 +1,58 @@
 <?php
 require '../vendor/autoload.php';
 
+class DB {
+    private $user;
+    private $password;
+
+    private $pdo;
+
+    public function connect($user, $password) {
+        $this->user = $user;
+        $this->password = $password;
+
+        $this->pdo = new PDO('mysql:host=localhost;', $user, $password);
+    }
+
+    public static function checkCredentials($user, $password) {
+        try {
+            new PDO('mysql:host=localhost', $user, $password);
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function query($query) {
+        return $this->pdo->query($query);
+    }
+}
+
 // Set the path to views
 Flight::set('flight.views.path', '../views');
 
-Flight::register('db', 'PDO', array('mysql:host=localhost;', 'root', ''), function($db) {
-    //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-});
+Flight::register('db', 'DB');
 
 // API routes
 // Credentials
 // This endpoint should be called prior to others
-Flight::route('GET /api/v1/credentials', function() {
+Flight::route('POST /api/v1/credentials', function() {
     $request = Flight::request();
-    $user = $request->query['user'];
-    $password = $request->query['password'];
+    $db = Flight::db();
 
-    Flight::json([
-        'status' => 'ok'
-    ]);
+    $user = $request->data['user'];
+    $password = $request->data['password'];
+
+    if ($db::checkCredentials($user, $password)) {
+        Flight::json([
+            'status' => 'ok'
+        ]);
+    } else {
+        Flight::json([
+            'status' => 'error'
+        ]);
+    }
 });
 
 // List of collations
@@ -74,18 +107,23 @@ Flight::route('GET /api/v1/databases', function() {
     $token = $request->query['token'];
     $json = [];
 
-    $db = Flight::db();
+    try {
+        $db = Flight::db();
+        $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-    foreach ($db->query("SHOW DATABASES LIKE '%$token%'") as $row) {
-        $json[] = [
-            'database' => $row[0],
-            'tableCount' => 0
-        ];
+        foreach ($db->query("SHOW DATABASES LIKE '%$token%'") as $row) {
+            $json[] = [
+                'database' => $row[0],
+                'tableCount' => 0
+            ];
+        }
+
+        sort($json);
+
+        Flight::json($json);
+    } catch (PDOException $e) {
+        Flight::json($json);
     }
-
-    sort($json);
-
-    Flight::json($json);
 });
 
 // Create new database
@@ -94,6 +132,7 @@ Flight::route('POST /api/v1/databases', function() {
     $name = $request->data['name'];
 
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     if ($db->query("CREATE DATABASE $name")) {
         Flight::json([
@@ -115,6 +154,7 @@ Flight::route('GET /api/v1/databases/@name', function($name) {
             FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '$name'";
 
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     $rows = $db->query($sql);
 
@@ -146,6 +186,8 @@ Flight::route('PATCH /api/v1/databases/@oldName', function($oldName) {
     $json = [];
     $sql = "";
 
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
     if ($db->query("CREATE DATABASE $newName")) {
         $tables = $db->query("SHOW TABLES FROM $oldName");
 
@@ -174,6 +216,7 @@ Flight::route('GET /api/v1/databases/@name/tables', function($name) {
             FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$name'";
 
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     foreach ($db->query($sql) as $row) {
         $json[] = [
@@ -193,6 +236,7 @@ Flight::route('GET /api/v1/databases/@name/tables', function($name) {
 // Database delete
 Flight::route('DELETE /api/v1/databases/@name', function($name) {
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     if ($db->query("DROP DATABASE $name")) {
         Flight::json([
@@ -223,6 +267,7 @@ Flight::route('GET /api/v1/status/summary', function() {
     $traffic = 0;
 
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     foreach ($db->query($sql) as $row) {
         switch ($row['name']) {
@@ -255,6 +300,7 @@ Flight::route('GET /api/v1/databases/@database/tables/@table/columns', function(
     $json = [];
 
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     foreach ($db->query($sql) as $row) {
         $type = explode(' ', $row['Type']);
@@ -279,6 +325,7 @@ Flight::route('GET /api/v1/databases/@database/tables/@table/columns', function(
 // Table rows
 Flight::route('GET /api/v1/databases/@database/tables/@table/rows', function($database, $table) {
     $db = Flight::db();
+    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
     $sql = "SELECT * FROM $database.$table";
     $json = [

@@ -9,7 +9,7 @@ class API {
     }
 
     async checkCredentials(user, password) {
-        return this.axios.get('credentials', { params: { user, password }})
+        return this.axios.post('credentials', { user, password })
     }
 
     /**

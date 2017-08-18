@@ -16,16 +16,20 @@ class NavigationBarItem extends React.Component {
      * @property {string} url Url
      */
     static propTypes = {
+        exact: PropTypes.bool,
         id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
+        url: PropTypes.string.isRequired,
+        onClick: PropTypes.func
     };
 
     /**
      * Default properties
      * @static
      */
-    static defaultProps = {};
+    static defaultProps = {
+        exact: false
+    };
 
     /**
      * Render component
@@ -34,14 +38,15 @@ class NavigationBarItem extends React.Component {
     render() {
         const
             b = block('navigation-bar'),
-            { id, title, url } = this.props;
+            { exact, id, title, url, onClick } = this.props;
 
         return (
-            <Route path={url} children={({match}) =>
+            <Route exact={exact} path={url} children={({match}) =>
                 <Link
                     className={b('item', {icon: id, state: match ? 'selected' : null})}
                     title={title}
                     to={url}
+                    onClick={onClick}
                 >
                     <svg>
                         <use xlinkHref={`#icon-${id}`} />

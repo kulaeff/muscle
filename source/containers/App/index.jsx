@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/app'
@@ -20,10 +20,8 @@ import './style.less'
 
 class App extends React.Component {
     /**
-     * Databases container properties
+     * Properties
      * @static
-     * @property {bool} fetching Is fetching data
-     * @property {object} credentials Credentials
      */
     static propTypes = {
         fetching: PropTypes.bool.isRequired,
@@ -32,13 +30,14 @@ class App extends React.Component {
         saving: PropTypes.bool.isRequired,
         user: PropTypes.string.isRequired,
         getCredentials: PropTypes.func.isRequired,
+        removeCredentials: PropTypes.func.isRequired,
         saveCredentials: PropTypes.func.isRequired,
         setPassword: PropTypes.func.isRequired,
         setUser: PropTypes.func.isRequired
     };
 
     /**
-     * Gets credentials from session storage and navigates to server page if they are valid
+     * Gets credentials and navigates to server page if they are valid
      * @override
      */
     componentDidMount() {
@@ -48,7 +47,7 @@ class App extends React.Component {
     }
 
     /**
-     * Saves credentials on form submit
+     * Saves credentials and navigates to server page if they are valid
      * @param {Event} e
      */
     onFormSubmit = (e) => {
@@ -59,20 +58,10 @@ class App extends React.Component {
         e.preventDefault()
     };
 
-    onNavigationBarItemLogoutClick = () => {
-        const
-            { history } = this.props,
-            { removeCredentials } = this.props.appActions;
+    navigationBarItemLogoutClick = () => {
+        const { removeCredentials } = this.props;
 
-        removeCredentials()
-            .then(() => {
-                this.setState({
-                    password: '',
-                    user: 'root'
-                });
-
-                history.push('/')
-            });
+        removeCredentials();
     };
 
     /**
@@ -106,8 +95,8 @@ class App extends React.Component {
 
         if (logged) {
             return (
-                <div className={b()}>
-                    <div className={b('content')}>
+                <main className={b()}>
+                    <section className={b('content')}>
                         <Switch>
                             <Route path="/about" component={About}/>
                             <Route path="/components" component={Components}/>
@@ -116,8 +105,8 @@ class App extends React.Component {
                             <Route path="/status" component={Status}/>
                             <Redirect to="/server" />
                         </Switch>
-                    </div>
-                    <div className={b('sidebar')}>
+                    </section>
+                    <aside className={b('sidebar')}>
                         <div className={b('nav')}>
                             <NavigationBar>
                                 <NavigationBarItem id="about" title="About" url="/about" />
@@ -128,13 +117,15 @@ class App extends React.Component {
                         </div>
                         <div className={b('logout')}>
                             <NavigationBarItem
+                                exact
                                 id="logout"
                                 title="Logout"
-                                url="/logout"
+                                url="/"
+                                onClick={this.navigationBarItemLogoutClick}
                             />
                         </div>
-                    </div>
-                </div>
+                    </aside>
+                </main>
             )
         } else {
             return (
@@ -204,6 +195,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps(dispatch) {
     const {
         getCredentials,
+        removeCredentials,
         saveCredentials,
         setPassword,
         setUser
@@ -211,10 +203,11 @@ function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({
         getCredentials,
+        removeCredentials,
         saveCredentials,
         setPassword,
         setUser
     }, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -41,9 +41,18 @@ export default function app(state = initialState, action) {
                 logged: false
             };
         case REMOVE_CREDENTIALS_REQUEST:
-            return { ...state, fetching: true };
+            return {
+                ...state,
+                fetching: true
+            };
         case REMOVE_CREDENTIALS_SUCCESS:
-            return { ...state, fetching: false, credentials: action.payload };
+            return {
+                ...state,
+                fetching: false,
+                logged: false,
+                password: initialState.password,
+                user: initialState.user
+            };
         case SAVE_CREDENTIALS_REQUEST:
             return {
                 ...state,

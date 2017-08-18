@@ -26,11 +26,7 @@ export function removeCredentials() {
         sessionStorage.removeItem('password');
 
         dispatch({
-            type: REMOVE_CREDENTIALS_SUCCESS,
-            payload: {
-                user: null,
-                password: null
-            }
+            type: REMOVE_CREDENTIALS_SUCCESS
         })
     }
 }
@@ -55,6 +51,11 @@ export function saveCredentials() {
                 if (response.data.status === 'ok') {
                     sessionStorage.setItem('user', state.app.user);
                     sessionStorage.setItem('password', state.app.password);
+
+                    api.axios.defaults.auth = {
+                        username: user,
+                        password
+                    };
 
                     dispatch({
                         type: SAVE_CREDENTIALS_SUCCESS,
