@@ -12,6 +12,7 @@ import {
 } from '../constants/app'
 
 const initialState = {
+    error: null,
     fetching: false,
     user: 'root',
     password: '',
@@ -56,18 +57,19 @@ export default function app(state = initialState, action) {
         case SAVE_CREDENTIALS_REQUEST:
             return {
                 ...state,
-                saving: true
+                fetching: true
             };
         case SAVE_CREDENTIALS_SUCCESS:
             return {
                 ...state,
-                logged: true,
-                saving: false
+                fetching: false,
+                logged: true
             };
         case SAVE_CREDENTIALS_FAIL:
             return {
                 ...state,
-                saving: false
+                error: action.payload,
+                fetching: false
             };
         case SET_PASSWORD:
             return {

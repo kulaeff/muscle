@@ -13,6 +13,7 @@ import Button from '../../components/Button'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Form, { FormField } from '../../components/Form'
 import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar'
+import { Notifications } from '../../components/Notifications'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import block from 'bem-cn'
@@ -24,6 +25,7 @@ class App extends React.Component {
      * @static
      */
     static propTypes = {
+        error: PropTypes.object,
         fetching: PropTypes.bool.isRequired,
         logged: PropTypes.bool.isRequired,
         password: PropTypes.string,
@@ -44,6 +46,14 @@ class App extends React.Component {
         const { getCredentials } = this.props;
 
         getCredentials();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error && this.props.error !== nextProps.error) {
+            this.notifications.error({
+                message: nextProps.error.message
+            });
+        }
     }
 
     /**
@@ -91,7 +101,7 @@ class App extends React.Component {
     render() {
         const
             b = block('app'),
-            { logged, password, saving, user } = this.props;
+            { fetching, logged, password, user } = this.props;
 
         if (logged) {
             return (
@@ -141,6 +151,7 @@ class App extends React.Component {
                                         <FlexItem>
                                             <FormField label="User">
                                                 <Textbox
+                                                    disabled={fetching}
                                                     id="textBoxUser"
                                                     name="user"
                                                     required={true}
@@ -153,6 +164,7 @@ class App extends React.Component {
                                         <FlexItem>
                                             <FormField label="Password">
                                                 <Textbox
+                                                    disabled={fetching}
                                                     id="textBoxPassword"
                                                     name="password"
                                                     type="password"
@@ -165,7 +177,7 @@ class App extends React.Component {
                                         <FlexItem align="right">
                                             <Button
                                                 size="stretch"
-                                                disabled={user.length === 0 || saving}
+                                                disabled={user.length === 0 || fetching}
                                                 label="Login"
                                                 type="submit"
                                             />
@@ -175,6 +187,7 @@ class App extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <Notifications ref={element => this.notifications = element}/>
                 </div>
             )
         }
@@ -183,7 +196,7 @@ class App extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        credentials: state.app.credentials,
+        error: state.app.error,
         fetching: state.app.fetching,
         logged: state.app.logged,
         password: state.app.password,

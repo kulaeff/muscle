@@ -39,18 +39,23 @@ Flight::register('db', 'DB');
 // This endpoint should be called prior to others
 Flight::route('POST /api/v1/credentials', function() {
     $request = Flight::request();
-    $db = Flight::db();
 
     $user = $request->data['user'];
     $password = $request->data['password'];
 
-    if ($db::checkCredentials($user, $password)) {
+    try {
+        $pdo = new PDO('mysql:host=localhost;', $user, $password);
+        $pdo = null;
+
         Flight::json([
             'status' => 'ok'
         ]);
-    } else {
+    } catch (PDOException $e) {
         Flight::json([
-            'status' => 'error'
+            'error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ]
         ]);
     }
 });

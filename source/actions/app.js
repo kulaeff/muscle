@@ -65,7 +65,7 @@ export function saveCredentials() {
                 } else {
                     dispatch({
                         type: SAVE_CREDENTIALS_FAIL,
-                        payload: response.data.status
+                        payload: response.data.error
                     })
                 }
             })
