@@ -3,7 +3,9 @@ import {
     MINIMIZE_TABLE_WINDOW,
     RESTORE_TABLE_WINDOW
 } from '../constants/table'
-import { push } from 'react-router-redux'
+import {
+    restoreWindow as restoreServerWindow
+} from '../actions/server'
 
 /**
  * Closes window
@@ -14,9 +16,7 @@ export function closeWindow() {
             type: CLOSE_TABLE_WINDOW
         });
 
-        dispatch(push('/server'));
-
-        //dispatch(restoreServerWindow());
+        dispatch(restoreServerWindow());
     };
 }
 

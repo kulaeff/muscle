@@ -62,6 +62,7 @@ class Server extends React.Component {
         openCreateDatabaseModal: PropTypes.func.isRequired,
         openDeleteDatabaseModal: PropTypes.func.isRequired,
         openEditDatabaseModal: PropTypes.func.isRequired,
+        minimizeWindow: PropTypes.func.isRequired,
         restoreWindow: PropTypes.func.isRequired,
         setDatabaseName: PropTypes.func.isRequired,
         setFilter: PropTypes.func.isRequired,
@@ -300,6 +301,7 @@ class Server extends React.Component {
                         <div className={b('buttons')}>
                             <button
                                 className={b('button', {action: 'minimize'})}
+                                disabled={!_match}
                                 onClick={this.onWindowButtonMinimizeClick} />
                             <button
                                 className={b('button', {action: 'close'})}
@@ -568,6 +570,7 @@ function mapDispatchToProps(dispatch) {
         openEditDatabaseModal,
         setFilter,
         initWindow,
+        minimizeWindow,
         restoreWindow
     } = actions;
 
@@ -585,6 +588,7 @@ function mapDispatchToProps(dispatch) {
         openEditDatabaseModal,
         setFilter,
         initWindow,
+        minimizeWindow,
         restoreWindow
     }, dispatch)
 }

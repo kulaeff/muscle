@@ -109,17 +109,17 @@ Flight::route('GET /api/v1/engines', function() {
 // List of databases
 Flight::route('GET /api/v1/databases', function() {
     $request = Flight::request();
+
     $token = $request->query['token'];
     $json = [];
 
     try {
-        $db = Flight::db();
-        $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+        $pdo = new PDO('mysql:host=localhost;', $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-        foreach ($db->query("SHOW DATABASES LIKE '%$token%'") as $row) {
+        foreach ($pdo->query("SELECT table_schema, SUM(table_type = 'base table') tables, SUM(table_type = 'view') views, SUM(table_type = 'system view') system_views from information_schema.tables GROUP BY table_schema") as $row) {
             $json[] = [
-                'database' => $row[0],
-                'tableCount' => 0
+                'database' => $row['table_schema'],
+                'tableCount' => $row['tables'] + $row['views'] + $row['system_views']
             ];
         }
 

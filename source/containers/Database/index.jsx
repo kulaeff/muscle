@@ -22,7 +22,6 @@ class Database extends React.Component {
      */
     static propTypes = {
         minimized: PropTypes.bool.isRequired,
-        closeWindow: PropTypes.func.isRequired,
         minimizeWindow: PropTypes.func.isRequired,
         restoreWindow: PropTypes.func.isRequired
     };
@@ -37,6 +36,15 @@ class Database extends React.Component {
     };
 
     /**
+     * Closes the window
+     */
+    onWindowButtonCloseClick = () => {
+        const { history } = this.props;
+
+        history.push('/server');
+    };
+
+    /**
      * Minimizes the window
      */
     onWindowButtonMinimizeClick = (e) => {
@@ -45,15 +53,6 @@ class Database extends React.Component {
         minimizeWindow();
 
         e.stopPropagation();
-    };
-
-    /**
-     * Closes the window
-     */
-    onWindowButtonCloseClick = () => {
-        const { closeWindow } = this.props;
-
-        closeWindow();
     };
 
     /**
@@ -112,10 +111,9 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    const { closeWindow, minimizeWindow, restoreWindow } = actions;
+    const { minimizeWindow, restoreWindow } = actions;
 
     return bindActionCreators({
-        closeWindow,
         minimizeWindow,
         restoreWindow
     }, dispatch);

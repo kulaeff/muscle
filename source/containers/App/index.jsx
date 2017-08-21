@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/app'
@@ -113,7 +113,6 @@ class App extends React.Component {
                             <Route path="/settings" component={Settings}/>
                             <Route path="/server" component={Server}/>
                             <Route path="/status" component={Status}/>
-                            <Redirect to="/server" />
                         </Switch>
                     </section>
                     <aside className={b('sidebar')}>
