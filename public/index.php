@@ -339,7 +339,7 @@ Flight::route('GET /api/v1/databases/@database/tables/@table/rows', function($da
     ];
 
     if ($query = $db->query($sql, PDO::FETCH_ASSOC)) {
-        $rows = $query->fetchAll();
+        $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
         if (count($rows)) {
             $columns = array_keys($rows[0]);

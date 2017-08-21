@@ -2,10 +2,26 @@ import axios from 'axios';
 
 class API {
     constructor() {
-        this.axios = axios.create({
+        const
+            user = sessionStorage.getItem('user'),
+            password = sessionStorage.getItem('password');
+
+        let axiosOptions = {
             baseURL: '/api/v1',
             responseType: 'json'
-        })
+        };
+
+        if (user !== null && password !== null) {
+            axiosOptions = {
+                ...axiosOptions,
+                auth: {
+                    username: user,
+                    password
+                }
+            };
+        }
+
+        this.axios = axios.create(axiosOptions);
     }
 
     async checkCredentials(user, password) {

@@ -5,6 +5,3 @@
 9. Bug: DataTableColumn sort doesn't work in Edge browser
 10. Test: write tests
 11. Use decorators (in Babel 7 Stage-0 plugin, info at https://babeljs.io/docs/plugins/transform-decorators/)
-12. Replace defaults with defaultProps
-13. Use code from https://github.com/gaearon/react-document-title to set document title
-14. Change relative paths to aliases, e.g. '../../components/Title' to '~/components/Title'
