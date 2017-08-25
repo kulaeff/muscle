@@ -1,7 +1,5 @@
 @import (reference) '../../styles/variables';
 
-@itemSize: 48px;
-
 .app {
     height: 100%;
     position: relative;
@@ -9,6 +7,11 @@
         background: @cSidebar;
         display: table-cell;
         vertical-align: middle;
+    }
+    &__content {
+        height: 100%;
+        overflow: hidden;
+        margin-left: @navigationBarItemSize;
     }
     &__login {
         background: @cWindowBackground;
@@ -35,16 +38,10 @@
         background: @cSidebar;
         height: 100%;
         left: 0;
-        min-width: @itemSize;
+        min-width: @navigationBarItemSize;
         position: absolute;
         top: 0;
-        width: @itemSize;
-    }
-    &__content {
-        border-left: 2px solid @cAccent;
-        height: 100%;
-        overflow: hidden;
-        margin-left: @itemSize;
+        width: @navigationBarItemSize;
     }
     //
     &_state_unauthorized {

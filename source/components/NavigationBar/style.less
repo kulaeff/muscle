@@ -1,7 +1,5 @@
 @import (reference) '../../styles/variables';
 
-@itemSize: 48px;
-
 .navigation-bar {
     background-color: @navigationBarBackgroundColor;
     position: relative;
@@ -10,19 +8,19 @@
         color: @navigationBarForegroundColor;
         cursor: pointer;
         display: block;
-        height: @itemSize;
+        height: @navigationBarItemSize;
         position: relative;
         text-decoration: none;
         transition: background-color @dDefault;
-        width: @itemSize;
+        width: @navigationBarItemSize;
         svg {
             display: block;
-            height: @itemSize;
+            height: 100%;
             margin: auto;
-            width: @itemSize;
+            width: 100%;
             use {
                 fill: @cAccent;
-                color: greyscale(@cAccent);
+                color: currentColor;
             }
         }
         &:hover {

@@ -3,16 +3,16 @@
 /***************************************************************/
 
 // Accent color
-@cAccent: #37d;
+@cAccent: #36e;
 
 // Foreground color
-@cForeground: #070809;
+@cForeground: #101010;
 
 // Background color
-@cBackground: #e0e1e2;
+@cBackground: #e0e0e0;
 
 // Sidebar background color
-@cSidebar: #f0f1f2;
+@cSidebar: #f5f5f5;
 
 // Error color
 @cError: #e04;
@@ -39,14 +39,14 @@
 /* DEFAULT PROPERTIES                                          */
 /***************************************************************/
 
-// Height
-@hDefault: 3rem;
+// Default size (height or/and width)
+@sDefault: 3rem;
 
-// Margin
+// Default margin
 @mDefault: 2.4rem;
 
-// Duration
-@dDefault: 0.04s;
+// Default animation duration or delay
+@dDefault: 0.06s;
 
 /***************************************************************/
 /* COMPONENTS STYLES                                           */
@@ -64,14 +64,14 @@
 @controlForegroundColorHover: @controlForegroundColor;
 @controlForegroundColorDisabled: @cTransparentDark25;
 @controlForegroundColorSelected: #fff;
-@controlBorderColor: #e0e1e2;
+@controlBorderColor: #e0e0e0;
 @controlBorderColorActive: @controlBorderColor;
 @controlBorderColorDisabled: @controlBorderColor;
 @controlBorderColorFocused: @controlBorderColor;
 @controlBorderColorHover: @controlBorderColor;
 @controlBorderColorSelected: @controlBorderColor;
 @controlBorderThickness: 0;
-@controlHeight: @hDefault;
+@controlHeight: @sDefault;
 @controlPlaceholderColor: @cTransparentDark50;
 
 // ActionButton
@@ -89,7 +89,7 @@
 @actionButtonDefaultForegroundColorActive: @buttonDefaultForegroundColor;
 @actionButtonDefaultForegroundColorDisabled: @controlForegroundColorDisabled;
 @actionButtonDefaultForegroundColorHover: @buttonDefaultForegroundColor;
-@actionButtonHeight: @hDefault * .8;
+@actionButtonHeight: @sDefault * .8;
 
 // Button
 @buttonDefaultBackgroundColor: @cAccent;
@@ -120,7 +120,7 @@
 @buttonResetForegroundColorActive: #fff;
 @buttonResetForegroundColorDisabled: darken(@buttonResetBackgroundColorDisabled, 20%);
 @buttonResetForegroundColorHover: @buttonResetForegroundColor;
-@buttonHeight: @hDefault;
+@buttonHeight: @sDefault;
 
 // Checkbox
 @checkboxBackgroundColor: darken(@controlBackgroundColor, 5%);
@@ -182,7 +182,7 @@
 @listBoxForegroundColorActive: @listBoxForegroundColor;
 @listBoxForegroundColorDisabled: @cTransparentDark50;
 @listBoxColorForegroundHover: @listBoxForegroundColor;
-@listBoxHeight: @hDefault;
+@listBoxHeight: @sDefault;
 
 // ListView & ListViewItem
 @listViewItemBackgroundColor: transparent;
@@ -194,11 +194,12 @@
 
 // NavigationBar & NavigationBarItem
 @navigationBarBackgroundColor: transparent;
-@navigationBarForegroundColor: rgba(255, 255, 255, .8);
-@navigationBarItemBackgroundColorHover: rgba(0, 0, 0, .05);
+@navigationBarForegroundColor: #303030;
+@navigationBarItemBackgroundColorHover: darken(@cSidebar, 3%);
 @navigationBarItemBackgroundColorSelected: @cAccent;
-@navigationBarItemForegroundColorHover: #fff;
+@navigationBarItemForegroundColorHover: @navigationBarForegroundColor;
 @navigationBarItemForegroundColorSelected: #fff;
+@navigationBarItemSize: 5rem;
 
 // Radio
 @radioBackgroundColor: darken(@controlBackgroundColor, 5%);
@@ -237,7 +238,7 @@
 @textboxColorForegroundActive: @textboxColorForeground;
 @textboxColorForegroundDisabled: @cTransparentDark50;
 @textboxColorForegroundHover: @textboxColorForeground;
-@textboxHeight: @hDefault;
+@textboxHeight: @sDefault;
 
 // Toggle
 @toggleBackgroundColor: darken(@controlBackgroundColor, 5%);
