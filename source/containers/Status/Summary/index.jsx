@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as statusSummaryActions from '../../../actions/status/summary'
-import Grid, { FlexItem } from '../../../components/Flex'
-import Indicator from '../../../components/Indicator'
+import Flex, { FlexItem, FlexSeparator } from '../../../components/Flex'
+import Tile from '../../../components/Tile'
 import Spinner from '../../../components/Spinner'
 import block from 'bem-cn'
 import bytes from '../../../helpers/bytes'
@@ -25,18 +25,18 @@ class StatusSummary extends React.Component {
     static propTypes = {
         fetching: PropTypes.bool,
         summary: PropTypes.object.isRequired,
-    }
+    };
 
     /**
      * Creates StatusSummary container
      * @constructor
      */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             selectedTab: null,
-        }
+        };
     }
 
     /**
@@ -44,9 +44,9 @@ class StatusSummary extends React.Component {
      * @method
      */
     componentDidMount() {
-        const { getStatusSummary } = this.props.statusSummaryActions
+        const { getStatusSummary } = this.props.statusSummaryActions;
 
-        getStatusSummary()
+        getStatusSummary();
     }
 
     /**
@@ -57,7 +57,7 @@ class StatusSummary extends React.Component {
         const
             b = block('status-summary'),
             { fetching, summary } = this.props,
-            uptime = moment.duration(summary.uptime * 1000)
+            uptime = moment.duration(summary.uptime * 1000);
 
         return (
             <div className={b()}>
@@ -71,20 +71,23 @@ class StatusSummary extends React.Component {
                         </div>
                         :
                         <div className={b('container')}>
-                            <Grid type="tiled">
+                            <Flex>
                                 <FlexItem>
-                                    <Indicator title="Up time" value={uptime.humanize()}/>
+                                    <Tile title="Up time" value={uptime.humanize()}/>
                                 </FlexItem>
+                                <FlexSeparator />
                                 <FlexItem>
-                                    <Indicator title="Connections" value={summary.connections.toLocaleString()}/>
+                                    <Tile title="Connections" value={summary.connections.toLocaleString()}/>
                                 </FlexItem>
+                                <FlexSeparator />
                                 <FlexItem>
-                                    <Indicator title="Traffic" value={bytes(summary.usage)} />
+                                    <Tile title="Traffic" value={bytes(summary.usage)} />
                                 </FlexItem>
+                                <FlexSeparator />
                                 <FlexItem>
-                                    <Indicator title="Queries" value={summary.queries.toLocaleString()} />
+                                    <Tile title="Queries" value={summary.queries.toLocaleString()} />
                                 </FlexItem>
-                            </Grid>
+                            </Flex>
                         </div>
                 }
             </div>

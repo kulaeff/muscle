@@ -31,6 +31,7 @@ class DB {
 
 // Set the path to views
 Flight::set('flight.views.path', '../views');
+Flight::set('pdo.connection', 'mysql:host=localhost;');
 
 Flight::register('db', 'DB');
 
@@ -44,7 +45,7 @@ Flight::route('POST /api/v1/credentials', function() {
     $password = $request->data['password'];
 
     try {
-        $pdo = new PDO('mysql:host=localhost;', $user, $password);
+        $pdo = new PDO(Flight::get('pdo.connection'), $user, $password);
         $pdo = null;
 
         Flight::json([
@@ -65,21 +66,21 @@ Flight::route('GET /api/v1/collations', function() {
     $json = [];
     $sql = "SELECT COLLATION_NAME FROM information_schema.COLLATIONS";
 
-    $db = Flight::db();
+    try {
+        $pdo = new PDO(Flight::get('pdo.connection'), $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-    if ($db->query($sql)) {
-        foreach ($db->query($sql) as $row) {
+        foreach ($pdo->query($sql) as $row) {
             $json[] = $row['COLLATION_NAME'];
         }
 
         sort($json);
 
         Flight::json($json);
-    } else {
+    } catch (PDOException $exception) {
         Flight::json([
             'status' => 'error',
-            'statusCode' => $db->errorCode(),
-            'statusMessage' => $db->errorInfo()[2],
+            'statusCode' => $exception->getCode(),
+            'statusMessage' => $exception->getMessage(),
         ]);
     }
 });
@@ -89,19 +90,19 @@ Flight::route('GET /api/v1/engines', function() {
     $json = [];
     $sql = "SELECT ENGINE FROM information_schema.ENGINES WHERE SUPPORT != 'NO'";
 
-    $db = Flight::db();
+    try {
+        $pdo = new PDO(Flight::get('pdo.connection'), $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-    if ($db->query($sql)) {
-        foreach ($db->query($sql) as $row) {
+        foreach ($pdo->query($sql) as $row) {
             $json[] = $row['ENGINE'];
         }
 
         Flight::json($json);
-    } else {
+    } catch (PDOException $exception) {
         Flight::json([
             'status' => 'error',
-            'statusCode' => $db->errorCode(),
-            'statusMessage' => $db->errorInfo()[2],
+            'statusCode' => $exception->getCode(),
+            'statusMessage' => $exception->getMessage(),
         ]);
     }
 });
@@ -264,39 +265,69 @@ Flight::route('GET /api/v1/status/summary', function() {
         FROM
             performance_schema.global_status
         WHERE
-            VARIABLE_NAME LIKE 'Connections' OR
-            VARIABLE_NAME LIKE 'Queries' OR
-            VARIABLE_NAME LIKE 'Bytes_received' OR
-            VARIABLE_NAME LIKE 'Bytes_sent' OR
-            VARIABLE_NAME LIKE 'Uptime'";
+            VARIABLE_NAME = 'Connections' OR
+            VARIABLE_NAME = 'Queries' OR
+            VARIABLE_NAME = 'Bytes_received' OR
+            VARIABLE_NAME = 'Bytes_sent' OR
+            VARIABLE_NAME = 'Uptime'
+        UNION SELECT
+            VARIABLE_NAME as name,
+            VARIABLE_VALUE as value
+        FROM
+            performance_schema.global_variables
+        WHERE
+            VARIABLE_NAME = 'bind_address' OR
+            VARIABLE_NAME = 'hostname' OR
+            VARIABLE_NAME = 'port' OR
+            VARIABLE_NAME = 'version' OR
+            VARIABLE_NAME = 'version_comment' OR
+            VARIABLE_NAME = 'version_compile_os'";
     $traffic = 0;
 
-    $db = Flight::db();
-    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+    try {
+        $pdo = new PDO('mysql:host=localhost;', $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-    foreach ($db->query($sql) as $row) {
-        switch ($row['name']) {
-            case 'Bytes_received':
-                $traffic += $row['value'];
-                $json['usage'] = $traffic;
-                break;
-            case 'Bytes_sent':
-                $traffic += $row['value'];
-                $json['usage'] = $traffic;
-                break;
-            case 'Connections':
-                $json['connections'] = +$row['value'];
-                break;
-            case 'Queries':
-                $json['queries'] = +$row['value'];
-                break;
-            case 'Uptime':
-                $json['uptime'] = +$row['value'];
-                break;
+        foreach ($pdo->query($sql) as $row) {
+            switch ($row['name']) {
+                case 'bind_address':
+                    $json['ip'] = $row['value'];
+                    break;
+                case 'Bytes_received':
+                    $traffic += $row['value'];
+                    $json['usage'] = $traffic;
+                    break;
+                case 'Bytes_sent':
+                    $traffic += $row['value'];
+                    $json['usage'] = $traffic;
+                    break;
+                case 'Connections':
+                    $json['connections'] = +$row['value'];
+                    break;
+                case 'hostname':
+                    $json['host'] = $row['value'];
+                    break;
+                case 'port':
+                    $json['port'] = $row['value'];
+                    break;
+                case 'Queries':
+                    $json['queries'] = +$row['value'];
+                    break;
+                case 'Uptime':
+                    $json['uptime'] = +$row['value'];
+                    break;
+                case 'version':
+                    $json['version'] = $row['value'];
+                    break;
+                case 'version_comment':
+                    $json['versionComment'] = $row['value'];
+                    break;
+            }
         }
-    }
 
-    Flight::json($json);
+        Flight::json($json);
+    } catch (PDOException $e) {
+        Flight::json($json);
+    }
 });
 
 // Table columns

@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="48" height="48" viewBox="0 0 48.00 48.00" enable-background="new 0 0 48.00 48.00" xml:space="preserve">
-	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="miter" d="M 14,16L 16,16L 16,32L 14,32L 14,16 Z M 32,16L 34,16L 34,32L 32,32L 32,16 Z M 29,15L 31,15L 31,33L 29,33L 29,15 Z M 17,15L 19,15L 19,33L 17,33L 17,15 Z M 20,17L 22,17L 22,24L 20,24L 20,17 Z M 26,17L 28,17L 28,24L 26,24L 26,17 Z M 23,19L 25,19L 25,26L 23,26L 23,19 Z "/>
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50.00 50.00">
+	<path fill-opacity="1" stroke-linejoin="round" d="M 8.99999,25L 25,8.99999L 41,25L 25,41L 8.99999,25 Z "/>
+	<path fill="currentColor" fill-opacity="0.603922" stroke-linejoin="round" d="M 21,13L 25,9L 29,13L 25,17L 21,13 Z "/>
+	<path fill="currentColor" fill-opacity="0.501961" stroke-linejoin="round" d="M 25,17L 29,13L 33,17L 29,21L 25,17 Z "/>
+	<path fill="currentColor" fill-opacity="0.401961" stroke-linejoin="round" d="M 25,33L 29,29L 33,33L 29,37L 25,33 Z "/>
+	<path fill="currentColor" fill-opacity="0.403922" stroke-linejoin="round" d="M 21,37L 25,33L 29,37L 25,41L 21,37 Z "/>
+	<path fill="currentColor" fill-opacity="0.403922" stroke-linejoin="round" d="M 21,21L 25,17L 29,21L 25,25L 21,21 Z "/>
+	<path fill="currentColor" fill-opacity="0.45098" stroke-linejoin="round" d="M 29,21L 33,17L 37,21L 33,25L 29,21 Z "/>
+	<path fill="currentColor" fill-opacity="0.352941" stroke-linejoin="round" d="M 33,25L 37,21L 41,25L 37,29L 33,25 Z "/>
+	<path fill="currentColor" fill-opacity="0.501961" stroke-linejoin="round" d="M 17,17L 21,13L 25,17L 21,21L 17,17 Z "/>
+	<path fill="currentColor" fill-opacity="0.301961" stroke-linejoin="round" d="M 17,33L 21,29L 25,33L 21,37L 17,33 Z "/>
+	<path fill="currentColor" fill-opacity="0.45098" stroke-linejoin="round" d="M 13,21L 17,17L 21,21L 17,25L 13,21 Z "/>
+	<path fill="currentColor" fill-opacity="0.352941" stroke-linejoin="round" d="M 9,25L 13,21L 17,25L 13,29L 9,25 Z "/>
 </svg>

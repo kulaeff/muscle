@@ -29,7 +29,7 @@
         }
         // ICON
         &_icon_about svg use {
-            fill: @cForeground;
+            color: #fff;
         }
         // STATE
         // Selected
@@ -38,12 +38,14 @@
             color: @navigationBarItemForegroundColorSelected;
             svg use {
                 fill: #fff;
-                color: #fff;
             }
             &:hover {
                 background: @navigationBarItemBackgroundColorSelected;
                 color: @navigationBarItemForegroundColorSelected;
             }
+        }
+        &_state_selected&_icon_about svg use {
+            color: @cAccent;
         }
     }
 }
