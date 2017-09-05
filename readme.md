@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kulaeff/muscle.svg?branch=v0.4.6)](https://travis-ci.org/kulaeff/muscle)
+
 # Installation
 
 Clone repo to your local machine
