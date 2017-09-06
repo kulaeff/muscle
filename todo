@@ -1,7 +1,0 @@
-2. Refactoring: Make font available locally
-3. Feature: Animations
-6. Feature: add themes support
-7. Refactoring: refactor all titles
-9. Bug: DataTableColumn sort doesn't work in Edge browser
-10. Test: write tests
-11. Use decorators (in Babel 7 Stage-0 plugin, info at https://babeljs.io/docs/plugins/transform-decorators/)
