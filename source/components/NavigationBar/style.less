@@ -29,7 +29,7 @@
         }
         // ICON
         &_icon_about svg use {
-            color: #fff;
+            color: saturate(darken(@cAccent, 10%), 10%);
         }
         // STATE
         // Selected
@@ -45,7 +45,8 @@
             }
         }
         &_state_selected&_icon_about svg use {
-            color: @cAccent;
+            color: #fff;
+            fill: #fff;
         }
     }
 }
