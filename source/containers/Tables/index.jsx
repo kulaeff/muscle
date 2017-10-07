@@ -6,15 +6,12 @@ import { connect } from 'react-redux'
 import { matchPath } from 'react-router-dom'
 import * as actions from '../../actions/tables'
 import * as actions_ from '../../actions/server'
-import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import DataTable, { DataTableRow } from '../../components/DataTable'
 import Form, { FormField }  from '../../components/Form'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
-import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Placeholder from '~/components/Placeholder'
-import PropertyEditor from '../../components/PropertyEditor'
 import Select from '../../components/Select'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -48,11 +45,19 @@ class Tables extends React.Component {
      * @method
      */
     componentDidMount() {
-        const
-            { match } = this.props,
-            { getTables } = this.props;
+        const { getTables } = this.props;
 
-        getTables(match.params.database);
+        getTables();
+    }
+
+    /**
+     * Fetches database when database was selected for the first time
+     * @method
+     */
+    componentWillMount() {
+        const { match, setCurrentDatabase } = this.props;
+
+        setCurrentDatabase(match.params.database);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -62,18 +67,6 @@ class Tables extends React.Component {
             getTables(nextProps.match.params.database);
         }
     }
-
-    onActionButtonAddFieldClick = () => {
-        const { addTableField } = this.props;
-
-        addTableField();
-    };
-
-    onActionButtonRemoveFieldClick = () => {
-        const { removeTableField } = this.props;
-
-        removeTableField();
-    };
 
     /**
      * Show modal when toolbar button Create clicked
@@ -167,7 +160,11 @@ class Tables extends React.Component {
         setTableComment(event.target.value);
     };
 
-    onCreateTableModalClose = () => {
+    /**
+     * Closes the Create Table modal
+     * @method
+     */
+    formCreateTableReset = () => {
         const { closeCreateTableModal } = this.props;
 
         closeCreateTableModal();
@@ -175,20 +172,15 @@ class Tables extends React.Component {
 
     /**
      * Creates a database
+     * @method
      * @param {Event} event Event
      */
-    onCreateTableFormSubmit = (event) => {
+    formCreateTableSubmit = (e) => {
         const { createTable } = this.props;
 
         createTable();
 
-        event.preventDefault();
-    };
-
-    handleListBoxFieldsChange = (index) => {
-        const { setListBoxFieldsSelectedIndex } = this.props;
-
-        setListBoxFieldsSelectedIndex(index);
+        e.preventDefault();
     };
 
     selectTableCollationChange = (value) => {
@@ -219,13 +211,11 @@ class Tables extends React.Component {
                 fetching,
                 filter,
                 tables,
-                listBoxFieldsSelectedIndex,
                 modalCreateTableVisible,
                 saving,
                 tableCollation,
                 tableComment,
                 tableEngine,
-                tableFields,
                 tableName
             } = this.props,
             _match = matchPath(location.pathname, {
@@ -314,133 +304,83 @@ class Tables extends React.Component {
                     {/* Create Table */}
                     <ReactModal
                         ariaHideApp={true}
-                        className="ReactModal__Content-Large"
-                        closeTimeoutMS={240}
+                        className="ReactModal__Content-Small"
+                        closeTimeoutMS={180}
                         contentLabel="Create new table modal"
                         isOpen={modalCreateTableVisible}
                         overlayClassName="ReactModal__Overlay"
-                        onRequestClose={this.onCreateTableModalClose}
+                        onRequestClose={this.formCreateTableReset}
                         parentSelector={() => document.body}
                         shouldCloseOnOverlayClick={true}
                     >
-                        <Flex>
-                            <FlexItem>
-                                <Title primaryTitle="New table" size="large" />
-                            </FlexItem>
-                            <FlexItem size="auto">
-                                <Spinner active={saving} type="rect" />
-                            </FlexItem>
-                        </Flex>
                         <Form
-                            onReset={this.onCreateTableModalClose}
-                            onSubmit={this.onCreateTableFormSubmit}
+                            onReset={this.formCreateTableReset}
+                            onSubmit={this.formCreateTableSubmit}
                         >
                             <Flex flow="column">
                                 <FlexItem>
                                     <Flex>
                                         <FlexItem>
-                                            {/* Column 1 */}
-                                            <Flex flow="column">
-                                                <FlexItem>
-                                                    <FormField id="name" label="Name">
-                                                        <Textbox
-                                                            autoFocus={true}
-                                                            id="name"
-                                                            name="name"
-                                                            required={true}
-                                                            value={tableName}
-                                                            onChange={this.onTextboxTableNameChange}
-                                                        />
-                                                    </FormField>
-                                                </FlexItem>
-                                                <FlexSeparator size="half"/>
-                                                <FlexItem>
-                                                    <FormField id="collation" label="Collation">
-                                                        <Select
-                                                            id="collation"
-                                                            loading={collationsLoading}
-                                                            name="collation"
-                                                            options={collations}
-                                                            placeholder="Select a collation"
-                                                            value={tableCollation}
-                                                            onChange={this.selectTableCollationChange}
-                                                        />
-                                                    </FormField>
-                                                </FlexItem>
-                                                <FlexSeparator size="half"/>
-                                                <FlexItem>
-                                                    <FormField id="comment" label="Comment">
-                                                        <Textbox
-                                                            id="comment"
-                                                            name="comment"
-                                                            required={true}
-                                                            value={tableComment}
-                                                            onChange={this.onTextboxTableCommentChange}
-                                                        />
-                                                    </FormField>
-                                                </FlexItem>
-                                                <FlexSeparator size="half"/>
-                                                <FlexItem>
-                                                    <FormField id="engine" label="engine">
-                                                        <Select
-                                                            id="engine"
-                                                            loading={enginesLoading}
-                                                            name="engine"
-                                                            options={engines}
-                                                            placeholder="Select an engine"
-                                                            value={tableEngine}
-                                                            onChange={this.selectTableEngineChange}
-                                                        />
-                                                    </FormField>
-                                                </FlexItem>
-                                            </Flex>
+                                            <Title primaryTitle="New table" size="large" />
                                         </FlexItem>
-                                        <FlexSeparator size="half" />
-                                        <FlexItem>
-                                            {/* Column 2 */}
-                                            <Flex flow="column">
-                                                <FlexItem>
-                                                    <FormField label="Fields">
-                                                        <ListBox
-                                                            id="name"
-                                                            name="name"
-                                                            selected={listBoxFieldsSelectedIndex}
-                                                            onChange={this.handleListBoxFieldsChange}
-                                                        >
-                                                            {
-                                                                tableFields.map((tableField, index) => (
-                                                                    <ListBoxItem
-                                                                        index={index}
-                                                                        key={index}
-                                                                        tooltip={tableField.name}
-                                                                    >{tableField.name}</ListBoxItem>
-                                                                ))
-                                                            }
-                                                        </ListBox>
-                                                    </FormField>
-                                                </FlexItem>
-                                                <FlexSeparator size="quarter" />
-                                                <FlexItem size="auto">
-                                                    <ButtonGroup align="left">
-                                                        <ActionButton
-                                                            icon="add-24"
-                                                            onClick={this.onActionButtonAddFieldClick}
-                                                        />
-                                                        <ActionButton
-                                                            disabled={listBoxFieldsSelectedIndex < 0}
-                                                            icon="remove-24"
-                                                            onClick={this.onActionButtonRemoveFieldClick}
-                                                        />
-                                                    </ButtonGroup>
-                                                </FlexItem>
-                                            </Flex>
+                                        <FlexItem size="auto">
+                                            <Spinner active={saving} position="static" size="small" />
                                         </FlexItem>
-                                        <FlexSeparator size="half" />
+                                    </Flex>
+                                </FlexItem>
+                                <FlexSeparator/>
+                                <FlexItem>
+                                    {/* Column 1 */}
+                                    <Flex flow="column">
                                         <FlexItem>
-                                            {/* Column 3 */}
-                                            <FormField label="Properties">
-                                                <PropertyEditor
-                                                    properties={[]}
+                                            <FormField id="name" label="Name">
+                                                <Textbox
+                                                    autoFocus={true}
+                                                    id="name"
+                                                    name="name"
+                                                    required={true}
+                                                    value={tableName}
+                                                    onChange={this.onTextboxTableNameChange}
+                                                />
+                                            </FormField>
+                                        </FlexItem>
+                                        <FlexSeparator size="half"/>
+                                        <FlexItem>
+                                            <FormField id="comment" label="Comment">
+                                                <Textbox
+                                                    id="comment"
+                                                    name="comment"
+                                                    required={true}
+                                                    value={tableComment}
+                                                    onChange={this.onTextboxTableCommentChange}
+                                                />
+                                            </FormField>
+                                        </FlexItem>
+                                        <FlexSeparator size="half"/>
+                                        <FlexItem>
+                                            <FormField id="collation" label="Collation">
+                                                <Select
+                                                    id="collation"
+                                                    loading={collationsLoading}
+                                                    name="collation"
+                                                    options={collations}
+                                                    placeholder="Select a collation"
+                                                    value={tableCollation}
+                                                    onChange={this.selectTableCollationChange}
+                                                />
+                                            </FormField>
+                                        </FlexItem>
+                                        <FlexSeparator size="half"/>
+                                        <FlexItem>
+                                            <FormField id="engine" label="engine">
+                                                <Select
+                                                    id="engine"
+                                                    loading={enginesLoading}
+                                                    name="engine"
+                                                    options={engines}
+                                                    placeholder="Select an engine"
+                                                    value={tableEngine}
+                                                    onChange={this.selectTableEngineChange}
                                                 />
                                             </FormField>
                                         </FlexItem>
@@ -454,7 +394,7 @@ class Tables extends React.Component {
                                             type="reset"
                                         />
                                         <Button
-                                            disabled={tableName.length === 0 || tableFields.length === 0 || saving}
+                                            disabled={tableName.length === 0 || saving}
                                             label="Create"
                                             type="submit"
                                         />
@@ -481,21 +421,18 @@ Tables.propTypes = {
     fetching: PropTypes.bool.isRequired,
     filter: PropTypes.string.isRequired,
     tables: PropTypes.array.isRequired,
-    listBoxFieldsSelectedIndex: PropTypes.number.isRequired,
     modalCreateTableVisible: PropTypes.bool.isRequired,
     saving: PropTypes.bool.isRequired,
     tableCollation: PropTypes.string.isRequired,
     tableComment: PropTypes.string.isRequired,
     tableEngine: PropTypes.string.isRequired,
-    tableFields: PropTypes.array.isRequired,
     tableName: PropTypes.string.isRequired,
-    addTableField: PropTypes.func.isRequired,
     closeCreateTableModal: PropTypes.func.isRequired,
+    createTable: PropTypes.func.isRequired,
     getTables: PropTypes.func.isRequired,
     minimizeWindow: PropTypes.func.isRequired,
     openCreateTableModal: PropTypes.func.isRequired,
-    removeTableField: PropTypes.func.isRequired,
-    setListBoxFieldsSelectedIndex: PropTypes.func.isRequired,
+    setCurrentDatabase: PropTypes.func.isRequired,
     setTableCollation: PropTypes.func.isRequired,
     setTableComment: PropTypes.func.isRequired,
     setTableEngine: PropTypes.func.isRequired,
@@ -511,13 +448,11 @@ function mapStateToProps (state) {
         fetching: state.tables.fetching,
         filter: state.tables.filter,
         tables: state.tables.tables,
-        listBoxFieldsSelectedIndex: state.tables.listBoxFieldsSelectedIndex,
         modalCreateTableVisible: state.tables.modalCreateTableVisible,
         saving: state.tables.saving,
         tableCollation: state.tables.tableCollation,
         tableComment: state.tables.tableComment,
         tableEngine: state.tables.tableEngine,
-        tableFields: state.tables.tableFields,
         tableName: state.tables.tableName
     }
 }
@@ -525,12 +460,11 @@ function mapStateToProps (state) {
 function mapDispatchToProps(dispatch) {
     const
         {
-            addTableField,
             closeCreateTableModal,
+            createTable,
             getTables,
             openCreateTableModal,
-            removeTableField,
-            setListBoxFieldsSelectedIndex,
+            setCurrentDatabase,
             setTableCollation,
             setTableComment,
             setTableEngine,
@@ -539,13 +473,12 @@ function mapDispatchToProps(dispatch) {
         { minimizeWindow } = actions_;
 
     return bindActionCreators({
-        addTableField,
         closeCreateTableModal,
+        createTable,
         getTables,
         minimizeWindow,
         openCreateTableModal,
-        removeTableField,
-        setListBoxFieldsSelectedIndex,
+        setCurrentDatabase,
         setTableCollation,
         setTableComment,
         setTableEngine,

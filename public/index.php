@@ -115,7 +115,7 @@ Flight::route('GET /api/v1/databases', function() {
     $json = [];
 
     try {
-        $pdo = new PDO('mysql:host=localhost;', $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+        $pdo = new PDO(Flight::get('pdo.connection'), $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
         foreach ($pdo->query("SELECT table_schema, SUM(table_type = 'base table') tables, SUM(table_type = 'view') views, SUM(table_type = 'system view') system_views from information_schema.tables GROUP BY table_schema") as $row) {
             $json[] = [
@@ -137,18 +137,52 @@ Flight::route('POST /api/v1/databases', function() {
     $request = Flight::request();
     $name = $request->data['name'];
 
-    $db = Flight::db();
-    $db->connect($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+    $pdo = new PDO(Flight::get('pdo.connection'), $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-    if ($db->query("CREATE DATABASE $name")) {
+    if ($pdo->query("CREATE DATABASE $name")) {
         Flight::json([
             'status' => 'ok'
         ]);
     } else {
         Flight::json([
             'status' => 'error',
-            'statusCode' => $db->errorCode(),
-            'statusMessage' => $db->errorInfo()[2],
+            'statusCode' => $pdo->errorCode(),
+            'statusMessage' => $pdo->errorInfo()[2],
+        ]);
+    }
+});
+
+// Create a new table
+Flight::route('POST /api/v1/tables', function() {
+    $request = Flight::request();
+    $name = $request->data['name'];
+    $collation = $request->data['collation'];
+    $comment = $request->data['comment'];
+    $database = $request->data['database'];
+    $engine = $request->data['engine'];
+
+    try {
+        $pdo = new PDO(Flight::get('pdo.connection'), $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+        if ($result = $pdo->query("CREATE TABLE $database.$name" )) {
+            var_dump($result);
+            exit();
+            Flight::json([
+                'status' => 'ok',
+                'data' => ''
+            ]);
+        } else {
+            Flight::json([
+                'status' => 'error',
+                'code' => $pdo->errorCode(),
+                'message' => $pdo->errorInfo()[2],
+            ]);
+        }
+    } catch (PDOException $e) {
+        Flight::json([
+            'status' => 'error',
+            'code' => $e->getCode(),
+            'message' => $e->getMessage(),
         ]);
     }
 });

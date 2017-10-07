@@ -27,7 +27,7 @@ class DataTableCell extends React.Component {
             { cell, onValueTransform } = this.props;
 
         return (
-            <td className={b('cell')}>
+            <td className={b('cell')} title={cell}>
                 {onValueTransform ? onValueTransform(cell) : cell}
             </td>
         )

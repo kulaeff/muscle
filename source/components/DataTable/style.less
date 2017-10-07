@@ -13,8 +13,13 @@
         border-bottom: @dataTableBorderThickness solid @dataTableHeaderColorBorder;
     }
     &__cell {
-        padding: @mDefault / 4;
+        height: @controlHeight;
+        max-width: 15rem;
+        overflow: hidden;
+        padding: 0 @mDefault * .25;
+        text-overflow: ellipsis;
         user-select: none;
+        white-space: nowrap;
         svg {
             bottom: 0;
             fill: currentColor;

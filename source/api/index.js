@@ -39,6 +39,16 @@ class API {
     }
 
     /**
+     * Creates a database with specified name
+     * @function
+     * @param {string} data Table data (schema)
+     * @returns {Promise<AxiosPromise>.<object>}
+     */
+    async createTable(data) {
+        return this.axios.post('tables', data);
+    }
+
+    /**
      * Deletes a database with specified name
      * @param {string} name Database's name
      * @returns {Promise<AxiosPromise>}

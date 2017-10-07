@@ -1,6 +1,8 @@
 import {
-    ADD_TABLE_FIELD,
     CLOSE_CREATE_TABLE_MODAL,
+    CREATE_TABLE_REQUEST,
+    CREATE_TABLE_SUCCESS,
+    CREATE_TABLE_FAIL,
     GET_TABLES_REQUEST,
     GET_TABLES_SUCCESS,
     GET_TABLES_FAIL,
@@ -11,8 +13,7 @@ import {
     GET_ENGINES_SUCCESS,
     GET_ENGINES_FAIL,
     OPEN_CREATE_TABLE_MODAL,
-    REMOVE_TABLE_FIELD,
-    SET_LISTBOX_FIELDS_SELECTED_INDEX,
+    SET_CURRENT_DATABASE,
     SET_TABLE_COLLATION,
     SET_TABLE_ENGINE,
     SET_TABLE_COMMENT,
@@ -24,15 +25,54 @@ import {
 /*------------------------------------------------------------------------------------*/
 
 /**
- * Retrieves the list of tables
+ * Create a new table
+ */
+export function createTable() {
+    return async (dispatch, getState, api) => {
+        dispatch({
+            type: CREATE_TABLE_REQUEST
+        });
+
+        const
+            state = getState(),
+            data = {
+                collation: state.tables.tableCollation,
+                comment: state.tables.tableComment,
+                database: state.tables.currentDatabase,
+                engine: state.tables.tableEngine,
+                name: state.tables.tableName
+            };
+
+        api.createTable(data)
+            .then(response => {
+                dispatch({
+                    type: CREATE_TABLE_SUCCESS,
+                    payload: response.data
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: CREATE_TABLE_FAIL,
+                    payload: error
+                })
+            });
+    }
+}
+
+/**
+ * Load the list of tables
  * @param {string} database Database name
  * @param {string} token String used to filter tables
  */
-export function getTables(database, token = '') {
+export function getTables(token = '') {
     return async (dispatch, getState, api) => {
         dispatch({
             type: GET_TABLES_REQUEST
         });
+
+        const
+            state = getState(),
+            database = state.tables.currentDatabase;
 
         api.getTables(database, token)
             .then(response => {
@@ -132,65 +172,14 @@ export function openCreateTableModal() {
 /* Controls */
 
 /**
- * CreateTableModal:ListBoxFields
- * Add a new field to the list box
+ * Stores current database
+ * @param {string} collation Collation
  */
-export function addTableField() {
-    return async (dispatch, getState) => {
-        const
-            state = getState().tables,
-            [...fields] = state.tableFields;
-
-        fields.push({
-            attributes: '',
-            autoIncrement: false,
-            collation: '',
-            comment: '',
-            default: '',
-            index: '',
-            length: null,
-            name: `field_${state.tableFieldCounter}`,
-            type: 'int'
-        });
-
-        dispatch({
-            type: ADD_TABLE_FIELD,
-            payload: fields
-        });
-    };
-}
-
-/**
- * CreateTableModal:ListBoxFields
- * Remove the field from the list box
- */
-export function removeTableField() {
-    return async (dispatch, getState) => {
-        const
-            state = getState().tables,
-            [...fields] = state.tableFields;
-
-        fields.splice(state.listBoxFieldsSelectedIndex, 1);
-
-        dispatch({
-            type: REMOVE_TABLE_FIELD,
-            payload: fields
-        });
-    };
-}
-
-/**
- * CreateTableModal:ListBoxFields
- * Set the index of a selected field
- * @param {number} index Index of a selected field
- */
-export function setListBoxFieldsSelectedIndex(index) {
-    return async (dispatch) => {
-        dispatch({
-            type: SET_LISTBOX_FIELDS_SELECTED_INDEX,
-            payload: index
-        });
-    };
+export function setCurrentDatabase(database) {
+    return {
+        type: SET_CURRENT_DATABASE,
+        payload: database
+    }
 }
 
 /**

@@ -16,6 +16,7 @@ class Spinner extends React.Component {
      */
     static propTypes = {
         active: PropTypes.bool,
+        position: PropTypes.oneOf(['auto', 'static']),
         size: PropTypes.oneOf(['big', 'medium', 'small'])
     };
 
@@ -27,6 +28,7 @@ class Spinner extends React.Component {
      */
     static defaultProps = {
         active: false,
+        position: 'auto',
         size: 'medium'
     };
 
@@ -37,10 +39,14 @@ class Spinner extends React.Component {
     render() {
         const
             b = block('spinner'),
-            { active, size } = this.props;
+            { active, position, size } = this.props;
 
         return (
-            <div className={b({state: active ? 'active' : null, size})}>
+            <div className={b({
+                position,
+                state: active ? 'active' : null,
+                size
+            })}>
                 <div className={b('container')}>
                     <div className={b('ellipse')} />
                 </div>

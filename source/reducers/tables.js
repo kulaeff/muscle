@@ -1,5 +1,4 @@
 import {
-    ADD_TABLE_FIELD,
     CLOSE_CREATE_TABLE_MODAL,
     GET_TABLES_REQUEST,
     GET_TABLES_SUCCESS,
@@ -11,8 +10,7 @@ import {
     GET_ENGINES_SUCCESS,
     GET_ENGINES_FAIL,
     OPEN_CREATE_TABLE_MODAL,
-    REMOVE_TABLE_FIELD,
-    SET_LISTBOX_FIELDS_SELECTED_INDEX,
+    SET_CURRENT_DATABASE,
     SET_TABLE_COLLATION,
     SET_TABLE_COMMENT,
     SET_TABLE_ENGINE,
@@ -22,30 +20,22 @@ import {
 const initialState = {
     collations: [],
     collationsLoading: false,
+    currentDatabase: null,
     engines: [],
     enginesLoading: false,
     fetching: false,
     filter: '',
     tables: [],
-    listBoxFieldsSelectedIndex: -1,
     modalCreateTableVisible: false,
     saving: false,
     tableCollation: '',
     tableComment: '',
     tableEngine: '',
-    tableFieldCounter: 1,
-    tableFields: [],
     tableName: ''
 };
 
 export default function tables(state = initialState, action) {
     switch(action.type) {
-        case ADD_TABLE_FIELD:
-            return {
-                ...state,
-                tableFieldCounter: state.tableFieldCounter + 1,
-                tableFields: action.payload
-            };
         case CLOSE_CREATE_TABLE_MODAL:
             return {
                 ...state,
@@ -100,15 +90,10 @@ export default function tables(state = initialState, action) {
                 ...state,
                 modalCreateTableVisible: true
             };
-        case REMOVE_TABLE_FIELD:
+        case SET_CURRENT_DATABASE:
             return {
                 ...state,
-                tableFields: action.payload
-            };
-        case SET_LISTBOX_FIELDS_SELECTED_INDEX:
-            return {
-                ...state,
-                listBoxFieldsSelectedIndex: action.payload
+                currentDatabase: action.payload
             };
         case SET_TABLE_COLLATION:
             return {
