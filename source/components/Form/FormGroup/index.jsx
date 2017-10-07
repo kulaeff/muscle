@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import '../style.less'
 
 /**
  * FormGroup component
  * @class
  */
-class FormGroup extends React.Component {
+@cn('FormGroup') class FormGroup extends React.Component {
     /**
      * Properties
      * @static
@@ -32,13 +32,13 @@ class FormGroup extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
+    render(cn) {
         const
-            b = block('form'),
+
             { children, flow, width } = this.props;
 
         return (
-            <div className={b('group', {flow, width: flow === 'column' ? width : null})}>
+            <div className={cn('group', {flow, width: flow === 'column' ? width : null})}>
                 {children}
             </div>
         )

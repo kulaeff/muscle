@@ -6,7 +6,7 @@ import * as statusSummaryActions from '../../../actions/status/summary'
 import Flex, { FlexItem, FlexSeparator } from '../../../components/Flex'
 import Tile from '../../../components/Tile'
 import Spinner from '../../../components/Spinner'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import bytes from '../../../helpers/bytes'
 import moment from 'moment'
 import './style.less';
@@ -15,6 +15,7 @@ import './style.less';
  * StatusSummary container
  * @class
  */
+@cn('status-summary')
 class StatusSummary extends React.Component {
     /**
      * StatusSummary properties
@@ -53,24 +54,23 @@ class StatusSummary extends React.Component {
      * Renders StatusSummary container
      * @method
      */
-    render() {
+    render(cn) {
         const
-            b = block('status-summary'),
             { fetching, summary } = this.props,
             uptime = moment.duration(summary.uptime * 1000);
 
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 {
                     fetching
                         ?
-                        <div className={b('spinner')}>
-                            <div className={b('spinner-container')}>
+                        <div className={cn('spinner')}>
+                            <div className={cn('spinner-container')}>
                                 <Spinner active={true}/>
                             </div>
                         </div>
                         :
-                        <div className={b('container')}>
+                        <div className={cn('container')}>
                             <Flex>
                                 <FlexItem>
                                     <Tile title="Up time" value={uptime.humanize()}/>

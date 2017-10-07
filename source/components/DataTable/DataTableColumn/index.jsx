@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * DataTableColumn Component
  * @class
  */
+@cn('data-table')
 class DataTableColumn extends React.Component {
     /**
      * Properties
@@ -30,20 +31,18 @@ class DataTableColumn extends React.Component {
      * Render component
      * @returns {XML} Rendered element
      */
-    render() {
-        const
-            b = block('data-table'),
-            { column, sorting, onClick } = this.props;
+    render(cn) {
+        const { column, sorting, onClick } = this.props;
 
         return (
             <th
-                className={b('column', {
+                className={cn('column', {
                     order: sorting.column === column && sorting.order > 0 ? 'asc' : 'desc',
                     state: sorting.column === column ? 'sorted' : null
                 })}
                 onClick={() => onClick(column)}>
-                <span className={b('column-title')}>{column.label}</span>
-                <span className={b('column-arrow')}>
+                <span className={cn('column-title')}>{column.label}</span>
+                <span className={cn('column-arrow')}>
                     <svg>
                         <use xlinkHref="#icon-data-table-column-arrow" />
                     </svg>

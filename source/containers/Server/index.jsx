@@ -15,7 +15,7 @@ import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
 import * as actions from '../../actions/server'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
@@ -32,6 +32,7 @@ const COLUMNS = [
  * Server container
  * @class
  */
+@cn('server')
 class Server extends React.Component {
     /**
      * Properties
@@ -268,9 +269,8 @@ class Server extends React.Component {
      * Render the container
      * @returns {XML}
      */
-    render() {
+    render(cn) {
         const
-            b = block('server'),
             {
                 location,
                 match,
@@ -292,19 +292,19 @@ class Server extends React.Component {
             });
 
         return (
-            <div className={b({state: minimized ? 'minimized' : null})}>
-                <div className={b('container')} onClick={this.onWindowClick}>
-                    <div className={b('header')}>
-                        <div className={b('title')}>
+            <div className={cn({state: minimized ? 'minimized' : null})}>
+                <div className={cn('container')} onClick={this.onWindowClick}>
+                    <div className={cn('header')}>
+                        <div className={cn('title')}>
                             <Title primaryTitle="Local databases" />
                         </div>
-                        <div className={b('buttons')}>
+                        <div className={cn('buttons')}>
                             <button
-                                className={b('button', {action: 'minimize'})}
+                                className={cn('button', {action: 'minimize'})}
                                 disabled={!_match}
                                 onClick={this.onWindowButtonMinimizeClick} />
                             <button
-                                className={b('button', {action: 'close'})}
+                                className={cn('button', {action: 'close'})}
                                 onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
@@ -312,8 +312,8 @@ class Server extends React.Component {
                         fetching && !minimized ? (
                             <Spinner active={fetching} />
                         ) : (
-                            <div className={b('content')}>
-                                <div className={b('toolbar')}>
+                            <div className={cn('content')}>
+                                <div className={cn('toolbar')}>
                                     <Toolbar>
                                         <ToolBarButton
                                             icon="create"
@@ -349,14 +349,14 @@ class Server extends React.Component {
                                             onClick={this.onToolBarButtonExportDatabaseClick}/>
                                     </Toolbar>
                                 </div>
-                                <div className={b('filters')}>
+                                <div className={cn('filters')}>
                                     <Textbox
                                         id="textboxFilter"
                                         placeholder="Filter by name..."
                                         value={filter}
                                         onChange={this.onTextboxFilterChange}/>
                                 </div>
-                                <div className={b('table')}>
+                                <div className={cn('table')}>
                                     <DataTable
                                         columns={COLUMNS}
                                         onChange={this.dataTableChange}
@@ -377,7 +377,7 @@ class Server extends React.Component {
                         )
                     }
                 </div>
-                <div className={b('view')}>
+                <div className={cn('view')}>
                     <Route path={`${match.url}/:database`} component={Database} />
                 </div>
                 {/* MODALS */}

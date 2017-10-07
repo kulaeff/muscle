@@ -1,28 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GridItem from './GridItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Grid Component
  * @class
  */
+@cn('grid')
 class Grid extends React.Component {
-    static ColumnDefinitions = []
-
     /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('grid'),
-            { children, className, columns, gap, rows } = this.props;
+    render(cn) {
+        const { children, columns, gap, rows } = this.props;
 
         return (
             <div
-                className={b({}).mix(className)}
+                className={cn({})}
                 style={{
                     gridTemplateColumns: columns && (typeof columns === 'string' ? columns : columns.join(' ')),
                     gridTemplateRows: rows && (typeof rows === 'string' ? rows : rows.join(' ')),

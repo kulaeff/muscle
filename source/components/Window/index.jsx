@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Tabs from '../Tabs'
 import Title from '../Title'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
+@cn('window')
 class Window extends React.Component {
     /**
      * Properties
@@ -25,16 +26,11 @@ class Window extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('window'),
-            {
-                children,
-                title,
-            } = this.props;
+    render(cn) {
+        const { children, title } = this.props;
 
         return (
-            <section className={b()}>
+            <section className={cn()}>
                 {children}
             </section>
         )

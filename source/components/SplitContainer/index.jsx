@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SplitContainerPanel from './SplitContainerPanel'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * SplitContainer component
  * @class
  */
+@cn('split-container')
 class SplitContainer extends React.Component {
     /**
      * Properties
@@ -31,13 +32,11 @@ class SplitContainer extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('split-container'),
-            { children, orientation } = this.props;
+    render(cn) {
+        const { children, orientation } = this.props;
 
         return (
-            <div className={b({orientation})}>
+            <div className={cn({orientation})}>
                 {children}
             </div>
         )

@@ -6,13 +6,14 @@ import { withRouter } from 'react-router-dom'
 import Title from '../../components/Title'
 import Toggle from '../../components/Toggle'
 import * as settingsActions from '../../actions/settings'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Settings container
  * @class
  */
+@cn('settings')
 class Settings extends React.Component {
     /**
      * Settings properties
@@ -21,14 +22,14 @@ class Settings extends React.Component {
      */
     static propTypes = {
         useSmartFolding: PropTypes.bool.isRequired
-    }
+    };
 
     /**
      * Invoked after the component was mounted
      * @method
      */
     componentDidMount() {
-        const { getSettings } = this.props.settingsActions
+        const { getSettings } = this.props.settingsActions;
 
         getSettings()
     }
@@ -36,27 +37,25 @@ class Settings extends React.Component {
     onChangeUseSmartFolding = () => {
         const
             { useSmartFolding } = this.props,
-            { saveSettings } = this.props.settingsActions
+            { saveSettings } = this.props.settingsActions;
 
         saveSettings('useSmartFolding', !useSmartFolding)
-    }
+    };
 
     /**
      * Renders Settings container
      * @method
      */
-    render() {
-        const
-            b = block('settings'),
-            { useSmartFolding } = this.props
+    render(cn) {
+        const { useSmartFolding } = this.props;
 
         return (
-            <div className={b()}>
-                <div className={b('title')}>
+            <div className={cn()}>
+                <div className={cn('title')}>
                     <Title primaryTitle="Settings" />
                 </div>
-                <div className={b('container')}>
-                    <div className={b('panel')}>
+                <div className={cn('container')}>
+                    <div className={cn('panel')}>
                         <Toggle
                             checked={useSmartFolding}
                             id="useSmartFolding"

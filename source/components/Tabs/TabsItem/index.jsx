@@ -1,12 +1,13 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * TabsItem Component
  * @class
  */
+@cn('tabs')
 class TabsItem extends React.Component {
     /**
      * TabsItem properties
@@ -29,15 +30,13 @@ class TabsItem extends React.Component {
     /**
      * Renders TabsItem component
      */
-    render() {
-        const
-            b = block('tabs'),
-            { label, url } = this.props;
+    render(cn) {
+        const { label, url } = this.props;
 
         return (
             <Route path={url} children={({ match }) => (
                 <Link
-                    className={b('item', {state: match ? 'selected' : null})}
+                    className={cn('item', {state: match ? 'selected' : null})}
                     title={match}
                     to={url}>
                     {label}

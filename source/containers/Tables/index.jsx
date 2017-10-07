@@ -17,7 +17,7 @@ import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toolbar, { ToolBarButton, ToolBarSeparator } from '../../components/ToolBar'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import bytes from '~/helpers/bytes'
 import './style.less';
 
@@ -39,6 +39,7 @@ const COLUMNS = [
  * Database container
  * @class
  */
+@cn('tables')
 class Tables extends React.Component {
     /**
      * Fetches database when database was selected for the first time
@@ -199,9 +200,8 @@ class Tables extends React.Component {
      * Renders Summary container
      * @method
      */
-    render() {
+    render(cn) {
         const
-            b = block('tables'),
             {
                 location,
                 collations,
@@ -228,10 +228,10 @@ class Tables extends React.Component {
             fetching ? (
                 <Spinner active={fetching} />
             ) : (
-                <div className={b()}>
+                <div className={cn()}>
                     {/* CONTENT */}
-                    <div className={b('content')}>
-                        <div className={b('toolbar')}>
+                    <div className={cn('content')}>
+                        <div className={cn('toolbar')}>
                             <Toolbar>
                                 <ToolBarButton
                                     icon="create"
@@ -269,14 +269,14 @@ class Tables extends React.Component {
                                 />
                             </Toolbar>
                         </div>
-                        <div className={b('filters')}>
+                        <div className={cn('filters')}>
                             <Textbox
                                 id="filter"
                                 placeholder="Filter by name..."
                                 value={filter}
                                 onChange={this.onTextboxFilterChange}/>
                         </div>
-                        <div className={b('table')}>
+                        <div className={cn('table')}>
                             {
                                 tables.length ? (
                                     <DataTable

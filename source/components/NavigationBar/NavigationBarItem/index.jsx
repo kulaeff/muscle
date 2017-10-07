@@ -1,12 +1,13 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * NavigationBarItem Component
  * @class
  */
+@cn('navigation-bar')
 class NavigationBarItem extends React.Component {
     /**
      * Properties
@@ -35,15 +36,13 @@ class NavigationBarItem extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('navigation-bar'),
-            { exact, id, title, url, onClick } = this.props;
+    render(cn) {
+        const { exact, id, title, url, onClick } = this.props;
 
         return (
             <Route exact={exact} path={url} children={({match}) =>
                 <Link
-                    className={b('item', {icon: id, state: match ? 'selected' : null})}
+                    className={cn('item', {icon: id, state: match ? 'selected' : null})}
                     title={title}
                     to={url}
                     onClick={onClick}

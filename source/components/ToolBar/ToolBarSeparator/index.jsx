@@ -1,19 +1,18 @@
 import React from 'react'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * ToolBarSeparator Component
  * @class
  */
+@cn('toolbar')
 class ToolBarSeparator extends React.Component {
     /**
      * Render the component
      */
-    render() {
-        const b = block('toolbar')
-
+    render(cn) {
         return (
-            <span className={b('separator')}></span>
+            <span className={cn('separator')} />
         )
     }
 }

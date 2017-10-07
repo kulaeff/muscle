@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Textbox component
  * @class
  */
+@cn('textbox')
 class Textbox extends React.Component {
     /**
      * Properties
@@ -53,27 +54,25 @@ class Textbox extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('textbox'),
-            {
-                autoFocus,
-                disabled,
-                id,
-                name,
-                pattern,
-                placeholder,
-                required = Textbox.defaults.required,
-                title,
-                type = Textbox.defaults.type,
-                value = Textbox.defaults.value,
-                onChange
-            } = this.props;
+    render(cn) {
+        const {
+            autoFocus,
+            disabled,
+            id,
+            name,
+            pattern,
+            placeholder,
+            required = Textbox.defaults.required,
+            title,
+            type = Textbox.defaults.type,
+            value = Textbox.defaults.value,
+            onChange
+        } = this.props;
 
         return (
             <input
                 autoFocus={autoFocus}
-                className={b()}
+                className={cn()}
                 disabled={disabled}
                 id={id}
                 pattern={pattern}

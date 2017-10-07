@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * SplitContainerPanel component
  * @class
  */
+@cn('split-container')
 class SplitContainerPanel extends React.Component {
     /**
      * Properties
@@ -29,13 +30,11 @@ class SplitContainerPanel extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('split-container'),
-            { children, size } = this.props;
+    render(cn) {
+        const { children, size } = this.props;
 
         return (
-            <div className={b('panel', {size})}>{children}</div>
+            <div className={cn('panel', {size})}>{children}</div>
         )
     }
 }

@@ -1,12 +1,12 @@
 import React from 'react'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import '../style.less'
 
 /**
  * FormButton component
  * @class
  */
-class FormButton extends React.Component {
+@cn('FormButton') class FormButton extends React.Component {
     /**
      * Properties
      * @static
@@ -25,13 +25,13 @@ class FormButton extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
+    render(cn) {
         const
-            b = block('form'),
+
             { children } = this.props
 
         return (
-            <div className={b('button')}>{children}</div>
+            <div className={cn('button')}>{children}</div>
         )
     }
 }

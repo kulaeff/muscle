@@ -4,13 +4,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Spinner from '../../../components/Spinner'
 import * as statusConnectionsActions from '../../../actions/status/connections'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * StatusConnections container
  * @class
  */
+@cn('status-connections')
 class StatusConnections extends React.Component {
     /**
      * StatusConnections properties
@@ -21,18 +22,18 @@ class StatusConnections extends React.Component {
     static propTypes = {
         fetching: PropTypes.bool,
         connections: PropTypes.object.isRequired,
-    }
+    };
 
     /**
      * Creates StatusConnections container
      * @constructor
      */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             selectedTab: null,
-        }
+        };
     }
 
     /**
@@ -40,46 +41,43 @@ class StatusConnections extends React.Component {
      * @method
      */
     componentDidMount() {
-        const { getStatusConnections } = this.props.statusConnectionsActions
+        const { getStatusConnections } = this.props.statusConnectionsActions;
 
-        getStatusConnections()
+        getStatusConnections();
     }
 
     /**
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        const { router } = this.props
+        const { router } = this.props;
 
         this.setState({
             selectedTab: name
-        })
+        });
 
-        router.push(`/status/${name}`)
-    }
+        router.push(`/status/${name}`);
+    };
 
     /**
      * Renders StatusConnections container
      * @method
      */
-    render() {
-        const
-            b = block('status-connections'),
-            { fetching, connections } = this.props
-            // received = bytesToString(server.usage.received)
+    render(cn) {
+        const { fetching, connections } = this.props;
 
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 {
                     fetching
                         ?
-                        <div className={b('spinner')}>
-                            <div className={b('spinner-container')}>
+                        <div className={cn('spinner')}>
+                            <div className={cn('spinner-container')}>
                                 <Spinner active={true}/>
                             </div>
                         </div>
                         :
-                        <div className={b('container')}>
+                        <div className={cn('container')}>
                             {connections.upTime}
                         </div>
                 }

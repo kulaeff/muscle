@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TabsItem from './TabsItem'
 import Title from '../Title'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Tabs Component
  * @class
  */
+@cn('tabs')
 class Tabs extends React.Component {
     /**
      * Properties
@@ -41,31 +42,21 @@ class Tabs extends React.Component {
     };
 
     /**
-     * Create the component
-     * @constructor
-     */
-    constructor (props) {
-        super(props);
-    }
-
-    /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('tabs'),
-            {
-                children,
-                collapsed,
-                items,
-                title,
-            } = this.props;
+    render(cn) {
+        const {
+            children,
+            collapsed,
+            items,
+            title,
+        } = this.props;
 
         return (
-            <div className={b({state: collapsed ? 'collapsed' : null})}>
-                <div className={b('title')}>{title}</div>
-                <div className={b('items')}>
+            <div className={cn({state: collapsed ? 'collapsed' : null})}>
+                <div className={cn('title')}>{title}</div>
+                <div className={cn('items')}>
                     {
                         children ? (
                             children

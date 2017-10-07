@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import '../style.less'
 
 /**
  * FormBody component
  * @class
  */
-class FormBody extends React.Component {
+@cn('FormBody') class FormBody extends React.Component {
     /**
      * Properties
      * @static
@@ -30,13 +30,13 @@ class FormBody extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
+    render(cn) {
         const
-            b = block('form'),
+
             { children, flow } = this.props;
 
         return (
-            <div className={b('body', {flow})}>{children}</div>
+            <div className={cn('body', {flow})}>{children}</div>
         )
     }
 }

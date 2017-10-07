@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * TreeViewItem Component
  * @class
  */
-class TreeViewItem extends React.Component {
+@cn('TreeViewItem') class TreeViewItem extends React.Component {
     /**
      * Properties
      * @static
@@ -33,9 +33,9 @@ class TreeViewItem extends React.Component {
     /**
      * Render component
      */
-    render() {
+    render(cn) {
         const
-            b = block('tree-view'),
+
             {
                 children,
                 id,
@@ -46,11 +46,11 @@ class TreeViewItem extends React.Component {
 
         return (
             <div
-                className={b('item', {state: selected ? 'selected' : null})}
+                className={cn('item', {state: selected ? 'selected' : null})}
                 title={label}
                 onClick={() => onClick(id, label)}>
-                <div className={b('item-label')}>{label}</div>
-                <div className={b('item-container')}>
+                <div className={cn('item-label')}>{label}</div>
+                <div className={cn('item-container')}>
                     {selected ? children : null}
                 </div>
             </div>

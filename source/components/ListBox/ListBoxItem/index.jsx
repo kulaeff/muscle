@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * ListBoxItem Component
  * @class
  */
+@cn('list-box')
 class ListBoxItem extends React.Component {
     /**
      * Properties
@@ -42,14 +43,12 @@ class ListBoxItem extends React.Component {
     /**
      * Renders ListViewItem component
      */
-    render() {
-        const
-            b = block('list-box'),
-            { children, index, selected, tooltip } = this.props;
+    render(cn) {
+        const { children, index, selected, tooltip } = this.props;
 
         return (
             <div
-                className={b('item', {state: selected ? 'selected' : null})}
+                className={cn('item', {state: selected ? 'selected' : null})}
                 title={tooltip}
                 onClick={() => this.handleClick(index)}>
                 {children}

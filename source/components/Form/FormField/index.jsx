@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import '../style.less'
 
 /**
  * FormField component
  * @class
  */
+@cn('form')
 class FormField extends React.Component {
     /**
      * Properties
@@ -31,19 +32,17 @@ class FormField extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('form'),
-            { children, id, label, required } = this.props;
+    render(cn) {
+        const { children, id, label, required } = this.props;
 
         return (
-            <div className={b('field', {required})}>
+            <div className={cn('field', {required})}>
                 {
                     label ? (
-                        <label className={b('field-label')} htmlFor={id}>{label}</label>
+                        <label className={cn('field-label')} htmlFor={id}>{label}</label>
                     ) : null
                 }
-                <div className={b('field-container')}>{children}</div>
+                <div className={cn('field-container')}>{children}</div>
             </div>
         )
     }

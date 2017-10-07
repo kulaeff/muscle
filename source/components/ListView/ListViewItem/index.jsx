@@ -1,12 +1,13 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * ListViewItem Component
  * @class
  */
+@cn('list-view')
 class ListViewItem extends React.Component {
     /**
      * Properties
@@ -30,17 +31,15 @@ class ListViewItem extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('list-view'),
-            { children, url } = this.props;
+    render(cn) {
+        const { children, url } = this.props;
 
         return (
             <Route
                 path={`/server/${url}`}
                 children={({match}) => (
                     <Link
-                        className={b('item', {state: match ? 'selected' : null})}
+                        className={cn('item', {state: match ? 'selected' : null})}
                         to={`/server/${url}`}
                     >
                         {children}

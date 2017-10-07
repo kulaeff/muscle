@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FlexItem from './FlexItem'
 import FlexSeparator from './FlexSeparator'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
@@ -10,18 +10,17 @@ import './style.less'
  * @class
  * @extends Component
  */
+@cn('flex')
 class Flex extends React.Component {
     /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('flex'),
-            { children, className, flow } = this.props;
+    render(cn) {
+        const { children, flow } = this.props;
 
         return (
-            <div className={b({flow}).mix(className)}>{children}</div>
+            <div className={cn({flow})}>{children}</div>
         )
     }
 }
@@ -45,7 +44,6 @@ Flex.propTypes = {
             })
         )
     ]).isRequired,
-    className: PropTypes.string,
     flow: PropTypes.oneOf(['column', 'row'])
 };
 

@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * NotificationsItem component
  * @class
  */
+@cn('notifications')
 class NotificationsItem extends React.Component {
     timeoutID = null;
     removed = false;
@@ -74,23 +75,21 @@ class NotificationsItem extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('notifications'),
-            { message, type } = this.props;
+    render(cn) {
+        const { message, type } = this.props;
 
         return (
             <div
-                className={b('item', {state: this.state.active ? 'active' : null, type})}
+                className={cn('item', {state: this.state.active ? 'active' : null, type})}
                 ref={element => this.self = element}
             >
-                <div className={b('item-container')}>
-                    <div className={b('item-icon')}>
+                <div className={cn('item-container')}>
+                    <div className={cn('item-icon')}>
                         <svg>
                             <use xlinkHref={`#icon-${type}-24`}/>
                         </svg>
                     </div>
-                    <span  className={b('item-message')}>{message}</span>
+                    <span  className={cn('item-message')}>{message}</span>
                 </div>
             </div>
         )

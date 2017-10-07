@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import NavigationBarItem from './NavigationBarItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * NavigationBar Component
  * @class
  */
+@cn('navigation-bar')
 class NavigationBar extends React.Component {
     /**
      * Properties
@@ -27,25 +28,14 @@ class NavigationBar extends React.Component {
     };
 
     /**
-     * Create the components
-     * @constructor
-     * @param {object} props
-     */
-    constructor (props) {
-        super(props);
-    }
-
-    /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('navigation-bar'),
-            { children, items } = this.props;
+    render(cn) {
+        const { children, items } = this.props;
 
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 {
                     children ? (
                         children

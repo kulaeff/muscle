@@ -8,13 +8,14 @@ import Rows from '../Rows'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
 import * as actions from '../../actions/table'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Table container
  * @class
  */
+@cn('table')
 class Table extends React.Component {
     /**
      * Table container properties
@@ -64,16 +65,14 @@ class Table extends React.Component {
      * Render the container
      * @method
      */
-    render() {
-        const
-            b = block('table'),
-            { match, minimized } = this.props;
+    render(cn) {
+        const { match, minimized } = this.props;
 
         return (
-            <div className={b({state: minimized ? 'minimized' : null})}>
-                <div className={b('container')} onClick={this.onWindowClick}>
-                    <div className={b('header')}>
-                        <div className={b('title')}>
+            <div className={cn({state: minimized ? 'minimized' : null})}>
+                <div className={cn('container')} onClick={this.onWindowClick}>
+                    <div className={cn('header')}>
+                        <div className={cn('title')}>
                             <Tabs
                                 collapsed={minimized}
                                 title={
@@ -84,16 +83,16 @@ class Table extends React.Component {
                                 <TabsItem label="Columns" url={`${match.url}/columns`} />
                             </Tabs>
                         </div>
-                        <div className={b('buttons')}>
+                        <div className={cn('buttons')}>
                             <button
-                                className={b('button', {action: 'minimize'})}
+                                className={cn('button', {action: 'minimize'})}
                                 onClick={this.onWindowButtonMinimizeClick} />
                             <button
-                                className={b('button', {action: 'close'})}
+                                className={cn('button', {action: 'close'})}
                                 onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
-                    <div className={b('content')}>
+                    <div className={cn('content')}>
                         <Switch>
                             <Route path={`${match.path}/rows`} component={Rows}/>*/}
                             <Route path={`${match.path}/columns`} component={Columns}/>

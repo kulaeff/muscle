@@ -8,13 +8,14 @@ import Placeholder from '~/components/Placeholder'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
 import Toolbar, { ToolBarButton } from '../../components/ToolBar'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Rows container
  * @class
  */
+@cn('rows')
 class Rows extends React.Component {
     /**
      * Database container properties
@@ -117,26 +118,24 @@ class Rows extends React.Component {
      * Renders Summary container
      * @method
      */
-    render() {
-        const
-            b = block('rows'),
-            {
-                match,
-                columns,
-                rows,
-                fetching,
-                filter,
-                //saving,
-            } = this.props;
+    render(cn) {
+        const {
+            match,
+            columns,
+            rows,
+            fetching,
+            filter,
+            //saving,
+        } = this.props;
 
         return (
             fetching ? (
                 <Spinner active={fetching} />
             ) : (
-                <div className={b()}>
+                <div className={cn()}>
                     {/* CONTENT */}
-                    <div className={b('content')}>
-                        <div className={b('toolbar')}>
+                    <div className={cn('content')}>
+                        <div className={cn('toolbar')}>
                             <Toolbar>
                                 <ToolBarButton
                                     icon="create"
@@ -158,14 +157,14 @@ class Rows extends React.Component {
                                     onClick={this.onToolBarButtonDeleteDatabaseClick} />
                             </Toolbar>
                         </div>
-                        <div className={b('filters')}>
+                        <div className={cn('filters')}>
                             <Textbox
                                 id="filter"
                                 placeholder="Filter by name..."
                                 value={filter}
                                 onChange={this.onTextboxFilterChange}/>
                         </div>
-                        <div className={b('table')}>
+                        <div className={cn('table')}>
                             {
                                 rows.length ? (
                                     <DataTable

@@ -16,9 +16,10 @@ import NavigationBar, { NavigationBarItem } from '../../components/NavigationBar
 import { Notifications } from '../../components/Notifications'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
+@cn('app')
 class App extends React.Component {
     /**
      * Properties
@@ -98,15 +99,15 @@ class App extends React.Component {
      * Render
      * @returns {XML}
      */
-    render() {
+    render(cn) {
         const
-            b = block('app'),
+
             { fetching, logged, password, user } = this.props;
 
         if (logged) {
             return (
-                <main className={b()}>
-                    <section className={b('content')}>
+                <main className={cn()}>
+                    <section className={cn('content')}>
                         <Switch>
                             <Route path="/about" component={About}/>
                             <Route path="/components" component={Components}/>
@@ -115,8 +116,8 @@ class App extends React.Component {
                             <Route path="/status" component={Status}/>
                         </Switch>
                     </section>
-                    <aside className={b('sidebar')}>
-                        <div className={b('nav')}>
+                    <aside className={cn('sidebar')}>
+                        <div className={cn('nav')}>
                             <NavigationBar>
                                 <NavigationBarItem id="about" title="About" url="/about" />
                                 <NavigationBarItem id="status" title="Status" url="/status" />
@@ -124,7 +125,7 @@ class App extends React.Component {
                                 <NavigationBarItem id="settings" title="Settings" url="/settings" />
                             </NavigationBar>
                         </div>
-                        <div className={b('logout')}>
+                        <div className={cn('logout')}>
                             <NavigationBarItem
                                 exact
                                 id="logout"
@@ -138,13 +139,13 @@ class App extends React.Component {
             )
         } else {
             return (
-                <div className={b({state: 'unauthorized'})}>
-                    <div className={b('container')}>
-                        <div className={b('login')}>
-                            <div className={b('login-header')}>
+                <div className={cn({state: 'unauthorized'})}>
+                    <div className={cn('container')}>
+                        <div className={cn('login')}>
+                            <div className={cn('login-header')}>
                                 <Title primaryTitle="Authorization" />
                             </div>
-                            <div className={b('login-form')}>
+                            <div className={cn('login-form')}>
                                 <Form onSubmit={this.onFormSubmit}>
                                     <Flex flow="column">
                                         <FlexItem>

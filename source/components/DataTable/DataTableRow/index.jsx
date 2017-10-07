@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import DataTableCell from '../DataTableCell'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * DataTableRow Component
  * @class
  */
+@cn('data-table')
 class DataTableRow extends React.Component {
     /**
      * Properties
@@ -43,19 +44,17 @@ class DataTableRow extends React.Component {
      * Render component
      * @returns {XML} Rendered element
      */
-    render() {
-        const
-            b = block('data-table'),
-            {
-                cells,
-                columns,
-                selected,
-                onValueTransform
-            } = this.props;
+    render(cn) {
+        const {
+            cells,
+            columns,
+            selected,
+            onValueTransform
+        } = this.props;
 
         return (
             <tr
-                className={b('row', {state: selected ? 'selected' : null})}
+                className={cn('row', {state: selected ? 'selected' : null})}
                 onClick={(e) => this.onClick(e, cells)}>
                 {
                     columns.map((column, index) =>

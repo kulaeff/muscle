@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Checkbox component
  * @class
  */
+@cn('checkbox')
 class Checkbox extends React.Component {
     /**
      * Invokes onChange callback
@@ -24,25 +25,23 @@ class Checkbox extends React.Component {
      * Render the component
      * @returns {XML} Rendered element
      */
-    render() {
-        const
-            b = block('checkbox'),
-            { _grouped, checked, disabled, label } = this.props;
+    render(cn) {
+        const { _grouped, checked, disabled, label } = this.props;
 
         return (
             <div
-                className={b({
+                className={cn({
                     grouping: _grouped ? 'grouped' : null,
                     mode: disabled ? 'disabled' : null,
                     state: checked ? 'checked' : null
                 })}
                 onClick={this.handleClick}
             >
-                <div className={b('control')}>
-                    <div className={b('control-rectangle')} />
+                <div className={cn('control')}>
+                    <div className={cn('control-rectangle')} />
                 </div>
                 {
-                    label.length > 0 && <span className={b('label')}>{label}</span>
+                    label.length > 0 && <span className={cn('label')}>{label}</span>
                 }
             </div>
         )

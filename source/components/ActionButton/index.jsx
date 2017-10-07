@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ActionButton component
  * @class
  */
+@cn('action-button')
 class ActionButton extends React.Component {
     /**
      * Properties
@@ -33,14 +34,12 @@ class ActionButton extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('action-button'),
-            { disabled, _flow, icon, onClick } = this.props;
+    render(cn) {
+        const { disabled, _flow, icon, onClick } = this.props;
 
         return (
             <button
-                className={b({flow: _flow})}
+                className={cn({flow: _flow})}
                 disabled={disabled}
                 type="button"
                 onClick={onClick}

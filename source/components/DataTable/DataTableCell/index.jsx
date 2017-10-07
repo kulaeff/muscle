@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * DataTableCell Component
  * @class
  */
+@cn('data-table')
 class DataTableCell extends React.Component {
     /**
      * Properties
@@ -21,13 +22,11 @@ class DataTableCell extends React.Component {
     /**
      * Render component
      */
-    render() {
-        const
-            b = block('data-table'),
-            { cell, onValueTransform } = this.props;
+    render(cn) {
+        const { cell, onValueTransform } = this.props;
 
         return (
-            <td className={b('cell')} title={cell}>
+            <td className={cn('cell')} title={cell}>
                 {onValueTransform ? onValueTransform(cell) : cell}
             </td>
         )

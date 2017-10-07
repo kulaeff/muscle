@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Toggle component
  * @class
  */
+@cn('toggle')
 class Toggle extends React.Component {
     /**
      * Properties
@@ -49,23 +50,21 @@ class Toggle extends React.Component {
      * Render the component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('toggle'),
-            { checked, disabled, label } = this.props;
+    render(cn) {
+        const { checked, disabled, label } = this.props;
 
         return (
             <div
-                className={b({
+                className={cn({
                     mode: disabled ? 'disabled' : null,
                     state: checked ? 'checked' : null
                 })}
                 onClick={this.onClick}
             >
-                <div className={b('label')}>{label}</div>
-                <div className={b('control')}>
-                    <div className={b('rectangle')}>
-                        <div className={b('knob')} />
+                <div className={cn('label')}>{label}</div>
+                <div className={cn('control')}>
+                    <div className={cn('rectangle')}>
+                        <div className={cn('knob')} />
                     </div>
                 </div>
             </div>

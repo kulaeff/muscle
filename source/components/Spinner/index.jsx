@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Spinner components
  * @class
  */
+@cn('spinner')
 class Spinner extends React.Component {
     /**
      * Properties
@@ -36,19 +37,17 @@ class Spinner extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('spinner'),
-            { active, position, size } = this.props;
+    render(cn) {
+        const { active, position, size } = this.props;
 
         return (
-            <div className={b({
+            <div className={cn({
                 position,
                 state: active ? 'active' : null,
                 size
             })}>
-                <div className={b('container')}>
-                    <div className={b('ellipse')} />
+                <div className={cn('container')}>
+                    <div className={cn('ellipse')} />
                 </div>
             </div>
         )

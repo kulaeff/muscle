@@ -1,24 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * FlexSeparator Component
  * @class
  * @extends Component
  */
+@cn('flex')
 class FlexSeparator extends React.Component {
     /**
      * Render component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('flex'),
-            { size } = this.props;
+    render(cn) {
+        const { size } = this.props;
 
         return (
-            <div className={b('separator', {size})} />
+            <div className={cn('separator', {size})} />
         )
     }
 }

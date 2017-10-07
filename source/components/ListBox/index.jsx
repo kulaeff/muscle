@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ScrollBox from '../ScrollBox'
 import ListBoxItem from './ListBoxItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ListBox component
  * @class
  */
+@cn('list-box')
 class ListBox extends React.Component {
     /**
      * Properties
@@ -71,14 +72,12 @@ class ListBox extends React.Component {
      * Renders the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('list-box'),
-            { children, disabled, items, selected } = this.props;
+    render(cn) {
+        const { children, disabled, items, selected } = this.props;
 
         return (
             <div
-                className={b({state: disabled ? 'disabled' : null})}
+                className={cn({state: disabled ? 'disabled' : null})}
                 ref={element => this.self = element}
                 tabIndex={0}
             >

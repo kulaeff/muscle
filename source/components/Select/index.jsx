@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ScrollBox from '../../components/ScrollBox'
 import Spinner from '../../components/Spinner'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Select component
  * @class
  */
+@cn('select')
 class Select extends React.Component {
     /**
      * Textbox's properties
@@ -167,25 +168,23 @@ class Select extends React.Component {
      * Renders the component
      * @method
      */
-    render() {
-        const
-            b = block('select'),
-            {
-                disabled,
-                id,
-                labelKey,
-                loading,
-                name,
-                placeholder,
-                options,
-                tooltip,
-                value,
-                valueKey
-            } = this.props;
+    render(cn) {
+        const {
+            disabled,
+            id,
+            labelKey,
+            loading,
+            name,
+            placeholder,
+            options,
+            tooltip,
+            value,
+            valueKey
+        } = this.props;
 
         return (
             <div
-                className={b({
+                className={cn({
                     mode: disabled || loading ? 'disabled' : null,
                     state: this.state.active ? 'active' : null
                 })}
@@ -199,39 +198,39 @@ class Select extends React.Component {
                     type="hidden"
                     value={value ? value : 0}
                 />
-                <div className={b('control')} onMouseDown={(e) => this.handleControlClick(e)}>
+                <div className={cn('control')} onMouseDown={(e) => this.handleControlClick(e)}>
                     {
                         loading ? (
-                            <span className={b('spinner')}>
+                            <span className={cn('spinner')}>
                                 <Spinner active={loading} size="small"/>
                             </span>
                         ) : (
                             value && (value >= 0 || value.length > 0) ? (
-                                <span className={b('value')}>{this.state.option}</span>
+                                <span className={cn('value')}>{this.state.option}</span>
                             ) : (
-                                !disabled && <span className={b('placeholder')}>{placeholder}</span>
+                                !disabled && <span className={cn('placeholder')}>{placeholder}</span>
                             )
                         )
                     }
-                    <span className={b('arrow')} />
+                    <span className={cn('arrow')} />
                 </div>
                 {
                     this.state.active ? (
-                        <div className={b('dropdown')} ref={element => this.dropdown = element}>
+                        <div className={cn('dropdown')} ref={element => this.dropdown = element}>
                             <ScrollBox height={this.state.dropdownHeight}>
-                                <ul className={b('options')}>
+                                <ul className={cn('options')}>
                                     {
                                         options.map((option, index) =>
                                             typeof option === 'string' ? (
                                                 <li
-                                                    className={b('option', {state: option === value ? 'selected' : null})}
+                                                    className={cn('option', {state: option === value ? 'selected' : null})}
                                                     key={index}
                                                     onClick={() => this.handleOptionClick(option, index)}
                                                     onMouseDown={(e) => this.handleOptionMouseDown(e)}
                                                 >{option}</li>
                                             ) : (
                                                 <li
-                                                    className={b('option', {state: option[valueKey] === value ? 'selected' : null})}
+                                                    className={cn('option', {state: option[valueKey] === value ? 'selected' : null})}
                                                     key={index}
                                                     onClick={() => this.handleOptionClick(option[valueKey], index)}
                                                     onMouseDown={(e) => this.handleOptionMouseDown(e)}

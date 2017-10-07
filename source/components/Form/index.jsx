@@ -5,13 +5,14 @@ import FormButton from './FormButton'
 import FormButtons from './FormButtons'
 import FormField from './FormField'
 import FormGroup from './FormGroup'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Form component
  * @class
  */
+@cn('form')
 class Form extends React.Component {
     /**
      * Properties
@@ -46,21 +47,19 @@ class Form extends React.Component {
      * Render component
      * @returns {XML} Rendered element
      */
-    render() {
-        const
-            b = block('form'),
-            {
-                children,
-                action,
-                method,
-                orientation,
-                onReset,
-                onSubmit
-            } = this.props;
+    render(cn) {
+        const {
+            children,
+            action,
+            method,
+            orientation,
+            onReset,
+            onSubmit
+        } = this.props;
 
         return (
             <form
-                className={b({orientation})}
+                className={cn({orientation})}
                 action={action}
                 method={method}
                 onReset={onReset}

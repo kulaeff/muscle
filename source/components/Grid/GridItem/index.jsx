@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * GridItem Component
  * @class
  */
+@cn('grid')
 class GridItem extends React.Component {
     /**
      * Properties
@@ -43,20 +44,18 @@ class GridItem extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('grid'),
-            {
-                children,
-                column,
-                columnSpan,
-                row,
-                rowSpan
-            } = this.props;
+    render(cn) {
+        const {
+            children,
+            column,
+            columnSpan,
+            row,
+            rowSpan
+        } = this.props;
 
         return (
             <div
-                className={b('item')}
+                className={cn('item')}
                 style={{
                     gridColumn: `${column} / span ${columnSpan}`,
                     gridRow: `${row} / span ${rowSpan}`

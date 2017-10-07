@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 import Title from '../../../components/Title'
 import Spinner from '../../../components/Spinner'
 import * as statusUsageActions from '../../../actions/status/usage'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * StatusUsage container
  * @class
  */
+@cn('status-usage')
 class StatusUsage extends React.Component {
     /**
      * StatusUsage properties
@@ -22,18 +23,18 @@ class StatusUsage extends React.Component {
     static propTypes = {
         fetching: PropTypes.bool,
         usage: PropTypes.object.isRequired,
-    }
+    };
 
     /**
      * Creates StatusUsage container
      * @constructor
      */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             selectedTab: null,
-        }
+        };
     }
 
     /**
@@ -41,75 +42,72 @@ class StatusUsage extends React.Component {
      * @method
      */
     componentDidMount() {
-        const { getStatusUsage } = this.props.statusUsageActions
+        const { getStatusUsage } = this.props.statusUsageActions;
 
-        getStatusUsage()
+        getStatusUsage();
     }
 
     /**
      * Redirects to selected tab
      * */
     onTabsChange = (name) => {
-        const { router } = this.props
+        const { router } = this.props;
 
         this.setState({
             selectedTab: name
-        })
+        });
 
-        router.push(`/status/${name}`)
-    }
+        router.push(`/status/${name}`);
+    };
 
     /**
      * Renders StatusUsage container
      * @method
      */
-    render() {
-        const
-            b = block('status-usage'),
-            { fetching, usage } = this.props
-            // received = bytesToString(server.usage.received)
+    render(cn) {
+        const { fetching, usage } = this.props;
 
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 {
                     fetching
                         ?
-                        <div className={b('spinner')}>
-                            <div className={b('spinner-container')}>
+                        <div className={cn('spinner')}>
+                            <div className={cn('spinner-container')}>
                                 <Spinner active={true}/>
                             </div>
                         </div>
                         :
-                        <div className={b('container')}>
-                            <div className={b('indicators')}>
-                                <span className={b('indicators-title')}>
+                        <div className={cn('container')}>
+                            <div className={cn('indicators')}>
+                                <span className={cn('indicators-title')}>
                                     <Title size="small" primaryTitle="Network traffic"  />
                                 </span>
-                                <div className={b('indicators-container')}>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Received</span>
-                                        <span className={b('indicator-value')}>
+                                <div className={cn('indicators-container')}>
+                                    <div className={cn('indicator')}>
+                                        <span className={cn('indicator-title')}>Received</span>
+                                        <span className={cn('indicator-value')}>
                                             {usage.usage.received}
                                         </span>
-                                        <span className={b('indicator-unit')}>
+                                        <span className={cn('indicator-unit')}>
                                             Kb
                                         </span>
                                     </div>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Sent</span>
-                                        <span className={b('indicator-value')}>
+                                    <div className={cn('indicator')}>
+                                        <span className={cn('indicator-title')}>Sent</span>
+                                        <span className={cn('indicator-value')}>
                                             {usage.usage.sent}
                                         </span>
-                                        <span className={b('indicator-unit')}>
+                                        <span className={cn('indicator-unit')}>
                                             Kb
                                         </span>
                                     </div>
-                                    <div className={b('indicator')}>
-                                        <span className={b('indicator-title')}>Total</span>
-                                        <span className={b('indicator-value')}>
+                                    <div className={cn('indicator')}>
+                                        <span className={cn('indicator-title')}>Total</span>
+                                        <span className={cn('indicator-value')}>
                                             {usage.usage.total}
                                         </span>
-                                        <span className={b('indicator-unit')}>
+                                        <span className={cn('indicator-unit')}>
                                             Kb
                                         </span>
                                     </div>

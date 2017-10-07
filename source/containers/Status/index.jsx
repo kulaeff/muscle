@@ -5,13 +5,14 @@ import Summary from './Summary'
 import Usage from './Usage'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Status container
  * @class
  */
+@cn('status')
 class Status extends React.Component {
     /**
      * Status properties
@@ -47,14 +48,12 @@ class Status extends React.Component {
      * Renders Status container
      * @method
      */
-    render() {
-        const
-            b = block('status'),
-            { match } = this.props;
+    render(cn) {
+        const { match } = this.props;
 
         return (
-            <div className={b()}>
-                <div className={b('title')}>
+            <div className={cn()}>
+                <div className={cn('title')}>
                     <Tabs
                         title={
                             <Title secondaryTitle="Server status" />
@@ -65,7 +64,7 @@ class Status extends React.Component {
                         <TabsItem label="Connections" url={`${match.url}/connections`} />
                     </Tabs>
                 </div>
-                <div className={b('view')}>
+                <div className={cn('view')}>
                     <Switch>
                         <Route path={`${match.url}/connection`} component={Connections} />
                         <Route path={`${match.url}/summary`} component={Summary} />

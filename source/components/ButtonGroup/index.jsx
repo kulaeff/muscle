@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ButtonGroup component
  * @class
  */
+@cn('button-group')
 class ButtonGroup extends React.Component {
     /**
      * Properties
@@ -33,13 +34,11 @@ class ButtonGroup extends React.Component {
      * Render the component
      * @method
      */
-    render() {
-        const
-            b = block('button-group'),
-            { children, align, flow } = this.props;
+    render(cn) {
+        const { children, align, flow } = this.props;
 
         return (
-            <div className={b({align, flow})}>
+            <div className={cn({align, flow})}>
                 {
                     React.Children.map(children, button => React.cloneElement(button, {
                         _flow: flow

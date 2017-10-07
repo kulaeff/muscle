@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
+@cn('placeholder')
 class Placeholder extends React.Component {
     /**
      * Properties
@@ -11,19 +12,17 @@ class Placeholder extends React.Component {
      */
     static propTypes = {
         text: PropTypes.string.isRequired
-    }
+    };
 
     /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('placeholder'),
-            { text } = this.props
+    render(cn) {
+        const { text } = this.props;
 
         return (
-            <span className={b()}>{text}</span>
+            <span className={cn()}>{text}</span>
         )
     }
 }

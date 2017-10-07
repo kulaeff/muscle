@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * ScrollBar component
  * @class
  */
+@cn('scroll-bar')
 class ScrollBar extends React.Component {
     /**
      * Properties
@@ -84,18 +85,16 @@ class ScrollBar extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('scroll-bar'),
-            { position, visible } = this.props;
+    render(cn) {
+        const { position, visible } = this.props;
 
         return (
-            <div className={b({
+            <div className={cn({
                 position,
                 state: visible ? 'visible' : null
             })}>
                 <div
-                    className={b('handle')}
+                    className={cn('handle')}
                     style={{
                         height: `${this.state.handleHeight}%`,
                         top: `${this.state.handlePosition}%`

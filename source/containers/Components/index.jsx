@@ -16,13 +16,14 @@ import ScrollBox from '../../components/ScrollBox'
 import Textbox from '../../components/Textbox'
 import Title from '../../components/Title'
 import Toggle from '../../components/Toggle'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Components container
  * @class
  */
+@cn('components')
 class Components extends React.Component {
     constructor(props) {
         super(props);
@@ -140,21 +141,18 @@ class Components extends React.Component {
      * Renders Settings container
      * @method
      */
-    render() {
-        const
-            b = block('components');
-
+    render(cn) {
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 <ScrollBox scrollBarPosition="outer">
-                    <div className={b('title')}>
+                    <div className={cn('title')}>
                         <Title primaryTitle="Components" />
                     </div>
-                    <div className={b('container')}>
+                    <div className={cn('container')}>
                         {/* ActionButton */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>ActionButton</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>ActionButton</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -188,9 +186,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Button */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Button</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Button</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -239,9 +237,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* ButtonGroup */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>ButtonGroup</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>ButtonGroup</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -386,9 +384,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Checkbox */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Checkbox</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Checkbox</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -424,9 +422,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* DataTable */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>DataTable</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>DataTable</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -466,9 +464,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Radio */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Radio</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Radio</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -523,9 +521,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* ListBox */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>ListBox</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>ListBox</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -596,9 +594,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Select */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Select</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Select</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <Flex orientation="vertical">
@@ -721,9 +719,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Spinner */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Spinner</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Spinner</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -776,9 +774,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Textbox */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Textbox</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Textbox</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -831,9 +829,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Title */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Title</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Title</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>
@@ -882,9 +880,9 @@ class Components extends React.Component {
                             </div>
                         </section>
                         {/* Toggle */}
-                        <section className={b('section')}>
-                            <span className={b('section-title')}>Toggle</span>
-                            <div className={b('section-content')}>
+                        <section className={cn('section')}>
+                            <span className={cn('section-title')}>Toggle</span>
+                            <div className={cn('section-content')}>
                                 <Flex>
                                     <FlexItem>
                                         <SplitContainer>

@@ -1,11 +1,12 @@
 import React from 'react'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * About container
  * @class
  */
+@cn('about')
 class About extends React.Component {
     /**
      * Settings properties
@@ -25,18 +26,16 @@ class About extends React.Component {
      * Renders Settings container
      * @method
      */
-    render() {
-        const b = block('about');
-
+    render(cn) {
         return (
-            <div className={b()}>
-                <div className={b('content')}>
-                    <span className={b('title')}>Muscle</span>
-                    <span className={b('description')}>An awesome MySQL manager</span>
-                    <span className={b('version')}>
+            <div className={cn()}>
+                <div className={cn('content')}>
+                    <span className={cn('title')}>Muscle</span>
+                    <span className={cn('description')}>An awesome MySQL manager</span>
+                    <span className={cn('version')}>
                         Version: {process.env.VERSION || 0}
                     </span>
-                    <span className={b('url')}>
+                    <span className={cn('url')}>
                         <a href="https://github.com/kulaeff/muscle">https://github.com/kulaeff/muscle</a>
                     </span>
                 </div>

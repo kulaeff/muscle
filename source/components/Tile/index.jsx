@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Tile component
  * @class
  */
+@cn('tile')
 class Tile extends React.Component {
     /**
      * Properties
@@ -28,19 +29,17 @@ class Tile extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('tile'),
-            {
-                title,
-                value
-            } = this.props;
+    render(cn) {
+        const {
+            title,
+            value
+        } = this.props;
 
         return (
-            <div className={b()}>
-                <span className={b('title')}>{title}</span>
-                <div className={b('container')}>
-                    <h3 className={b('value')}>{value}</h3>
+            <div className={cn()}>
+                <span className={cn('title')}>{title}</span>
+                <div className={cn('container')}>
+                    <h3 className={cn('value')}>{value}</h3>
                 </div>
             </div>
         )

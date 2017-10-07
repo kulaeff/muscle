@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ListViewItem from './ListViewItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ListView Component
  * @class
  */
+@cn('list-view')
 class ListView extends React.Component {
     /**
      * Properties
@@ -30,13 +31,11 @@ class ListView extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('list-view'),
-            { icon, items } = this.props;
+    render(cn) {
+        const { icon, items } = this.props;
 
         return (
-            <div className={b()}>
+            <div className={cn()}>
                 {
                     items.map((item, index) =>
                         <ListViewItem

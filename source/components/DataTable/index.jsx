@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DataTableColumn from './DataTableColumn'
 import DataTableRow from './DataTableRow'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
@@ -10,6 +10,7 @@ import './style.less'
  * @class DataTable
  * @extends {React.Component}
  */
+@cn('data-table')
 class DataTable extends React.Component {
     /**
      * Properties
@@ -83,14 +84,14 @@ class DataTable extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
+    render(cn) {
         const
-            b = block('data-table'),
+
             { children, columns, rows, onValueTransform } = this.props;
 
         return (
-            <table className={b()}>
-                <thead className={b('header')}>
+            <table className={cn()}>
+                <thead className={cn('header')}>
                     <tr>
                         {
                             columns.map((column, index) =>
@@ -103,7 +104,7 @@ class DataTable extends React.Component {
                         }
                     </tr>
                 </thead>
-                <tbody className={b('body')}>
+                <tbody className={cn('body')}>
                     {
                         rows ? (
                             rows.sort((a, b) =>
@@ -142,7 +143,7 @@ class DataTable extends React.Component {
                         )
                     }
                 </tbody>
-                {/*<tfoot className={b('footer')}>
+                {/*<tfoot className={cn('footer')}>
                     <tr>
                         <td colSpan={columns.length}></td>
                     </tr>

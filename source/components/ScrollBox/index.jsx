@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ScrollBar from './ScrollBar'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ScrollBox component
  * @class
  */
+@cn('scroll-box')
 class ScrollBox extends React.Component {
     /**
      * Properties
@@ -159,14 +160,12 @@ class ScrollBox extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('scroll-box'),
-            { children, height, scrollBarPosition } = this.props;
+    render(cn) {
+        const { children, height, scrollBarPosition } = this.props;
 
         return (
             <div
-                className={b()}
+                className={cn()}
                 ref={element => this.wrapper = element}
                 style={{
                     height
@@ -174,7 +173,7 @@ class ScrollBox extends React.Component {
                 onWheel={this.handleWheel}
             >
                 <div
-                    className={b('container')}
+                    className={cn('container')}
                     ref={element => this.container = element}
                     style={{
                         top: `${this.state.containerTop}px`

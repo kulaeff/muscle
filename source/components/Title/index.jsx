@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
+@cn('title')
 class Title extends React.Component {
     /**
      * Properties
@@ -30,25 +31,23 @@ class Title extends React.Component {
      * Render the component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('title'),
-            {
-                primaryTitle,
-                secondaryTitle,
-                size
-            } = this.props;
+    render(cn) {
+        const {
+            primaryTitle,
+            secondaryTitle,
+            size
+        } = this.props;
 
         return (
-            <span className={b({size})}>
+            <span className={cn({size})}>
                 {
                     secondaryTitle ? (
-                        <span className={b('label', {context: 'secondary'})}>{secondaryTitle}</span>
+                        <span className={cn('label', {context: 'secondary'})}>{secondaryTitle}</span>
                     ) : null
                 }
                 {
                     primaryTitle ? (
-                        <span className={b('label',  {context: 'primary'})}>{primaryTitle}</span>
+                        <span className={cn('label',  {context: 'primary'})}>{primaryTitle}</span>
                     ) : null
                 }
             </span>

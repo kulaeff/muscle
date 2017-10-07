@@ -1,24 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * FlexItem Component
  * @class
  * @extends Component
  */
+@cn('flex')
 class FlexItem extends React.Component {
     /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('flex'),
-            { align, children, size } = this.props;
+    render(cn) {
+        const { align, children, size } = this.props;
 
         return (
-            <div className={b('item', {align, size})}>{children}</div>
+            <div className={cn('item', {align, size})}>{children}</div>
         )
     }
 }

@@ -1,26 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import NotificationsItem from './NotificationsItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * NotificationsContainer component
  * @class
  */
+@cn('notifications')
 class NotificationsContainer extends React.Component {
 
     /**
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('notifications'),
-            { notifications, onRemove } = this.props;
+    render(cn) {
+        const { notifications, onRemove } = this.props;
 
         return (
-            <div className={b('container')}>
+            <div className={cn('container')}>
                 {
                     notifications.map(notification =>
                         <NotificationsItem

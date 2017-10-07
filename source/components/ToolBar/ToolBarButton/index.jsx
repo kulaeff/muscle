@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 
 /**
  * ToolBarButton Component
  * @class
  */
+@cn('toolbar')
 class ToolBarButton extends React.Component {
     /**
      * Properties
@@ -35,14 +36,12 @@ class ToolBarButton extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('toolbar'),
-            { disabled, icon, title, onClick } = this.props;
+    render(cn) {
+        const { disabled, icon, title, onClick } = this.props;
 
         return (
             <button
-                className={b('button', {state: disabled ? 'disabled' : null})}
+                className={cn('button', {state: disabled ? 'disabled' : null})}
                 disabled={disabled}
                 title={title}
                 onClick={onClick}>

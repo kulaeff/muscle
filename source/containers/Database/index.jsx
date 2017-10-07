@@ -8,13 +8,14 @@ import Table from '../Table'
 import Tables from '../Tables'
 import Tabs, { TabsItem } from '../../components/Tabs'
 import Title from '../../components/Title'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less';
 
 /**
  * Database container
  * @class
  */
+@cn('database')
 class Database extends React.Component {
     /**
      * Properties
@@ -59,16 +60,14 @@ class Database extends React.Component {
      * Renders the container
      * @returns {XML} Database
      */
-    render() {
-        const
-            b = block('database'),
-            { match, minimized } = this.props;
+    render(cn) {
+        const { match, minimized } = this.props;
 
         return (
-            <div className={b({state: minimized ? 'minimized' : null})}>
-                <div className={b('container')} onClick={this.onWindowClick}>
-                    <div className={b('header')}>
-                        <div className={b('title')}>
+            <div className={cn({state: minimized ? 'minimized' : null})}>
+                <div className={cn('container')} onClick={this.onWindowClick}>
+                    <div className={cn('header')}>
+                        <div className={cn('title')}>
                             <Tabs
                                 collapsed={minimized}
                                 title={
@@ -79,16 +78,16 @@ class Database extends React.Component {
                                 <TabsItem label="Query" url={`${match.url}/query`} />
                             </Tabs>
                         </div>
-                        <div className={b('buttons')}>
+                        <div className={cn('buttons')}>
                             <button
-                                className={b('button', {action: 'minimize'})}
+                                className={cn('button', {action: 'minimize'})}
                                 onClick={this.onWindowButtonMinimizeClick} />
                             <button
-                                className={b('button', {action: 'close'})}
+                                className={cn('button', {action: 'close'})}
                                 onClick={this.onWindowButtonCloseClick} />
                         </div>
                     </div>
-                    <div className={b('content')}>
+                    <div className={cn('content')}>
                         <Switch>
                             <Route path={`${match.path}/tables`} component={Tables}/>
                             <Route path={`${match.path}/query`} component={Tables}/>
@@ -96,7 +95,7 @@ class Database extends React.Component {
                         </Switch>
                     </div>
                 </div>
-                <div className={b('view')}>
+                <div className={cn('view')}>
                     <Route path={`${match.path}/tables/:table`} component={Table} />
                 </div>
             </div>

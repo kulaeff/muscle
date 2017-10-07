@@ -1,39 +1,36 @@
 import React from 'react'
 import ToolBarButton from './ToolBarButton'
 import ToolBarSeparator from './ToolBarSeparator'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * ToolBar Component
  * @class
  */
+@cn('toolbar')
 class ToolBar extends React.Component {
     /**
      * Properties
      * @static
      */
-    static propTypes = {
-    }
+    static propTypes = {};
 
     /**
      * Default properties
      * @static
      */
-    static defaultProps = {
-    }
+    static defaultProps = {};
 
     /**
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('toolbar'),
-            { children } = this.props
+    render(cn) {
+        const { children } = this.props;
 
         return (
-            <div className={b()}>{children}</div>
+            <div className={cn()}>{children}</div>
         )
     }
 }

@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * RadioGroup component
  * @class
  */
+@cn('radio-group')
 class RadioGroup extends React.Component {
     /**
      * Properties
@@ -30,13 +31,11 @@ class RadioGroup extends React.Component {
      * Render the component
      * @method
      */
-    render() {
-        const
-            b = block('radio-group'),
-            { children, flow } = this.props;
+    render(cn) {
+        const { children, flow } = this.props;
 
         return (
-            <div className={b({flow})}>
+            <div className={cn({flow})}>
                 {
                     React.Children.map(children, button => React.cloneElement(button, {
                         grouped: true

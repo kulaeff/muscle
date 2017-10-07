@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * Radio component
  * @class
  */
+@cn('radio')
 class Radio extends React.Component {
     /**
      * Toggles checked state and invokes onChange handler
@@ -24,25 +25,23 @@ class Radio extends React.Component {
      * Render the component
      * @returns {XML} Rendered element
      */
-    render() {
-        const
-            b = block('radio'),
-            { checked, disabled, grouped, label, value } = this.props;
+    render(cn) {
+        const { checked, disabled, grouped, label, value } = this.props;
 
         return (
             <div
-                className={b({
+                className={cn({
                     grouping: grouped ? 'grouped' : null,
                     state: checked ? 'checked' : null,
                     mode: disabled ? 'disabled' : null
                 })}
                 onClick={() => this.onClick(value)}
             >
-                <div className={b('control')}>
-                    <div className={b('control-circle')} />
+                <div className={cn('control')}>
+                    <div className={cn('control-circle')} />
                 </div>
                 {
-                    label.length > 0 && <div className={b('label')}>{label}</div>
+                    label.length > 0 && <div className={cn('label')}>{label}</div>
                 }
             </div>
         )

@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import TreeViewItem from './TreeViewItem'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * TreeView Component
  * @class
  */
+@cn('tree-view')
 class TreeView extends React.Component {
     /**
      * Properties
@@ -20,7 +21,7 @@ class TreeView extends React.Component {
         items: PropTypes.array.isRequired,
         selectedIndex: PropTypes.number,
         onChange: PropTypes.func.isRequired
-    }
+    };
 
     /**
      * Default properties
@@ -29,7 +30,7 @@ class TreeView extends React.Component {
      */
     static defaultProps = {
         selectedIndex: null
-    }
+    };
 
     /**
      * Create the component
@@ -40,7 +41,7 @@ class TreeView extends React.Component {
 
         this.state = {
             selectedIndex: TreeView.defaults.selectedIndex
-        }
+        };
 
         this.onItemClick = this.onItemClick.bind(this)
     }
@@ -51,14 +52,14 @@ class TreeView extends React.Component {
      * @param {string} id The ID of clicked item
      */
     onItemClick(id, name) {
-        const { onChange } = this.props
+        const { onChange } = this.props;
 
         if (onChange && this.state.selectedIndex !== id) {
             this.setState({
                 selectedIndex: id
-            })
+            });
 
-            onChange(id, name)
+            onChange(id, name);
         }
     }
 
@@ -66,24 +67,22 @@ class TreeView extends React.Component {
      * Render component
      * @returns {XML} Component
      */
-    render() {
-        const
-            b = block('tree-view'),
-            { items, selectedIndex = this.state.selectedIndex} = this.props
+    render(cn) {
+        const { items, selectedIndex = this.state.selectedIndex} = this.props;
 
         return (
-            <div className={b()}>
-            {
-                items.map((item, index) =>
-                    <TreeViewItem
-                        key={index}
-                        id={index}
-                        items={item.items}
-                        label={item.name}
-                        selected={selectedIndex === index}
-                        onClick={this.onItemClick} />
-                )
-            }
+            <div className={cn()}>
+                {
+                    items.map((item, index) =>
+                        <TreeViewItem
+                            key={index}
+                            id={index}
+                            items={item.items}
+                            label={item.name}
+                            selected={selectedIndex === index}
+                            onClick={this.onItemClick}/>
+                    )
+                }
             </div>
         )
     }

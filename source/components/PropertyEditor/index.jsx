@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import block from 'bem-cn'
+import cn from 'cn-decorator';
 import './style.less'
 
 /**
  * PropertyEditor component
  * @class
  */
+@cn('property-editor')
 class PropertyEditor extends React.Component {
     /**
      * Properties
@@ -26,12 +27,9 @@ class PropertyEditor extends React.Component {
      * Render the component
      * @returns {XML}
      */
-    render() {
-        const
-            b = block('property-editor');
-
+    render(cn) {
         return (
-            <div className={b()}>
+            <div className={cn()}>
 
             </div>
         )
