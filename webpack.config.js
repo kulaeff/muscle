@@ -1,8 +1,6 @@
 const
     autoprefixer = require('autoprefixer'),
     path = require('path'),
-    pkg = require('./package.json'),
-    webpack = require('webpack'),
     SvgStorePlugin = require('webpack-svgstore-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -84,7 +82,7 @@ module.exports = (env, options) => {
                     loader: 'file-loader',
                     options: {
                         name: 'fonts/[name].[ext]',
-                        publicPath: './'
+                        publicPath: '/'
                     }
                 },
                 {

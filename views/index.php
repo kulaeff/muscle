@@ -14,7 +14,7 @@
 <div id="root"></div>
 
 <script src="/build/runtime.min.js"></script>
-<script src="/build/vendors.min.js"></script>
+<script src="/build/vendor.min.js"></script>
 <script src="/build/bundle.min.js"></script>
 </body>
 </html>
