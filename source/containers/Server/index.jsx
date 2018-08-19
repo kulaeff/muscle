@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import Database from '../../containers/Database'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
-import DataTable, { DataTableRow } from '../../components/DataTable'
+import { DataTable } from '../../components/DataTable'
 import Form, { FormField }  from '../../components/Form'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Spinner from '../../components/Spinner'
@@ -267,7 +267,7 @@ class Server extends React.Component {
 
     /**
      * Render the container
-     * @returns {XML}
+     * @returns {xml}
      */
     render(cn) {
         const
@@ -359,19 +359,10 @@ class Server extends React.Component {
                                 <div className={cn('table')}>
                                     <DataTable
                                         columns={COLUMNS}
+                                        rows={databases}
                                         onChange={this.dataTableChange}
                                         onValueTransform={this.dataTableValueTransform}
-                                    >
-                                        {
-                                            databases.map((database, index) =>
-                                                <DataTableRow
-                                                    cells={database}
-                                                    key={index}
-                                                    selected={_match && _match.params.database === database.database}
-                                                />
-                                            )
-                                        }
-                                    </DataTable>
+                                    />
                                 </div>
                             </div>
                         )

@@ -3,9 +3,8 @@ import ActionButton from '../../components/ActionButton'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
 import Checkbox from '../../components/Checkbox'
-import DataTable, { DataTableRow} from '../../components/DataTable'
+import { DataTable } from '../../components/DataTable'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
-import Highlight from 'react-highlight';
 import ListBox, { ListBoxItem } from '../../components/ListBox'
 import Radio from '../../components/Radio'
 import RadioGroup from '../../components/RadioGroup'
@@ -30,12 +29,23 @@ class Components extends React.Component {
 
         this.state = {
             checkboxChecked: true,
-            dataTableDefaultColumns: ['Name', 'Country', 'Age'],
+            dataTableDefaultColumns: [{
+                id: 'name',
+                label: 'Name'
+            }, {
+                id: 'country',
+                label: 'Country'
+            }, {
+                align: 'right',
+                id: 'age',
+                label: 'Age',
+                width: 'auto'
+            }],
             dataTableDefaultRows: [
-                ['John', 'USA', '27'],
-                ['Mark', 'Germany', '24'],
-                ['Ivan', 'Russia', '26'],
-                ['Tamara', 'Iran', '24']
+                { name: 'John', country: 'USA', age: '27' },
+                { name: 'Mark', country: 'Germany', age: '24' },
+                { name: 'Ivan', country: 'Russia', age: '25' },
+                { name: 'Eva', country: 'Poland', age: '26' },
             ],
             listBoxDefaultItems: [...new Array(10).keys()].map(item => `Item ${item}`),
             listBoxCustomItems: [...new Array(10).keys()].map(item => {
@@ -69,8 +79,8 @@ class Components extends React.Component {
         console.info('Button clicked');
     };
 
-    handleDataTableDefaultChange = (value) => {
-        console.info('DataTable changed: ', value);
+    handleDataTableDefaultChange = (e) => {
+        console.info('DataTable changed: ', e.value);
     };
 
     handleRadioChange = (value) => {
@@ -449,14 +459,9 @@ class Components extends React.Component {
                                             <SplitContainerPanel>
                                                 <DataTable
                                                     columns={this.state.dataTableDefaultColumns}
+                                                    rows={this.state.dataTableDefaultRows}
                                                     onChange={this.handleDataTableDefaultChange}
-                                                >
-                                                    {
-                                                        this.state.dataTableDefaultRows.map((row, index) =>
-                                                            <DataTableRow cells={row} key={index} />
-                                                        )
-                                                    }
-                                                </DataTable>
+                                                />
                                             </SplitContainerPanel>
                                         </SplitContainer>
                                     </FlexItem>
@@ -618,12 +623,6 @@ class Components extends React.Component {
                                             <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
                                             </FlexItem>
-                                            <FlexSeparator/>
-                                            <FlexItem size="auto">
-                                                <Highlight className="jsx">
-                                                    {require('raw-loader!./snippets/select.array-of-strings.html')}
-                                                </Highlight>
-                                            </FlexItem>
                                         </Flex>
                                     </FlexItem>
                                     <FlexSeparator />
@@ -646,12 +645,6 @@ class Components extends React.Component {
                                             <FlexSeparator/>
                                             <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </FlexItem>
-                                            <FlexSeparator/>
-                                            <FlexItem size="auto">
-                                                <Highlight className="jsx">
-                                                    {require('raw-loader!./snippets/select.array-of-objects.html')}
-                                                </Highlight>
                                             </FlexItem>
                                         </Flex>
                                     </FlexItem>
@@ -677,12 +670,6 @@ class Components extends React.Component {
                                             <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
                                             </FlexItem>
-                                            <FlexSeparator/>
-                                            <FlexItem size="auto">
-                                                <Highlight className="jsx">
-                                                    {require('raw-loader!./snippets/select.array-of-objects.disabled.html')}
-                                                </Highlight>
-                                            </FlexItem>
                                         </Flex>
                                     </FlexItem>
                                     <FlexSeparator />
@@ -706,12 +693,6 @@ class Components extends React.Component {
                                             <FlexSeparator/>
                                             <FlexItem size="auto">
                                                 <Title primaryTitle="Example" size="tiny" />
-                                            </FlexItem>
-                                            <FlexSeparator/>
-                                            <FlexItem size="auto">
-                                                <Highlight className="jsx">
-                                                    {require('raw-loader!./snippets/select.array-of-objects.loading.html')}
-                                                </Highlight>
                                             </FlexItem>
                                         </Flex>
                                     </FlexItem>

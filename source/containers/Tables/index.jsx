@@ -8,7 +8,7 @@ import * as actions from '../../actions/tables'
 import * as actions_ from '../../actions/server'
 import Button from '../../components/Button'
 import ButtonGroup from '../../components/ButtonGroup'
-import DataTable, { DataTableRow } from '../../components/DataTable'
+import { DataTable } from '../../components/DataTable'
 import Form, { FormField }  from '../../components/Form'
 import Flex, { FlexItem, FlexSeparator } from '../../components/Flex'
 import Placeholder from '~/components/Placeholder'
@@ -281,19 +281,10 @@ class Tables extends React.Component {
                                 tables.length ? (
                                     <DataTable
                                         columns={COLUMNS}
+                                        rows={tables}
                                         onChange={this.onDataTableChange}
                                         onValueTransform={this.onDataTableValueTransform}
-                                    >
-                                        {
-                                            tables.map((table, index) =>
-                                                <DataTableRow
-                                                    cells={table}
-                                                    key={index}
-                                                    selected={_match && _match.params.table === table.table}
-                                                />
-                                            )
-                                        }
-                                    </DataTable>
+                                    />
                                 ) : (
                                     <Placeholder text="There are no tables in this database" />
                                 )

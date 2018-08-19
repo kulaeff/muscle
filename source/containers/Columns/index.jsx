@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { matchPath } from 'react-router-dom'
+//import { matchPath } from 'react-router-dom'
 import * as actions from '../../actions/columns'
-import DataTable, { DataTableRow } from '../../components/DataTable'
+import { DataTable } from '../../components/DataTable'
 import Placeholder from '~/components/Placeholder'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -136,18 +136,18 @@ class Columns extends React.Component {
     render(cn) {
         const
             {
-                location,
+                //location,
                 match,
                 columns,
                 fetching,
                 filter,
                 //saving,
-            } = this.props,
-            _match = matchPath(location.pathname, {
+            } = this.props;
+            /*_match = matchPath(location.pathname, {
                 path: '/server/:database/tables/:table',
                 strict: false,
                 exact: false
-            });
+            });*/
 
         return (
             fetching ? (
@@ -190,19 +190,10 @@ class Columns extends React.Component {
                                 columns.length ? (
                                     <DataTable
                                         columns={COLUMNS}
+                                        rows={columns}
                                         onChange={this.onDataTableChange}
                                         onValueTransform={this.onDataTableValueTransform}
-                                    >
-                                        {
-                                            columns.map((column, index) =>
-                                                <DataTableRow
-                                                    cells={column}
-                                                    key={index}
-                                                    selected={_match && _match.params.table === column[0]}
-                                                />
-                                            )
-                                        }
-                                    </DataTable>
+                                    />
                                 ) : (
                                     <Placeholder text="There are no tables in this database" />
                                 )

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/rows'
-import DataTable, { DataTableRow } from '../../components/DataTable'
+import { DataTable } from '../../components/DataTable'
 import Placeholder from '~/components/Placeholder'
 import Spinner from '../../components/Spinner'
 import Textbox from '../../components/Textbox'
@@ -169,18 +169,10 @@ class Rows extends React.Component {
                                 rows.length ? (
                                     <DataTable
                                         columns={columns}
+                                        rows={rows}
                                         onChange={this.dataTableChange}
                                         onValueTransform={this.dataTableValueTransform}
-                                    >
-                                        {
-                                            rows.map((row, index) =>
-                                                <DataTableRow
-                                                    cells={row}
-                                                    key={index}
-                                                />
-                                            )
-                                        }
-                                    </DataTable>
+                                    />
                                 ) : (
                                     <Placeholder text="There are no rows in this table" />
                                 )
