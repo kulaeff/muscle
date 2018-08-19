@@ -6,9 +6,9 @@ const
     SvgStorePlugin = require('webpack-svgstore-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = (env) => {
+module.exports = (env, options) => {
     const config = {
-        devtool: env.development ? 'cheap-module-eval-source-map' : false,
+        devtool: options.mode === 'development' ? 'cheap-module-eval-source-map' : false,
         entry: {
             bundle: [
                 'babel-polyfill',
@@ -47,8 +47,8 @@ module.exports = (env) => {
                         use: [{
                             loader: 'css-loader',
                             options: {
-                                minimize: env.production,
-                                sourceMap: env.development
+                                minimize: options.mode === 'production',
+                                sourceMap: options.mode === 'development'
                             }
                         }, {
                             loader: 'postcss-loader',
@@ -58,13 +58,13 @@ module.exports = (env) => {
                                         browsers: ['last 2 versions']
                                     })
                                 ],
-                                sourceMap: env.development ? 'inline' : false
+                                sourceMap: options.mode === 'development' ? 'inline' : false
                             }
                         }, {
                             loader: 'less-loader',
                             options: {
-                                sourceMap: env.development,
-                                sourceMapContents: env.development
+                                sourceMap: options.mode === 'development',
+                                sourceMapContents: options.mode === 'development'
                             }
                         }]
                     })
@@ -80,21 +80,32 @@ module.exports = (env) => {
                     ]
                 },
                 {
+                    test: /\.(woff|woff2)$/,
+                    loader: 'file-loader',
+                    options: {
+                        name: 'fonts/[name].[ext]',
+                        publicPath: './'
+                    }
+                },
+                {
                     test: /\.(jpeg|png|gif|svg)$/i,
                     use: 'url-loader'
                 },
             ]
         },
-        plugins: [
-            new webpack.DefinePlugin({
-                'process.env.VERSION': JSON.stringify(pkg.version)
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                minChunks: function (module) {
-                    return module.context && module.context.indexOf('node_modules') !== -1;
+        optimization: {
+            runtimeChunk: 'single',
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendor',
+                        chunks: 'all'
+                    }
                 }
-            }),
+            }
+        },
+        plugins: [
             new ExtractTextPlugin({
                 allChunks: true,
                 filename: 'build/bundle.min.css'
@@ -122,12 +133,6 @@ module.exports = (env) => {
             extensions: ['.js', '.jsx']
         }
     };
-
-    if (env.production) {
-        config.plugins.push(
-            new webpack.NoEmitOnErrorsPlugin()
-        );
-    }
 
     return config
 };
